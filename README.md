@@ -20,3 +20,5 @@ Current installer URL:
 ```text
 https://zerokky11.github.io/Release/KKY_Tool_Revit(2019,21,23,25)_v2.01.exe
 ```
+
+Updated on 2026-03-20 for Pages redeploy.
