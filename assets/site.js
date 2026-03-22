@@ -3,6 +3,7 @@ const requestConfig = window.KKY_REQUESTS_CONFIG || {};
 const requestApiUrl = String(requestConfig.requestApiUrl || "").trim();
 const maxVisibleRequests = Number(requestConfig.maxVisibleRequests || 10);
 const draftStorageKey = "kky-tool-request-draft";
+const ownershipStorageKey = "kky-tool-request-ownership";
 
 function updateReleaseNotes(text) {
   const releaseNotes = document.getElementById("release-notes");
@@ -128,8 +129,7 @@ function saveDraft() {
     return;
   }
 
-  const values = collectRequestValues();
-  localStorage.setItem(draftStorageKey, JSON.stringify(values));
+  localStorage.setItem(draftStorageKey, JSON.stringify(collectRequestValues()));
 }
 
 function loadDraft() {
@@ -159,6 +159,42 @@ function loadDraft() {
 
 function clearDraft() {
   localStorage.removeItem(draftStorageKey);
+}
+
+function loadOwnershipMap() {
+  try {
+    return JSON.parse(localStorage.getItem(ownershipStorageKey) || "{}");
+  } catch (error) {
+    return {};
+  }
+}
+
+function saveOwnershipMap(map) {
+  localStorage.setItem(ownershipStorageKey, JSON.stringify(map));
+}
+
+function rememberOwnership(id, deleteToken) {
+  const map = loadOwnershipMap();
+  map[id] = deleteToken;
+  saveOwnershipMap(map);
+}
+
+function forgetOwnership(id) {
+  const map = loadOwnershipMap();
+  delete map[id];
+  saveOwnershipMap(map);
+}
+
+function deleteTokenFor(id) {
+  return loadOwnershipMap()[id] || "";
+}
+
+function createRequestId() {
+  if (window.crypto?.randomUUID) {
+    return window.crypto.randomUUID();
+  }
+
+  return `req-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
 }
 
 async function copyRequestText() {
@@ -208,6 +244,14 @@ function escapeHtml(value) {
     .replaceAll("'", "&#39;");
 }
 
+function renderDeleteButton(item) {
+  if (!item.id || !deleteTokenFor(item.id)) {
+    return "";
+  }
+
+  return `<button class="delete-button" data-request-id="${escapeHtml(item.id)}" type="button">삭제</button>`;
+}
+
 function renderRequestList(items) {
   const container = document.getElementById("request-list");
   if (!container) {
@@ -231,6 +275,7 @@ function renderRequestList(items) {
           <p class="request-card-body">${escapeHtml(item.problem)}</p>
           <div class="request-card-idea">필요 기능: ${escapeHtml(item.idea)}</div>
           ${item.note ? `<div class="request-card-note">메모: ${escapeHtml(item.note)}</div>` : ""}
+          ${renderDeleteButton(item)}
         </article>
       `;
     })
@@ -289,6 +334,9 @@ async function submitRequest() {
     return;
   }
 
+  const id = createRequestId();
+  const deleteToken = createRequestId();
+
   button.disabled = true;
   button.textContent = "등록 중";
   setRequestStatus("등록 중입니다. 잠시만 기다려주세요.");
@@ -300,6 +348,9 @@ async function submitRequest() {
         "Content-Type": "text/plain;charset=utf-8"
       },
       body: JSON.stringify({
+        action: "create",
+        id,
+        deleteToken,
         ...values,
         source: "mobile",
         created_at: new Date().toISOString()
@@ -310,6 +361,7 @@ async function submitRequest() {
       throw new Error(`HTTP ${response.status}`);
     }
 
+    rememberOwnership(id, deleteToken);
     clearDraft();
     document.getElementById("request-form")?.reset();
     setRequestStatus("등록되었습니다. 아래 최근 요청에서 바로 확인할 수 있습니다.", "success");
@@ -320,6 +372,53 @@ async function submitRequest() {
     button.disabled = false;
     button.textContent = "등록하기";
   }
+}
+
+async function deleteRequest(id) {
+  const deleteToken = deleteTokenFor(id);
+  if (!id || !deleteToken) {
+    setRequestStatus("이 기기에서 등록한 요청만 삭제할 수 있습니다.", "error");
+    return;
+  }
+
+  if (!window.confirm("이 요청을 삭제할까요?")) {
+    return;
+  }
+
+  setRequestStatus("삭제 중입니다.");
+
+  try {
+    const response = await fetch(requestApiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify({
+        action: "delete",
+        id,
+        deleteToken
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    forgetOwnership(id);
+    setRequestStatus("삭제되었습니다.", "success");
+    await loadRequestList();
+  } catch (error) {
+    setRequestStatus("삭제에 실패했습니다. 다시 시도해주세요.", "error");
+  }
+}
+
+function handleRequestListClick(event) {
+  const button = event.target.closest(".delete-button");
+  if (!button) {
+    return;
+  }
+
+  deleteRequest(button.dataset.requestId || "");
 }
 
 function setupRequestPage() {
@@ -333,6 +432,7 @@ function setupRequestPage() {
   document.getElementById("copy-request")?.addEventListener("click", copyRequestText);
   document.getElementById("save-request")?.addEventListener("click", submitRequest);
   document.getElementById("refresh-requests")?.addEventListener("click", loadRequestList);
+  document.getElementById("request-list")?.addEventListener("click", handleRequestListClick);
   loadRequestList();
 }
 

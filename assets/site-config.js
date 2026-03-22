@@ -1,4 +1,4 @@
 window.KKY_REQUESTS_CONFIG = {
-  requestApiUrl: "https://script.google.com/macros/s/AKfycbxtJLLoIynl7ruWu3orv3r-tqyeSV5_xsPPuf-v3y5nVzEEIWyvEVSQYgB5pvdC6d00/exec",
+  requestApiUrl: "https://script.google.com/macros/s/AKfycbwjyBlwEcpeCFTMg_heSID3yH87R8Rp2aiC8gXOqhHnpShsy2MR1F8lE1cb0OiCXBIv/exec",
   maxVisibleRequests: 10
 };
