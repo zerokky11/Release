@@ -35,24 +35,24 @@
 
         <section class="section">
           <div class="panel">
-            <p class="section-note">휴대폰에서 간단하게 남길 수 있게 구성했습니다. 지금은 입력 내용을 복사하는 단계까지만 연결되어 있고, 저장과 정리를 위해서는 별도 폼 저장 서비스나 백엔드 연결이 필요합니다.</p>
+            <p class="section-note">휴대폰에서 짧게 남기고 등록하는 흐름으로 구성했습니다. 등록된 내용은 아래 최근 요청 목록에서 바로 확인할 수 있습니다. 민감한 정보나 프로젝트 원본 데이터는 적지 않는 것을 기준으로 사용해주세요.</p>
 
             <form class="request-form" id="request-form">
               <div class="field">
                 <label for="field-site">현장명</label>
-                <input id="field-site" name="site" type="text" placeholder="예: A병원 신축공사">
+                <input id="field-site" name="site" type="text" placeholder="예: A병원 신축공사" required>
               </div>
               <div class="field">
                 <label for="field-task">업무 유형</label>
-                <input id="field-task" name="task" type="text" placeholder="예: 속성 관리, 검토, 납품 점검">
+                <input id="field-task" name="task" type="text" placeholder="예: 속성 관리, 검토, 납품 점검" required>
               </div>
               <div class="field">
                 <label for="field-problem">불편한 점</label>
-                <textarea id="field-problem" name="problem" rows="3" placeholder="어떤 작업이 반복되거나 번거로운지"></textarea>
+                <textarea id="field-problem" name="problem" rows="3" placeholder="어떤 작업이 반복되거나 번거로운지" required></textarea>
               </div>
               <div class="field">
                 <label for="field-idea">있으면 좋은 기능</label>
-                <textarea id="field-idea" name="idea" rows="3" placeholder="구체적으로 어떤 기능이 필요한지"></textarea>
+                <textarea id="field-idea" name="idea" rows="3" placeholder="구체적으로 어떤 기능이 필요한지" required></textarea>
               </div>
               <div class="field-row">
                 <div class="field">
@@ -71,8 +71,23 @@
             </form>
 
             <div class="request-actions">
-              <button class="submit-button" id="copy-request" type="button">요청 기록하기</button>
-              <p class="request-help">버튼을 누르면 입력 내용이 복사됩니다. 저장 기능은 다음 단계에서 연결할 수 있습니다.</p>
+              <div class="button-row">
+                <button class="submit-button" id="save-request" type="button">등록하기</button>
+                <button class="ghost-button" id="copy-request" type="button">내용 복사</button>
+              </div>
+              <p class="request-help" id="request-status">작성 중인 내용은 이 기기에서 임시 저장되고, 등록 시 공유 목록에 표시됩니다.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-heading-row">
+            <h2>최근 요청</h2>
+            <button class="text-button" id="refresh-requests" type="button">새로 불러오기</button>
+          </div>
+          <div class="panel">
+            <div class="request-list" id="request-list">
+              <p class="empty-state">등록된 요청을 불러오는 중입니다.</p>
             </div>
           </div>
         </section>
@@ -80,6 +95,7 @@
     </div>
   </div>
 
+  <script src="assets/site-config.js"></script>
   <script src="assets/site.js"></script>
 </body>
 </html>
