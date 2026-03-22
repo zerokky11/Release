@@ -2,13 +2,13 @@ const packageBaseName = "KKY_Tool_Revit(2019,21,23,25)_v";
 
 function buildRequestText() {
   const values = {
-    site: document.getElementById("field-site").value.trim() || "-",
-    task: document.getElementById("field-task").value.trim() || "-",
-    problem: document.getElementById("field-problem").value.trim() || "-",
-    idea: document.getElementById("field-idea").value.trim() || "-",
-    duration: document.getElementById("field-duration").value.trim() || "-",
-    frequency: document.getElementById("field-frequency").value.trim() || "-",
-    note: document.getElementById("field-note").value.trim() || "-"
+    site: document.getElementById("field-site")?.value.trim() || "-",
+    task: document.getElementById("field-task")?.value.trim() || "-",
+    problem: document.getElementById("field-problem")?.value.trim() || "-",
+    idea: document.getElementById("field-idea")?.value.trim() || "-",
+    duration: document.getElementById("field-duration")?.value.trim() || "-",
+    frequency: document.getElementById("field-frequency")?.value.trim() || "-",
+    note: document.getElementById("field-note")?.value.trim() || "-"
   };
 
   return [
@@ -24,6 +24,9 @@ function buildRequestText() {
 
 async function copyRequestText() {
   const button = document.getElementById("copy-request");
+  if (!button) {
+    return;
+  }
 
   try {
     await navigator.clipboard.writeText(buildRequestText());
@@ -40,7 +43,14 @@ async function copyRequestText() {
 
 function updateReleaseNotes(text) {
   const releaseNotes = document.getElementById("release-notes");
-  const lines = String(text || "").split(/\r?\n|,/).map((entry) => entry.trim()).filter(Boolean);
+  if (!releaseNotes) {
+    return;
+  }
+
+  const lines = String(text || "")
+    .split(/\r?\n|,/)
+    .map((entry) => entry.trim())
+    .filter(Boolean);
 
   if (!lines.length) {
     releaseNotes.innerHTML = "<li>배포 노트가 없습니다.</li>";
@@ -58,20 +68,26 @@ function setReleaseInfo(data) {
   const exeName = version ? `${packageBaseName}${version}.exe` : "latest executable";
   const exeUrl = version ? `${packageBaseName}${version}.exe` : "latest.json";
 
-  document.getElementById("release-version").textContent = version ? `v${version}` : "-";
-  document.getElementById("release-date").textContent = releaseDate;
-  document.getElementById("download-zip").href = zipUrl;
-  document.getElementById("download-exe").href = exeUrl;
-  document.getElementById("package-file-label").textContent = packageName;
-  document.getElementById("exe-file-label").textContent = exeName;
-  document.getElementById("footer-updated").textContent = `Last updated: ${releaseDate}`;
+  const versionElement = document.getElementById("release-version");
+  const dateElement = document.getElementById("release-date");
+  const zipElement = document.getElementById("download-zip");
+  const exeElement = document.getElementById("download-exe");
+  const packageElement = document.getElementById("package-file-label");
+  const exeNameElement = document.getElementById("exe-file-label");
+
+  if (versionElement) versionElement.textContent = version ? `v${version}` : "-";
+  if (dateElement) dateElement.textContent = releaseDate;
+  if (zipElement) zipElement.href = zipUrl;
+  if (exeElement) exeElement.href = exeUrl;
+  if (packageElement) packageElement.textContent = packageName;
+  if (exeNameElement) exeNameElement.textContent = exeName;
+
   updateReleaseNotes(data.notes);
 }
 
 async function loadReleaseInfo() {
   try {
     const response = await fetch("latest.json", { cache: "no-store" });
-
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}`);
     }
@@ -79,14 +95,13 @@ async function loadReleaseInfo() {
     const data = await response.json();
     setReleaseInfo(data);
   } catch (error) {
-    document.getElementById("release-version").textContent = "-";
-    document.getElementById("release-date").textContent = "-";
-    document.getElementById("package-file-label").textContent = "최신 패키지 확인 필요";
-    document.getElementById("exe-file-label").textContent = "최신 설치 파일 확인 필요";
-    document.getElementById("footer-updated").textContent = "Last updated: -";
+    const packageElement = document.getElementById("package-file-label");
+    const exeNameElement = document.getElementById("exe-file-label");
+    if (packageElement) packageElement.textContent = "최신 패키지 확인 필요";
+    if (exeNameElement) exeNameElement.textContent = "최신 설치 파일 확인 필요";
     updateReleaseNotes("latest.json을 읽지 못했습니다.");
   }
 }
 
-document.getElementById("copy-request").addEventListener("click", copyRequestText);
+document.getElementById("copy-request")?.addEventListener("click", copyRequestText);
 loadReleaseInfo();
