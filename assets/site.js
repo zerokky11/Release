@@ -5,29 +5,62 @@ const maxVisibleRequests = Number(requestConfig.maxVisibleRequests || 10);
 const draftStorageKey = "kky-tool-request-draft";
 const ownershipStorageKey = "kky-tool-request-ownership";
 
-function updateReleaseNotes(text) {
+const text = {
+  releaseNotesEmpty: "\uBC30\uD3EC \uB178\uD2B8\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4.",
+  packageCheckNeeded: "\uCD5C\uC2E0 \uD328\uD0A4\uC9C0 \uD655\uC778 \uD544\uC694",
+  exeCheckNeeded: "\uCD5C\uC2E0 \uC124\uCE58 \uD30C\uC77C \uD655\uC778 \uD544\uC694",
+  latestJsonLoadFailed: "latest.json\uC744 \uBD88\uB7EC\uC624\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4.",
+  validation: "\uD504\uB85C\uC81D\uD2B8\uBA85, \uC5C5\uBB34 \uC720\uD615, \uBD88\uD3B8\uD55C \uC810, \uC788\uC73C\uBA74 \uC88B\uC740 \uAE30\uB2A5\uC744 \uC801\uC5B4\uC8FC\uC138\uC694.",
+  apiMissing: "\uC800\uC7A5 \uAE30\uB2A5\uC774 \uC544\uC9C1 \uC5F0\uACB0\uB418\uC9C0 \uC54A\uC558\uC2B5\uB2C8\uB2E4. assets/site-config.js\uC5D0 Apps Script \uC6F9\uC571 \uC8FC\uC18C\uB97C \uB123\uC5B4\uC8FC\uC138\uC694.",
+  copyDone: "\uBCF5\uC0AC \uC644\uB8CC",
+  copyDefault: "\uB0B4\uC6A9 \uBCF5\uC0AC",
+  copyFailed: "\uD074\uB9BD\uBCF4\uB4DC \uBCF5\uC0AC\uC5D0 \uC2E4\uD328\uD588\uC2B5\uB2C8\uB2E4. \uB0B4\uC6A9\uC744 \uC9C1\uC811 \uBCF5\uC0AC\uD574\uC8FC\uC138\uC694.",
+  emptyRequests: "\uC544\uC9C1 \uB4F1\uB85D\uB41C \uC694\uCCAD\uC774 \uC5C6\uC2B5\uB2C8\uB2E4.",
+  requestLoading: "\uB4F1\uB85D\uB41C \uC694\uCCAD\uC744 \uBD88\uB7EC\uC624\uB294 \uC911\uC785\uB2C8\uB2E4.",
+  requestLoadFailed: "\uC694\uCCAD \uBAA9\uB85D\uC744 \uBD88\uB7EC\uC624\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4. \uC6F9\uC571 \uC8FC\uC18C\uC640 \uBC30\uD3EC \uC0C1\uD0DC\uB97C \uD655\uC778\uD574\uC8FC\uC138\uC694.",
+  requestCreatePending: "\uB4F1\uB85D \uC911\uC785\uB2C8\uB2E4. \uC7A0\uC2DC\uB9CC \uAE30\uB2E4\uB824\uC8FC\uC138\uC694.",
+  requestCreateDone: "\uB4F1\uB85D\uD588\uC2B5\uB2C8\uB2E4. \uC544\uB798 \uCD5C\uADFC \uC694\uCCAD\uC5D0\uC11C \uBC14\uB85C \uD655\uC778\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4.",
+  requestCreateFailed: "\uB4F1\uB85D\uC5D0 \uC2E4\uD328\uD588\uC2B5\uB2C8\uB2E4. \uC6F9\uC571 \uBC30\uD3EC \uC8FC\uC18C \uB610\uB294 \uAD8C\uD55C \uC124\uC815\uC744 \uD655\uC778\uD574\uC8FC\uC138\uC694.",
+  requestDeleting: "\uC0AD\uC81C \uC911\uC785\uB2C8\uB2E4.",
+  requestDeleteDone: "\uC0AD\uC81C\uD588\uC2B5\uB2C8\uB2E4.",
+  requestDeleteFailed: "\uC0AD\uC81C\uC5D0 \uC2E4\uD328\uD588\uC2B5\uB2C8\uB2E4. \uB2E4\uC2DC \uC2DC\uB3C4\uD574\uC8FC\uC138\uC694.",
+  requestDeleteOwnOnly: "\uC774 \uAE30\uAE30\uC5D0\uC11C \uB4F1\uB85D\uD55C \uC694\uCCAD\uB9CC \uC0AD\uC81C\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4.",
+  requestDeleteConfirm: "\uC774 \uC694\uCCAD\uC744 \uC0AD\uC81C\uD560\uAE4C\uC694?",
+  requestDeleteButton: "\uC0AD\uC81C",
+  requestRefresh: "\uC0C8\uB85C \uBD88\uB7EC\uC624\uAE30",
+  requestSubmit: "\uB4F1\uB85D\uD558\uAE30",
+  requestSubmitLoading: "\uB4F1\uB85D \uC911...",
+  requestFrequencyFallback: "\uBE48\uB3C4 \uBBF8\uC785\uB825",
+  requestIdeaPrefix: "\uD544\uC694 \uAE30\uB2A5",
+  requestNotePrefix: "\uBA54\uBAA8",
+  requestConfigHelp: "\uC800\uC7A5 \uAE30\uB2A5 \uC5F0\uACB0 \uC804\uC785\uB2C8\uB2E4. assets/site-config.js\uC5D0 Apps Script \uC6F9\uC571 \uC8FC\uC18C\uB97C \uB123\uC73C\uBA74 \uBAA9\uB85D\uC774 \uD45C\uC2DC\uB429\uB2C8\uB2E4."
+};
+
+function updateReleaseNotes(rawText) {
   const releaseNotes = document.getElementById("release-notes");
   if (!releaseNotes) {
     return;
   }
 
-  const lines = String(text || "")
+  const lines = String(rawText || "")
     .split(/\r?\n|,/)
     .map((entry) => entry.trim())
     .filter(Boolean);
 
-  if (!lines.length) {
-    releaseNotes.innerHTML = "<li>배포 노트가 없습니다.</li>";
-    return;
-  }
+  releaseNotes.innerHTML = "";
 
-  releaseNotes.innerHTML = lines.map((entry) => `<li>${entry}</li>`).join("");
+  const entries = lines.length ? lines : [text.releaseNotesEmpty];
+  entries.forEach((entry) => {
+    const item = document.createElement("li");
+    item.textContent = entry;
+    releaseNotes.appendChild(item);
+  });
 }
 
 function setReleaseInfo(data) {
   const version = String(data.version || "").trim();
-  const releaseDate = data.publishedAt || "-";
-  const zipUrl = data.url || "latest.json";
+  const releaseDate = String(data.publishedAt || "-").trim() || "-";
+  const zipUrl = String(data.url || "latest.json").trim() || "latest.json";
   const packageName = zipUrl.split("/").pop() || "latest package";
   const exeName = version ? `${packageBaseName}${version}.exe` : "latest executable";
   const exeUrl = version ? `${packageBaseName}${version}.exe` : "latest.json";
@@ -50,6 +83,11 @@ function setReleaseInfo(data) {
 }
 
 async function loadReleaseInfo() {
+  const versionElement = document.getElementById("release-version");
+  if (!versionElement) {
+    return;
+  }
+
   try {
     const response = await fetch("latest.json", { cache: "no-store" });
     if (!response.ok) {
@@ -61,9 +99,9 @@ async function loadReleaseInfo() {
   } catch (error) {
     const packageElement = document.getElementById("package-file-label");
     const exeNameElement = document.getElementById("exe-file-label");
-    if (packageElement) packageElement.textContent = "최신 패키지 확인 필요";
-    if (exeNameElement) exeNameElement.textContent = "최신 설치 파일 확인 필요";
-    updateReleaseNotes("latest.json을 읽지 못했습니다.");
+    if (packageElement) packageElement.textContent = text.packageCheckNeeded;
+    if (exeNameElement) exeNameElement.textContent = text.exeCheckNeeded;
+    updateReleaseNotes(text.latestJsonLoadFailed);
   }
 }
 
@@ -87,13 +125,13 @@ function buildRequestText() {
   const values = collectRequestValues();
 
   return [
-    `현장명: ${values.site || "-"}`,
-    `업무 유형: ${values.task || "-"}`,
-    `불편한 점: ${values.problem || "-"}`,
-    `있으면 좋은 기능: ${values.idea || "-"}`,
-    `소요 시간: ${values.duration || "-"}`,
-    `빈도: ${values.frequency || "-"}`,
-    `메모: ${values.note || "-"}`
+    `\uD504\uB85C\uC81D\uD2B8\uBA85: ${values.site || "-"}`,
+    `\uC5C5\uBB34 \uC720\uD615: ${values.task || "-"}`,
+    `\uBD88\uD3B8\uD55C \uC810: ${values.problem || "-"}`,
+    `\uC788\uC73C\uBA74 \uC88B\uC740 \uAE30\uB2A5: ${values.idea || "-"}`,
+    `\uC18C\uC694 \uC2DC\uAC04: ${values.duration || "-"}`,
+    `\uBE48\uB3C4: ${values.frequency || "-"}`,
+    `\uBA54\uBAA8: ${values.note || "-"}`
   ].join("\n");
 }
 
@@ -117,7 +155,7 @@ function setRequestStatus(message, tone = "") {
 
 function validateRequest(values) {
   if (!values.site || !values.task || !values.problem || !values.idea) {
-    return "현장명, 업무 유형, 불편한 점, 있으면 좋은 기능은 꼭 적어주세요.";
+    return text.validation;
   }
 
   return "";
@@ -205,14 +243,14 @@ async function copyRequestText() {
 
   try {
     await navigator.clipboard.writeText(buildRequestText());
-    button.textContent = "복사 완료";
+    button.textContent = text.copyDone;
     button.classList.add("is-done");
     window.setTimeout(() => {
-      button.textContent = "내용 복사";
+      button.textContent = text.copyDefault;
       button.classList.remove("is-done");
     }, 1600);
   } catch (error) {
-    window.alert("클립보드 복사에 실패했습니다. 내용을 직접 복사해주세요.");
+    window.alert(text.copyFailed);
   }
 }
 
@@ -249,7 +287,7 @@ function renderDeleteButton(item) {
     return "";
   }
 
-  return `<button class="delete-button" data-request-id="${escapeHtml(item.id)}" type="button">삭제</button>`;
+  return `<button class="delete-button" data-request-id="${escapeHtml(item.id)}" type="button">${text.requestDeleteButton}</button>`;
 }
 
 function renderRequestList(items) {
@@ -259,22 +297,30 @@ function renderRequestList(items) {
   }
 
   if (!Array.isArray(items) || !items.length) {
-    container.innerHTML = '<p class="empty-state">아직 등록된 요청이 없습니다.</p>';
+    container.innerHTML = `<p class="empty-state">${text.emptyRequests}</p>`;
     return;
   }
 
   container.innerHTML = items
     .map((item) => {
+      const site = escapeHtml(item.site);
+      const date = escapeHtml(formatRequestDate(item.created_at));
+      const task = escapeHtml(item.task);
+      const frequency = escapeHtml(item.frequency || text.requestFrequencyFallback);
+      const problem = escapeHtml(item.problem);
+      const idea = escapeHtml(item.idea);
+      const note = item.note ? `<div class="request-card-note">${text.requestNotePrefix}: ${escapeHtml(item.note)}</div>` : "";
+
       return `
         <article class="request-card">
           <div class="request-card-head">
-            <strong>${escapeHtml(item.site)}</strong>
-            <span>${escapeHtml(formatRequestDate(item.created_at))}</span>
+            <strong>${site}</strong>
+            <span>${date}</span>
           </div>
-          <div class="request-card-meta">${escapeHtml(item.task)} · ${escapeHtml(item.frequency || "빈도 미입력")}</div>
-          <p class="request-card-body">${escapeHtml(item.problem)}</p>
-          <div class="request-card-idea">필요 기능: ${escapeHtml(item.idea)}</div>
-          ${item.note ? `<div class="request-card-note">메모: ${escapeHtml(item.note)}</div>` : ""}
+          <div class="request-card-meta">${task} / ${frequency}</div>
+          <p class="request-card-body">${problem}</p>
+          <div class="request-card-idea">${text.requestIdeaPrefix}: ${idea}</div>
+          ${note}
           ${renderDeleteButton(item)}
         </article>
       `;
@@ -289,11 +335,11 @@ async function loadRequestList() {
   }
 
   if (!requestApiUrl) {
-    container.innerHTML = '<p class="empty-state">저장 기능 연결 전입니다. `assets/site-config.js`에 Apps Script 웹앱 주소를 넣으면 목록이 표시됩니다.</p>';
+    container.innerHTML = `<p class="empty-state">${text.requestConfigHelp}</p>`;
     return;
   }
 
-  container.innerHTML = '<p class="empty-state">최근 요청을 불러오는 중입니다.</p>';
+  container.innerHTML = `<p class="empty-state">${text.requestLoading}</p>`;
 
   try {
     const url = new URL(requestApiUrl);
@@ -311,7 +357,7 @@ async function loadRequestList() {
     const data = await response.json();
     renderRequestList(Array.isArray(data.items) ? data.items : []);
   } catch (error) {
-    container.innerHTML = '<p class="empty-state">요청 목록을 불러오지 못했습니다. 웹앱 주소와 배포 상태를 확인해주세요.</p>';
+    container.innerHTML = `<p class="empty-state">${text.requestLoadFailed}</p>`;
   }
 }
 
@@ -330,7 +376,7 @@ async function submitRequest() {
   }
 
   if (!requestApiUrl) {
-    setRequestStatus("저장 기능이 아직 연결되지 않았습니다. `assets/site-config.js`에 Apps Script 웹앱 주소를 넣어주세요.", "error");
+    setRequestStatus(text.apiMissing, "error");
     return;
   }
 
@@ -338,8 +384,8 @@ async function submitRequest() {
   const deleteToken = createRequestId();
 
   button.disabled = true;
-  button.textContent = "등록 중";
-  setRequestStatus("등록 중입니다. 잠시만 기다려주세요.");
+  button.textContent = text.requestSubmitLoading;
+  setRequestStatus(text.requestCreatePending);
 
   try {
     const response = await fetch(requestApiUrl, {
@@ -361,31 +407,36 @@ async function submitRequest() {
       throw new Error(`HTTP ${response.status}`);
     }
 
+    const data = await response.json().catch(() => ({ ok: true }));
+    if (data.ok === false) {
+      throw new Error(data.message || "create_failed");
+    }
+
     rememberOwnership(id, deleteToken);
     clearDraft();
     document.getElementById("request-form")?.reset();
-    setRequestStatus("등록되었습니다. 아래 최근 요청에서 바로 확인할 수 있습니다.", "success");
+    setRequestStatus(text.requestCreateDone, "success");
     await loadRequestList();
   } catch (error) {
-    setRequestStatus("등록에 실패했습니다. 웹앱 배포 주소 또는 권한 설정을 확인해주세요.", "error");
+    setRequestStatus(text.requestCreateFailed, "error");
   } finally {
     button.disabled = false;
-    button.textContent = "등록하기";
+    button.textContent = text.requestSubmit;
   }
 }
 
 async function deleteRequest(id) {
   const deleteToken = deleteTokenFor(id);
   if (!id || !deleteToken) {
-    setRequestStatus("이 기기에서 등록한 요청만 삭제할 수 있습니다.", "error");
+    setRequestStatus(text.requestDeleteOwnOnly, "error");
     return;
   }
 
-  if (!window.confirm("이 요청을 삭제할까요?")) {
+  if (!window.confirm(text.requestDeleteConfirm)) {
     return;
   }
 
-  setRequestStatus("삭제 중입니다.");
+  setRequestStatus(text.requestDeleting);
 
   try {
     const response = await fetch(requestApiUrl, {
@@ -404,11 +455,16 @@ async function deleteRequest(id) {
       throw new Error(`HTTP ${response.status}`);
     }
 
+    const data = await response.json().catch(() => ({ ok: true }));
+    if (data.ok === false) {
+      throw new Error(data.message || "delete_failed");
+    }
+
     forgetOwnership(id);
-    setRequestStatus("삭제되었습니다.", "success");
+    setRequestStatus(text.requestDeleteDone, "success");
     await loadRequestList();
   } catch (error) {
-    setRequestStatus("삭제에 실패했습니다. 다시 시도해주세요.", "error");
+    setRequestStatus(text.requestDeleteFailed, "error");
   }
 }
 
