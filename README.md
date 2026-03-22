@@ -1,24 +1,42 @@
-# GitHub Pages Update Files
+# KKY Tool Lab Pages
 
-This repository is used as a GitHub Pages based update server for KKY Tool Revit.
+This folder is deployed as a GitHub Pages based static site for KKY Tool Revit.
 
-Current files:
+It now serves two roles:
+
+- update feed hosting for the add-in
+- lightweight landing page for KKY Tool downloads and feature-request direction
+
+## Key files
 
 - `index.html`
+- `assets/site.css`
+- `assets/site.js`
 - `.nojekyll`
+- `CNAME`
 - `latest.json`
-- `KKY_Tool_Revit(2019,21,23,25)_v2.01.exe`
 
-Current feed URL:
-
-```text
-https://zerokky11.github.io/Release/latest.json
-```
-
-Current installer URL:
+## Current feed URL
 
 ```text
-https://zerokky11.github.io/Release/KKY_Tool_Revit(2019,21,23,25)_v2.01.exe
+https://update.zerokky.com/latest.json
 ```
 
-Updated on 2026-03-20 for Pages redeploy.
+## Release package pattern
+
+```text
+KKY_Tool_Revit(2019,21,23,25)_v{version}.exe
+KKY_Tool_Revit(2019,21,23,25)_v{version}.zip
+```
+
+The landing page reads `latest.json` and updates the visible version, release date, and package link automatically.
+
+## Deploy note
+
+When you upload a new release:
+
+1. Add the latest `.exe` and `.zip` files to this folder.
+2. Update `latest.json`.
+3. Push this folder to the Pages repository.
+
+Updated on 2026-03-22.
