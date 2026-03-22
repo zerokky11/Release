@@ -131,9 +131,12 @@ h1 {
 }
 
 .intro h1 {
-  font-family: "Palatino Linotype", "Book Antiqua", Georgia, serif;
-  font-weight: 400;
-  letter-spacing: -0.02em;
+  font-family: "Aptos", "Segoe UI", "Malgun Gothic", sans-serif;
+  font-size: 42px;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 1.16;
+  color: #243547;
 }
 
 h2 {
