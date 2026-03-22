@@ -6,55 +6,7 @@
   <meta name="description" content="KKY Tool 내부 공유 페이지">
   <title>KKY Tool 내부 공유 페이지</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <script>
-    (function () {
-      function normalizeVersion(value) {
-        return (value || "")
-          .replace(/^W\\//, "")
-          .replace(/"/g, "")
-          .replace(/[^a-zA-Z0-9._-]/g, "");
-      }
-
-      function appendStylesheet(version) {
-        var link = document.createElement("link");
-        link.rel = "stylesheet";
-        link.href = "assets/site.css" + (version ? "?v=" + version : "");
-        document.head.appendChild(link);
-      }
-
-      function appendScript(version) {
-        var script = document.createElement("script");
-        script.src = "assets/site.js" + (version ? "?v=" + version : "");
-        document.body.appendChild(script);
-      }
-
-      function loadAssetVersion(path) {
-        return fetch(path, { method: "HEAD", cache: "no-store" })
-          .then(function (response) {
-            if (!response.ok) {
-              throw new Error("HEAD " + path + " failed");
-            }
-
-            return normalizeVersion(
-              response.headers.get("etag") || response.headers.get("last-modified")
-            );
-          })
-          .catch(function () {
-            return "";
-          });
-      }
-
-      Promise.all([
-        loadAssetVersion("assets/site.css"),
-        loadAssetVersion("assets/site.js")
-      ]).then(function (versions) {
-        appendStylesheet(versions[0]);
-        window.__kkyScriptVersion = versions[1];
-      });
-
-      window.__kkyLoadScript = appendScript;
-    })();
-  </script>
+  <link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
   <div class="page">
@@ -71,66 +23,57 @@
       </aside>
 
       <main class="content">
-      <section class="intro">
-        <div class="intro-badge">INTERNAL TOOL</div>
-        <h1>KKY Tool</h1>
-        <p class="intro-summary">현장에서 같이 쓰고, 같이 다듬어가는 공유 공간입니다.</p>
-        <div class="intro-detail">
-          <p>이 페이지는 KKY Tool의 개발 배경과 개선 기록을 정리하고, 함께 사용하는 직원들과 공유하기 위한 내부 문서입니다.</p>
-          <p>제품 소개가 아닌, 실무에서 발생하는 불편함을 줄이기 위해 계속 발전하는 도구의 기록입니다.</p>
-        </div>
-      </section>
+        <section class="intro">
+          <div class="intro-badge">INTERNAL TOOL</div>
+          <h1>KKY Tool</h1>
+          <p class="intro-summary">현장에서 같이 쓰고, 같이 다듬어가는 공유 공간입니다.</p>
+          <div class="intro-detail">
+            <p>이 페이지는 KKY Tool의 개발 배경과 개선 기록을 정리하고, 함께 사용하는 직원들과 공유하기 위한 내부 문서입니다.</p>
+            <p>제품 소개가 아닌, 실무에서 발생하는 불편함을 줄이기 위해 계속 발전하는 도구의 기록입니다.</p>
+          </div>
+        </section>
 
-      <section class="section">
-        <h2>최신 배포</h2>
-        <div class="panel">
-          <div class="release-head">
-            <div>
-              <div class="meta-label">현재 버전</div>
-              <div class="release-version" id="release-version">-</div>
+        <section class="section">
+          <h2>최신 배포</h2>
+          <div class="panel">
+            <div class="release-head">
+              <div>
+                <div class="meta-label">현재 버전</div>
+                <div class="release-version" id="release-version">-</div>
+              </div>
+              <div>
+                <div class="meta-label">배포일</div>
+                <div class="release-date" id="release-date">-</div>
+              </div>
             </div>
-            <div>
-              <div class="meta-label">배포일</div>
-              <div class="release-date" id="release-date">-</div>
+
+            <div class="release-links">
+              <a class="release-link" id="download-zip" href="latest.json">
+                <span class="release-link-label">패키지 다운로드</span>
+                <span class="release-link-value" id="package-file-label">최신 패키지 확인 중</span>
+              </a>
+              <a class="release-link" id="download-exe" href="latest.json">
+                <span class="release-link-label">설치 파일</span>
+                <span class="release-link-value" id="exe-file-label">최신 설치 파일 확인 중</span>
+              </a>
+              <a class="release-link" href="latest.json">
+                <span class="release-link-label">업데이트 피드</span>
+                <span class="release-link-value">latest.json</span>
+              </a>
+            </div>
+
+            <div class="release-note-block">
+              <div class="meta-label">주요 변경사항</div>
+              <ul class="release-notes" id="release-notes">
+                <li>배포 정보를 읽고 있습니다.</li>
+              </ul>
             </div>
           </div>
-
-          <div class="release-links">
-            <a class="release-link" id="download-zip" href="latest.json">
-              <span class="release-link-label">패키지 다운로드</span>
-              <span class="release-link-value" id="package-file-label">최신 패키지 확인 중</span>
-            </a>
-            <a class="release-link" id="download-exe" href="latest.json">
-              <span class="release-link-label">설치 파일</span>
-              <span class="release-link-value" id="exe-file-label">최신 설치 파일 확인 중</span>
-            </a>
-            <a class="release-link" href="latest.json">
-              <span class="release-link-label">업데이트 피드</span>
-              <span class="release-link-value">latest.json</span>
-            </a>
-          </div>
-
-          <div class="release-note-block">
-            <div class="meta-label">주요 변경사항</div>
-            <ul class="release-notes" id="release-notes">
-              <li>배포 정보를 읽고 있습니다.</li>
-            </ul>
-          </div>
-        </div>
-      </section>
+        </section>
       </main>
     </div>
   </div>
 
-  <script>
-    (function waitForAssetVersion() {
-      if (window.__kkyLoadScript && typeof window.__kkyScriptVersion !== "undefined") {
-        window.__kkyLoadScript(window.__kkyScriptVersion);
-        return;
-      }
-
-      window.setTimeout(waitForAssetVersion, 20);
-    })();
-  </script>
+  <script src="assets/site.js"></script>
 </body>
 </html>
