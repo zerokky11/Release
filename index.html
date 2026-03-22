@@ -6,22 +6,71 @@
   <meta name="description" content="KKY Tool 내부 공유 페이지">
   <title>KKY Tool 내부 공유 페이지</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/site.css?v=20260322-1">
+  <script>
+    (function () {
+      function normalizeVersion(value) {
+        return (value || "")
+          .replace(/^W\\//, "")
+          .replace(/"/g, "")
+          .replace(/[^a-zA-Z0-9._-]/g, "");
+      }
+
+      function appendStylesheet(version) {
+        var link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href = "assets/site.css" + (version ? "?v=" + version : "");
+        document.head.appendChild(link);
+      }
+
+      function appendScript(version) {
+        var script = document.createElement("script");
+        script.src = "assets/site.js" + (version ? "?v=" + version : "");
+        document.body.appendChild(script);
+      }
+
+      function loadAssetVersion(path) {
+        return fetch(path, { method: "HEAD", cache: "no-store" })
+          .then(function (response) {
+            if (!response.ok) {
+              throw new Error("HEAD " + path + " failed");
+            }
+
+            return normalizeVersion(
+              response.headers.get("etag") || response.headers.get("last-modified")
+            );
+          })
+          .catch(function () {
+            return "";
+          });
+      }
+
+      Promise.all([
+        loadAssetVersion("assets/site.css"),
+        loadAssetVersion("assets/site.js")
+      ]).then(function (versions) {
+        appendStylesheet(versions[0]);
+        window.__kkyScriptVersion = versions[1];
+      });
+
+      window.__kkyLoadScript = appendScript;
+    })();
+  </script>
 </head>
 <body>
   <div class="page">
-    <header class="site-header">
-      <div class="site-title">
-        <strong>KKY Tool</strong>
-        <span>내부 공유 페이지</span>
-      </div>
-      <nav class="site-nav" aria-label="주요 메뉴">
-        <a class="is-active" href="index.html">홈</a>
-        <a href="requests.html">요청사항</a>
-      </nav>
-    </header>
+    <div class="layout">
+      <aside class="side-nav">
+        <div class="site-title">
+          <strong>KKY Tool</strong>
+          <span>내부 공유 페이지</span>
+        </div>
+        <nav class="site-nav" aria-label="주요 메뉴">
+          <a class="is-active" href="index.html">홈</a>
+          <a href="requests.html">기능 요청하기</a>
+        </nav>
+      </aside>
 
-    <main class="content">
+      <main class="content">
       <section class="intro">
         <div class="intro-badge">INTERNAL TOOL</div>
         <h1>KKY Tool</h1>
@@ -69,9 +118,19 @@
           </div>
         </div>
       </section>
-    </main>
+      </main>
+    </div>
   </div>
 
-  <script src="assets/site.js?v=20260322-1"></script>
+  <script>
+    (function waitForAssetVersion() {
+      if (window.__kkyLoadScript && typeof window.__kkyScriptVersion !== "undefined") {
+        window.__kkyLoadScript(window.__kkyScriptVersion);
+        return;
+      }
+
+      window.setTimeout(waitForAssetVersion, 20);
+    })();
+  </script>
 </body>
 </html>
