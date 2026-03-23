@@ -10,7 +10,7 @@ const text = {
   packageCheckNeeded: "\uCD5C\uC2E0 \uD328\uD0A4\uC9C0 \uD655\uC778 \uD544\uC694",
   exeCheckNeeded: "\uCD5C\uC2E0 \uC124\uCE58 \uD30C\uC77C \uD655\uC778 \uD544\uC694",
   latestJsonLoadFailed: "latest.json\uC744 \uBD88\uB7EC\uC624\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4.",
-  validation: "\uD504\uB85C\uC81D\uD2B8\uBA85, \uC5C5\uBB34 \uC720\uD615, \uBD88\uD3B8\uD55C \uC810, \uC788\uC73C\uBA74 \uC88B\uC740 \uAE30\uB2A5\uC744 \uC801\uC5B4\uC8FC\uC138\uC694.",
+  validation: "\uD504\uB85C\uC81D\uD2B8\uBA85, \uC791\uC131\uC790 \uC774\uB984, \uC5C5\uBB34 \uC720\uD615, \uBD88\uD3B8\uD55C \uC810, \uC788\uC73C\uBA74 \uC88B\uC740 \uAE30\uB2A5\uC744 \uC801\uC5B4\uC8FC\uC138\uC694.",
   apiMissing: "\uC800\uC7A5 \uAE30\uB2A5\uC774 \uC544\uC9C1 \uC5F0\uACB0\uB418\uC9C0 \uC54A\uC558\uC2B5\uB2C8\uB2E4. assets/site-config.js\uC5D0 Apps Script \uC6F9\uC571 \uC8FC\uC18C\uB97C \uB123\uC5B4\uC8FC\uC138\uC694.",
   copyDone: "\uBCF5\uC0AC \uC644\uB8CC",
   copyDefault: "\uB0B4\uC6A9 \uBCF5\uC0AC",
@@ -112,6 +112,7 @@ function formField(id) {
 function collectRequestValues() {
   return {
     site: formField("field-site")?.value.trim() || "",
+    author: formField("field-author")?.value.trim() || "",
     task: formField("field-task")?.value.trim() || "",
     problem: formField("field-problem")?.value.trim() || "",
     idea: formField("field-idea")?.value.trim() || "",
@@ -126,6 +127,7 @@ function buildRequestText() {
 
   return [
     `\uD504\uB85C\uC81D\uD2B8\uBA85: ${values.site || "-"}`,
+    `\uC791\uC131\uC790: ${values.author || "-"}`,
     `\uC5C5\uBB34 \uC720\uD615: ${values.task || "-"}`,
     `\uBD88\uD3B8\uD55C \uC810: ${values.problem || "-"}`,
     `\uC788\uC73C\uBA74 \uC88B\uC740 \uAE30\uB2A5: ${values.idea || "-"}`,
@@ -154,7 +156,7 @@ function setRequestStatus(message, tone = "") {
 }
 
 function validateRequest(values) {
-  if (!values.site || !values.task || !values.problem || !values.idea) {
+  if (!values.site || !values.author || !values.task || !values.problem || !values.idea) {
     return text.validation;
   }
 
@@ -184,6 +186,7 @@ function loadDraft() {
   try {
     const values = JSON.parse(raw);
     formField("field-site").value = values.site || "";
+    formField("field-author").value = values.author || "";
     formField("field-task").value = values.task || "";
     formField("field-problem").value = values.problem || "";
     formField("field-idea").value = values.idea || "";
@@ -304,6 +307,7 @@ function renderRequestList(items) {
   container.innerHTML = items
     .map((item) => {
       const site = escapeHtml(item.site);
+      const author = escapeHtml(item.author || "-");
       const date = escapeHtml(formatRequestDate(item.created_at));
       const task = escapeHtml(item.task);
       const frequency = escapeHtml(item.frequency || text.requestFrequencyFallback);
@@ -317,7 +321,7 @@ function renderRequestList(items) {
             <strong>${site}</strong>
             <span>${date}</span>
           </div>
-          <div class="request-card-meta">${task} / ${frequency}</div>
+          <div class="request-card-meta">${author} / ${task} / ${frequency}</div>
           <p class="request-card-body">${problem}</p>
           <div class="request-card-idea">${text.requestIdeaPrefix}: ${idea}</div>
           ${note}

@@ -3,6 +3,7 @@ const HEADERS = [
   "id",
   "created_at",
   "site",
+  "author",
   "task",
   "problem",
   "idea",
@@ -23,6 +24,20 @@ const LEGACY_HEADERS = [
   "frequency",
   "note",
   "source"
+];
+const CURRENT_HEADERS_WITHOUT_AUTHOR = [
+  "id",
+  "created_at",
+  "site",
+  "task",
+  "problem",
+  "idea",
+  "duration",
+  "frequency",
+  "note",
+  "source",
+  "delete_token",
+  "deleted_at"
 ];
 
 function doGet(e) {
@@ -45,6 +60,7 @@ function doGet(e) {
       id: item.id,
       created_at: item.created_at,
       site: item.site,
+      author: item.author,
       task: item.task,
       problem: item.problem,
       idea: item.idea,
@@ -74,6 +90,7 @@ function createRequest_(payload) {
     payload.id || uuid_(),
     payload.created_at || new Date().toISOString(),
     payload.site || "",
+    payload.author || "",
     payload.task || "",
     payload.problem || "",
     payload.idea || "",
@@ -129,6 +146,31 @@ function ensureHeaders_(sheet) {
     return;
   }
 
+  if (sameHeaders_(firstRow, CURRENT_HEADERS_WITHOUT_AUTHOR)) {
+    const rows = sheet.getDataRange().getValues().slice(1);
+    sheet.clearContents();
+    sheet.appendRow(HEADERS);
+
+    rows.forEach((row) => {
+      sheet.appendRow([
+        row[0] || uuid_(),
+        row[1] || new Date().toISOString(),
+        row[2] || "",
+        "",
+        row[3] || "",
+        row[4] || "",
+        row[5] || "",
+        row[6] || "",
+        row[7] || "",
+        row[8] || "",
+        row[9] || "mobile",
+        row[10] || "",
+        row[11] || ""
+      ]);
+    });
+    return;
+  }
+
   if (sameHeaders_(firstRow.slice(0, LEGACY_HEADERS.length), LEGACY_HEADERS)) {
     const legacyRows = sheet.getDataRange().getValues().slice(1);
     sheet.clearContents();
@@ -139,6 +181,7 @@ function ensureHeaders_(sheet) {
         uuid_(),
         row[0] || new Date().toISOString(),
         row[1] || "",
+        "",
         row[2] || "",
         row[3] || "",
         row[4] || "",
