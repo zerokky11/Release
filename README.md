@@ -6,12 +6,16 @@ It now serves two roles:
 
 - update feed hosting for the add-in
 - lightweight landing page for KKY Tool downloads and feature-request direction
+- manual draft hosting under `Manual/`
 
 ## Key files
 
 - `index.html`
 - `assets/site.css`
 - `assets/site.js`
+- `Manual/index.html`
+- `Manual/manual.css`
+- `Manual/manual.js`
 - `.nojekyll`
 - `CNAME`
 - `latest.json`

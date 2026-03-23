@@ -33,7 +33,14 @@ const text = {
   requestFrequencyFallback: "\uBE48\uB3C4 \uBBF8\uC785\uB825",
   requestIdeaPrefix: "\uD544\uC694 \uAE30\uB2A5",
   requestNotePrefix: "\uBA54\uBAA8",
-  requestConfigHelp: "\uC800\uC7A5 \uAE30\uB2A5 \uC5F0\uACB0 \uC804\uC785\uB2C8\uB2E4. assets/site-config.js\uC5D0 Apps Script \uC6F9\uC571 \uC8FC\uC18C\uB97C \uB123\uC73C\uBA74 \uBAA9\uB85D\uC774 \uD45C\uC2DC\uB429\uB2C8\uB2E4."
+  requestConfigHelp: "\uC800\uC7A5 \uAE30\uB2A5 \uC5F0\uACB0 \uC804\uC785\uB2C8\uB2E4. assets/site-config.js\uC5D0 Apps Script \uC6F9\uC571 \uC8FC\uC18C\uB97C \uB123\uC73C\uBA74 \uBAA9\uB85D\uC774 \uD45C\uC2DC\uB429\uB2C8\uB2E4.",
+  releaseHistoryLoading: "\uC5C5\uB370\uC774\uD2B8 \uB0B4\uC5ED\uC744 \uBD88\uB7EC\uC624\uB294 \uC911\uC785\uB2C8\uB2E4.",
+  releaseHistoryEmpty: "\uC544\uC9C1 \uAE30\uB85D\uB41C \uC5C5\uB370\uC774\uD2B8 \uB0B4\uC5ED\uC774 \uC5C6\uC2B5\uB2C8\uB2E4.",
+  releaseHistoryFailed: "\uC5C5\uB370\uC774\uD2B8 \uB0B4\uC5ED\uC744 \uBD88\uB7EC\uC624\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4.",
+  releaseHistoryNotesEmpty: "\uC138\uBD80 \uBCC0\uACBD \uC0AC\uD56D \uAE30\uB85D\uC774 \uC5C6\uC2B5\uB2C8\uB2E4.",
+  releaseHistoryZip: "\uC5C5\uB370\uC774\uD2B8 ZIP",
+  releaseHistoryExe: "\uC124\uCE58 EXE",
+  releaseHistoryVersionPrefix: "\uBC84\uC804"
 };
 
 function updateReleaseNotes(rawText) {
@@ -102,6 +109,98 @@ async function loadReleaseInfo() {
     if (packageElement) packageElement.textContent = text.packageCheckNeeded;
     if (exeNameElement) exeNameElement.textContent = text.exeCheckNeeded;
     updateReleaseNotes(text.latestJsonLoadFailed);
+  }
+}
+
+function normalizeReleaseNotes(value) {
+  if (Array.isArray(value)) {
+    return value.map((item) => String(item || "").trim()).filter(Boolean);
+  }
+
+  return String(value || "")
+    .split(/\r?\n|\|/)
+    .map((item) => item.trim())
+    .filter(Boolean);
+}
+
+function renderReleaseHistory(items, containerId, maxItems = Number.POSITIVE_INFINITY) {
+  const container = document.getElementById(containerId);
+  if (!container) {
+    return;
+  }
+
+  if (!Array.isArray(items) || !items.length) {
+    container.innerHTML = `<p class="empty-state">${text.releaseHistoryEmpty}</p>`;
+    return;
+  }
+
+  container.innerHTML = items
+    .slice(0, maxItems)
+    .map((item) => {
+      const version = escapeHtml(item.version || "-");
+      const date = escapeHtml(item.publishedAt || "-");
+      const notes = normalizeReleaseNotes(item.notes);
+      const packageUrl = escapeHtml(item.packageUrl || "latest.json");
+      const installerUrl = escapeHtml(item.installerUrl || "latest.json");
+      const notesHtml = (notes.length ? notes : [text.releaseHistoryNotesEmpty])
+        .map((note) => `<li>${escapeHtml(note)}</li>`)
+        .join("");
+
+      return `
+        <article class="release-history-card">
+          <div class="release-history-head">
+            <div>
+              <div class="meta-label">${text.releaseHistoryVersionPrefix}</div>
+              <div class="release-history-version">v${version}</div>
+            </div>
+            <div>
+              <div class="meta-label">배포일</div>
+              <div class="release-history-date">${date}</div>
+            </div>
+          </div>
+          <ul class="release-history-notes">${notesHtml}</ul>
+          <div class="release-history-links">
+            <a class="text-link" href="${packageUrl}">${text.releaseHistoryZip}</a>
+            <a class="text-link" href="${installerUrl}">${text.releaseHistoryExe}</a>
+          </div>
+        </article>
+      `;
+    })
+    .join("");
+}
+
+async function loadReleaseHistory() {
+  const historyRoot = document.getElementById("release-history");
+  const previewRoot = document.getElementById("release-history-preview");
+  if (!historyRoot && !previewRoot) {
+    return;
+  }
+
+  if (historyRoot) {
+    historyRoot.innerHTML = `<p class="empty-state">${text.releaseHistoryLoading}</p>`;
+  }
+
+  if (previewRoot) {
+    previewRoot.innerHTML = `<p class="empty-state">${text.releaseHistoryLoading}</p>`;
+  }
+
+  try {
+    const response = await fetch("release-history.json", { cache: "no-store" });
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    const data = await response.json();
+    renderReleaseHistory(data, "release-history");
+    renderReleaseHistory(data, "release-history-preview", 2);
+  } catch (error) {
+    if (historyRoot) {
+      historyRoot.innerHTML = `<p class="empty-state">${text.releaseHistoryFailed}</p>`;
+    }
+
+    if (previewRoot) {
+      previewRoot.innerHTML = `<p class="empty-state">${text.releaseHistoryFailed}</p>`;
+    }
   }
 }
 
@@ -497,4 +596,5 @@ function setupRequestPage() {
 }
 
 loadReleaseInfo();
+loadReleaseHistory();
 setupRequestPage();

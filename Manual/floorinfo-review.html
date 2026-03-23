@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="KKY Tool Revit 층정보 파라미터 검토 매뉴얼 초안">
+  <title>층정보 파라미터 검토 | KKY Tool Revit Manual</title>
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/site.css">
+  <link rel="stylesheet" href="manual.css">
+</head>
+<body>
+  <div class="page">
+    <div class="layout manual-layout">
+      <aside class="side-nav manual-side-nav">
+        <div class="site-title">
+          <strong>KKY Tool</strong>
+          <span>기능 상세 문서</span>
+        </div>
+
+        <nav class="site-nav" aria-label="주요 메뉴">
+          <a href="../index.html">홈</a>
+          <a href="../requests.html">기능 요청하기</a>
+          <a href="index.html">매뉴얼</a>
+          <a class="is-active" href="floorinfo-review.html">층정보 파라미터 검토</a>
+        </nav>
+
+        <div class="manual-side-block">
+          <div class="meta-label">빠른 이동</div>
+          <nav class="manual-anchor-nav" aria-label="문서 섹션">
+            <a href="#summary">기능 개요</a>
+            <a href="#context">왜 필요한지</a>
+            <a href="#inputs">입력값</a>
+            <a href="#logic">판정 방식</a>
+            <a href="#results">결과 해석</a>
+            <a href="#captures">캡처 자리</a>
+            <a href="#tips">활용 / 주의</a>
+          </nav>
+        </div>
+      </aside>
+
+      <main class="content manual-content">
+        <section class="intro manual-intro" id="summary">
+          <div class="intro-badge">FEATURE DETAIL</div>
+          <h1>층정보 파라미터 검토</h1>
+          <p class="intro-summary">
+            모델 객체의 위치를 레벨 기준으로 판정한 뒤, 해당 구간에 맞는 층정보 값이 입력되어 있는지 검토하는 기능입니다.
+            층별 물량산출이나 납품용 BIM DATA 정리에서 누락되면 안 되는 속성값을 빠르게 확인하는 데 적합합니다.
+          </p>
+
+          <div class="manual-callouts">
+            <article class="manual-callout">
+              <h2>주요 대상</h2>
+              <p>프로젝트에 모델링된 모델 객체 전반. 다만 레벨, 그리드, 링크, 룸, 시스템 등 검토 대상이 아닌 항목은 제외됩니다.</p>
+            </article>
+            <article class="manual-callout">
+              <h2>주요 목적</h2>
+              <p>객체 위치에 맞는 층정보 값이 들어가 있는지 확인하고, 물량산출 정확도를 높이기 위한 기초 검토를 수행합니다.</p>
+            </article>
+            <article class="manual-callout">
+              <h2>주요 결과물</h2>
+              <p>기대값과 실제값이 다른 객체, 파라미터 누락 객체, 규칙 미설정 객체를 엑셀로 정리해 후속 검토에 활용할 수 있습니다.</p>
+            </article>
+          </div>
+
+          <div class="detail-hero-actions">
+            <a class="detail-link-button" href="index.html">매뉴얼 목록으로 돌아가기</a>
+          </div>
+        </section>
+
+        <section class="section" id="context">
+          <div class="section-heading-row">
+            <h2>왜 필요한지</h2>
+          </div>
+          <div class="panel manual-panel">
+            <div class="detail-body">
+              <p>
+                BIM DATA 검토 시 모델링된 객체에는 위치한 레벨에 따라 층 정보가 입력되어야 하는 경우가 많습니다.
+                이 기능은 입력된 층 정보 값이 실제 객체 위치에 맞는지 검토하기 위해 만들었습니다.
+              </p>
+              <p>
+                보통 층 정보는 빠지면 안 되는 핵심 속성값이기 때문에, 속성 누락이나 잘못된 입력을 검토하는 데 의미가 큽니다.
+                특히 층별 물량산출을 정확하게 하려면 이 값이 실제 위치와 맞아야 합니다.
+              </p>
+            </div>
+
+            <div class="detail-grid">
+              <article class="detail-card">
+                <h3>주로 언제 쓰는지</h3>
+                <p>보통 납품 파일을 작성할 때 검토용으로 사용합니다. 현재는 Sub 기능 성격이 강하고, TEST를 통해 더 정확하게 다듬어 갈 예정입니다.</p>
+              </article>
+              <article class="detail-card">
+                <h3>대상 범위</h3>
+                <p>보통 현재 열려 있는 활성 문서를 기준으로 검토하며, 문서 내 레벨과 그 기준 높이를 불러와 구간을 설정합니다.</p>
+              </article>
+              <article class="detail-card">
+                <h3>기능 이름의 의미</h3>
+                <p>가장 대표적인 용도가 층정보 검토이기 때문에 이렇게 이름을 붙였지만, 실제로는 레벨 구간별 기대값이 필요한 다른 파라미터 검토에도 응용할 수 있습니다.</p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="inputs">
+          <div class="section-heading-row">
+            <h2>사용 전에 필요한 것과 입력값</h2>
+          </div>
+          <div class="panel manual-panel">
+            <div class="detail-grid detail-grid--two">
+              <article class="detail-card">
+                <h3>사전 조건</h3>
+                <ul class="detail-list">
+                  <li>활성 문서를 열어둔 상태여야 합니다.</li>
+                  <li>프로젝트의 Level 목록과 각 Level의 기준 높이를 불러와야 합니다.</li>
+                  <li>검토할 파라미터명을 결정해야 합니다.</li>
+                </ul>
+              </article>
+              <article class="detail-card">
+                <h3>사용자가 설정하는 항목</h3>
+                <ul class="detail-list">
+                  <li>층정보를 비교할 파라미터명</li>
+                  <li>검토 영역 경계로 사용할 레벨</li>
+                  <li>각 레벨 바로 위쪽 구간의 기대값</li>
+                  <li>영역에서 제외할 중간 레벨</li>
+                </ul>
+              </article>
+            </div>
+
+            <div class="note-panel">
+              <strong>설정 방식</strong>
+              <p>
+                해당 프로젝트에 있는 Level과 기준 높이를 화면에서 확인한 뒤,
+                “이 레벨 위쪽 구간에서는 어떤 값을 가져야 하는지”를 레벨별로 입력합니다.
+                영역으로 고려하지 않는 레벨은 선택 해제하여 구간 계산에서 제외하고,
+                입력한 기대값을 어떤 파라미터와 비교할지 지정해 검토를 실행합니다.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="logic">
+          <div class="section-heading-row">
+            <h2>내부 판정 방식</h2>
+          </div>
+          <div class="panel manual-panel">
+            <div class="timeline">
+              <article class="timeline-step">
+                <span class="timeline-no">1</span>
+                <div>
+                  <h3>레벨 구간 생성</h3>
+                  <p>문서의 레벨을 절대 Z 기준으로 정렬하고, 사용자가 선택한 레벨만 검토 구간 경계로 사용합니다.</p>
+                </div>
+              </article>
+              <article class="timeline-step">
+                <span class="timeline-no">2</span>
+                <div>
+                  <h3>모델 객체 수집</h3>
+                  <p>문서 내 모델 객체를 수집하되, 레벨, 그리드, 링크, 임포트, 룸, 영역, 시스템 같은 비교 대상이 아닌 항목은 제외합니다.</p>
+                </div>
+              </article>
+              <article class="timeline-step">
+                <span class="timeline-no">3</span>
+                <div>
+                  <h3>객체 위치 판정</h3>
+                  <p>각 객체의 BoundingBox에서 하부 Z, 상부 Z, 대표 Z를 계산해 어느 레벨 구간에 속하는지 결정합니다.</p>
+                </div>
+              </article>
+              <article class="timeline-step">
+                <span class="timeline-no">4</span>
+                <div>
+                  <h3>관통 객체 처리</h3>
+                  <p>객체가 여러 레벨 구간을 통과하면 중간값이 아니라 가장 아래 구간을 기준으로 기대값을 적용해 판정합니다.</p>
+                </div>
+              </article>
+              <article class="timeline-step">
+                <span class="timeline-no">5</span>
+                <div>
+                  <h3>파라미터 값 비교</h3>
+                  <p>인스턴스 또는 타입에서 지정 파라미터를 찾고, 실제값과 사용자가 입력한 기대값이 일치하는지 비교합니다.</p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="results">
+          <div class="section-heading-row">
+            <h2>결과 화면에서 봐야 할 것</h2>
+          </div>
+          <div class="panel manual-panel">
+            <div class="status-grid">
+              <article class="status-card">
+                <h3>MISMATCH</h3>
+                <p>기대값과 실제 입력값이 다를 때 표시됩니다. 가장 핵심적인 오류 상태입니다.</p>
+              </article>
+              <article class="status-card">
+                <h3>PARAMETER_MISSING</h3>
+                <p>지정한 파라미터를 객체 인스턴스나 타입 어디에서도 찾지 못한 경우입니다. 속성 누락 검토에서 중요합니다.</p>
+              </article>
+              <article class="status-card">
+                <h3>RULE_MISSING</h3>
+                <p>해당 레벨 구간의 기대값이 설정되지 않은 경우입니다. 즉, 판정 대상 구간인데 검토 기준이 비어 있는 상태입니다.</p>
+              </article>
+              <article class="status-card">
+                <h3>NO_GEOMETRY</h3>
+                <p>BoundingBox를 가져오지 못해 위치 판정 자체가 불가능한 경우입니다. 별도 확인이 필요합니다.</p>
+              </article>
+              <article class="status-card">
+                <h3>SpansMultipleZones</h3>
+                <p>객체가 여러 레벨 구간을 관통하는지 여부를 같이 표시합니다. 입상 객체 해석 시 매우 중요합니다.</p>
+              </article>
+              <article class="status-card">
+                <h3>Note</h3>
+                <p>왜 오류로 판정되었는지, 관통 객체일 경우 어떤 기준으로 판정했는지를 설명합니다.</p>
+              </article>
+            </div>
+
+            <div class="detail-grid detail-grid--two top-space">
+              <article class="detail-card">
+                <h3>같이 보면 좋은 열</h3>
+                <ul class="detail-list">
+                  <li>LowerLevel / UpperLevel: 어느 구간으로 판정했는지</li>
+                  <li>ExpectedValue / ActualValue: 기대값과 실제값 비교</li>
+                  <li>RepresentativeZ / BottomZ / TopZ: 객체 위치 확인</li>
+                </ul>
+              </article>
+              <article class="detail-card">
+                <h3>추가 확인 포인트</h3>
+                <ul class="detail-list">
+                  <li>Category / Family / TypeName: 어떤 객체인지 식별</li>
+                  <li>ParameterName: 어떤 파라미터를 검토했는지</li>
+                  <li>Result: 최종 판정</li>
+                  <li>Warnings: 동일 이름 레벨 등 설정 경고 여부</li>
+                </ul>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="captures">
+          <div class="section-heading-row">
+            <h2>스크린샷 넣을 자리</h2>
+          </div>
+          <div class="panel manual-panel">
+            <div class="capture-grid">
+              <article class="capture-card">
+                <div class="capture-placeholder">Screenshot Placeholder</div>
+                <h3>캡처 1. 레벨 규칙 설정 화면</h3>
+                <p>활성 문서의 레벨 목록, 절대 Z 값, 영역 체크, 기대값 입력 UI를 보여주는 캡처 자리.</p>
+              </article>
+              <article class="capture-card">
+                <div class="capture-placeholder">Screenshot Placeholder</div>
+                <h3>캡처 2. 결과 화면</h3>
+                <p>MISMATCH, PARAMETER_MISSING, RULE_MISSING, 관통 객체 여부가 보이는 결과 화면 캡처 자리.</p>
+              </article>
+              <article class="capture-card">
+                <div class="capture-placeholder">Screenshot Placeholder</div>
+                <h3>캡처 3. 엑셀 결과 예시</h3>
+                <p>ExpectedValue, ActualValue, RepresentativeZ, Result, Note 열이 보이는 엑셀 예시 자리.</p>
+              </article>
+            </div>
+
+            <div class="note-panel">
+              <strong>나중에 캡처를 넣을 때 추천 순서</strong>
+              <p>설정 화면 → 결과 테이블 → 엑셀 결과 순으로 넣으면 사용자가 구간 설정부터 판정 결과 해석까지 자연스럽게 따라갈 수 있습니다.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="tips">
+          <div class="section-heading-row">
+            <h2>실무 활용과 주의사항</h2>
+          </div>
+          <div class="panel manual-panel">
+            <div class="detail-grid detail-grid--two">
+              <article class="detail-card">
+                <h3>실무에서 어떻게 활용하면 좋은지</h3>
+                <p>
+                  층정보뿐 아니라, 레벨 기준으로 영역별 동일한 값이 들어가야 하는 파라미터라면 같은 방식으로 활용할 수 있습니다.
+                  특히 층별 물량산출 전, 객체의 위치와 층정보 값이 일치하는지 사전 검토하는 데 효과적입니다.
+                </p>
+              </article>
+              <article class="detail-card">
+                <h3>다른 기능과 같이 쓰면 좋은 조합</h3>
+                <p>연속성 검토 기능과 같이 보면 더 좋습니다. 레벨 기준 속성값과 연결 객체 간 속성 연속성을 함께 보면 예상하지 못한 오류 유형을 더 쉽게 발견할 수 있습니다.</p>
+              </article>
+            </div>
+
+            <div class="note-panel note-panel--warn">
+              <strong>주의사항</strong>
+              <p>
+                입상 객체처럼 여러 레벨을 통과하는 경우 판정 기준을 어떻게 둘지 프로젝트별 합의가 필요합니다.
+                현재 로직은 가장 아래 구간 기준으로 판정하므로, 해석 기준을 팀 내부에서 맞추는 것이 좋습니다.
+                필요하다면 이 조건은 향후 더 강화하거나 조정할 여지가 있습니다.
+              </p>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="manual.js"></script>
+</body>
+</html>
