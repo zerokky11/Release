@@ -1,4 +1,4 @@
-const packageBaseName = "KKY_Tool_Revit(2019,21,23,25)_v";
+﻿const packageBaseName = "KKY_Tool_Revit(2019,21,23,25)_v";
 const requestConfig = window.KKY_REQUESTS_CONFIG || {};
 const requestApiUrl = String(requestConfig.requestApiUrl || "").trim();
 const maxVisibleRequests = Number(requestConfig.maxVisibleRequests || 10);
