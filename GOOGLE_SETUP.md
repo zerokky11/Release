@@ -1,10 +1,10 @@
-# Google Sheets 연결 방법
+﻿# Google Sheets 연결 방법
 
-`기능 요청하기` 페이지는 Google Sheets + Apps Script 백엔드로 저장되도록 구성되어 있습니다.
+`기능 요청하기` 페이지는 Google Sheets와 Apps Script를 이용해 저장되도록 구성되어 있습니다.
 
 ## 1. 시트 만들기
 1. Google Sheets에서 새 스프레드시트를 만듭니다.
-2. 이름은 편한 것으로 정하시면 됩니다.
+2. 시트 이름은 알아보기 쉬운 이름으로 정하면 됩니다.
 
 ## 2. Apps Script 붙이기
 1. 시트에서 `확장 프로그램 -> Apps Script`를 엽니다.
@@ -16,10 +16,10 @@
 1. `배포 -> 새 배포`
 2. 유형은 `웹 앱`
 3. 실행 계정은 본인 계정
-4. 액세스 권한은 `Anyone` 또는 `Anyone with the link`
+4. 접근 권한은 `Anyone` 또는 `Anyone with the link`
 5. 배포 후 웹앱 URL을 복사합니다.
 
-공식 문서:
+참고 문서:
 - [Apps Script Web Apps](https://developers.google.com/apps-script/guides/web)
 - [Content Service](https://developers.google.com/apps-script/guides/content)
 
@@ -37,9 +37,9 @@ window.KKY_REQUESTS_CONFIG = {
 ## 5. 동작 확인
 1. `requests.html`에서 내용을 입력하고 `등록하기`
 2. 아래 `최근 요청` 목록에 바로 보이는지 확인
-3. 같은 기기에서 등록한 글은 `삭제` 버튼이 보이는지 확인
+3. 같은 기기에서 등록한 요청은 `삭제` 버튼이 보이는지 확인
 
 ## 참고
-- 현재 구조는 간단한 입력/조회/삭제를 기준으로 합니다.
+- 현재 구조는 간단한 입력, 조회, 삭제를 기준으로 합니다.
 - 민감한 프로젝트 원본 데이터는 적지 않는 것을 권장합니다.
-- 삭제 기능은 같은 브라우저/같은 기기에서 등록한 요청만 보이도록 구성되어 있습니다.
+- 삭제 기능은 같은 브라우저와 같은 기기에서 등록한 요청만 보이도록 구성되어 있습니다.

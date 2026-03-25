@@ -1,6 +1,6 @@
 ﻿{
-    "version":  "2.11",
-    "url":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.11.zip",
-    "publishedAt":  "2026-03-24",
-    "notes":  "기능 요청 페이지에 작성자 이름 입력 칸 추가 | 요청 저장/목록 표시 정리 | 내부 공유 페이지 문구 정리"
+    "version":  "2.12",
+    "url":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.12.zip",
+    "publishedAt":  "2026-03-25",
+    "notes":  "Release build v2.12"
 }
