@@ -1,5 +1,17 @@
 ﻿[
     {
+        "version":  "2.13",
+        "publishedAt":  "2026-03-27",
+        "title":  "Version 2.13",
+        "notes":  [
+                      "\ud648\ud398\uc774\uc9c0 \ud55c\uae00 \uae68\uc9d0 \uc815\ub9ac",
+                      "\uc5c5\ub370\uc774\ud2b8 \ub0b4\uc5ed \ubc0f \uae30\ub2a5 \uc694\uccad \ud398\uc774\uc9c0 \ubb38\uad6c \uc815\ub9ac",
+                      "Google Sheets \uc548\ub0b4 \ubb38\uc11c \uc815\ub9ac"
+                  ],
+        "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.13.zip",
+        "installerUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.13.exe"
+    },
+    {
         "version":  "2.12",
         "publishedAt":  "2026-03-25",
         "title":  "Version 2.12",
