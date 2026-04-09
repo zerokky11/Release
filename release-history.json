@@ -1,55 +1,60 @@
-﻿[
-    {
-        "version":  "2.14",
-        "publishedAt":  "2026-04-09",
-        "title":  "Version 2.14",
-        "notes":  [
-                      "\uae30\ub2a5 \ucd94\uac00: \uba54\uc778 \ubc30\uad00\uacfc \ubd84\uae30 \ubc30\uad00 \uad6c\ubd84 \uae30\uc900 \uc138\ubd84\ud654",
-                      "\uae30\ub2a5 \ucd94\uac00: \ud328\ubc00\ub9ac \ub9c1\ud06c \uac80\ud1a0\uc5d0\uc11c \uc911\ucca9 \ud328\ubc00\ub9ac \ud655\uc778 \ubc94\uc704 \ubcf4\uac15",
-                      "\uc218\uc815: \ub178\uc990 \ucf54\ub4dc \ucd94\ucd9c\uacfc \uc5d1\uc140 \ub0b4\ubcf4\ub0b4\uae30 \ud750\ub984 \uc815\ub9ac",
-                      "\uc218\uc815: \uacf5\uc720 \ud30c\ub77c\ubbf8\ud130 \ucc98\ub9ac, \ud5c8\ube0c \ud654\uba74, 2025 \ud14c\uc2a4\ud2b8 \uacbd\ub85c \uc548\uc815\ud654"
-                  ],
-        "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.14.zip",
-        "installerUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.14.exe"
-    },
-    {
-        "version":  "2.13",
-        "publishedAt":  "2026-03-27",
-        "title":  "Version 2.13",
-        "notes":  [
-                      "?\ub34a\ub7f9?\ub301? ?\uc493? \u6e90\u2465\ucb5a ?\ubea3\u2501",
-                      "?\ub085\ub732?\ub304\ub4c3 ?\ub301\ubfed \u8adb?\u6e72\uacd5\ub4ab ?\ubdbf\uaecc ?\uc10f\uc520\uf9de\u0080 \u81fe\uba78\ub384 ?\ubea3\u2501",
-                      "Google Sheets ?\ub348\uada1 \u81fe\uba84\uaf4c ?\ubea3\u2501"
-                  ],
-        "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.13.zip",
-        "installerUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.13.exe"
-    },
-    {
-        "version":  "2.12",
-        "publishedAt":  "2026-03-25",
-        "title":  "Version 2.12",
-        "notes":  "Release build v2.12",
-        "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.12.zip",
-        "installerUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.12.exe"
-    },
-    {
-        "version":  "2.11",
-        "publishedAt":  "2026-03-24",
-        "title":  "Version 2.11",
-        "notes":  [
-                      "\u6e72\uacd5\ub4ab ?\ubdbf\uaecc ?\uc10f\uc520\uf9de\u0080???\ubb12\uaf66???\ub300\ucaeb ?\ub085\uc830 \u79fb?\u7570\ubdbd?",
-                      "?\ubdbf\uaecc ?\u0080??\uf9cf\u2478\uc909 ?\uc496\ub586 ?\ubea3\u2501",
-                      "?\ub300? \u6028\ub4ed\uc440 ?\uc10f\uc520\uf9de\u0080 \u81fe\uba78\ub384 ?\ubea3\u2501"
-                  ],
-        "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.11.zip",
-        "installerUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.11.exe"
-    },
-    {
-        "version":  "2.10",
-        "publishedAt":  "2026-03-23",
-        "title":  "Version 2.10",
-        "notes":  "?\uba2e\ub8de ?\ub085\ub732?\ub304\ub4c3 ?\u2466\uad8e\uf9de\u0080?\u0080 ?\ub34a\ub7f9?\ub301? \u8adb\uace0\ub8f7 ?\ub6af\uc52a???\u317c\ub586 ?\ubea3\u2501?\ub349\ub4bf?\ub348\ub58e.",
-        "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.10.zip",
-        "installerUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.10.exe"
-    }
+[
+  {
+    "version": "2.14",
+    "publishedAt": "2026-04-09",
+    "title": "Version 2.14",
+    "notes": [
+      "기능 추가 - 유틸리티: KTA 추출 기능을 추가했습니다. (동탄 T 한정 사용)",
+      "기능 추가 - 유틸리티: Manage Workset 설정하기 기능을 추가했습니다. (탕정 A4, A6, S1 요청)",
+      "기능 추가 - 납품시 BQC 검토: 조건별 객체 대상 속성 추출 기능을 추가했습니다. 필터링 조건에 맞는 객체를 대상으로 원하는 파라미터 값을 추출할 수 있고, 넓이·부피 추출, 패밀리 산식 기반 값 추출, X/Y/Z 좌표 설정 추출도 가능합니다.",
+      "기능 수정 - 유틸리티: 패밀리 연동 검토 논리를 보강했습니다. 하위 패밀리 차수 기준으로 기존 비유효 필터를 개선했고, 복합 파라미터 추가 및 연동 추가, Label 변경 시 누락되던 인스턴스 보강 등 연동 조건을 정리했습니다.",
+      "기능 수정 - 납품시 BQC 검토: RVT 정리 기능에서 설정 기준을 보강했습니다. 카테고리별 End Cut 등 추가 조건을 설정할 수 있도록 정리했습니다."
+    ],
+    "packageUrl": "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.14.zip",
+    "installerUrl": "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.14.exe"
+  },
+  {
+    "version": "2.13",
+    "publishedAt": "2026-03-27",
+    "title": "Version 2.13",
+    "notes": [
+      "홈페이지 한글 깨짐을 정리했습니다.",
+      "업데이트 내역 및 기능 요청 페이지 문구를 정리했습니다.",
+      "Google Sheets 안내 문서를 정리했습니다."
+    ],
+    "packageUrl": "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.13.zip",
+    "installerUrl": "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.13.exe"
+  },
+  {
+    "version": "2.12",
+    "publishedAt": "2026-03-25",
+    "title": "Version 2.12",
+    "notes": [
+      "Release build v2.12"
+    ],
+    "packageUrl": "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.12.zip",
+    "installerUrl": "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.12.exe"
+  },
+  {
+    "version": "2.11",
+    "publishedAt": "2026-03-24",
+    "title": "Version 2.11",
+    "notes": [
+      "기능 요청 페이지에 작성자 이름 입력 항목을 추가했습니다.",
+      "요청 저장과 목록 표시에서 작성자 정보가 함께 보이도록 정리했습니다.",
+      "내부 공유 페이지 문구와 구성 방식을 보기 쉽게 다듬었습니다."
+    ],
+    "packageUrl": "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.11.zip",
+    "installerUrl": "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.11.exe"
+  },
+  {
+    "version": "2.10",
+    "publishedAt": "2026-03-23",
+    "title": "Version 2.10",
+    "notes": [
+      "홈페이지와 요청 페이지 한글 깨짐을 정리하고 문구를 보기 쉽게 다듬었습니다."
+    ],
+    "packageUrl": "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.10.zip",
+    "installerUrl": "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.10.exe"
+  }
 ]
