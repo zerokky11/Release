@@ -1,6 +1,6 @@
 ﻿{
-    "version":  "2.13",
-    "url":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.13.zip",
-    "publishedAt":  "2026-03-27",
-    "notes":  "홈페이지 한글 깨짐 정리|업데이트 내역 및 기능 요청 페이지 문구 정리|Google Sheets 안내 문서 정리"
+    "version":  "2.14",
+    "url":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.14.zip",
+    "publishedAt":  "2026-04-09",
+    "notes":  "기능 추가: 메인 배관과 분기 배관 구분 기준 세분화|기능 추가: 패밀리 링크 검토에서 중첩 패밀리 확인 범위 보강|수정: 노즐 코드 추출과 엑셀 내보내기 흐름 정리|수정: 공유 파라미터 처리, 허브 화면, 2025 테스트 경로 안정화"
 }
