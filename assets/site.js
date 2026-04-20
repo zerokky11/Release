@@ -43,6 +43,46 @@ const text = {
   releaseHistoryVersionPrefix: "\uBC84\uC804"
 };
 
+function splitReleaseNote(entry) {
+  const raw = String(entry || "").trim();
+  if (!raw) {
+    return { label: "", body: "" };
+  }
+
+  const colonIndex = raw.indexOf(":");
+  if (colonIndex < 0) {
+    return { label: "", body: raw };
+  }
+
+  return {
+    label: raw.slice(0, colonIndex).trim(),
+    body: raw.slice(colonIndex + 1).trim()
+  };
+}
+
+function renderReleaseNoteItem(entry, itemClass = "") {
+  const { label, body } = splitReleaseNote(entry);
+  const classes = ["release-note-item"];
+  if (itemClass) {
+    classes.push(itemClass);
+  }
+
+  if (!label) {
+    return `
+      <li class="${classes.join(" ")}">
+        <span class="release-note-text">${escapeHtml(body || text.releaseNotesEmpty)}</span>
+      </li>
+    `;
+  }
+
+  return `
+    <li class="${classes.join(" ")}">
+      <span class="release-note-tag">${escapeHtml(label)}</span>
+      <span class="release-note-text">${escapeHtml(body || text.releaseNotesEmpty)}</span>
+    </li>
+  `;
+}
+
 function updateReleaseNotes(rawText) {
   const releaseNotes = document.getElementById("release-notes");
   if (!releaseNotes) {
@@ -58,9 +98,7 @@ function updateReleaseNotes(rawText) {
 
   const entries = lines.length ? lines : [text.releaseNotesEmpty];
   entries.forEach((entry) => {
-    const item = document.createElement("li");
-    item.textContent = entry;
-    releaseNotes.appendChild(item);
+    releaseNotes.insertAdjacentHTML("beforeend", renderReleaseNoteItem(entry));
   });
 }
 
@@ -143,7 +181,7 @@ function renderReleaseHistory(items, containerId, maxItems = Number.POSITIVE_INF
       const packageUrl = escapeHtml(item.packageUrl || "latest.json");
       const installerUrl = escapeHtml(item.installerUrl || "latest.json");
       const notesHtml = (notes.length ? notes : [text.releaseHistoryNotesEmpty])
-        .map((note) => `<li>${escapeHtml(note)}</li>`)
+        .map((note) => renderReleaseNoteItem(note, "release-history-note-item"))
         .join("");
 
       return `
