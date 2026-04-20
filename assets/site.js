@@ -89,10 +89,7 @@ function updateReleaseNotes(rawText) {
     return;
   }
 
-  const lines = String(rawText || "")
-    .split(/\r?\n|,/)
-    .map((entry) => entry.trim())
-    .filter(Boolean);
+  const lines = normalizeReleaseNotes(rawText);
 
   releaseNotes.innerHTML = "";
 
