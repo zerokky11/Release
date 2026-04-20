@@ -1,76 +1,84 @@
 ﻿[
-  {
-    "version": "2.20",
-    "publishedAt": "2026-04-20",
-    "title": "Version 2.20",
-    "notes": [
-      "기능 추가: 납품시 BQC 검토에 파라미터 누락, Project Parameter 중복, 웍셋 배정, Family 적합성, 탭/분기 축 틀어짐 검토를 추가했습니다.",
-      "기능 추가: 유틸리티에 Revit 링크 경로 추출/검토와 Document Navigator를 추가했습니다.",
-      "기능 추가: 허브 화면에 즐겨찾기/빠른 접근 기능을 추가했습니다. 기능 카드에서 오른쪽 클릭하면 즐겨찾기에 바로 추가할 수 있습니다.",
-      "기능 추가: 자주 사용하는 항목에 프리셋을 등록할 수 있고, 저장 시 각 기능의 설정값도 함께 저장됩니다. 불러오면 각 기능 설정도 같이 적용되어 기존 검토 상황을 일관성 있게 유지할 수 있습니다.",
-      "기능 개선: 다중 검토 화면의 뷰 탐색 흐름과 중복/자체간섭 검토 흐름을 개선했습니다.",
-      "기능 개선: 조건별 객체 대상 속성 추출, 메인/분기 배관 판정, GUID/패밀리 연동/Connector/Shared Parameter Batch, 엑셀 내보내기 안정성을 보강했습니다.",
-      "수정: 2025 테스트/배포 경로와 리소스 처리 흐름을 정리했습니다."
-    ],
-    "packageUrl": "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.20.zip",
-    "installerUrl": "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.20.exe"
-  },
-  {
-    "version": "2.14",
-    "publishedAt": "2026-04-09",
-    "title": "Version 2.14",
-    "notes": [
-      "기능 추가 - 유틸리티: KTA 추출 기능을 추가했습니다. (동탄 T 한정 사용)",
-      "기능 추가 - 유틸리티: Manage Workset 설정하기 기능을 추가했습니다. (탕정 A4, A6, S1 요청)",
-      "기능 추가 - 납품시 BQC 검토: 조건별 객체 대상 속성 추출 기능을 추가했습니다. 필터링 조건에 맞는 객체를 대상으로 원하는 파라미터 값, 넓이·부피, 패밀리 산식 기반 값, X/Y/Z 좌표를 추출할 수 있습니다.",
-      "기능 수정 - 유틸리티: 패밀리 연동 검토 논리를 보강했습니다. 하위 패밀리 차수 기준 비유효 필터, 복합 파라미터 추가/연동, Label 변경 시 누락 인스턴스 보강을 포함합니다.",
-      "기능 수정 - 납품시 BQC 검토: RVT 정리에서 카테고리별 End Cut 등 세부 조건을 더 정교하게 설정할 수 있도록 보강했습니다."
-    ],
-    "packageUrl": "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.14.zip",
-    "installerUrl": "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.14.exe"
-  },
-  {
-    "version": "2.13",
-    "publishedAt": "2026-03-27",
-    "title": "Version 2.13",
-    "notes": [
-      "홈페이지 글꼴과 기본 문구 구성을 정리했습니다.",
-      "업데이트 내역과 기능 요청 페이지 문구를 보기 쉽게 다듬었습니다.",
-      "Google Sheets 안내 문서를 정리했습니다."
-    ],
-    "packageUrl": "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.13.zip",
-    "installerUrl": "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.13.exe"
-  },
-  {
-    "version": "2.12",
-    "publishedAt": "2026-03-25",
-    "title": "Version 2.12",
-    "notes": [
-      "Release build v2.12"
-    ],
-    "packageUrl": "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.12.zip",
-    "installerUrl": "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.12.exe"
-  },
-  {
-    "version": "2.11",
-    "publishedAt": "2026-03-24",
-    "title": "Version 2.11",
-    "notes": [
-      "기능 요청 페이지에 작성자 이름 입력 항목을 추가했습니다.",
-      "요청 등록과 목록 표시에서 작성자 정보가 함께 보이도록 정리했습니다.",
-      "외부 공유 페이지 문구와 구성을 더 읽기 쉽게 다듬었습니다."
-    ],
-    "packageUrl": "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.11.zip",
-    "installerUrl": "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.11.exe"
-  },
-  {
-    "version": "2.10",
-    "publishedAt": "2026-03-23",
-    "title": "Version 2.10",
-    "notes": [
-      "홈페이지와 요청 페이지 글꼴 깨짐을 정리하고 문구를 보기 쉽게 다듬었습니다."
-    ],
-    "packageUrl": "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.10.zip",
-    "installerUrl": "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.10.exe"
-  }
+    {
+        "version":  "2.21",
+        "publishedAt":  "2026-04-20",
+        "title":  "Version 2.21",
+        "notes":  "수정: 중복객체 결과 엑셀 추출 오류 사항을 수정했습니다.",
+        "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.21.zip",
+        "installerUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.21.exe"
+    },
+    {
+        "version":  "2.20",
+        "publishedAt":  "2026-04-20",
+        "title":  "Version 2.20",
+        "notes":  [
+                      "기능 추가: 납품시 BQC 검토에 파라미터 누락, Project Parameter 중복, 웍셋 배정, Family 적합성, 탭/분기 축 틀어짐 검토를 추가했습니다.",
+                      "기능 추가: 유틸리티에 Revit 링크 경로 추출/검토와 Document Navigator를 추가했습니다.",
+                      "기능 추가: 허브 화면에 즐겨찾기/빠른 접근 기능을 추가했습니다. 기능 카드에서 오른쪽 클릭하면 즐겨찾기에 바로 추가할 수 있습니다.",
+                      "기능 추가: 자주 사용하는 항목에 프리셋을 등록할 수 있고, 저장 시 각 기능의 설정값도 함께 저장됩니다. 불러오면 각 기능 설정도 같이 적용되어 기존 검토 상황을 일관성 있게 유지할 수 있습니다.",
+                      "기능 개선: 다중 검토 화면의 뷰 탐색 흐름과 중복/자체간섭 검토 흐름을 개선했습니다.",
+                      "기능 개선: 조건별 객체 대상 속성 추출, 메인/분기 배관 판정, GUID/패밀리 연동/Connector/Shared Parameter Batch, 엑셀 내보내기 안정성을 보강했습니다.",
+                      "수정: 2025 테스트/배포 경로와 리소스 처리 흐름을 정리했습니다."
+                  ],
+        "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.20.zip",
+        "installerUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.20.exe"
+    },
+    {
+        "version":  "2.14",
+        "publishedAt":  "2026-04-09",
+        "title":  "Version 2.14",
+        "notes":  [
+                      "기능 추가 - 유틸리티: KTA 추출 기능을 추가했습니다. (동탄 T 한정 사용)",
+                      "기능 추가 - 유틸리티: Manage Workset 설정하기 기능을 추가했습니다. (탕정 A4, A6, S1 요청)",
+                      "기능 추가 - 납품시 BQC 검토: 조건별 객체 대상 속성 추출 기능을 추가했습니다. 필터링 조건에 맞는 객체를 대상으로 원하는 파라미터 값, 넓이·부피, 패밀리 산식 기반 값, X/Y/Z 좌표를 추출할 수 있습니다.",
+                      "기능 수정 - 유틸리티: 패밀리 연동 검토 논리를 보강했습니다. 하위 패밀리 차수 기준 비유효 필터, 복합 파라미터 추가/연동, Label 변경 시 누락 인스턴스 보강을 포함합니다.",
+                      "기능 수정 - 납품시 BQC 검토: RVT 정리에서 카테고리별 End Cut 등 세부 조건을 더 정교하게 설정할 수 있도록 보강했습니다."
+                  ],
+        "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.14.zip",
+        "installerUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.14.exe"
+    },
+    {
+        "version":  "2.13",
+        "publishedAt":  "2026-03-27",
+        "title":  "Version 2.13",
+        "notes":  [
+                      "홈페이지 글꼴과 기본 문구 구성을 정리했습니다.",
+                      "업데이트 내역과 기능 요청 페이지 문구를 보기 쉽게 다듬었습니다.",
+                      "Google Sheets 안내 문서를 정리했습니다."
+                  ],
+        "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.13.zip",
+        "installerUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.13.exe"
+    },
+    {
+        "version":  "2.12",
+        "publishedAt":  "2026-03-25",
+        "title":  "Version 2.12",
+        "notes":  [
+                      "Release build v2.12"
+                  ],
+        "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.12.zip",
+        "installerUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.12.exe"
+    },
+    {
+        "version":  "2.11",
+        "publishedAt":  "2026-03-24",
+        "title":  "Version 2.11",
+        "notes":  [
+                      "기능 요청 페이지에 작성자 이름 입력 항목을 추가했습니다.",
+                      "요청 등록과 목록 표시에서 작성자 정보가 함께 보이도록 정리했습니다.",
+                      "외부 공유 페이지 문구와 구성을 더 읽기 쉽게 다듬었습니다."
+                  ],
+        "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.11.zip",
+        "installerUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.11.exe"
+    },
+    {
+        "version":  "2.10",
+        "publishedAt":  "2026-03-23",
+        "title":  "Version 2.10",
+        "notes":  [
+                      "홈페이지와 요청 페이지 글꼴 깨짐을 정리하고 문구를 보기 쉽게 다듬었습니다."
+                  ],
+        "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.10.zip",
+        "installerUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.10.exe"
+    }
 ]
