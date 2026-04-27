@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="KKY Tool Revit 기능 정리 및 매뉴얼 초안">
-  <title>KKY Tool Revit Manual Draft</title>
+  <meta name="description" content="KKY Tool Revit 기능 정리 및 매뉴얼">
+  <title>KKY Tool Revit Manual</title>
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../assets/site.css">
   <link rel="stylesheet" href="manual.css">
@@ -15,7 +15,7 @@
       <aside class="side-nav manual-side-nav">
         <div class="site-title">
           <strong>KKY Tool</strong>
-          <span>매뉴얼 초안</span>
+          <span>매뉴얼</span>
         </div>
 
         <nav class="site-nav" aria-label="주요 메뉴">
@@ -37,11 +37,11 @@
 
       <main class="content manual-content">
         <section class="intro manual-intro" id="overview">
-          <div class="intro-badge">MANUAL DRAFT</div>
+          <div class="intro-badge">MANUAL</div>
           <h1>KKY Tool Revit 기능 정리</h1>
           <p class="intro-summary">
-            이 문서는 KKY Tool Revit의 주요 기능을 사용자 관점에서 정리하기 위한 매뉴얼 초안입니다.
-            현재 매뉴얼 인덱스에서는 메뉴 구조와 기능별 역할, 검토 요소, 수행 요소, 결과물을 중심으로 먼저 정리하고 있습니다.
+            이 문서는 KKY Tool Revit의 주요 기능을 사용자 관점에서 정리한 매뉴얼입니다.
+            메뉴 구조와 기능별 역할, 검토 요소, 수행 요소, 결과물을 중심으로 현재 제공 중인 기능을 확인할 수 있습니다.
           </p>
         </section>
 
@@ -82,22 +82,32 @@
               <article class="taxonomy-card">
                 <h3>검토형 기능</h3>
                 <ul>
+                  <li>조건별 객체 대상 속성 추출</li>
                   <li>파라미터 연속성 검토</li>
-                  <li>층정보 파라미터 검토</li>
-                  <li>GUID 검토</li>
+                  <li>레벨 영역별 파라미터 검토</li>
+                  <li>Family 적합성 검토</li>
+                  <li>탭/분기 축 틀어짐 검토</li>
+                  <li>중복 / 자체간섭 검토</li>
+                  <li>웍셋 배정 검토</li>
+                  <li>Project Parameter 중복 검토</li>
+                  <li>파라미터 누락 검토</li>
+                  <li>Segment↔PMS 비교 검토</li>
+                  <li>파라미터 GUID 검토 및 정리</li>
                   <li>패밀리 공유파라미터 연동 검토</li>
-                  <li>PMS 검토</li>
-                  <li>Point 좌표 추출</li>
+                  <li>프로젝트대상 Point 좌표 추출</li>
+                  <li>링크 기본 웍셋 점검/적용</li>
                 </ul>
               </article>
               <article class="taxonomy-card">
                 <h3>수정 / 반영형 기능</h3>
                 <ul>
-                  <li>중복 요소 삭제 / 복원</li>
-                  <li>복합패밀리 공유 파라미터 추가/연동</li>
-                  <li>Project Parameter 추가</li>
-                  <li>파라미터 수정기</li>
                   <li>RVT 정리 (납품용)</li>
+                  <li>중복 요소 삭제 / 복원</li>
+                  <li>패밀리 공유파라미터 추가/연동</li>
+                  <li>파라미터 수정기</li>
+                  <li>Revit 링크 경로 추출/재지정</li>
+                  <li>노즐코드 KTA 단일화</li>
+                  <li>Project 파라미터 일괄 추가</li>
                 </ul>
               </article>
             </div>
@@ -112,7 +122,7 @@
             <div class="feature-toolbar">
               <label class="search-box" for="feature-search">
                 <span>기능 찾기</span>
-                <input id="feature-search" type="search" placeholder="예: GUID, 층정보, 파라미터">
+                <input id="feature-search" type="search" placeholder="예: GUID, 링크, KTA, 파라미터">
               </label>
               <div class="filter-chips" aria-label="기능 그룹 필터">
                 <button class="filter-chip is-active" type="button" data-filter="all">전체</button>
@@ -145,7 +155,20 @@
                   <div><strong>검토 요소</strong><p>3D 뷰 상태, 링크/그룹/조립/Design Option, 필터 적용 상태, 추출 대상 속성.</p></div>
                   <div><strong>결과물</strong><p>정리된 RVT, 검토 엑셀, 로그, Purge 결과표.</p></div>
                 </div>
-                <p class="feature-note">주의: RVT 직접 수정형 기능입니다. 작동 방식과 옵션 설정에 대한 설명을 상세 메뉴얼에서 필수로 확인하세요.</p>
+                <p class="feature-note">주의: RVT 직접 수정형 기능입니다. 작동 방식과 옵션 설정에 대한 설명을 상세 매뉴얼에서 필수로 확인하세요.</p>
+              </article>
+
+              <article class="feature-entry" data-group="bqc" data-keywords="조건별 객체 대상 속성 추출 필터 좌표 선형 엑셀">
+                <div class="feature-head">
+                  <span class="feature-badge">BQC Export</span>
+                  <h3>조건별 객체 대상 속성 추출</h3>
+                </div>
+                <p class="feature-summary">조건식에 맞는 객체만 골라 지정 속성과 좌표, 선형 정보를 엑셀로 추출하는 기능입니다.</p>
+                <div class="feature-grid">
+                  <div><strong>역할</strong><p>납품 또는 검토에 필요한 객체 목록을 조건 기반으로 추려 속성 검토 자료를 만듭니다.</p></div>
+                  <div><strong>검토 요소</strong><p>카테고리, 패밀리/타입, 파라미터 값, 좌표, 선형 정보 등 조건식에 포함된 대상 정보.</p></div>
+                  <div><strong>결과물</strong><p>조건에 매칭된 객체와 지정 속성, 위치 정보를 정리한 엑셀 결과표.</p></div>
+                </div>
               </article>
 
               <article class="feature-entry" data-group="bqc" data-keywords="파라미터 연속성 커넥터 배관 덕트 전기">
@@ -176,6 +199,32 @@
                 </div>
               </article>
 
+              <article class="feature-entry" data-group="bqc" data-keywords="family 적합성 검토 category family type 기준 엑셀">
+                <div class="feature-head">
+                  <span class="feature-badge">BQC Review</span>
+                  <h3>Family 적합성 검토</h3>
+                </div>
+                <p class="feature-summary">기준 엑셀에 정의된 Category / Family / Type 조합과 프로젝트 내 객체 구성이 일치하는지 확인합니다.</p>
+                <div class="feature-grid">
+                  <div><strong>역할</strong><p>프로젝트에서 사용된 패밀리와 타입이 납품 기준에 맞는지 빠르게 검토합니다.</p></div>
+                  <div><strong>검토 요소</strong><p>Category, Family Name, Type Name 조합의 누락, 오사용, 기준표 미등록 항목.</p></div>
+                  <div><strong>결과물</strong><p>기준 일치/불일치 목록과 검토 대상 객체 정보를 정리한 엑셀 결과표.</p></div>
+                </div>
+              </article>
+
+              <article class="feature-entry" data-group="bqc" data-keywords="탭 분기 축 틀어짐 검토 배관 덕트 피팅 중심축">
+                <div class="feature-head">
+                  <span class="feature-badge">BQC Review</span>
+                  <h3>탭/분기 축 틀어짐 검토</h3>
+                </div>
+                <p class="feature-summary">배관과 덕트의 중심축을 기준으로 탭 또는 분기 피팅의 축 방향이 어긋난 후보를 검토합니다.</p>
+                <div class="feature-grid">
+                  <div><strong>역할</strong><p>분기 모델링 과정에서 발생할 수 있는 축 틀어짐과 접속 방향 오류를 찾아냅니다.</p></div>
+                  <div><strong>검토 요소</strong><p>주 배관/덕트 중심선, 분기 피팅 방향, 접속 각도, 허용 오차를 벗어난 축 편차.</p></div>
+                  <div><strong>결과물</strong><p>틀어짐 후보 객체와 기준축, 편차 정보를 정리한 검토 결과표.</p></div>
+                </div>
+              </article>
+
               <article class="feature-entry" data-group="bqc utility" data-keywords="중복 자체간섭 삭제 복원 set">
                 <div class="feature-head">
                   <span class="feature-badge">Review + Action</span>
@@ -188,6 +237,45 @@
                   <div><strong>결과물</strong><p>중복 요소 및 간섭 요소를 그룹 및 쌍으로 정리하여 엑셀 출력. (중복의 경우 창에서 직접 확인 및 삭제/되돌리기 가능)</p></div>
                 </div>
                 <p class="feature-note">주의: 삭제/복원은 실제 모델 변경입니다. 검토자가 직접 수행하기보다 검토 결과를 추출하여 작업자에게 전달하는 편을 권장 합니다.</p>
+              </article>
+
+              <article class="feature-entry" data-group="bqc" data-keywords="웍셋 배정 검토 workset workset1 특정 workset">
+                <div class="feature-head">
+                  <span class="feature-badge">BQC Review</span>
+                  <h3>웍셋 배정 검토</h3>
+                </div>
+                <p class="feature-summary">Workset1 또는 사용자가 입력한 특정 workset 기준으로 객체가 올바른 웍셋에 배정되어 있는지 검토합니다.</p>
+                <div class="feature-grid">
+                  <div><strong>역할</strong><p>납품 전 객체의 workset 배정 상태를 확인해 협업 모델 관리 기준을 맞춥니다.</p></div>
+                  <div><strong>검토 요소</strong><p>객체별 Workset 값, 기준 workset과 다른 항목, Workset1 잔류 항목 또는 지정 workset 누락.</p></div>
+                  <div><strong>결과물</strong><p>웍셋 배정 오류 후보와 객체 식별 정보를 정리한 엑셀 결과표.</p></div>
+                </div>
+              </article>
+
+              <article class="feature-entry" data-group="bqc" data-keywords="project parameter 중복 검토 프로젝트 파라미터 이름 duplicate">
+                <div class="feature-head">
+                  <span class="feature-badge">BQC Review</span>
+                  <h3>Project Parameter 중복 검토</h3>
+                </div>
+                <p class="feature-summary">프로젝트에 추가된 Project Parameter 중 이름이 중복되거나 기준과 혼동될 수 있는 항목을 검토합니다.</p>
+                <div class="feature-grid">
+                  <div><strong>역할</strong><p>동일하거나 유사한 이름의 프로젝트 파라미터로 인한 입력 오류와 집계 오류를 줄입니다.</p></div>
+                  <div><strong>검토 요소</strong><p>Project Parameter 이름, 바인딩 카테고리, 인스턴스/타입 여부, 이름 중복 후보.</p></div>
+                  <div><strong>결과물</strong><p>중복 파라미터 후보와 설정 정보를 정리한 검토 결과표.</p></div>
+                </div>
+              </article>
+
+              <article class="feature-entry" data-group="bqc" data-keywords="파라미터 누락 검토 공유 text 파라미터 예외 규칙">
+                <div class="feature-head">
+                  <span class="feature-badge">BQC Review</span>
+                  <h3>파라미터 누락 검토</h3>
+                </div>
+                <p class="feature-summary">공유 Text 파라미터가 필요한 객체에 누락 없이 들어가 있는지 확인하고, 예외 규칙을 적용해 검토합니다.</p>
+                <div class="feature-grid">
+                  <div><strong>역할</strong><p>납품 기준에서 요구하는 텍스트 파라미터의 존재 여부와 입력 가능 상태를 점검합니다.</p></div>
+                  <div><strong>검토 요소</strong><p>대상 카테고리, 공유 Text 파라미터 존재 여부, 예외 처리 대상, 누락 또는 잘못 바인딩된 항목.</p></div>
+                  <div><strong>결과물</strong><p>파라미터 누락 객체와 예외 적용 결과를 정리한 엑셀 결과표.</p></div>
+                </div>
               </article>
             </div>
           </div>
@@ -208,15 +296,16 @@
                 <div class="feature-grid">
                   <div><strong>역할</strong><p>평소 센트럴 파일 건전성 (파라미터 GUID 일치여부, 복합 패밀리 파라미터 연동 등)을 검토하는데 도움을 주는 역할을 합니다.</p></div>
                   <div><strong>검토 요소</strong><p>프로젝트 상에 추가되어있는 파라미터/공유파라미터, 패밀리 파라미터 검토, Segment와 PMS 간 OD, ID 일치여부 검토 등 프로젝트를 구성하는 Setting 에 대한 검토.</p></div>
+                  <div><strong>공통 기능</strong><p>중복 / 자체간섭 검토는 BQC와 Utility 양쪽에서 사용하는 공통 검토 기능입니다.</p></div>
                 </div>
               </article>
 
-              <article class="feature-entry" data-group="utility" data-keywords="복합패밀리 공유 파라미터 추가 연동 하위 패밀리">
+              <article class="feature-entry" data-group="utility" data-keywords="패밀리 공유 파라미터 추가 연동 하위 패밀리 복합패밀리">
                 <div class="feature-head">
                   <span class="feature-badge">Utility</span>
-                  <h3>복합패밀리 공유 파라미터 추가/연동</h3>
+                  <h3>패밀리 공유파라미터 추가/연동</h3>
                 </div>
-                <p class="feature-summary">복합 패밀리의 하위 패밀리에 공유 파라미터를 추가 및 연동 까지 수행하고, 호스트와 연동 상태를 점검하는 기능입니다.</p>
+                <p class="feature-summary">복합 패밀리와 하위 패밀리에 필요한 공유 파라미터를 추가하고, 호스트와 하위 패밀리 간 연동까지 수행하는 기능입니다.</p>
                 <div class="feature-grid">
                   <div><strong>역할</strong><p>패밀리 표준화와 하위 패밀리 파라미터 건전성 유지 및 연동 확인.</p></div>
                   <div><strong>검토 요소</strong><p>동일 파라미터 추가 및 연동 수행 후, 파라미터 추가 누락 및 GUID 일치여부. 잘못된 연동 검토.</p></div>
@@ -224,10 +313,10 @@
                 </div>
               </article>
 
-              <article class="feature-entry" data-group="utility" data-keywords="project parameter shared parameter batch add">
+              <article class="feature-entry" data-group="utility" data-keywords="project parameter shared parameter batch add 프로젝트 파라미터 일괄 추가">
                 <div class="feature-head">
                   <span class="feature-badge">Batch Add</span>
-                  <h3>Project Parameter 추가 (Project/Shared)</h3>
+                  <h3>Project 파라미터 일괄 추가</h3>
                 </div>
                 <p class="feature-summary">프로젝트 또는 공유 파라미터를 여러 RVT에 한 번에 추가하는 도구입니다.</p>
                 <div class="feature-grid">
@@ -250,10 +339,37 @@
                 </div>
               </article>
 
-              <article class="feature-entry" data-group="utility" data-keywords="pms segment routing preference pipe size">
+              <article class="feature-entry" data-group="utility" data-keywords="revit 링크 경로 추출 재지정 rvt link path 엑셀">
+                <div class="feature-head">
+                  <span class="feature-badge">Link</span>
+                  <h3>Revit 링크 경로 추출/재지정</h3>
+                </div>
+                <p class="feature-summary">닫힌 RVT 파일의 Revit 링크 경로를 추출하고, 엑셀 기준으로 링크 경로를 다시 반영하는 기능입니다.</p>
+                <div class="feature-grid">
+                  <div><strong>역할</strong><p>여러 프로젝트 파일의 링크 경로 현황을 한 번에 파악하고, 경로 변경 작업을 일괄 처리합니다.</p></div>
+                  <div><strong>수행 요소</strong><p>RVT 파일 선택, 링크 파일 경로 추출, 엑셀 편집 기준의 경로 재지정, 저장 처리.</p></div>
+                  <div><strong>결과물</strong><p>링크 경로 목록 엑셀, 변경 성공/실패 로그, 재지정 결과표.</p></div>
+                </div>
+                <p class="feature-note">주의: 경로 재지정은 RVT 링크 설정을 변경하는 작업입니다. 적용 전 기준 엑셀의 경로와 대상 파일을 확인하세요.</p>
+              </article>
+
+              <article class="feature-entry" data-group="utility" data-keywords="노즐코드 kta 단일화 nozzle code excel sheet">
+                <div class="feature-head">
+                  <span class="feature-badge">Excel</span>
+                  <h3>노즐코드 KTA 단일화</h3>
+                </div>
+                <p class="feature-summary">접수받은 KTA 양식을 하나의 시트 양식으로 모아 노즐코드 검토에 사용할 수 있게 정리합니다.</p>
+                <div class="feature-grid">
+                  <div><strong>역할</strong><p>여러 형식으로 전달된 KTA 자료를 검토하기 쉬운 단일 양식으로 정리합니다.</p></div>
+                  <div><strong>수행 요소</strong><p>KTA 원본 엑셀, 노즐코드 관련 컬럼, 병합 대상 시트, 표준 출력 양식.</p></div>
+                  <div><strong>결과물</strong><p>단일 시트로 정리된 KTA 엑셀과 처리 로그.</p></div>
+                </div>
+              </article>
+
+              <article class="feature-entry" data-group="utility" data-keywords="pms segment routing preference pipe size od id 비교">
                 <div class="feature-head">
                   <span class="feature-badge">Utility</span>
-                  <h3>PMS 검토</h3>
+                  <h3>Segment↔PMS 비교 검토</h3>
                 </div>
                 <p class="feature-summary">Revit의 Segment, Routing Preference, Pipe Size와 PMS 기준표를 비교해 매핑과 사이즈 일치 여부를 검토합니다.</p>
                 <div class="feature-grid">
@@ -263,15 +379,15 @@
                 </div>
               </article>
 
-              <article class="feature-entry" data-group="utility" data-keywords="파라미터 guid 검토 shared parameter project family">
+              <article class="feature-entry" data-group="utility" data-keywords="파라미터 guid 검토 정리 shared parameter project family">
                 <div class="feature-head">
                   <span class="feature-badge">Utility</span>
-                  <h3>파라미터 GUID 검토</h3>
+                  <h3>파라미터 GUID 검토 및 정리</h3>
                 </div>
-                <p class="feature-summary">Shared Parameter로 추가된 프로젝트 파라미터 및 패밀리 파라미터의 GUID가 현재 Shared Parameter text 파일과 일치하는지 확인합니다.</p>
+                <p class="feature-summary">Shared Parameter로 추가된 프로젝트/패밀리 파라미터의 GUID가 기준 text 파일과 일치하는지 확인하고, 정리 대상을 식별합니다.</p>
                 <div class="feature-grid">
                   <div><strong>역할</strong><p>프로젝트 및 패밀리 파일의 파라미터 건전성 검토.</p></div>
-                  <div><strong>검토 요소</strong><p>프로젝트/패밀리 내 GUID 불일치, GUID가 다른 중복 파라미터 검토. 파라미터 추가 여부</p></div>
+                  <div><strong>검토 요소</strong><p>프로젝트/패밀리 내 GUID 불일치, GUID가 다른 중복 파라미터, 삭제 또는 정리가 필요한 후보.</p></div>
                   <div><strong>결과물</strong><p>검토 결과에 따른 각종 오류 사항 엑셀 추출.</p></div>
                 </div>
               </article>
@@ -301,6 +417,20 @@
                   <div><strong>검토 요소</strong><p>Project/Survey Point 좌표, True North 각도, 파일별 좌표 편차.</p></div>
                   <div><strong>결과물</strong><p>검토 결과 엑셀추출.</p></div>
                 </div>
+              </article>
+
+              <article class="feature-entry" data-group="utility" data-keywords="링크 기본 웍셋 점검 적용 revit link open workset workset1">
+                <div class="feature-head">
+                  <span class="feature-badge">Link</span>
+                  <h3>링크 기본 웍셋 점검/적용</h3>
+                </div>
+                <p class="feature-summary">Revit 링크의 open workset 현황을 점검하고, 필요한 경우 기본 Workset1 기준으로 적용합니다.</p>
+                <div class="feature-grid">
+                  <div><strong>역할</strong><p>링크 모델을 열 때 불필요한 workset이 함께 열리는 상황을 줄이고 기본 링크 설정을 맞춥니다.</p></div>
+                  <div><strong>검토 요소</strong><p>링크 인스턴스, 링크 타입, open workset 설정, Workset1 적용 여부.</p></div>
+                  <div><strong>결과물</strong><p>링크별 open workset 현황과 적용 결과를 정리한 엑셀 또는 로그.</p></div>
+                </div>
+                <p class="feature-note">주의: 적용 작업은 링크 로드 설정에 영향을 줄 수 있으므로 프로젝트 기준을 확인한 뒤 실행하세요.</p>
               </article>
             </div>
           </div>
