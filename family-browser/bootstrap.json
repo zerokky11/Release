@@ -1,0 +1,22 @@
+{
+  "version": "2026.04.29-samoo-test",
+  "message": "SAMOO Family Browser shared test deployment",
+  "refreshMinutes": 5,
+  "managedPolicyPath": "Z:\\20. NICE DCV\\01. SAMOO\\Family Test\\Config\\standard-policy.json",
+  "requestStore": {
+    "mode": "NetworkShare",
+    "path": "Z:\\20. NICE DCV\\01. SAMOO\\Family Test\\Requests",
+    "endpoint": ""
+  },
+  "standardMode": "DisciplineSeparated",
+  "standardLibraries": [],
+  "security": {
+    "adminUsers": [],
+    "requestApproverUsers": [],
+    "readOnlyUsers": [],
+    "allowUnlistedUsersAsModelers": true,
+    "allowModelersToLoadFamilies": true,
+    "allowModelersToApplySystemTypes": true,
+    "allowModelersToSubmitRequests": true
+  }
+}
