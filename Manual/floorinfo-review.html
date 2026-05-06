@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="KKY Tool Revit 레벨 영역별 파라미터 검토 매뉴얼 초안">
-  <title>레벨 영역별 파라미터 검토 | KKY Tool Revit Manual</title>
+  <meta name="description" content="KKY Tool Revit 레벨 영역별 파라미터 검토 매뉴얼">
+  <title>레벨 영역별 파라미터 검토 | KKY Tool Revit 매뉴얼</title>
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../assets/site.css">
   <link rel="stylesheet" href="manual.css">
@@ -87,7 +87,7 @@
             <div class="detail-grid">
               <article class="detail-card">
                 <h3>주로 언제 쓰는지</h3>
-                <p>보통 납품 파일을 작성할 때 검토용으로 사용합니다. 현재는 Sub 기능 성격이 강하고, TEST를 통해 더 정확하게 다듬어 갈 예정입니다.</p>
+                <p>보통 납품 파일을 작성할 때 검토용으로 사용합니다. 현재는 보조 검토 성격이 강하고, 실제 테스트를 통해 더 정확하게 다듬어 갈 예정입니다.</p>
               </article>
               <article class="detail-card">
                 <h3>대상 범위</h3>
@@ -190,27 +190,27 @@
           <div class="panel manual-panel">
             <div class="status-grid">
               <article class="status-card">
-                <h3>MISMATCH</h3>
+                <h3>불일치(MISMATCH)</h3>
                 <p>기대값과 실제 입력값이 다를 때 표시됩니다. 가장 핵심적인 오류 상태입니다.</p>
               </article>
               <article class="status-card">
-                <h3>PARAMETER_MISSING</h3>
+                <h3>파라미터 누락(PARAMETER_MISSING)</h3>
                 <p>지정한 파라미터를 객체 인스턴스나 타입 어디에서도 찾지 못한 경우입니다. 속성 누락 검토에서 중요합니다.</p>
               </article>
               <article class="status-card">
-                <h3>RULE_MISSING</h3>
+                <h3>규칙 누락(RULE_MISSING)</h3>
                 <p>해당 레벨 구간의 기대값이 설정되지 않은 경우입니다. 즉, 판정 대상 구간인데 검토 기준이 비어 있는 상태입니다.</p>
               </article>
               <article class="status-card">
-                <h3>NO_GEOMETRY</h3>
+                <h3>형상 정보 없음(NO_GEOMETRY)</h3>
                 <p>BoundingBox를 가져오지 못해 위치 판정 자체가 불가능한 경우입니다. 별도 확인이 필요합니다.</p>
               </article>
               <article class="status-card">
-                <h3>SpansMultipleZones</h3>
+                <h3>복수 구간 관통(SpansMultipleZones)</h3>
                 <p>객체가 여러 레벨 구간을 관통하는지 여부를 같이 표시합니다. 입상 객체 해석 시 매우 중요합니다.</p>
               </article>
               <article class="status-card">
-                <h3>Note</h3>
+                <h3>비고(Note)</h3>
                 <p>왜 오류로 판정되었는지, 관통 객체일 경우 어떤 기준으로 판정했는지를 설명합니다.</p>
               </article>
             </div>
@@ -219,18 +219,18 @@
               <article class="detail-card">
                 <h3>같이 보면 좋은 열</h3>
                 <ul class="detail-list">
-                  <li>LowerLevel / UpperLevel: 어느 구간으로 판정했는지</li>
-                  <li>ExpectedValue / ActualValue: 기대값과 실제값 비교</li>
-                  <li>RepresentativeZ / BottomZ / TopZ: 객체 위치 확인</li>
+                  <li>하한/상한 레벨(LowerLevel / UpperLevel): 어느 구간으로 판정했는지</li>
+                  <li>기대값/실제값(ExpectedValue / ActualValue): 기준값과 입력값 비교</li>
+                  <li>대표/하단/상단 Z(RepresentativeZ / BottomZ / TopZ): 객체 위치 확인</li>
                 </ul>
               </article>
               <article class="detail-card">
                 <h3>추가 확인 포인트</h3>
                 <ul class="detail-list">
-                  <li>Category / Family / TypeName: 어떤 객체인지 식별</li>
-                  <li>ParameterName: 어떤 파라미터를 검토했는지</li>
-                  <li>Result: 최종 판정</li>
-                  <li>Warnings: 동일 이름 레벨 등 설정 경고 여부</li>
+                  <li>카테고리 / 패밀리 / 타입 이름: 어떤 객체인지 식별</li>
+                  <li>파라미터 이름: 어떤 파라미터를 검토했는지</li>
+                  <li>결과: 최종 판정</li>
+                  <li>경고: 동일 이름 레벨 등 설정 경고 여부</li>
                 </ul>
               </article>
             </div>
@@ -244,19 +244,19 @@
           <div class="panel manual-panel">
             <div class="capture-grid">
               <article class="capture-card">
-                <div class="capture-placeholder">Screenshot Placeholder</div>
+                <div class="capture-placeholder">스크린샷 준비 중</div>
                 <h3>캡처 1. 레벨 규칙 설정 화면</h3>
                 <p>활성 문서의 레벨 목록, 절대 Z 값, 영역 체크, 기대값 입력 UI를 보여주는 캡처 자리.</p>
               </article>
               <article class="capture-card">
-                <div class="capture-placeholder">Screenshot Placeholder</div>
+                <div class="capture-placeholder">스크린샷 준비 중</div>
                 <h3>캡처 2. 결과 화면</h3>
-                <p>MISMATCH, PARAMETER_MISSING, RULE_MISSING, 관통 객체 여부가 보이는 결과 화면 캡처 자리.</p>
+                <p>불일치(MISMATCH), 파라미터 누락(PARAMETER_MISSING), 규칙 누락(RULE_MISSING), 관통 객체 여부가 보이는 결과 화면 캡처 자리.</p>
               </article>
               <article class="capture-card">
-                <div class="capture-placeholder">Screenshot Placeholder</div>
+                <div class="capture-placeholder">스크린샷 준비 중</div>
                 <h3>캡처 3. 엑셀 결과 예시</h3>
-                <p>ExpectedValue, ActualValue, RepresentativeZ, Result, Note 열이 보이는 엑셀 예시 자리.</p>
+                <p>기대값(ExpectedValue), 실제값(ActualValue), 대표 Z(RepresentativeZ), 판정(Result), 비고(Note) 열이 보이는 엑셀 예시 자리.</p>
               </article>
             </div>
 

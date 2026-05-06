@@ -14,7 +14,7 @@
       <aside class="side-nav">
         <div class="site-title">
           <strong>KKY Tool</strong>
-          <span>내부 공유 페이지</span>
+          <span>업데이트 / 요청 페이지</span>
         </div>
         <nav class="site-nav" aria-label="주요 메뉴">
           <a href="index.html">홈</a>
@@ -28,16 +28,16 @@
         <section class="section">
           <h1 class="page-heading">기능 요청하기</h1>
           <div class="panel panel-soft">
-            <h2>실무에서 불편했던 점이나 있으면 좋을 기능을 적어 주세요</h2>
-            <p>반복되는 작업, 시간이 오래 걸리는 작업, 있으면 바로 쓰고 싶은 기능이 있으면 편하게 적어 주세요.</p>
-            <p>프로젝트명과 작성자 이름을 같이 적어주시면 요청 배경을 더 빠르게 확인할 수 있습니다.</p>
-            <p class="muted">등록한 내용은 아래 최근 요청 목록에서 바로 확인할 수 있습니다.</p>
+            <h2>필요한 기능과 반복되는 불편을 남겨 주세요</h2>
+            <p>반복 작업, 오래 걸리는 정리, 새로 필요한 검토 기능을 간단히 등록할 수 있습니다.</p>
+            <p>프로젝트명과 작성자 이름을 함께 적으면 요청 배경과 우선순위를 더 빠르게 판단할 수 있습니다.</p>
+            <p class="muted">등록된 요청은 최근 요청 목록에 표시되어 팀원도 함께 확인할 수 있습니다.</p>
           </div>
         </section>
 
         <section class="section">
           <div class="panel">
-            <p class="section-note">민감한 프로젝트 원본 데이터나 개인 정보는 적지 않는 것을 기본으로 권장합니다.</p>
+            <p class="section-note">프로젝트 원본 데이터나 개인정보는 제외하고, 필요한 상황과 기대 결과 중심으로 작성해 주세요.</p>
 
             <form class="request-form" id="request-form">
               <div class="field-row">
@@ -52,18 +52,18 @@
               </div>
 
               <div class="field">
-                <label for="field-task">업무 유형</label>
-                <input id="field-task" name="task" type="text" placeholder="예: 속성 관리 검토 / 납품 자료 정리" required>
+                <label for="field-task">요청 제목</label>
+                <input id="field-task" name="task" type="text" placeholder="예: 납품 자료 정리 자동화 / 링크 경로 검토" required>
               </div>
 
               <div class="field">
-                <label for="field-problem">불편한 점</label>
-                <textarea id="field-problem" name="problem" rows="3" placeholder="어떤 작업이 반복되거나 번거로운지 적어주세요." required></textarea>
+                <label for="field-problem">현재 불편한 점</label>
+                <textarea id="field-problem" name="problem" rows="3" placeholder="현재 어떤 작업이 반복되거나 오래 걸리는지 입력해 주세요." required></textarea>
               </div>
 
               <div class="field">
-                <label for="field-idea">있으면 좋은 기능</label>
-                <textarea id="field-idea" name="idea" rows="3" placeholder="어떤 방식으로 개선되면 좋을지 적어주세요." required></textarea>
+                <label for="field-idea">원하는 개선 방향</label>
+                <textarea id="field-idea" name="idea" rows="3" placeholder="어떤 결과가 나오면 좋은지, 어떤 버튼이나 흐름이면 편할지 입력해 주세요." required></textarea>
               </div>
 
               <div class="field-row">
@@ -79,16 +79,16 @@
 
               <div class="field">
                 <label for="field-note">메모</label>
-                <textarea id="field-note" name="note" rows="3" placeholder="추가로 전달하고 싶은 내용이 있으면 적어주세요."></textarea>
+                <textarea id="field-note" name="note" rows="3" placeholder="추가로 전달하고 싶은 내용이 있으면 입력해 주세요."></textarea>
               </div>
             </form>
 
             <div class="request-actions">
               <div class="button-row">
-                <button class="submit-button" id="save-request" type="button">등록하기</button>
-                <button class="ghost-button" id="copy-request" type="button">내용 복사</button>
+                <button class="submit-button" id="save-request" type="button">요청 등록</button>
+                <button class="ghost-button" id="copy-request" type="button">요청 내용 복사</button>
               </div>
-              <p class="request-help" id="request-status">작성 중인 내용은 이 기기에서 임시 저장되고, 등록 후 최근 요청 목록에서 바로 확인할 수 있습니다.</p>
+              <p class="request-help" id="request-status">요청 등록 후 최근 요청 목록에서 바로 확인할 수 있습니다.</p>
             </div>
           </div>
         </section>
@@ -96,7 +96,7 @@
         <section class="section">
           <div class="section-heading-row">
             <h2>최근 요청</h2>
-            <button class="text-button" id="refresh-requests" type="button">새로 불러오기</button>
+            <button class="text-button" id="refresh-requests" type="button">목록 새로고침</button>
           </div>
           <div class="panel">
             <div class="request-list" id="request-list">
@@ -109,6 +109,6 @@
   </div>
 
   <script src="assets/site-config.js"></script>
-  <script src="assets/site.js"></script>
+  <script src="assets/site.js?v=20260505h"></script>
 </body>
 </html>

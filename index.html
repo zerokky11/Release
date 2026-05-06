@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="KKY Tool 내부 공유 페이지">
-  <title>KKY Tool 내부 공유 페이지</title>
+  <meta name="description" content="KKY Tool Hub 배포, 업데이트 내역, 기능 요청 페이지">
+  <title>KKY Tool Hub</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="assets/site.css">
 </head>
@@ -14,7 +14,7 @@
       <aside class="side-nav">
         <div class="site-title">
           <strong>KKY Tool</strong>
-          <span>내부 공유 페이지</span>
+          <span>업데이트 / 요청 페이지</span>
         </div>
         <nav class="site-nav" aria-label="주요 메뉴">
           <a class="is-active" href="index.html">홈</a>
@@ -26,14 +26,14 @@
 
       <main class="content">
         <section class="intro">
-          <div class="intro-badge">INTERNAL TOOL</div>
-          <h1>KKY Tool</h1>
+          <div class="intro-badge">내부 배포</div>
+          <h1>KKY Tool Hub</h1>
           <p class="intro-summary">
-            현장에서 함께 쓰는 KKY Tool 관련 자료를 한곳에서 확인할 수 있도록 정리한 내부 페이지입니다.
+            Revit 납품 전 검토와 반복 정리 작업을 한 곳에서 실행하는 실무 보조 도구입니다.
           </p>
           <div class="intro-detail">
-            <p>최신 설치 파일, 업데이트 내역, 기능 요청 페이지를 한 번에 볼 수 있게 모아두었습니다.</p>
-            <p>복잡한 설명보다 실제로 필요한 정보가 바로 보이도록 간단하게 구성했습니다.</p>
+            <p>BQC 검토, 파라미터 확인, 패밀리 타입 적합성 검토, 링크/웍셋 관리, 엑셀 결과 정리를 Hub 안에서 선택해 실행할 수 있습니다.</p>
+            <p>이 페이지에서는 최신 설치 파일, 업데이트 내역, 매뉴얼, 기능 요청 현황을 함께 확인합니다.</p>
           </div>
         </section>
 
@@ -61,8 +61,8 @@
                 <span class="release-link-value" id="exe-file-label">최신 파일 확인 중</span>
               </a>
               <a class="release-link" href="latest.json">
-                <span class="release-link-label">업데이트 피드</span>
-                <span class="release-link-value">latest.json</span>
+                <span class="release-link-label">배포 정보</span>
+                <span class="release-link-value">자동 업데이트 기준</span>
               </a>
             </div>
 
@@ -77,52 +77,52 @@
 
         <section class="section" id="feature-overview">
           <div class="section-heading-row">
-            <h2>현재 기능 목록</h2>
+            <h2>현재 제공 기능</h2>
             <a class="text-link" href="Manual/index.html">매뉴얼 보기</a>
           </div>
           <div class="feature-overview-grid">
             <article class="feature-overview-card">
               <div class="feature-overview-head">
                 <div>
-                  <div class="meta-label">납품 시 BQC</div>
-                  <h3>BQC 검토 기능</h3>
+                  <div class="meta-label">납품 전 검토</div>
+                  <h3>BQC 검토 흐름</h3>
                 </div>
                 <span class="feature-count">10개</span>
               </div>
               <ul class="feature-summary-list">
-                <li><strong>RVT 정리 (납품용)</strong><span>납품파일 작성을 위한 뷰정리, Purge, 검토용 속성 추출</span></li>
-                <li><strong>조건별 객체 대상 속성 추출</strong><span>조건식으로 객체를 추려 지정 속성, 좌표, 선형 정보 추출</span></li>
+                <li><strong>RVT 정리 (납품용)</strong><span>납품 파일 작성을 위한 뷰 정리, 불필요 항목 제거(Purge), 검토용 속성 추출</span></li>
+                <li><strong>조건별 객체 대상 속성 추출</strong><span>조건식으로 객체를 추려 지정 속성, 좌표, 선형 정보를 추출</span></li>
                 <li><strong>파라미터 연속성 검토</strong><span>연결된 MEP 객체의 파라미터 연속성 검토</span></li>
                 <li><strong>레벨 영역별 파라미터 검토</strong><span>선택한 레벨 영역 기준 파라미터 일치 여부 검토</span></li>
-                <li><strong>Family 적합성 검토</strong><span>기준 엑셀의 Category / Family / Type 조합 비교</span></li>
+                <li><strong>패밀리 타입 적합성 검토</strong><span>기준 엑셀의 카테고리/패밀리/타입 조합 비교</span></li>
                 <li><strong>탭/분기 축 틀어짐 검토</strong><span>배관/덕트 중심축 기준 탭/분기 피팅 축 검토</span></li>
-                <li><strong>중복 / 자체간섭 검토</strong><span>여러 RVT 대상 중복검토 또는 자체간섭검토</span></li>
-                <li><strong>웍셋 배정 검토</strong><span>Workset1 또는 입력한 특정 workset 기준 검토</span></li>
-                <li><strong>Project Parameter 중복 검토</strong><span>추가된 Project Parameter 이름 중복 검토</span></li>
-                <li><strong>파라미터 누락 검토</strong><span>공유 Text 파라미터 누락 여부와 예외 규칙 검토</span></li>
+                <li><strong>중복 / 자체 간섭 검토</strong><span>여러 RVT 대상 중복 검토 또는 자체 간섭 검토</span></li>
+                <li><strong>웍셋 배정 검토</strong><span>기본 웍셋(Workset1) 또는 입력한 특정 웍셋 기준 검토</span></li>
+                <li><strong>프로젝트 파라미터 중복 검토</strong><span>추가된 프로젝트 파라미터 이름 중복 검토</span></li>
+                <li><strong>파라미터 누락 검토</strong><span>공유 텍스트 파라미터 누락 여부와 예외 규칙 검토</span></li>
               </ul>
             </article>
 
             <article class="feature-overview-card">
               <div class="feature-overview-head">
                 <div>
-                  <div class="meta-label">현장 유틸리티</div>
-                  <h3>Utility 기능</h3>
+                  <div class="meta-label">반복 작업 보조</div>
+                  <h3>유틸리티 기능</h3>
                 </div>
                 <span class="feature-count">11개</span>
               </div>
               <ul class="feature-summary-list">
-                <li><strong>중복 / 자체간섭 검토</strong><span>활성 문서에서 중복 객체 또는 자체 간섭 검토</span></li>
+                <li><strong>중복 / 자체 간섭 검토</strong><span>활성 문서 또는 선택 RVT에서 중복 객체와 자체 간섭 검토</span></li>
                 <li><strong>패밀리 공유파라미터 추가/연동</strong><span>복합 및 하위 패밀리에 지정 파라미터 추가/연동</span></li>
-                <li><strong>Segment↔PMS 비교 검토</strong><span>PMS 양식 기준 Segment OD, ID 비교 검토</span></li>
+                <li><strong>Segment-PMS 비교 검토</strong><span>PMS 양식 기준 Segment OD, ID 비교 검토</span></li>
                 <li><strong>파라미터 수정기</strong><span>조건 기반 필터링 대상으로 파라미터 값 일괄 입력</span></li>
                 <li><strong>Revit 링크 경로 추출/재지정</strong><span>닫힌 RVT의 링크 경로 추출 및 엑셀 기준 반영</span></li>
                 <li><strong>노즐코드 KTA 단일화</strong><span>접수받은 KTA 양식을 하나의 시트 양식으로 추출</span></li>
                 <li><strong>파라미터 GUID 검토 및 정리</strong><span>프로젝트/패밀리 파라미터 GUID 검토 및 삭제 기준 정리</span></li>
                 <li><strong>패밀리 공유파라미터 연동 검토</strong><span>복합 패밀리와 하위 패밀리 파라미터 연동 여부 검토</span></li>
-                <li><strong>프로젝트대상 Point 좌표 추출</strong><span>RVT 파일의 Project/Survey 북각 좌표 추출</span></li>
-                <li><strong>링크 기본 웍셋 점검/적용</strong><span>Revit 링크 open workset 현황 점검 및 기본 Workset1 적용</span></li>
-                <li><strong>Project 파라미터 일괄 추가</strong><span>프로젝트 파일에 지정 파라미터 일괄 추가</span></li>
+                <li><strong>기준점/북각 추출</strong><span>RVT의 프로젝트 기준점, 측량 기준점, 북각 값 추출</span></li>
+                <li><strong>링크 기본 웍셋 점검/적용</strong><span>Revit 링크의 열려 있는 웍셋 현황 점검 및 기본 웍셋(Workset1) 적용</span></li>
+                <li><strong>프로젝트 파라미터 일괄 추가</strong><span>프로젝트 파일에 지정 파라미터 일괄 추가</span></li>
               </ul>
             </article>
           </div>
@@ -143,6 +143,6 @@
     </div>
   </div>
 
-  <script src="assets/site.js"></script>
+  <script src="assets/site.js?v=20260505h"></script>
 </body>
 </html>

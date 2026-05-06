@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="KKY Tool Revit 파라미터 연속성 검토 매뉴얼 초안">
-  <title>파라미터 연속성 검토 | KKY Tool Revit Manual</title>
+  <meta name="description" content="KKY Tool Revit 파라미터 연속성 검토 매뉴얼">
+  <title>파라미터 연속성 검토 | KKY Tool Revit 매뉴얼</title>
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../assets/site.css">
   <link rel="stylesheet" href="manual.css">
@@ -111,8 +111,8 @@
                 <h3>사전 조건</h3>
                 <ul class="detail-list">
                   <li>활성 문서 또는 검토할 RVT 목록이 준비되어 있어야 합니다.</li>
-                  <li>검토 파라미터는 Revit에 연결된 Shared Parameter Text 파일 기반으로 검색해 선택합니다.</li>
-                  <li>Shared Parameter 파일이 없으면 선택 가능한 파라미터 목록이 제한될 수 있습니다.</li>
+                  <li>검토 파라미터는 Revit에 연결된 공유파라미터 TXT 파일 기반으로 검색해 선택합니다.</li>
+                  <li>공유파라미터 파일이 없으면 선택 가능한 파라미터 목록이 제한될 수 있습니다.</li>
                 </ul>
               </article>
               <article class="detail-card">
@@ -175,7 +175,7 @@
                 <span class="timeline-no">5</span>
                 <div>
                   <h3>이슈 행 생성</h3>
-                  <p>Mismatch, Shared Parameter 등록 필요, 연결 대상 객체 없음, 연결 필요(Proximity), ERROR 같은 이슈를 결과 행으로 정리합니다.</p>
+                  <p>불일치, 공유파라미터 등록 필요, 연결 대상 객체 없음, 연결 필요(근접 연결), 오류 같은 이슈를 결과 행으로 정리합니다.</p>
                 </div>
               </article>
             </div>
@@ -189,7 +189,7 @@
           <div class="panel manual-panel">
             <div class="status-grid">
               <article class="status-card">
-                <h3>Mismatch</h3>
+                <h3>값 불일치(Mismatch)</h3>
                 <p>선택한 파라미터 값이 양쪽 객체에서 다를 때 표시됩니다. 가장 중요한 오류 판단 항목입니다.</p>
               </article>
               <article class="status-card">
@@ -197,7 +197,7 @@
                 <p>실제 연결은 없지만 허용오차 범위 안에서 가까운 대상이 잡힌 경우입니다. 속성 불일치뿐 아니라 미연결 모델링 오류 가능성도 함께 봐야 합니다.</p>
               </article>
               <article class="status-card">
-                <h3>Shared Parameter 등록 필요</h3>
+                <h3>공유파라미터 등록 필요</h3>
                 <p>비교하려는 파라미터가 한쪽 또는 양쪽 객체에 존재하지 않을 때 표시됩니다. 파라미터 미등록이나 바인딩 누락을 의심합니다.</p>
               </article>
               <article class="status-card">
@@ -205,11 +205,11 @@
                 <p>실제 연결도 없고 허용오차 범위 안에서도 비교 대상을 찾지 못한 경우입니다. 고립 객체나 연결 누락 여부를 다시 확인합니다.</p>
               </article>
               <article class="status-card">
-                <h3>OK</h3>
+                <h3>정상(OK)</h3>
                 <p>비교 대상 간 값이 정상적으로 일치하는 상태입니다. 일반적으로는 이슈 위주로 화면에 표시됩니다.</p>
               </article>
               <article class="status-card">
-                <h3>ERROR</h3>
+                <h3>처리 오류(ERROR)</h3>
                 <p>특정 객체 처리 중 예외가 발생한 경우입니다. 객체 상태나 패밀리, 문서 상태를 추가로 확인해야 합니다.</p>
               </article>
             </div>
@@ -218,19 +218,19 @@
               <article class="detail-card">
                 <h3>같이 보면 좋은 열</h3>
                 <ul class="detail-list">
-                  <li>Id1 / Id2: 어떤 객체 쌍인지 확인</li>
-                  <li>Category1 / Category2: 어떤 계열 객체인지 확인</li>
-                  <li>Family1 / Family2: 패밀리/타입 차이 확인</li>
-                  <li>Distance: 실제 연결이 아닌 경우 거리 확인</li>
+                  <li>객체 ID(Id1 / Id2): 어떤 객체 쌍인지 확인</li>
+                  <li>카테고리(Category1 / Category2): 어떤 계열 객체인지 확인</li>
+                  <li>패밀리/타입(Family1 / Family2): 패밀리와 타입 차이 확인</li>
+                  <li>거리(Distance): 실제 연결이 아닌 경우 객체 간 거리 확인</li>
                 </ul>
               </article>
               <article class="detail-card">
                 <h3>핵심 확인 포인트</h3>
                 <ul class="detail-list">
-                  <li>ConnectionType: 실제 연결인지, 근접 판정인지</li>
-                  <li>ParamName: 어떤 파라미터를 검토한 결과인지</li>
-                  <li>Value1 / Value2: 실제 값 차이</li>
-                  <li>Status: 최종 판정</li>
+                  <li>연결 판정(ConnectionType): 실제 연결인지, 근접 판정인지</li>
+                  <li>검토 파라미터(ParamName): 어떤 파라미터를 검토한 결과인지</li>
+                  <li>비교 값(Value1 / Value2): 실제 값 차이</li>
+                  <li>판정 상태(Status): 최종 판정</li>
                 </ul>
               </article>
             </div>
@@ -244,17 +244,17 @@
           <div class="panel manual-panel">
             <div class="capture-grid">
               <article class="capture-card">
-                <div class="capture-placeholder">Screenshot Placeholder</div>
+                <div class="capture-placeholder">스크린샷 준비 중</div>
                 <h3>캡처 1. 기능 진입 화면</h3>
                 <p>허용오차, 단위, 검토 파라미터를 선택하는 초기 설정 화면 캡처를 넣는 자리.</p>
               </article>
               <article class="capture-card">
-                <div class="capture-placeholder">Screenshot Placeholder</div>
+                <div class="capture-placeholder">스크린샷 준비 중</div>
                 <h3>캡처 2. 결과 화면</h3>
-                <p>Mismatch, Proximity, Shared Parameter 등록 필요 등의 상태가 보이는 결과 테이블 캡처 자리.</p>
+                <p>불일치, 근접 연결, 공유파라미터 등록 필요 등의 상태가 보이는 결과 테이블 캡처 자리.</p>
               </article>
               <article class="capture-card">
-                <div class="capture-placeholder">Screenshot Placeholder</div>
+                <div class="capture-placeholder">스크린샷 준비 중</div>
                 <h3>캡처 3. 엑셀 결과 예시</h3>
                 <p>저장된 엑셀에서 주요 열과 결과 상태를 한눈에 보여주는 예시 캡처 자리.</p>
               </article>

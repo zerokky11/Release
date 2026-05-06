@@ -29,8 +29,8 @@ https://update.zerokky.com/latest.json
 ## Release package pattern
 
 ```text
-KKY_Tool_Revit(2019,21,23,25)_v{version}.exe
-KKY_Tool_Revit(2019,21,23,25)_v{version}.zip
+KKY_Tool_Revit(2019,21,23,25,27)_v{version}.exe
+KKY_Tool_Revit(2019,21,23,25,27)_v{version}.zip
 ```
 
 The landing page reads `latest.json` and updates the visible version, release date, and package link automatically.

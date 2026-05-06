@@ -1,6 +1,6 @@
 ﻿# Google Sheets 연결 방법
 
-`기능 요청하기` 페이지는 Google Sheets와 Apps Script를 이용해 저장되도록 구성되어 있습니다.
+`기능 요청하기` 페이지는 Google Sheets와 Apps Script를 이용해 요청을 저장하고 함께 확인하도록 구성되어 있습니다.
 
 ## 1. 시트 만들기
 1. Google Sheets에서 새 스프레드시트를 만듭니다.
@@ -9,7 +9,7 @@
 ## 2. Apps Script 붙이기
 1. 시트에서 `확장 프로그램 -> Apps Script`를 엽니다.
 2. 기본으로 들어 있는 코드를 모두 지웁니다.
-3. [google-apps-script.gs](/C:/Users/kkyki/OneDrive/바탕%20화면/KKY_Tool_Revit/Sever/Release/google-apps-script.gs) 내용을 그대로 붙여 넣습니다.
+3. [google-apps-script.gs](google-apps-script.gs) 내용을 그대로 붙여 넣습니다.
 4. 저장합니다.
 
 ## 3. 웹앱 배포
@@ -24,7 +24,7 @@
 - [Content Service](https://developers.google.com/apps-script/guides/content)
 
 ## 4. 사이트에 URL 넣기
-1. [site-config.js](/C:/Users/kkyki/OneDrive/바탕%20화면/KKY_Tool_Revit/Sever/Release/assets/site-config.js)를 엽니다.
+1. [site-config.js](assets/site-config.js)를 엽니다.
 2. 아래처럼 웹앱 URL을 넣습니다.
 
 ```js
@@ -35,11 +35,13 @@ window.KKY_REQUESTS_CONFIG = {
 ```
 
 ## 5. 동작 확인
-1. `requests.html`에서 내용을 입력하고 `등록하기`
-2. 아래 `최근 요청` 목록에 바로 보이는지 확인
-3. 같은 기기에서 등록한 요청은 `삭제` 버튼이 보이는지 확인
+1. `requests.html`에서 내용을 입력하고 `요청 등록`을 누릅니다.
+2. 아래 `최근 요청` 목록에 바로 보이는지 확인합니다.
+3. 다른 PC나 브라우저에서도 같은 요청 목록이 보이는지 확인합니다.
+4. 같은 기기에서 등록한 요청은 `요청 삭제` 버튼이 보이는지 확인합니다.
+5. 목록이 갱신되지 않으면 `목록 새로고침`을 누르고, 그래도 보이지 않으면 `site-config.js`의 `requestApiUrl` 값을 다시 확인합니다.
 
 ## 참고
-- 현재 구조는 간단한 입력, 조회, 삭제를 기준으로 합니다.
+- 현재 구조는 요청 입력, 목록 조회, 작성 기기 기준 삭제를 기준으로 합니다.
 - 민감한 프로젝트 원본 데이터는 적지 않는 것을 권장합니다.
-- 삭제 기능은 같은 브라우저와 같은 기기에서 등록한 요청만 보이도록 구성되어 있습니다.
+- 삭제 기능은 같은 브라우저와 같은 기기에서 등록한 요청에만 보이도록 구성되어 있습니다.

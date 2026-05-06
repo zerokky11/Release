@@ -97,7 +97,7 @@ function createRequest_(payload) {
     payload.duration || "",
     payload.frequency || "",
     payload.note || "",
-    payload.source || "mobile",
+    payload.source || "homepage",
     payload.deleteToken || "",
     ""
   ]);
@@ -163,7 +163,7 @@ function ensureHeaders_(sheet) {
         row[6] || "",
         row[7] || "",
         row[8] || "",
-        row[9] || "mobile",
+        row[9] || "homepage",
         row[10] || "",
         row[11] || ""
       ]);
@@ -188,7 +188,7 @@ function ensureHeaders_(sheet) {
         row[5] || "",
         row[6] || "",
         row[7] || "",
-        row[8] || "mobile",
+        row[8] || "homepage",
         "",
         ""
       ]);

@@ -6,41 +6,42 @@ const draftStorageKey = "kky-tool-request-draft";
 const ownershipStorageKey = "kky-tool-request-ownership";
 
 const text = {
-  releaseNotesEmpty: "\uBC30\uD3EC \uB178\uD2B8\uAC00 \uC5C6\uC2B5\uB2C8\uB2E4.",
-  packageCheckNeeded: "\uCD5C\uC2E0 \uD328\uD0A4\uC9C0 \uD655\uC778 \uD544\uC694",
-  exeCheckNeeded: "\uCD5C\uC2E0 \uC124\uCE58 \uD30C\uC77C \uD655\uC778 \uD544\uC694",
-  latestJsonLoadFailed: "latest.json\uC744 \uBD88\uB7EC\uC624\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4.",
-  validation: "\uD504\uB85C\uC81D\uD2B8\uBA85, \uC791\uC131\uC790 \uC774\uB984, \uC5C5\uBB34 \uC720\uD615, \uBD88\uD3B8\uD55C \uC810, \uC788\uC73C\uBA74 \uC88B\uC740 \uAE30\uB2A5\uC744 \uC801\uC5B4\uC8FC\uC138\uC694.",
-  apiMissing: "\uC800\uC7A5 \uAE30\uB2A5\uC774 \uC544\uC9C1 \uC5F0\uACB0\uB418\uC9C0 \uC54A\uC558\uC2B5\uB2C8\uB2E4. assets/site-config.js\uC5D0 Apps Script \uC6F9\uC571 \uC8FC\uC18C\uB97C \uB123\uC5B4\uC8FC\uC138\uC694.",
-  copyDone: "\uBCF5\uC0AC \uC644\uB8CC",
-  copyDefault: "\uB0B4\uC6A9 \uBCF5\uC0AC",
-  copyFailed: "\uD074\uB9BD\uBCF4\uB4DC \uBCF5\uC0AC\uC5D0 \uC2E4\uD328\uD588\uC2B5\uB2C8\uB2E4. \uB0B4\uC6A9\uC744 \uC9C1\uC811 \uBCF5\uC0AC\uD574\uC8FC\uC138\uC694.",
-  emptyRequests: "\uC544\uC9C1 \uB4F1\uB85D\uB41C \uC694\uCCAD\uC774 \uC5C6\uC2B5\uB2C8\uB2E4.",
-  requestLoading: "\uB4F1\uB85D\uB41C \uC694\uCCAD\uC744 \uBD88\uB7EC\uC624\uB294 \uC911\uC785\uB2C8\uB2E4.",
-  requestLoadFailed: "\uC694\uCCAD \uBAA9\uB85D\uC744 \uBD88\uB7EC\uC624\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4. \uC6F9\uC571 \uC8FC\uC18C\uC640 \uBC30\uD3EC \uC0C1\uD0DC\uB97C \uD655\uC778\uD574\uC8FC\uC138\uC694.",
-  requestCreatePending: "\uB4F1\uB85D \uC911\uC785\uB2C8\uB2E4. \uC7A0\uC2DC\uB9CC \uAE30\uB2E4\uB824\uC8FC\uC138\uC694.",
-  requestCreateDone: "\uB4F1\uB85D\uD588\uC2B5\uB2C8\uB2E4. \uC544\uB798 \uCD5C\uADFC \uC694\uCCAD\uC5D0\uC11C \uBC14\uB85C \uD655\uC778\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4.",
-  requestCreateFailed: "\uB4F1\uB85D\uC5D0 \uC2E4\uD328\uD588\uC2B5\uB2C8\uB2E4. \uC6F9\uC571 \uBC30\uD3EC \uC8FC\uC18C \uB610\uB294 \uAD8C\uD55C \uC124\uC815\uC744 \uD655\uC778\uD574\uC8FC\uC138\uC694.",
-  requestDeleting: "\uC0AD\uC81C \uC911\uC785\uB2C8\uB2E4.",
-  requestDeleteDone: "\uC0AD\uC81C\uD588\uC2B5\uB2C8\uB2E4.",
-  requestDeleteFailed: "\uC0AD\uC81C\uC5D0 \uC2E4\uD328\uD588\uC2B5\uB2C8\uB2E4. \uB2E4\uC2DC \uC2DC\uB3C4\uD574\uC8FC\uC138\uC694.",
-  requestDeleteOwnOnly: "\uC774 \uAE30\uAE30\uC5D0\uC11C \uB4F1\uB85D\uD55C \uC694\uCCAD\uB9CC \uC0AD\uC81C\uD560 \uC218 \uC788\uC2B5\uB2C8\uB2E4.",
-  requestDeleteConfirm: "\uC774 \uC694\uCCAD\uC744 \uC0AD\uC81C\uD560\uAE4C\uC694?",
-  requestDeleteButton: "\uC0AD\uC81C",
-  requestRefresh: "\uC0C8\uB85C \uBD88\uB7EC\uC624\uAE30",
-  requestSubmit: "\uB4F1\uB85D\uD558\uAE30",
-  requestSubmitLoading: "\uB4F1\uB85D \uC911...",
-  requestFrequencyFallback: "\uBE48\uB3C4 \uBBF8\uC785\uB825",
-  requestIdeaPrefix: "\uD544\uC694 \uAE30\uB2A5",
-  requestNotePrefix: "\uBA54\uBAA8",
-  requestConfigHelp: "\uC800\uC7A5 \uAE30\uB2A5 \uC5F0\uACB0 \uC804\uC785\uB2C8\uB2E4. assets/site-config.js\uC5D0 Apps Script \uC6F9\uC571 \uC8FC\uC18C\uB97C \uB123\uC73C\uBA74 \uBAA9\uB85D\uC774 \uD45C\uC2DC\uB429\uB2C8\uB2E4.",
-  releaseHistoryLoading: "\uC5C5\uB370\uC774\uD2B8 \uB0B4\uC5ED\uC744 \uBD88\uB7EC\uC624\uB294 \uC911\uC785\uB2C8\uB2E4.",
-  releaseHistoryEmpty: "\uC544\uC9C1 \uAE30\uB85D\uB41C \uC5C5\uB370\uC774\uD2B8 \uB0B4\uC5ED\uC774 \uC5C6\uC2B5\uB2C8\uB2E4.",
-  releaseHistoryFailed: "\uC5C5\uB370\uC774\uD2B8 \uB0B4\uC5ED\uC744 \uBD88\uB7EC\uC624\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4.",
-  releaseHistoryNotesEmpty: "\uC138\uBD80 \uBCC0\uACBD \uC0AC\uD56D \uAE30\uB85D\uC774 \uC5C6\uC2B5\uB2C8\uB2E4.",
-  releaseHistoryZip: "\uC5C5\uB370\uC774\uD2B8 ZIP",
-  releaseHistoryExe: "\uC124\uCE58 EXE",
-  releaseHistoryVersionPrefix: "\uBC84\uC804"
+  releaseNotesEmpty: "배포 노트가 없습니다.",
+  packageCheckNeeded: "최신 패키지 확인 필요",
+  exeCheckNeeded: "최신 설치 파일 확인 필요",
+  latestJsonLoadFailed: "최신 업데이트 정보를 불러오지 못했습니다. 잠시 후 페이지를 새로고침하고, 계속 실패하면 관리자에게 업데이트 페이지 연결 상태 확인을 요청해 주세요.",
+  validation: "프로젝트명, 작성자 이름, 요청 제목, 현재 불편한 점, 원하는 개선 방향을 모두 입력해 주세요.",
+  apiMissing: "요청 목록 연결이 아직 준비되지 않았습니다. 계속 보이지 않으면 관리자에게 요청 페이지 연결 상태 확인을 요청해 주세요.",
+  copyDone: "요청 내용 복사 완료",
+  copyDefault: "요청 내용 복사",
+  copyFailed: "클립보드 복사에 실패했습니다. 내용을 직접 복사해 주세요.",
+  emptyRequests: "아직 등록된 요청이 없습니다.",
+  requestLoading: "등록된 요청을 불러오는 중입니다.",
+  requestLoadFailed: "요청 목록을 불러오지 못했습니다. 잠시 후 목록을 새로고침하고, 계속 실패하면 관리자에게 요청 페이지 연결 상태 확인을 요청해 주세요.",
+  requestCreatePending: "요청을 등록하는 중입니다. 잠시만 기다려 주세요.",
+  requestCreateDone: "요청을 등록했습니다. 아래 최근 요청에서 바로 확인할 수 있습니다.",
+  requestCreateFailed: "요청 등록에 실패했습니다. 잠시 후 다시 시도하고, 계속 실패하면 관리자에게 요청 페이지 연결 상태를 전달해 주세요.",
+  requestDeleting: "요청을 삭제하는 중입니다.",
+  requestDeleteDone: "요청을 삭제했습니다.",
+  requestDeleteFailed: "요청 삭제에 실패했습니다. 잠시 후 다시 시도하고, 계속 실패하면 관리자에게 요청 페이지 연결 상태를 전달해 주세요.",
+  requestDeleteOwnOnly: "이 PC에서 등록한 요청만 삭제할 수 있습니다.",
+  requestDeleteConfirm: "이 요청을 삭제할까요?",
+  requestDeleteButton: "요청 삭제",
+  requestRefresh: "목록 새로고침",
+  requestSubmit: "요청 등록",
+  requestSubmitLoading: "등록 중입니다.",
+  requestFrequencyFallback: "빈도 입력 없음",
+  requestIdeaPrefix: "원하는 개선 방향",
+  requestNotePrefix: "메모",
+  requestConfigHelp: "요청 목록 연결이 아직 준비되지 않아 목록을 표시할 수 없습니다. 관리자 설정이 완료되면 등록된 요청이 이곳에 표시됩니다.",
+  requestAdminDetailPrefix: "관리자 전달 정보",
+  releaseHistoryLoading: "업데이트 내역을 불러오는 중입니다.",
+  releaseHistoryEmpty: "아직 기록된 업데이트 내역이 없습니다.",
+  releaseHistoryFailed: "업데이트 내역을 불러오지 못했습니다. 잠시 후 페이지를 새로고침하고, 계속 실패하면 관리자에게 업데이트 내역 연결 상태 확인을 요청해 주세요.",
+  releaseHistoryNotesEmpty: "세부 변경 사항 기록이 없습니다.",
+  releaseHistoryZip: "업데이트 ZIP",
+  releaseHistoryExe: "설치 EXE",
+  releaseHistoryVersionPrefix: "버전"
 };
 
 function splitReleaseNote(entry) {
@@ -103,8 +104,8 @@ function setReleaseInfo(data) {
   const version = String(data.version || "").trim();
   const releaseDate = String(data.publishedAt || "-").trim() || "-";
   const zipUrl = String(data.url || "latest.json").trim() || "latest.json";
-  const packageName = zipUrl.split("/").pop() || "latest package";
-  const exeName = version ? `${packageBaseName}${version}.exe` : "latest executable";
+  const packageName = zipUrl.split("/").pop() || "최신 업데이트 패키지";
+  const exeName = version ? `${packageBaseName}${version}.exe` : "최신 설치 파일";
   const exeUrl = version ? `${packageBaseName}${version}.exe` : "latest.json";
 
   const versionElement = document.getElementById("release-version");
@@ -260,14 +261,14 @@ function buildRequestText() {
   const values = collectRequestValues();
 
   return [
-    `\uD504\uB85C\uC81D\uD2B8\uBA85: ${values.site || "-"}`,
-    `\uC791\uC131\uC790: ${values.author || "-"}`,
-    `\uC5C5\uBB34 \uC720\uD615: ${values.task || "-"}`,
-    `\uBD88\uD3B8\uD55C \uC810: ${values.problem || "-"}`,
-    `\uC788\uC73C\uBA74 \uC88B\uC740 \uAE30\uB2A5: ${values.idea || "-"}`,
-    `\uC18C\uC694 \uC2DC\uAC04: ${values.duration || "-"}`,
-    `\uBE48\uB3C4: ${values.frequency || "-"}`,
-    `\uBA54\uBAA8: ${values.note || "-"}`
+    `프로젝트명: ${values.site || "-"}`,
+    `작성자: ${values.author || "-"}`,
+    `요청 제목: ${values.task || "-"}`,
+    `현재 불편한 점: ${values.problem || "-"}`,
+    `원하는 개선 방향: ${values.idea || "-"}`,
+    `소요 시간: ${values.duration || "-"}`,
+    `빈도: ${values.frequency || "-"}`,
+    `메모: ${values.note || "-"}`
   ].join("\n");
 }
 
@@ -287,6 +288,15 @@ function setRequestStatus(message, tone = "") {
   if (tone === "success") {
     status.classList.add("is-success");
   }
+}
+
+function requestErrorMessage(userMessage, error) {
+  const detail = String(error?.message || "").trim();
+  if (!detail) {
+    return userMessage;
+  }
+
+  return `${userMessage} (${text.requestAdminDetailPrefix}: ${detail})`;
 }
 
 function validateRequest(values) {
@@ -455,7 +465,11 @@ function renderRequestList(items) {
             <strong>${site}</strong>
             <span>${date}</span>
           </div>
-          <div class="request-card-meta">${author} / ${task} / ${frequency}</div>
+          <div class="request-card-meta">
+            <span><b>작성자</b>${author}</span>
+            <span><b>요청</b>${task}</span>
+            <span><b>빈도</b>${frequency}</span>
+          </div>
           <p class="request-card-body">${problem}</p>
           <div class="request-card-idea">${text.requestIdeaPrefix}: ${idea}</div>
           ${note}
@@ -495,7 +509,7 @@ async function loadRequestList() {
     const data = await response.json();
     renderRequestList(Array.isArray(data.items) ? data.items : []);
   } catch (error) {
-    container.innerHTML = `<p class="empty-state">${text.requestLoadFailed}</p>`;
+    container.innerHTML = `<p class="empty-state">${escapeHtml(requestErrorMessage(text.requestLoadFailed, error))}</p>`;
   }
 }
 
@@ -536,7 +550,7 @@ async function submitRequest() {
         id,
         deleteToken,
         ...values,
-        source: "mobile",
+        source: "homepage",
         created_at: new Date().toISOString()
       })
     });
@@ -556,7 +570,7 @@ async function submitRequest() {
     setRequestStatus(text.requestCreateDone, "success");
     await loadRequestList();
   } catch (error) {
-    setRequestStatus(text.requestCreateFailed, "error");
+    setRequestStatus(requestErrorMessage(text.requestCreateFailed, error), "error");
   } finally {
     button.disabled = false;
     button.textContent = text.requestSubmit;
@@ -602,7 +616,7 @@ async function deleteRequest(id) {
     setRequestStatus(text.requestDeleteDone, "success");
     await loadRequestList();
   } catch (error) {
-    setRequestStatus(text.requestDeleteFailed, "error");
+    setRequestStatus(requestErrorMessage(text.requestDeleteFailed, error), "error");
   }
 }
 
