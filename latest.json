@@ -1,6 +1,6 @@
 ﻿{
-    "version":  "2.24",
-    "url":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.24.zip",
-    "publishedAt":  "2026-05-07",
-    "notes":  "수정: 문서 색상 도우미의 View Navigator에서 Revit 2019/2021/2023/2025를 함께 사용할 때 선택한 Revit 버전이 다른 버전으로 튀던 문제를 수정했습니다.|수정: View Navigator에서 다른 뷰를 선택해도 현재 활성 뷰로 되돌아가고 Go 이동이 되지 않던 문제를 수정했습니다.|개선: 버전 탭과 뷰 드롭다운 선택 상태를 안정적으로 유지하도록 Navigator 세션 추적 흐름을 보강했습니다."
+    "version":  "2.25",
+    "url":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.25.zip",
+    "publishedAt":  "2026-05-08",
+    "notes":  "수정: View Navigator에서 다른 Revit 버전이나 문서로 이동할 때 최대화된 창이 일반 창으로 풀리던 문제를 수정했습니다.|개선: View Navigator 문서 색상을 더 옅게 조정하고, 여러 문서가 열려 있을 때 서로 다른 문서가 같은 색으로 겹치지 않도록 전역 색상 배정을 보강했습니다.|개선: BQC 납품용 RVT 정리의 기본/세부 설정에서 정리 결과 폴더를 탐색기 스타일 창으로 선택할 수 있게 개선했습니다."
 }

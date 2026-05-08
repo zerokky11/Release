@@ -6,41 +6,41 @@ const draftStorageKey = "kky-tool-request-draft";
 const ownershipStorageKey = "kky-tool-request-ownership";
 
 const text = {
-  releaseNotesEmpty: "배포 노트가 없습니다.",
-  packageCheckNeeded: "최신 패키지 확인 필요",
-  exeCheckNeeded: "최신 설치 파일 확인 필요",
-  latestJsonLoadFailed: "최신 업데이트 정보를 불러오지 못했습니다. 잠시 후 페이지를 새로고침하고, 계속 실패하면 관리자에게 업데이트 페이지 연결 상태 확인을 요청해 주세요.",
+  releaseNotesEmpty: "이번 버전 변경 사항이 아직 등록되지 않았습니다.",
+  packageCheckNeeded: "업데이트 패키지를 확인할 수 없습니다.",
+  exeCheckNeeded: "설치 파일을 확인할 수 없습니다.",
+  latestJsonLoadFailed: "최신 업데이트 정보를 불러오지 못했습니다. 잠시 후 페이지를 새로고침하고, 계속 실패하면 관리자에게 업데이트 정보 연결 상태 확인을 요청해 주세요.",
   validation: "프로젝트명, 작성자 이름, 요청 제목, 현재 불편한 점, 원하는 개선 방향을 모두 입력해 주세요.",
-  apiMissing: "요청 목록 연결이 아직 준비되지 않았습니다. 계속 보이지 않으면 관리자에게 요청 페이지 연결 상태 확인을 요청해 주세요.",
+  apiMissing: "요청 저장소 연결이 아직 준비되지 않았습니다. 계속 보이지 않으면 관리자에게 요청 저장소 연결 상태 확인을 요청해 주세요.",
   copyDone: "요청 내용 복사 완료",
   copyDefault: "요청 내용 복사",
   copyFailed: "클립보드 복사에 실패했습니다. 내용을 직접 복사해 주세요.",
   emptyRequests: "아직 등록된 요청이 없습니다.",
   requestLoading: "등록된 요청을 불러오는 중입니다.",
-  requestLoadFailed: "요청 목록을 불러오지 못했습니다. 잠시 후 목록을 새로고침하고, 계속 실패하면 관리자에게 요청 페이지 연결 상태 확인을 요청해 주세요.",
+  requestLoadFailed: "요청 목록을 불러오지 못했습니다. 잠시 후 목록을 새로고침하고, 계속 실패하면 관리자에게 요청 저장소 연결 상태 확인을 요청해 주세요.",
   requestCreatePending: "요청을 등록하는 중입니다. 잠시만 기다려 주세요.",
   requestCreateDone: "요청을 등록했습니다. 아래 최근 요청에서 바로 확인할 수 있습니다.",
-  requestCreateFailed: "요청 등록에 실패했습니다. 잠시 후 다시 시도하고, 계속 실패하면 관리자에게 요청 페이지 연결 상태를 전달해 주세요.",
+  requestCreateFailed: "요청 등록에 실패했습니다. 잠시 후 다시 시도하고, 계속 실패하면 관리자에게 요청 저장소 연결 상태를 전달해 주세요.",
   requestDeleting: "요청을 삭제하는 중입니다.",
   requestDeleteDone: "요청을 삭제했습니다.",
-  requestDeleteFailed: "요청 삭제에 실패했습니다. 잠시 후 다시 시도하고, 계속 실패하면 관리자에게 요청 페이지 연결 상태를 전달해 주세요.",
+  requestDeleteFailed: "요청 삭제에 실패했습니다. 잠시 후 다시 시도하고, 계속 실패하면 관리자에게 요청 저장소 연결 상태를 전달해 주세요.",
   requestDeleteOwnOnly: "이 PC에서 등록한 요청만 삭제할 수 있습니다.",
   requestDeleteConfirm: "이 요청을 삭제할까요?",
   requestDeleteButton: "요청 삭제",
   requestRefresh: "목록 새로고침",
   requestSubmit: "요청 등록",
   requestSubmitLoading: "등록 중입니다.",
-  requestFrequencyFallback: "빈도 입력 없음",
+  requestFrequencyFallback: "반복 빈도 입력 없음",
   requestIdeaPrefix: "원하는 개선 방향",
   requestNotePrefix: "메모",
-  requestConfigHelp: "요청 목록 연결이 아직 준비되지 않아 목록을 표시할 수 없습니다. 관리자 설정이 완료되면 등록된 요청이 이곳에 표시됩니다.",
-  requestAdminDetailPrefix: "관리자 전달 정보",
+  requestConfigHelp: "요청 저장소가 아직 연결되지 않아 목록을 표시할 수 없습니다. 관리자 설정이 완료되면 등록된 요청이 이곳에 표시됩니다.",
+  requestAdminDetailPrefix: "관리자에게 전달할 정보",
   releaseHistoryLoading: "업데이트 내역을 불러오는 중입니다.",
   releaseHistoryEmpty: "아직 기록된 업데이트 내역이 없습니다.",
   releaseHistoryFailed: "업데이트 내역을 불러오지 못했습니다. 잠시 후 페이지를 새로고침하고, 계속 실패하면 관리자에게 업데이트 내역 연결 상태 확인을 요청해 주세요.",
-  releaseHistoryNotesEmpty: "세부 변경 사항 기록이 없습니다.",
-  releaseHistoryZip: "업데이트 ZIP",
-  releaseHistoryExe: "설치 EXE",
+  releaseHistoryNotesEmpty: "세부 변경 사항이 아직 등록되지 않았습니다.",
+  releaseHistoryZip: "업데이트 패키지 ZIP",
+  releaseHistoryExe: "설치 파일 EXE",
   releaseHistoryVersionPrefix: "버전"
 };
 
@@ -262,12 +262,12 @@ function buildRequestText() {
 
   return [
     `프로젝트명: ${values.site || "-"}`,
-    `작성자: ${values.author || "-"}`,
+    `작성자 이름: ${values.author || "-"}`,
     `요청 제목: ${values.task || "-"}`,
     `현재 불편한 점: ${values.problem || "-"}`,
     `원하는 개선 방향: ${values.idea || "-"}`,
-    `소요 시간: ${values.duration || "-"}`,
-    `빈도: ${values.frequency || "-"}`,
+    `현재 소요 시간: ${values.duration || "-"}`,
+    `반복 빈도: ${values.frequency || "-"}`,
     `메모: ${values.note || "-"}`
   ].join("\n");
 }
@@ -466,9 +466,9 @@ function renderRequestList(items) {
             <span>${date}</span>
           </div>
           <div class="request-card-meta">
-            <span><b>작성자</b>${author}</span>
-            <span><b>요청</b>${task}</span>
-            <span><b>빈도</b>${frequency}</span>
+            <span><b>작성자 이름</b>${author}</span>
+            <span><b>요청 제목</b>${task}</span>
+            <span><b>반복 빈도</b>${frequency}</span>
           </div>
           <p class="request-card-body">${problem}</p>
           <div class="request-card-idea">${text.requestIdeaPrefix}: ${idea}</div>

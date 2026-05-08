@@ -1,14 +1,14 @@
-# KKY Tool Lab Pages
+# KKY Tool 배포 페이지
 
-This folder is deployed as a GitHub Pages based static site for KKY Tool Revit.
+이 폴더는 KKY Tool Revit의 GitHub Pages 기반 정적 사이트로 배포된다.
 
-It now serves two roles:
+현재 역할은 다음과 같다.
 
-- update feed hosting for the add-in
-- lightweight landing page for KKY Tool downloads and feature-request direction
-- manual draft hosting under `Manual/`
+- 애드인 업데이트 피드 제공
+- KKY Tool 다운로드와 기능 요청 안내 페이지 제공
+- `Manual/` 아래의 주요 기능 매뉴얼 제공
 
-## Key files
+## 주요 파일
 
 - `index.html`
 - `assets/site.css`
@@ -20,27 +20,29 @@ It now serves two roles:
 - `CNAME`
 - `latest.json`
 
-## Current feed URL
+## 현재 업데이트 피드 주소
 
 ```text
 https://update.zerokky.com/latest.json
 ```
 
-## Release package pattern
+## 배포 패키지 파일명 기준
 
 ```text
-KKY_Tool_Revit(2019,21,23,25,27)_v{version}.exe
-KKY_Tool_Revit(2019,21,23,25,27)_v{version}.zip
+KKY_Tool_Revit(2019,21,23,25)_v{version}.exe
+KKY_Tool_Revit(2019,21,23,25)_v{version}.zip
 ```
 
-The landing page reads `latest.json` and updates the visible version, release date, and package link automatically.
+홈페이지는 `latest.json`을 읽어 화면에 보이는 최신 버전, 배포일, 다운로드 링크를 갱신한다.
 
-## Deploy note
+## 배포 메모
 
-When you upload a new release:
+새 버전을 올릴 때는 다음 순서로 확인한다.
 
-1. Add the latest `.exe` and `.zip` files to this folder.
-2. Update `latest.json`.
-3. Push this folder to the Pages repository.
+1. 최신 `.exe`와 `.zip` 파일을 이 폴더에 추가한다.
+2. `latest.json`의 버전, 날짜, 다운로드 주소, 변경 내용을 갱신한다.
+3. `release-history.json`의 최신 버전 기록을 확인한다.
+4. 이 폴더를 Pages 저장소에 푸시한다.
+5. `https://update.zerokky.com/latest.json`과 홈페이지 다운로드 링크가 새 파일을 가리키는지 확인한다.
 
-Updated on 2026-03-22.
+마지막 정리: 2026-05-06.

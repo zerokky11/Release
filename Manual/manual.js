@@ -1,4 +1,5 @@
 const searchInput = document.getElementById("feature-search");
+const emptyState = document.getElementById("feature-empty-state");
 const filterButtons = Array.from(document.querySelectorAll(".filter-chip"));
 const featureEntries = Array.from(document.querySelectorAll(".feature-entry"));
 const anchorLinks = Array.from(document.querySelectorAll(".manual-anchor-nav a"));
@@ -34,11 +35,19 @@ function matchesSearch(entry, query) {
 
 function updateFeatureVisibility() {
   const query = normalizeText(searchInput ? searchInput.value : "");
+  let visibleCount = 0;
 
   featureEntries.forEach((entry) => {
     const visible = matchesFilter(entry) && matchesSearch(entry, query);
     entry.classList.toggle("is-hidden", !visible);
+    if (visible) {
+      visibleCount += 1;
+    }
   });
+
+  if (emptyState) {
+    emptyState.hidden = visibleCount > 0;
+  }
 }
 
 function setFilter(value) {
