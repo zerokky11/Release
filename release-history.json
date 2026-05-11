@@ -1,5 +1,17 @@
 ﻿[
     {
+        "version":  "2.26",
+        "publishedAt":  "2026-05-11",
+        "title":  "버전 2.26",
+        "notes":  [
+                      "수정: 프로젝트/공유 파라미터 일괄 추가에서 파라미터 설정 버튼을 눌렀을 때 화면 처리 오류가 발생하던 문제를 수정했습니다.",
+                      "개선: Hub UI 캐시 버전을 갱신해 프로젝트 파라미터 설정 창 수정 사항이 새 버전에 바로 반영되도록 했습니다.",
+                      "정리: 배포 패키지의 Hub UI 리소스에 남아 있던 오래된 백업 파일을 정리했습니다."
+                  ],
+        "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.26.zip",
+        "installerUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.26.exe"
+    },
+    {
         "version":  "2.25",
         "publishedAt":  "2026-05-08",
         "title":  "버전 2.25",
