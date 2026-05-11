@@ -1,5 +1,17 @@
 ﻿[
     {
+        "version":  "2.27",
+        "publishedAt":  "2026-05-11",
+        "title":  "버전 2.27",
+        "notes":  [
+                      "수정: BQC 속성 누락 검토의 객체 필터에서 조건 추가 시 기존 입력값이 유지되고 새 조건 행이 정상 추가되도록 수정했습니다.",
+                      "수정: 객체 필터 설정을 다시 열거나 프리셋을 저장/불러올 때 필터 조건이 유지되도록 보강했습니다.",
+                      "정리: Hub UI 캐시 버전을 갱신해 수정된 설정 화면이 새 배포에서 바로 반영되도록 했습니다."
+                  ],
+        "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.27.zip",
+        "installerUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.27.exe"
+    },
+    {
         "version":  "2.26",
         "publishedAt":  "2026-05-11",
         "title":  "버전 2.26",
