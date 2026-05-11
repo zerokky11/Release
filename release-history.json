@@ -1,17 +1,5 @@
 ﻿[
     {
-        "version":  "2.27",
-        "publishedAt":  "2026-05-11",
-        "title":  "버전 2.27",
-        "notes":  [
-                      "기능 추가: BQC 속성 누락검토 설정에 검토 대상 객체 필터를 추가했습니다.",
-                      "개선: Category/Family 조건을 전용 필터에서 사용할 수 있도록 보강해 특정 카테고리 또는 패밀리만 검토하거나 제외할 수 있게 했습니다.",
-                      "개선: 공통 검토대상 필터 이후 기능 전용 필터와 누락 예외 조건을 함께 요약하도록 다중 검토 안내를 정리했습니다."
-                  ],
-        "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.27.zip",
-        "installerUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.27.exe"
-    },
-    {
         "version":  "2.26",
         "publishedAt":  "2026-05-11",
         "title":  "버전 2.26",
