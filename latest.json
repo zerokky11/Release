@@ -1,6 +1,6 @@
 ﻿{
-    "version":  "2.28",
-    "url":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.28.zip",
+    "version":  "2.29",
+    "url":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.29.zip",
     "publishedAt":  "2026-05-13",
-    "notes":  "개선: 패밀리 타입 적합성 검토에서 Runs가 포함된 카테고리를 검토 대상에서 제외했습니다.|개선: 패밀리 타입 적합성 결과 엑셀에서 Status 보조 헤더를 제거해 결과표를 더 깔끔하게 정리했습니다.|개선: BQC 속성 누락 검토와 웍셋 배정 검토의 대량 모델 처리 및 엑셀 추출 성능을 보강했습니다."
+    "notes":  "수정: 층정보 파라미터 검토에서 선택한 기준 레벨마다 기대 층정보 값을 입력하도록 보강했습니다.|수정: 레벨 Z 기준을 객체 BoundingBox/Location과 같은 모델 기준 Z(ProjectElevation)로 맞춰 층 판정을 안정화했습니다.|개선: 레벨 표시 기준과 모델 기준 Z가 다를 때 경고를 표시하고 UI 문구를 모델 기준 Z로 정리했습니다."
 }
