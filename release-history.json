@@ -1,5 +1,17 @@
 ﻿[
     {
+        "version":  "2.28",
+        "publishedAt":  "2026-05-13",
+        "title":  "버전 2.28",
+        "notes":  [
+                      "개선: 패밀리 타입 적합성 검토에서 Runs가 포함된 카테고리를 검토 대상에서 제외했습니다.",
+                      "개선: 패밀리 타입 적합성 결과 엑셀에서 Status 보조 헤더를 제거해 결과표를 더 깔끔하게 정리했습니다.",
+                      "개선: BQC 속성 누락 검토와 웍셋 배정 검토의 대량 모델 처리 및 엑셀 추출 성능을 보강했습니다."
+                  ],
+        "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.28.zip",
+        "installerUrl":  "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25)_v2.28.exe"
+    },
+    {
         "version":  "2.27",
         "publishedAt":  "2026-05-11",
         "title":  "버전 2.27",
@@ -9,7 +21,7 @@
                       "정리: Hub UI 캐시 버전을 갱신해 수정된 설정 화면이 새 배포에서 바로 반영되도록 했습니다."
                   ],
         "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.27.zip",
-        "installerUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.27.exe"
+        "installerUrl":  "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25)_v2.27.exe"
     },
     {
         "version":  "2.26",
@@ -21,7 +33,7 @@
                       "정리: 배포 패키지의 Hub UI 리소스에 남아 있던 오래된 백업 파일을 정리했습니다."
                   ],
         "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.26.zip",
-        "installerUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.26.exe"
+        "installerUrl":  "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25)_v2.26.exe"
     },
     {
         "version":  "2.25",
@@ -33,7 +45,7 @@
                       "개선: BQC 납품용 RVT 정리의 기본/세부 설정에서 정리 결과 폴더를 탐색기 스타일 창으로 선택할 수 있게 개선했습니다."
                   ],
         "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.25.zip",
-        "installerUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.25.exe"
+        "installerUrl":  "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25)_v2.25.exe"
     },
     {
         "version":  "2.24",
@@ -45,7 +57,7 @@
                       "개선: 버전 탭과 뷰 드롭다운 선택 상태를 안정적으로 유지하도록 Navigator 세션 추적 흐름을 보강했습니다."
                   ],
         "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.24.zip",
-        "installerUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.24.exe"
+        "installerUrl":  "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25)_v2.24.exe"
     },
     {
         "version":  "2.23",
@@ -57,7 +69,7 @@
                       "보강: 버전 확인/업데이트 실패 안내와 Windows 프로그램 목록 표시 버전 동기화를 보강했습니다."
                   ],
         "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.23.zip",
-        "installerUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.23.exe"
+        "installerUrl":  "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25)_v2.23.exe"
     },
     {
         "version":  "2.22",
@@ -70,7 +82,7 @@
                       "수정: Revit 2025 리소스 경로와 업데이트/배포 스크립트 안정성을 정리했습니다."
                   ],
         "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.22.zip",
-        "installerUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.22.exe"
+        "installerUrl":  "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25)_v2.22.exe"
     },
     {
         "version":  "2.21",
@@ -80,7 +92,7 @@
                       "수정: 중복 객체 검토 결과 엑셀 추출 과정에서 발생하던 오류 항목을 수정했습니다."
                   ],
         "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.21.zip",
-        "installerUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.21.exe"
+        "installerUrl":  "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25)_v2.21.exe"
     },
     {
         "version":  "2.20",
@@ -93,7 +105,7 @@
                       "기능 개선: 다중 검토 화면의 뷰 탐색, 중복/자체 간섭 검토 흐름, 조건별 객체 속성 추출, GUID/패밀리 연동, Connector, 공유파라미터 일괄 추가 흐름을 보강했습니다."
                   ],
         "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.20.zip",
-        "installerUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.20.exe"
+        "installerUrl":  "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25)_v2.20.exe"
     },
     {
         "version":  "2.14",
@@ -105,7 +117,7 @@
                       "기능 수정: 패밀리 연동 검토와 RVT 정리 조건 처리 흐름을 보강했습니다."
                   ],
         "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.14.zip",
-        "installerUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.14.exe"
+        "installerUrl":  "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25)_v2.14.exe"
     },
     {
         "version":  "2.13",
@@ -117,7 +129,7 @@
                       "수정: 기능 요청 연동을 위한 Google Sheets 안내 문서를 정리했습니다."
                   ],
         "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.13.zip",
-        "installerUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.13.exe"
+        "installerUrl":  "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25)_v2.13.exe"
     },
     {
         "version":  "2.12",
@@ -127,7 +139,7 @@
                       "수정: v2.12 배포 패키지를 공개하고 홈페이지 다운로드 기준을 갱신했습니다."
                   ],
         "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.12.zip",
-        "installerUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.12.exe"
+        "installerUrl":  "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25)_v2.12.exe"
     },
     {
         "version":  "2.11",
@@ -139,7 +151,7 @@
                       "수정: 공유 페이지 문구와 구성을 읽기 쉽게 다듬었습니다."
                   ],
         "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.11.zip",
-        "installerUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.11.exe"
+        "installerUrl":  "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25)_v2.11.exe"
     },
     {
         "version":  "2.10",
@@ -149,6 +161,6 @@
                       "수정: 홈페이지와 요청 페이지 글꼴 깨짐을 정리하고 문구를 보기 쉽게 다듬었습니다."
                   ],
         "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.10.zip",
-        "installerUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.10.exe"
+        "installerUrl":  "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25)_v2.10.exe"
     }
 ]
