@@ -33,6 +33,10 @@ export default {
         return await handleFamilyBrowser(request, env, cors, pathname, url);
       }
 
+      if (pathname === "/family-browser" || pathname.startsWith("/family-browser/")) {
+        return await handleFamilyBrowserStatic(request, env, cors, pathname);
+      }
+
       return jsonResponse({ ok: false, message: "not_found" }, 404, cors);
     } catch (error) {
       const status = Number(error.status) || 500;
@@ -120,6 +124,47 @@ async function proxyRequests(request, env, cors) {
     status: response.status,
     headers: noStoreHeaders(cors, contentType)
   });
+}
+
+async function handleFamilyBrowserStatic(request, env, cors, pathname) {
+  if (request.method !== "GET" && request.method !== "HEAD") {
+    throw new HttpError(405, "method_not_allowed");
+  }
+
+  const repoPath = resolveFamilyBrowserStaticPath(pathname);
+  const content = request.method === "HEAD" ? "" : await readGitHubFile(env, repoPath);
+  return new Response(content, {
+    status: 200,
+    headers: noStoreHeaders(cors, contentTypeForPath(repoPath))
+  });
+}
+
+function resolveFamilyBrowserStaticPath(pathname) {
+  let value = String(pathname || "/family-browser")
+    .replace(/^\/+/, "")
+    .replace(/\/+$/, "");
+
+  if (value === "family-browser") {
+    value = "family-browser/index.html";
+  }
+
+  if (!value.startsWith("family-browser/") || value.includes("..") || value.includes("//")) {
+    throw new HttpError(400, "invalid_static_path");
+  }
+
+  return value;
+}
+
+function contentTypeForPath(path) {
+  const value = String(path || "").toLowerCase();
+  if (value.endsWith(".html")) return "text/html; charset=utf-8";
+  if (value.endsWith(".css")) return "text/css; charset=utf-8";
+  if (value.endsWith(".js")) return "application/javascript; charset=utf-8";
+  if (value.endsWith(".json")) return "application/json; charset=utf-8";
+  if (value.endsWith(".svg")) return "image/svg+xml; charset=utf-8";
+  if (value.endsWith(".png")) return "image/png";
+  if (value.endsWith(".jpg") || value.endsWith(".jpeg")) return "image/jpeg";
+  return "application/octet-stream";
 }
 
 async function handleFamilyBrowser(request, env, cors, pathname, url) {

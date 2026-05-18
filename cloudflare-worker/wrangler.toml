@@ -4,7 +4,8 @@ compatibility_date = "2026-05-18"
 workers_dev = false
 
 routes = [
-  { pattern = "update.zerokky.com/api/*", zone_name = "zerokky.com" }
+  { pattern = "update.zerokky.com/api/*", zone_name = "zerokky.com" },
+  { pattern = "update.zerokky.com/family-browser*", zone_name = "zerokky.com" }
 ]
 
 [vars]
