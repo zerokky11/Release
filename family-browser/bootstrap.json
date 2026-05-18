@@ -1,11 +1,17 @@
 {
-  "version": "2026.04.29-samoo-test",
-  "message": "SAMOO Family Browser shared test deployment",
+  "version": "2026.05.18-kcim-test",
+  "message": "KCIM Family Browser shared test deployment",
   "refreshMinutes": 5,
-  "managedPolicyPath": "Z:\\20. NICE DCV\\01. SAMOO\\Family Test\\Config\\standard-policy.json",
+  "managedPolicyPath": "I:\\30. 협력사 전용폴더\\00. BIM_KCIM\\02. 패밀리\\TEST\\Config\\standard-policy.json",
+  "managedPolicyPathCandidates": [
+    "I:\\30. 협력사 전용폴더\\00. BIM_KCIM\\02. 패밀리\\TEST\\Config\\standard-policy.json"
+  ],
   "requestStore": {
     "mode": "NetworkShare",
-    "path": "Z:\\20. NICE DCV\\01. SAMOO\\Family Test\\Requests",
+    "path": "I:\\30. 협력사 전용폴더\\00. BIM_KCIM\\02. 패밀리\\TEST\\Requests",
+    "pathCandidates": [
+      "I:\\30. 협력사 전용폴더\\00. BIM_KCIM\\02. 패밀리\\TEST\\Requests"
+    ],
     "endpoint": ""
   },
   "standardMode": "DisciplineSeparated",
