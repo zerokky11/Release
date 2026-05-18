@@ -1,7 +1,11 @@
 {
-  "version": "2026.05.18-kcim-test",
+  "version": "2026.05.19-kcim-test",
   "message": "KCIM Family Browser shared test deployment",
   "refreshMinutes": 5,
+  "managedRootPath": "I:\\30. 협력사 전용폴더\\00. BIM_KCIM\\02. 패밀리\\TEST",
+  "managedRootPathCandidates": [
+    "I:\\30. 협력사 전용폴더\\00. BIM_KCIM\\02. 패밀리\\TEST"
+  ],
   "managedPolicyPath": "I:\\30. 협력사 전용폴더\\00. BIM_KCIM\\02. 패밀리\\TEST\\Config\\standard-policy.json",
   "managedPolicyPathCandidates": [
     "I:\\30. 협력사 전용폴더\\00. BIM_KCIM\\02. 패밀리\\TEST\\Config\\standard-policy.json"

@@ -1,11 +1,11 @@
 {
-  "version": "2026.05.18",
+  "version": "2026.05.19",
   "defaultProfileId": "default",
   "profiles": [
     {
       "id": "default",
-      "name": "Default",
-      "description": "Default Family Browser shared settings",
+      "name": "KCIM TEST",
+      "description": "KCIM Family Browser shared test deployment",
       "url": "bootstrap.json"
     }
   ],

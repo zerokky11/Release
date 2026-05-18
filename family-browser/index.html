@@ -10,40 +10,46 @@
   <style>
     .settings-grid { display: grid; gap: 18px; }
     .settings-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-    .settings-field label { display: block; margin-bottom: 8px; color: var(--accent-3); font-size: 13px; }
+    .settings-field label { display: block; margin-bottom: 8px; color: var(--accent-3); font-size: 13px; font-weight: 700; }
     .settings-field input,
-    .settings-field select,
     .settings-field textarea {
       width: 100%;
-      padding: 12px 16px;
+      padding: 12px 14px;
       border: 1px solid var(--border);
       border-radius: 2px;
       background: #fafbfc;
       color: var(--title);
       font-size: 14px;
+      line-height: 1.45;
     }
-    .settings-field textarea { min-height: 92px; resize: vertical; }
+    .settings-field textarea { min-height: 88px; resize: vertical; }
+    .settings-help { margin: 6px 0 0; color: var(--subtle); font-size: 13px; line-height: 1.55; }
     .settings-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
-    .settings-actions button {
+    .settings-actions button,
+    .path-row button {
       padding: 11px 16px;
       border: 1px solid var(--border);
       border-radius: 2px;
       background: #fff;
       color: var(--body);
       cursor: pointer;
+      font-size: 14px;
     }
     .settings-actions .primary {
       border-color: var(--accent-3);
       background: linear-gradient(90deg, var(--accent-3), var(--accent-4));
       color: #fff;
+      font-weight: 700;
     }
-    .settings-help { margin: 6px 0 0; color: var(--subtle); font-size: 13px; line-height: 1.55; }
+    .path-list { display: grid; gap: 10px; }
+    .path-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: center; }
+    .path-row input { font-family: Consolas, "Courier New", monospace; }
     .settings-status { margin-top: 14px; color: var(--subtle); font-size: 14px; line-height: 1.6; }
     .settings-status.good { color: #2d6a4f; }
     .settings-status.warn { color: #8a6200; }
     .settings-status.bad { color: #9a4a4a; }
     .settings-preview {
-      max-height: 420px;
+      max-height: 360px;
       overflow: auto;
       margin: 18px 0 0;
       padding: 16px;
@@ -56,7 +62,11 @@
       word-break: break-word;
     }
     .hidden { display: none; }
-    @media (max-width: 720px) { .settings-row { grid-template-columns: 1fr; } }
+    @media (max-width: 720px) {
+      .settings-row,
+      .path-row { grid-template-columns: 1fr; }
+      .path-row button { width: 100%; }
+    }
   </style>
 </head>
 <body>
@@ -80,9 +90,9 @@
         <section class="section">
           <h1 class="page-heading">패밀리 브라우저 경로</h1>
           <div class="panel panel-soft">
-            <h2>현장별 Family Browser 공유 경로를 관리합니다</h2>
-            <p>프로필 JSON에는 네트워크 드라이브, UNC 경로 등 여러 후보 경로를 줄 단위로 등록할 수 있습니다.</p>
-            <p>Family Browser는 프로젝트 규칙 또는 기본 프로필을 따라가고, 후보 경로 중 접근 가능한 첫 경로를 사용합니다.</p>
+            <h2>Family Browser 관리 폴더를 한 곳에서 관리합니다</h2>
+            <p>관리 폴더 후보 경로를 여러 개 등록하면 애드인이 위에서부터 접근 가능한 경로를 찾습니다.</p>
+            <p>성공한 경로는 PC에 기억되고, 다음 실행 때 그 경로를 우선 사용합니다.</p>
             <p class="muted">서버 저장은 관리자 비밀번호로 동작합니다. GitHub 토큰은 브라우저에 노출되지 않습니다.</p>
           </div>
         </section>
@@ -105,166 +115,29 @@
             <div class="settings-grid">
               <div class="settings-row">
                 <div class="settings-field">
-                  <label for="profileSelect">프로필 선택</label>
-                  <select id="profileSelect"></select>
-                </div>
-                <div class="settings-field">
-                  <label for="defaultProfileId">기본 프로필 ID</label>
-                  <input id="defaultProfileId" placeholder="default">
-                </div>
-              </div>
-              <div class="settings-actions">
-                <button id="loadIndex" type="button">프로필 목록 새로고침</button>
-                <button id="loadProfile" type="button">선택 프로필 불러오기</button>
-              </div>
-
-              <div class="settings-row">
-                <div class="settings-field">
-                  <label for="profileId">프로필 ID</label>
-                  <input id="profileId" placeholder="pi-site-a">
-                </div>
-                <div class="settings-field">
                   <label for="profileName">프로필 이름</label>
-                  <input id="profileName" placeholder="PI Site A">
-                </div>
-              </div>
-              <div class="settings-field">
-                <label for="profileDescription">프로필 설명</label>
-                <input id="profileDescription" placeholder="현장 A PI 표준 경로">
-              </div>
-              <label class="settings-help">
-                <input id="makeDefaultProfile" type="checkbox"> 이 프로필을 기본값으로 사용
-              </label>
-
-              <div class="settings-row">
-                <div class="settings-field">
-                  <label for="projectNameContains">프로젝트명 포함 조건</label>
-                  <input id="projectNameContains" placeholder="04.PI">
+                  <input id="profileName" placeholder="예: KCIM TEST">
                 </div>
                 <div class="settings-field">
-                  <label for="centralPathContains">중앙/모델 경로 포함 조건</label>
-                  <input id="centralPathContains" placeholder="PI_Central">
-                </div>
-              </div>
-
-              <div class="settings-row">
-                <div class="settings-field">
-                  <label for="version">버전 라벨</label>
-                  <input id="version" placeholder="2026.05.18">
-                </div>
-                <div class="settings-field">
-                  <label for="refreshMinutes">새로고침 간격(분)</label>
-                  <input id="refreshMinutes" type="number" min="1" step="1" value="30">
-                </div>
-              </div>
-              <div class="settings-field">
-                <label for="message">관리자 메시지</label>
-                <input id="message" placeholder="Family Browser shared settings">
-              </div>
-
-              <div class="settings-field">
-                <label for="managedPolicyPath">공유 정책 JSON 경로</label>
-                <input id="managedPolicyPath" placeholder="\\SERVER\KKY\FamilyBrowser\Config\standard-policy.json">
-                <p class="settings-help">단일 기준 경로입니다. 후보 경로가 있으면 후보 중 접근 가능한 경로가 우선 적용됩니다.</p>
-              </div>
-              <div class="settings-field">
-                <label for="managedPolicyPathCandidates">공유 정책 JSON 후보 경로</label>
-                <textarea id="managedPolicyPathCandidates" spellcheck="false" placeholder="Z:\FamilyBrowser\SiteA\Config\standard-policy.json&#10;\\SERVER\KKY\FamilyBrowser\SiteA\Config\standard-policy.json"></textarea>
-                <p class="settings-help">한 줄에 하나씩 입력합니다.</p>
-              </div>
-
-              <div class="settings-row">
-                <div class="settings-field">
-                  <label for="requestStoreMode">요청 저장소 방식</label>
-                  <select id="requestStoreMode">
-                    <option value="NetworkShare">NetworkShare</option>
-                    <option value="Local">Local</option>
-                    <option value="CloudStorage">CloudStorage</option>
-                    <option value="SharePoint">SharePoint</option>
-                    <option value="Api">Api</option>
-                  </select>
-                </div>
-                <div class="settings-field">
-                  <label for="standardMode">표준 모드</label>
-                  <select id="standardMode">
-                    <option value="DisciplineSeparated">DisciplineSeparated</option>
-                    <option value="Integrated">Integrated</option>
-                  </select>
+                  <label for="message">관리자 메시지</label>
+                  <input id="message" placeholder="예: KCIM Family Browser 공유 설정">
                 </div>
               </div>
 
               <div class="settings-field">
-                <label for="requestStorePath">패밀리 요청 저장 경로</label>
-                <input id="requestStorePath" placeholder="\\SERVER\KKY\FamilyBrowser\Requests">
-              </div>
-              <div class="settings-field">
-                <label for="requestStorePathCandidates">패밀리 요청 후보 경로</label>
-                <textarea id="requestStorePathCandidates" spellcheck="false" placeholder="Z:\FamilyBrowser\SiteA\Requests&#10;\\SERVER\KKY\FamilyBrowser\SiteA\Requests"></textarea>
-              </div>
-              <div class="settings-field">
-                <label for="requestStoreEndpoint">패밀리 요청 API 주소(선택)</label>
-                <input id="requestStoreEndpoint" placeholder="https://internal.example.com/family-browser/requests">
+                <label>패밀리 브라우저 관리 폴더 경로</label>
+                <div class="path-list" id="pathList"></div>
+                <p class="settings-help">한 칸에 하나의 관리 폴더를 입력합니다. 예: I:\30. 협력사 전용폴더\00. BIM_KCIM\02. 패밀리\TEST</p>
+                <p class="settings-help">애드인은 이 폴더 아래의 Config, Requests, Registry, Snapshots, Thumbnails 폴더를 기준으로 사용합니다.</p>
+                <div class="settings-actions">
+                  <button id="addPath" type="button">경로 추가</button>
+                </div>
               </div>
 
-              <div class="settings-field">
-                <label for="standardLibraries">표준 RVT/엑셀 리스트 JSON 배열</label>
-                <textarea id="standardLibraries" spellcheck="false" placeholder='[
-  {
-    "discipline": "PI",
-    "displayName": "PI",
-    "standardRvtPathCandidates": [
-      "Z:\\Standards\\PI.rvt",
-      "\\\\SERVER\\Standards\\PI.rvt"
-    ],
-    "standardListPathCandidates": [
-      "Z:\\Standards\\PI.xlsx",
-      "\\\\SERVER\\Standards\\PI.xlsx"
-    ]
-  }
-]'></textarea>
-              </div>
-
-              <div class="settings-row">
-                <div class="settings-field">
-                  <label for="adminUsers">관리자 사용자/키워드</label>
-                  <input id="adminUsers" placeholder="KKY;Admin;BIM">
-                </div>
-                <div class="settings-field">
-                  <label for="requestApproverUsers">요청 승인 사용자/키워드</label>
-                  <input id="requestApproverUsers" placeholder="Lead;Manager">
-                </div>
-              </div>
-              <div class="settings-field">
-                <label for="readOnlyUsers">읽기 전용 사용자/키워드</label>
-                <input id="readOnlyUsers" placeholder="Viewer;Guest">
-              </div>
-
-              <div class="settings-row hidden">
-                <div class="settings-field">
-                  <label for="githubOwner">GitHub Owner</label>
-                  <input id="githubOwner" value="zerokky11">
-                </div>
-                <div class="settings-field">
-                  <label for="githubRepo">GitHub Repository</label>
-                  <input id="githubRepo" value="Release">
-                </div>
-              </div>
-              <div class="settings-row">
-                <div class="settings-field hidden">
-                  <label for="githubBranch">브랜치</label>
-                  <input id="githubBranch" value="main">
-                </div>
-                <div class="settings-field">
-                  <label for="githubPath">저장 파일 경로</label>
-                  <input id="githubPath" value="family-browser/bootstrap.json">
-                </div>
-              </div>
               <div class="settings-actions">
-                <button class="primary" id="build" type="button">JSON 미리보기</button>
-                <button id="copy" type="button">복사</button>
-                <button id="download" type="button">다운로드</button>
-                <button id="saveGithub" type="button">서버에 저장</button>
-                <button id="loadCurrent" type="button">현재 JSON 불러오기</button>
+                <button id="loadCurrent" type="button">현재 설정 불러오기</button>
+                <button id="build" type="button">JSON 미리보기</button>
+                <button class="primary" id="saveGithub" type="button">서버에 저장</button>
               </div>
               <div class="settings-status" id="editor-status"></div>
               <pre class="settings-preview" id="preview"></pre>
@@ -278,58 +151,98 @@
   <script>
     (function () {
       var PASSWORD_SHA256 = '578647f84f744607d061c4da2b27f663946e15c7f12abbe0a2d2130ad56a7626';
-      var DEFAULT_BOOTSTRAP_PATH = 'bootstrap.json';
-      var INDEX_FETCH_PATH = 'bootstrap-index.json';
+      var BOOTSTRAP_REPO_PATH = 'family-browser/bootstrap.json';
       var INDEX_REPO_PATH = 'family-browser/bootstrap-index.json';
       var WORKER_FILE_API = '../api/family-browser/file';
-      var currentIndex = null;
       var currentAdminPassword = '';
+      var preservedBootstrap = {};
+      var currentIndex = null;
 
       function byId(id) { return document.getElementById(id); }
+
       function setStatus(id, text, cls) {
         var el = byId(id);
         if (!el) return;
         el.textContent = text || '';
         el.className = 'settings-status' + (cls ? ' ' + cls : '');
       }
-      function splitList(value) {
-        return (value || '').split(/[;\n,]/).map(function (item) { return item.trim(); }).filter(Boolean);
+
+      function uniqueList(items) {
+        var seen = {};
+        var result = [];
+        (items || []).forEach(function (item) {
+          var value = (item || '').trim();
+          var key = value.toLowerCase();
+          if (!value || seen[key]) return;
+          seen[key] = true;
+          result.push(value);
+        });
+        return result;
       }
-      function splitLines(value) {
-        return (value || '').split(/\r?\n/).map(function (item) { return item.trim(); }).filter(Boolean);
+
+      function trimTrailingSlash(value) {
+        return (value || '').trim().replace(/[\\\/]+$/, '');
       }
-      function normalizeNumber(value, fallback) {
-        var n = Number(value);
-        return Number.isFinite(n) && n > 0 ? n : fallback;
+
+      function pathSeparator(value) {
+        return value.indexOf('\\') >= 0 ? '\\' : '/';
       }
-      function normalizeId(value) {
-        return (value || '').trim().toLowerCase().replace(/[^a-z0-9_-]+/g, '-').replace(/^-+|-+$/g, '') || 'default';
+
+      function looksLikeJsonPath(value) {
+        return /\.json$/i.test((value || '').trim());
       }
-      function repoPathToFetchPath(path) {
-        var value = (path || '').trim().replace(/\\/g, '/');
-        if (!value) return DEFAULT_BOOTSTRAP_PATH;
-        if (/^https?:\/\//i.test(value)) return value;
-        if (value.indexOf('family-browser/') === 0) return value.substring('family-browser/'.length);
-        return value;
+
+      function appendPath(base, child) {
+        var value = trimTrailingSlash(base);
+        if (!value) return child;
+        return value + pathSeparator(value) + child;
       }
-      function repoPathToIndexUrl(path) {
-        var value = (path || '').trim().replace(/\\/g, '/');
-        if (!value) return 'bootstrap.json';
-        if (/^https?:\/\//i.test(value)) return value;
-        if (value.indexOf('family-browser/') === 0) return value.substring('family-browser/'.length);
-        return value;
+
+      function rootToPolicyPath(root) {
+        var value = trimTrailingSlash(root);
+        if (!value) return '';
+        if (looksLikeJsonPath(value)) return value;
+        return appendPath(appendPath(value, 'Config'), 'standard-policy.json');
       }
+
+      function rootToRequestPath(root) {
+        var value = trimTrailingSlash(root);
+        if (!value) return '';
+        if (looksLikeJsonPath(value)) {
+          var rootPath = policyPathToRoot(value);
+          return rootPath ? appendPath(rootPath, 'Requests') : '';
+        }
+        return appendPath(value, 'Requests');
+      }
+
+      function policyPathToRoot(path) {
+        var value = trimTrailingSlash(path);
+        var normalized = value.replace(/\//g, '\\').toLowerCase();
+        var suffix = '\\config\\standard-policy.json';
+        if (normalized.slice(-suffix.length) === suffix) {
+          return value.slice(0, value.length - suffix.length);
+        }
+        return '';
+      }
+
+      function profileNameToId(value) {
+        var id = (value || '').trim().toLowerCase().replace(/[^a-z0-9_-]+/g, '-').replace(/^-+|-+$/g, '');
+        return id || 'default';
+      }
+
       function toHex(buffer) {
         return Array.prototype.map.call(new Uint8Array(buffer), function (b) {
           return b.toString(16).padStart(2, '0');
         }).join('');
       }
+
       function sha256(text) {
         if (!window.crypto || !window.crypto.subtle || !window.TextEncoder) {
           return Promise.reject(new Error('이 브라우저에서는 비밀번호 확인을 사용할 수 없습니다.'));
         }
         return crypto.subtle.digest('SHA-256', new TextEncoder().encode(text)).then(toHex);
       }
+
       function unlock() {
         var password = byId('password').value || '';
         sha256(password).then(function (hash) {
@@ -340,105 +253,112 @@
           currentAdminPassword = password;
           byId('lock-panel').classList.add('hidden');
           byId('editor-panel').classList.remove('hidden');
-          loadIndex().then(loadCurrent);
+          loadCurrent();
         }).catch(function (err) {
           setStatus('lock-status', err.message || String(err), 'bad');
         });
       }
-      function defaultIndex() {
-        return {
-          version: '2026.05.18',
-          defaultProfileId: 'default',
-          profiles: [{ id: 'default', name: 'Default', description: 'Default Family Browser shared settings', url: 'bootstrap.json' }],
-          projectRules: []
-        };
-      }
-      function populateProfileSelect(index) {
-        var select = byId('profileSelect');
-        select.innerHTML = '';
-        (index.profiles || []).forEach(function (profile) {
-          if (!profile || profile.disabled) return;
-          var option = document.createElement('option');
-          option.value = profile.id || '';
-          option.textContent = (profile.name || profile.id || 'Profile') + ' - ' + (profile.url || '');
-          select.appendChild(option);
+
+      function createPathRow(value) {
+        var row = document.createElement('div');
+        row.className = 'path-row';
+
+        var input = document.createElement('input');
+        input.type = 'text';
+        input.placeholder = 'I:\\FamilyBrowser\\ProjectA';
+        input.value = value || '';
+        input.addEventListener('input', buildJson);
+
+        var remove = document.createElement('button');
+        remove.type = 'button';
+        remove.textContent = '삭제';
+        remove.addEventListener('click', function () {
+          row.parentNode.removeChild(row);
+          if (!byId('pathList').querySelector('.path-row')) addPathRow('');
+          buildJson();
         });
-        byId('defaultProfileId').value = index.defaultProfileId || 'default';
-        select.value = index.defaultProfileId || '';
+
+        row.appendChild(input);
+        row.appendChild(remove);
+        byId('pathList').appendChild(row);
       }
-      function selectedProfile() {
-        var id = byId('profileSelect').value || '';
-        return ((currentIndex && currentIndex.profiles) || []).filter(function (profile) { return profile.id === id; })[0] || null;
+
+      function addPathRow(value) {
+        createPathRow(value || '');
       }
-      function fillProfileMeta(profile) {
-        profile = profile || {};
-        byId('profileId').value = profile.id || '';
-        byId('profileName').value = profile.name || '';
-        byId('profileDescription').value = profile.description || '';
-        byId('githubPath').value = profile.url && !/^https?:\/\//i.test(profile.url) ? 'family-browser/' + profile.url.replace(/^family-browser\//, '') : 'family-browser/bootstrap.json';
-        byId('makeDefaultProfile').checked = !!(currentIndex && profile.id && currentIndex.defaultProfileId === profile.id);
+
+      function getRootPaths() {
+        return uniqueList(Array.prototype.map.call(byId('pathList').querySelectorAll('input'), function (input) {
+          return input.value;
+        }));
       }
-      function loadIndex() {
-        return fetch(INDEX_FETCH_PATH, { cache: 'no-store' })
-          .then(function (response) {
-            if (!response.ok) throw new Error('bootstrap-index.json이 아직 없습니다.');
-            return response.json();
-          })
-          .then(function (index) {
-            currentIndex = index || defaultIndex();
-            if (!Array.isArray(currentIndex.profiles)) currentIndex.profiles = [];
-            if (!Array.isArray(currentIndex.projectRules)) currentIndex.projectRules = [];
-            populateProfileSelect(currentIndex);
-            fillProfileMeta(selectedProfile() || currentIndex.profiles[0]);
-            setStatus('editor-status', '프로필 목록을 불러왔습니다.', 'good');
-            return currentIndex;
-          })
-          .catch(function (err) {
-            currentIndex = defaultIndex();
-            populateProfileSelect(currentIndex);
-            fillProfileMeta(currentIndex.profiles[0]);
-            setStatus('editor-status', err.message + ' 저장 시 새로 생성됩니다.', 'warn');
-            return currentIndex;
+
+      function setRootPaths(paths) {
+        byId('pathList').innerHTML = '';
+        var clean = uniqueList(paths);
+        if (!clean.length) clean = [''];
+        clean.forEach(addPathRow);
+      }
+
+      function readRootPathsFromBootstrap(data) {
+        var roots = [];
+        if (data.managedRootPath) roots.push(data.managedRootPath);
+        if (Array.isArray(data.managedRootPathCandidates)) roots = roots.concat(data.managedRootPathCandidates);
+        if (data.managedPolicyPath) roots.push(policyPathToRoot(data.managedPolicyPath) || data.managedPolicyPath);
+        if (Array.isArray(data.managedPolicyPathCandidates)) {
+          data.managedPolicyPathCandidates.forEach(function (path) {
+            roots.push(policyPathToRoot(path) || path);
           });
+        }
+        return uniqueList(roots);
       }
-      function collectBootstrap() {
-        var rawLibraries = (byId('standardLibraries').value || '').trim();
-        var standardLibraries = rawLibraries ? JSON.parse(rawLibraries) : [];
-        if (!Array.isArray(standardLibraries)) throw new Error('표준 RVT/엑셀 리스트는 JSON 배열이어야 합니다.');
-        var bootstrap = {
-          version: byId('version').value.trim(),
-          message: byId('message').value.trim(),
-          refreshMinutes: normalizeNumber(byId('refreshMinutes').value, 30),
-          managedPolicyPath: byId('managedPolicyPath').value.trim(),
-          managedPolicyPathCandidates: splitLines(byId('managedPolicyPathCandidates').value),
-          requestStore: {
-            mode: byId('requestStoreMode').value,
-            path: byId('requestStorePath').value.trim(),
-            pathCandidates: splitLines(byId('requestStorePathCandidates').value),
-            endpoint: byId('requestStoreEndpoint').value.trim()
-          },
-          standardMode: byId('standardMode').value,
-          standardLibraries: standardLibraries,
+
+      function defaultBootstrap() {
+        return {
+          version: '2026.05.19',
+          message: '',
+          refreshMinutes: 30,
+          standardMode: 'DisciplineSeparated',
+          standardLibraries: [],
           security: {
-            adminUsers: splitList(byId('adminUsers').value),
-            requestApproverUsers: splitList(byId('requestApproverUsers').value),
-            readOnlyUsers: splitList(byId('readOnlyUsers').value),
+            adminUsers: [],
+            requestApproverUsers: [],
+            readOnlyUsers: [],
             allowUnlistedUsersAsModelers: true,
             allowModelersToLoadFamilies: true,
             allowModelersToApplySystemTypes: true,
             allowModelersToSubmitRequests: true
           }
         };
-        if (!bootstrap.version) delete bootstrap.version;
-        if (!bootstrap.message) delete bootstrap.message;
-        if (!bootstrap.managedPolicyPath) delete bootstrap.managedPolicyPath;
-        if (!bootstrap.managedPolicyPathCandidates.length) delete bootstrap.managedPolicyPathCandidates;
-        if (!bootstrap.requestStore.path) delete bootstrap.requestStore.path;
-        if (!bootstrap.requestStore.pathCandidates.length) delete bootstrap.requestStore.pathCandidates;
-        if (!bootstrap.requestStore.endpoint) delete bootstrap.requestStore.endpoint;
-        if (!bootstrap.standardLibraries.length) delete bootstrap.standardLibraries;
+      }
+
+      function collectBootstrap() {
+        var rootPaths = getRootPaths();
+        if (!rootPaths.length) throw new Error('패밀리 브라우저 관리 폴더 경로를 하나 이상 입력해 주세요.');
+
+        var policyPaths = uniqueList(rootPaths.map(rootToPolicyPath));
+        var requestPaths = uniqueList(rootPaths.map(rootToRequestPath));
+        var bootstrap = Object.assign(defaultBootstrap(), preservedBootstrap || {});
+
+        bootstrap.version = bootstrap.version || '2026.05.19';
+        bootstrap.message = byId('message').value.trim();
+        bootstrap.refreshMinutes = Number(bootstrap.refreshMinutes) > 0 ? Number(bootstrap.refreshMinutes) : 30;
+        bootstrap.managedRootPath = rootPaths[0];
+        bootstrap.managedRootPathCandidates = rootPaths;
+        bootstrap.managedPolicyPath = policyPaths[0] || '';
+        bootstrap.managedPolicyPathCandidates = policyPaths;
+        bootstrap.requestStore = Object.assign({}, bootstrap.requestStore || {}, {
+          mode: 'NetworkShare',
+          path: requestPaths[0] || '',
+          pathCandidates: requestPaths,
+          endpoint: ''
+        });
+        bootstrap.standardMode = bootstrap.standardMode || 'DisciplineSeparated';
+        if (!Array.isArray(bootstrap.standardLibraries)) bootstrap.standardLibraries = [];
+        if (!bootstrap.security) bootstrap.security = defaultBootstrap().security;
         return bootstrap;
       }
+
       function buildJson() {
         try {
           var json = JSON.stringify(collectBootstrap(), null, 2);
@@ -446,186 +366,138 @@
           setStatus('editor-status', 'JSON 미리보기를 갱신했습니다.', 'good');
           return json;
         } catch (err) {
+          byId('preview').textContent = '';
           setStatus('editor-status', err.message || String(err), 'bad');
           return '';
         }
       }
-      function fillForm(data) {
-        data = data || {};
-        byId('version').value = data.version || '';
-        byId('message').value = data.message || '';
-        byId('refreshMinutes').value = data.refreshMinutes || 30;
-        byId('managedPolicyPath').value = data.managedPolicyPath || '';
-        byId('managedPolicyPathCandidates').value = data.managedPolicyPathCandidates ? data.managedPolicyPathCandidates.join('\n') : '';
-        byId('requestStoreMode').value = (data.requestStore && data.requestStore.mode) || 'NetworkShare';
-        byId('requestStorePath').value = (data.requestStore && data.requestStore.path) || '';
-        byId('requestStorePathCandidates').value = data.requestStore && data.requestStore.pathCandidates ? data.requestStore.pathCandidates.join('\n') : '';
-        byId('requestStoreEndpoint').value = (data.requestStore && data.requestStore.endpoint) || '';
-        byId('standardMode').value = data.standardMode || 'DisciplineSeparated';
-        byId('standardLibraries').value = data.standardLibraries ? JSON.stringify(data.standardLibraries, null, 2) : '';
-        byId('adminUsers').value = data.security && data.security.adminUsers ? data.security.adminUsers.join('; ') : '';
-        byId('requestApproverUsers').value = data.security && data.security.requestApproverUsers ? data.security.requestApproverUsers.join('; ') : '';
-        byId('readOnlyUsers').value = data.security && data.security.readOnlyUsers ? data.security.readOnlyUsers.join('; ') : '';
-        buildJson();
-      }
-      function loadCurrent() {
-        var path = repoPathToFetchPath(byId('githubPath').value || DEFAULT_BOOTSTRAP_PATH);
-        fetch(path, { cache: 'no-store' })
-          .then(function (response) {
-            if (!response.ok) throw new Error(path + ' 파일을 찾을 수 없습니다.');
-            return response.json();
-          })
-          .then(function (data) {
-            fillForm(data);
-            setStatus('editor-status', '현재 JSON을 불러왔습니다.', 'good');
-          })
-          .catch(function (err) {
-            setStatus('editor-status', err.message + ' 새 설정으로 작성할 수 있습니다.', 'warn');
-            buildJson();
-          });
-      }
-      function loadSelectedProfile() {
-        var profile = selectedProfile();
-        if (!profile) {
-          setStatus('editor-status', '프로필을 먼저 선택해 주세요.', 'warn');
-          return;
-        }
-        fillProfileMeta(profile);
-        loadCurrent();
-      }
-      function collectProfileEntry() {
-        var id = normalizeId(byId('profileId').value || byId('profileName').value || 'default');
-        byId('profileId').value = id;
+
+      function defaultIndex(profileName) {
         return {
-          id: id,
-          name: (byId('profileName').value || id).trim(),
-          description: (byId('profileDescription').value || '').trim(),
-          url: repoPathToIndexUrl(byId('githubPath').value || 'family-browser/bootstrap.json')
+          version: '2026.05.19',
+          defaultProfileId: 'default',
+          profiles: [
+            {
+              id: 'default',
+              name: profileName || 'Default',
+              description: 'Family Browser management folder settings',
+              url: 'bootstrap.json'
+            }
+          ],
+          projectRules: []
         };
       }
-      function upsertProfileIndex(index, profile) {
-        index = index || defaultIndex();
-        if (!Array.isArray(index.profiles)) index.profiles = [];
-        if (!Array.isArray(index.projectRules)) index.projectRules = [];
-        index.version = byId('version').value.trim() || index.version || '2026.05.18';
-        index.defaultProfileId = byId('defaultProfileId').value.trim() || index.defaultProfileId || profile.id;
-        if (byId('makeDefaultProfile').checked) index.defaultProfileId = profile.id;
-        var replaced = false;
-        index.profiles = index.profiles.map(function (item) {
-          if (item && item.id === profile.id) {
-            replaced = true;
-            return profile;
-          }
-          return item;
-        });
-        if (!replaced) index.profiles.push(profile);
-        index.projectRules = index.projectRules.filter(function (rule) {
-          return !(rule && rule.source === 'homepage' && rule.profileId === profile.id);
-        });
-        var projectNameContains = byId('projectNameContains').value.trim();
-        var centralPathContains = byId('centralPathContains').value.trim();
-        if (projectNameContains || centralPathContains) {
-          index.projectRules.push({
-            source: 'homepage',
-            profileId: profile.id,
-            projectNameContains: projectNameContains,
-            centralPathContains: centralPathContains,
-            modelPathContains: centralPathContains,
-            priority: 10
-          });
-        }
+
+      function collectIndex() {
+        var name = byId('profileName').value.trim() || 'Default';
+        var index = defaultIndex(name);
+        index.profiles[0].description = byId('message').value.trim();
+        index.profiles[0].id = 'default';
+        index.defaultProfileId = 'default';
         return index;
       }
-      function encodePath(path) {
-        return (path || '').split('/').map(encodeURIComponent).join('/');
+
+      function loadIndex() {
+        return fetch('bootstrap-index.json', { cache: 'no-store' })
+          .then(function (response) {
+            if (!response.ok) throw new Error('bootstrap-index.json이 아직 없습니다.');
+            return response.json();
+          })
+          .then(function (index) {
+            currentIndex = index || defaultIndex();
+            var profiles = Array.isArray(currentIndex.profiles) ? currentIndex.profiles : [];
+            var profile = profiles.filter(function (item) {
+              return item && !item.disabled && item.id === (currentIndex.defaultProfileId || 'default');
+            })[0] || profiles[0];
+            if (profile && profile.name) byId('profileName').value = profile.name;
+          })
+          .catch(function () {
+            currentIndex = defaultIndex();
+          });
       }
-      function githubTarget(pathOverride) {
-        var path = pathOverride || byId('githubPath').value.trim();
-        if (!currentAdminPassword || !path) throw new Error('관리자 비밀번호와 저장 파일 경로가 필요합니다.');
-        return {
-          password: currentAdminPassword,
-          path: path
-        };
+
+      function loadCurrent() {
+        setStatus('editor-status', '현재 설정을 불러오는 중...', '');
+        return Promise.all([
+          loadIndex(),
+          fetch('bootstrap.json', { cache: 'no-store' })
+            .then(function (response) {
+              if (!response.ok) throw new Error('bootstrap.json 파일을 찾을 수 없습니다.');
+              return response.json();
+            })
+        ])
+          .then(function (results) {
+            var data = results[1] || {};
+            preservedBootstrap = data;
+            byId('message').value = data.message || '';
+            setRootPaths(readRootPathsFromBootstrap(data));
+            buildJson();
+            setStatus('editor-status', '현재 설정을 불러왔습니다.', 'good');
+          })
+          .catch(function (err) {
+            preservedBootstrap = defaultBootstrap();
+            if (!byId('profileName').value.trim()) byId('profileName').value = 'Default';
+            setRootPaths([]);
+            buildJson();
+            setStatus('editor-status', err.message + ' 새 설정으로 작성할 수 있습니다.', 'warn');
+          });
       }
-      function saveGithubContent(target, content, message) {
-        var headers = {
-          'Content-Type': 'application/json',
-          'X-KKY-Admin-Password': target.password
-        };
+
+      function saveContent(targetPath, content, message) {
+        if (!currentAdminPassword) throw new Error('관리자 비밀번호가 필요합니다.');
         return fetch(WORKER_FILE_API, {
           method: 'POST',
-          headers: headers,
+          headers: {
+            'Content-Type': 'application/json',
+            'X-KKY-Admin-Password': currentAdminPassword
+          },
           body: JSON.stringify({
-            path: target.path,
+            path: targetPath,
             content: content,
             message: message
           })
-        })
-          .then(function (response) {
-            if (!response.ok) return response.text().then(function (body) { throw new Error('Worker 저장 실패: ' + response.status + ' ' + body); });
-            return response.json();
-          });
-      }
-      function saveToGitHub() {
-        var json = buildJson();
-        if (!json) return;
-        var profile;
-        try {
-          profile = collectProfileEntry();
-          setStatus('editor-status', '프로필 JSON 저장 중...', '');
-          saveGithubContent(githubTarget(byId('githubPath').value.trim()), json, 'Update Family Browser profile ' + profile.id)
-            .then(function () {
-              var index = upsertProfileIndex(currentIndex || defaultIndex(), profile);
-              currentIndex = index;
-              setStatus('editor-status', 'bootstrap-index.json 저장 중...', '');
-              return saveGithubContent(githubTarget(INDEX_REPO_PATH), JSON.stringify(index, null, 2), 'Update Family Browser bootstrap index');
-            })
-            .then(function () {
-              populateProfileSelect(currentIndex);
-              byId('profileSelect').value = profile.id;
-              setStatus('editor-status', '서버 저장이 완료되었습니다.', 'good');
-            })
-            .catch(function (err) { setStatus('editor-status', err.message || String(err), 'bad'); });
-        } catch (err) {
-          setStatus('editor-status', err.message || String(err), 'bad');
-        }
-      }
-      function copyJson() {
-        var json = buildJson();
-        if (!json) return;
-        navigator.clipboard.writeText(json).then(function () {
-          setStatus('editor-status', '복사했습니다.', 'good');
-        }).catch(function () {
-          setStatus('editor-status', '복사 실패. 미리보기 내용을 직접 선택해 주세요.', 'warn');
+        }).then(function (response) {
+          if (!response.ok) {
+            return response.text().then(function (body) {
+              throw new Error('서버 저장 실패: ' + response.status + ' ' + body);
+            });
+          }
+          return response.json();
         });
       }
-      function downloadJson() {
-        var json = buildJson();
-        if (!json) return;
-        var blob = new Blob([json + '\n'], { type: 'application/json' });
-        var url = URL.createObjectURL(blob);
-        var a = document.createElement('a');
-        a.href = url;
-        a.download = normalizeId(byId('profileId').value || 'bootstrap') + '.json';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
+
+      function saveToServer() {
+        var bootstrapJson = buildJson();
+        if (!bootstrapJson) return;
+        var indexJson = JSON.stringify(collectIndex(), null, 2);
+        setStatus('editor-status', '서버에 저장 중...', '');
+        saveContent(BOOTSTRAP_REPO_PATH, bootstrapJson, 'Update Family Browser management folder settings')
+          .then(function () {
+            return saveContent(INDEX_REPO_PATH, indexJson, 'Update Family Browser profile index');
+          })
+          .then(function () {
+            currentIndex = collectIndex();
+            preservedBootstrap = collectBootstrap();
+            setStatus('editor-status', '서버 저장이 완료되었습니다.', 'good');
+          })
+          .catch(function (err) {
+            setStatus('editor-status', err.message || String(err), 'bad');
+          });
       }
 
       byId('unlock').addEventListener('click', unlock);
       byId('password').addEventListener('keydown', function (ev) { if (ev.key === 'Enter') unlock(); });
-      byId('loadIndex').addEventListener('click', loadIndex);
-      byId('loadProfile').addEventListener('click', loadSelectedProfile);
-      byId('profileSelect').addEventListener('change', function () { fillProfileMeta(selectedProfile()); });
+      byId('addPath').addEventListener('click', function () { addPathRow(''); });
       byId('loadCurrent').addEventListener('click', loadCurrent);
       byId('build').addEventListener('click', buildJson);
-      byId('copy').addEventListener('click', copyJson);
-      byId('download').addEventListener('click', downloadJson);
-      byId('saveGithub').addEventListener('click', saveToGitHub);
+      byId('saveGithub').addEventListener('click', saveToServer);
+      byId('profileName').addEventListener('input', buildJson);
+      byId('message').addEventListener('input', buildJson);
+
       currentIndex = defaultIndex();
-      populateProfileSelect(currentIndex);
-      fillProfileMeta(currentIndex.profiles[0]);
+      preservedBootstrap = defaultBootstrap();
+      byId('profileName').value = 'Default';
+      setRootPaths([]);
       buildJson();
     })();
   </script>
