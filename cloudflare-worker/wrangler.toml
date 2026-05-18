@@ -1,7 +1,7 @@
 name = "kky-update-api"
 main = "src/index.js"
 compatibility_date = "2026-05-18"
-workers_dev = true
+workers_dev = false
 
 routes = [
   { pattern = "update.zerokky.com/api/*", zone_name = "zerokky.com" }
