@@ -26,11 +26,11 @@ export default {
       }
 
       if (pathname === "/api/requests") {
-        return proxyRequests(request, env, cors);
+        return await proxyRequests(request, env, cors);
       }
 
       if (pathname.startsWith("/api/family-browser")) {
-        return handleFamilyBrowser(request, env, cors, pathname, url);
+        return await handleFamilyBrowser(request, env, cors, pathname, url);
       }
 
       return jsonResponse({ ok: false, message: "not_found" }, 404, cors);
@@ -61,7 +61,7 @@ function corsHeaders(request, env) {
   return {
     "Access-Control-Allow-Origin": allowOrigin,
     "Access-Control-Allow-Methods": "GET,POST,PUT,OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type,Authorization,X-KKY-Admin-Token",
+    "Access-Control-Allow-Headers": "Content-Type,Authorization,X-KKY-Admin-Token,X-KKY-Admin-Password",
     "Access-Control-Max-Age": "86400",
     "Vary": "Origin"
   };
@@ -133,7 +133,7 @@ async function handleFamilyBrowser(request, env, cors, pathname, url) {
   }
 
   if (request.method === "POST" || request.method === "PUT") {
-    requireAdminToken(request, env);
+    await requireAdminToken(request, env);
     const payload = await parseJsonBody(request);
     const path = normalizeFamilyBrowserRepoPath(payload.path || FAMILY_BROWSER_BOOTSTRAP_PATH);
     const content = normalizeJsonContent(payload.content ?? payload.data ?? payload.json);
@@ -197,19 +197,42 @@ function normalizeFamilyBrowserRepoPath(rawPath) {
   return value;
 }
 
-function requireAdminToken(request, env) {
-  const expected = String(env.FAMILY_BROWSER_ADMIN_TOKEN || "").trim();
-  if (!expected) {
-    throw new HttpError(500, "FAMILY_BROWSER_ADMIN_TOKEN is not configured.");
+async function requireAdminToken(request, env) {
+  const expectedToken = String(env.FAMILY_BROWSER_ADMIN_TOKEN || "").trim();
+  const expectedPasswordHash = String(env.FAMILY_BROWSER_ADMIN_PASSWORD_SHA256 || "").trim().toLowerCase();
+  if (!expectedToken && !expectedPasswordHash) {
+    throw new HttpError(500, "admin authentication is not configured.");
+  }
+
+  if (expectedPasswordHash) {
+    const providedPassword = request.headers.get("X-KKY-Admin-Password") || "";
+    if (providedPassword) {
+      const providedPasswordHash = await sha256Hex(providedPassword);
+      if (constantTimeEqual(providedPasswordHash, expectedPasswordHash)) {
+        return;
+      }
+    }
+
+    throw new HttpError(401, "unauthorized");
   }
 
   const auth = request.headers.get("Authorization") || "";
   const bearer = auth.toLowerCase().startsWith("bearer ") ? auth.slice(7).trim() : "";
-  const provided = request.headers.get("X-KKY-Admin-Token") || bearer;
+  const providedToken = request.headers.get("X-KKY-Admin-Token") || bearer;
 
-  if (!constantTimeEqual(provided, expected)) {
-    throw new HttpError(401, "unauthorized");
+  if (expectedToken && providedToken && constantTimeEqual(providedToken, expectedToken)) {
+    return;
   }
+
+  throw new HttpError(401, "unauthorized");
+}
+
+async function sha256Hex(text) {
+  const bytes = new TextEncoder().encode(String(text || ""));
+  const hash = await crypto.subtle.digest("SHA-256", bytes);
+  return Array.from(new Uint8Array(hash))
+    .map((value) => value.toString(16).padStart(2, "0"))
+    .join("");
 }
 
 function constantTimeEqual(a, b) {

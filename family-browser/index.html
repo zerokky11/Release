@@ -83,7 +83,7 @@
             <h2>현장별 Family Browser 공유 경로를 관리합니다</h2>
             <p>프로필 JSON에는 네트워크 드라이브, UNC 경로 등 여러 후보 경로를 줄 단위로 등록할 수 있습니다.</p>
             <p>Family Browser는 프로젝트 규칙 또는 기본 프로필을 따라가고, 후보 경로 중 접근 가능한 첫 경로를 사용합니다.</p>
-            <p class="muted">서버 저장은 관리자 토큰이 있을 때만 동작합니다. 토큰은 이 페이지에 저장하지 않습니다.</p>
+            <p class="muted">서버 저장은 관리자 비밀번호로 동작합니다. GitHub 토큰은 브라우저에 노출되지 않습니다.</p>
           </div>
         </section>
 
@@ -259,11 +259,6 @@
                   <input id="githubPath" value="family-browser/bootstrap.json">
                 </div>
               </div>
-              <div class="settings-field">
-                <label for="githubToken">관리자 토큰</label>
-                <input id="githubToken" type="password" autocomplete="off" placeholder="Cloudflare Worker admin token">
-              </div>
-
               <div class="settings-actions">
                 <button class="primary" id="build" type="button">JSON 미리보기</button>
                 <button id="copy" type="button">복사</button>
@@ -288,6 +283,7 @@
       var INDEX_REPO_PATH = 'family-browser/bootstrap-index.json';
       var WORKER_FILE_API = '../api/family-browser/file';
       var currentIndex = null;
+      var currentAdminPassword = '';
 
       function byId(id) { return document.getElementById(id); }
       function setStatus(id, text, cls) {
@@ -335,11 +331,13 @@
         return crypto.subtle.digest('SHA-256', new TextEncoder().encode(text)).then(toHex);
       }
       function unlock() {
-        sha256(byId('password').value || '').then(function (hash) {
+        var password = byId('password').value || '';
+        sha256(password).then(function (hash) {
           if (hash !== PASSWORD_SHA256) {
             setStatus('lock-status', '비밀번호가 맞지 않습니다.', 'bad');
             return;
           }
+          currentAdminPassword = password;
           byId('lock-panel').classList.add('hidden');
           byId('editor-panel').classList.remove('hidden');
           loadIndex().then(loadCurrent);
@@ -542,18 +540,17 @@
         return (path || '').split('/').map(encodeURIComponent).join('/');
       }
       function githubTarget(pathOverride) {
-        var token = byId('githubToken').value.trim();
         var path = pathOverride || byId('githubPath').value.trim();
-        if (!token || !path) throw new Error('관리자 토큰과 저장 파일 경로가 필요합니다.');
+        if (!currentAdminPassword || !path) throw new Error('관리자 비밀번호와 저장 파일 경로가 필요합니다.');
         return {
-          token: token,
+          password: currentAdminPassword,
           path: path
         };
       }
       function saveGithubContent(target, content, message) {
         var headers = {
           'Content-Type': 'application/json',
-          'X-KKY-Admin-Token': target.token
+          'X-KKY-Admin-Password': target.password
         };
         return fetch(WORKER_FILE_API, {
           method: 'POST',
