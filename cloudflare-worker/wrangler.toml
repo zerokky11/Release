@@ -1,0 +1,14 @@
+name = "kky-update-api"
+main = "src/index.js"
+compatibility_date = "2026-05-18"
+workers_dev = true
+
+routes = [
+  { pattern = "update.zerokky.com/api/*", zone_name = "zerokky.com" }
+]
+
+[vars]
+GITHUB_OWNER = "zerokky11"
+GITHUB_REPO = "Release"
+GITHUB_BRANCH = "main"
+ALLOWED_ORIGINS = "https://update.zerokky.com,http://localhost:8787"
