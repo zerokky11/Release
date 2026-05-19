@@ -6,7 +6,9 @@
   "standardLibraries": [],
   "security": {
     "adminUsers": [],
-    "adminProfileKeywords": [],
+    "adminProfileKeywords": [
+      "KCIM"
+    ],
     "requestApproverUsers": [],
     "readOnlyUsers": [],
     "allowUnlistedUsersAsModelers": true,
