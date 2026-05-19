@@ -6,6 +6,7 @@
   "standardLibraries": [],
   "security": {
     "adminUsers": [],
+    "adminProfileKeywords": [],
     "requestApproverUsers": [],
     "readOnlyUsers": [],
     "allowUnlistedUsersAsModelers": true,

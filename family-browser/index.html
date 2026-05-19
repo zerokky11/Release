@@ -125,6 +125,12 @@
               </div>
 
               <div class="settings-field">
+                <label for="adminProfileKeywords">관리자 권한 프로필 키워드</label>
+                <textarea id="adminProfileKeywords" placeholder="예: BIM; KCIM; 관리자"></textarea>
+                <p class="settings-help">Revit에 로그인된 Autodesk 프로필 이름에 이 키워드가 포함된 사용자만 애드인 설정에서 관리자 모드를 켤 수 있습니다.</p>
+              </div>
+
+              <div class="settings-field">
                 <label>패밀리 브라우저 관리 폴더 경로</label>
                 <div class="path-list" id="pathList"></div>
                 <p class="settings-help">한 칸에 하나의 관리 폴더를 입력합니다. 예: I:\30. 협력사 전용폴더\00. BIM_KCIM\02. 패밀리\TEST</p>
@@ -178,6 +184,12 @@
           result.push(value);
         });
         return result;
+      }
+
+      function splitList(value) {
+        return uniqueList(String(value || '')
+          .split(/[,;\r\n\t]+/)
+          .map(function (item) { return item.trim(); }));
       }
 
       function trimTrailingSlash(value) {
@@ -322,6 +334,7 @@
           standardLibraries: [],
           security: {
             adminUsers: [],
+            adminProfileKeywords: [],
             requestApproverUsers: [],
             readOnlyUsers: [],
             allowUnlistedUsersAsModelers: true,
@@ -355,7 +368,8 @@
         });
         bootstrap.standardMode = bootstrap.standardMode || 'DisciplineSeparated';
         if (!Array.isArray(bootstrap.standardLibraries)) bootstrap.standardLibraries = [];
-        if (!bootstrap.security) bootstrap.security = defaultBootstrap().security;
+        bootstrap.security = Object.assign({}, defaultBootstrap().security, bootstrap.security || {});
+        bootstrap.security.adminProfileKeywords = splitList(byId('adminProfileKeywords').value);
         return bootstrap;
       }
 
@@ -430,6 +444,9 @@
             var data = results[1] || {};
             preservedBootstrap = data;
             byId('message').value = data.message || '';
+            byId('adminProfileKeywords').value = ((data.security && Array.isArray(data.security.adminProfileKeywords))
+              ? data.security.adminProfileKeywords
+              : []).join('; ');
             setRootPaths(readRootPathsFromBootstrap(data));
             buildJson();
             setStatus('editor-status', '현재 설정을 불러왔습니다.', 'good');
@@ -493,6 +510,7 @@
       byId('saveGithub').addEventListener('click', saveToServer);
       byId('profileName').addEventListener('input', buildJson);
       byId('message').addEventListener('input', buildJson);
+      byId('adminProfileKeywords').addEventListener('input', buildJson);
 
       currentIndex = defaultIndex();
       preservedBootstrap = defaultBootstrap();
