@@ -1,6 +1,6 @@
 {
   "version": "2026.05.19-kcim-test",
-  "message": "KCIM Family Browser shared test deployment",
+  "message": "해당 프로젝트에서 사용할 관리 폴더를 추가하고 저장하시면 그 경로를 요청 등의 관리 폴더로 사용합니다.",
   "refreshMinutes": 5,
   "standardMode": "DisciplineSeparated",
   "standardLibraries": [],
