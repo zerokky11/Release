@@ -2,6 +2,17 @@
   "version": "2026.05.19-kcim-test",
   "message": "KCIM Family Browser shared test deployment",
   "refreshMinutes": 5,
+  "standardMode": "DisciplineSeparated",
+  "standardLibraries": [],
+  "security": {
+    "adminUsers": [],
+    "requestApproverUsers": [],
+    "readOnlyUsers": [],
+    "allowUnlistedUsersAsModelers": true,
+    "allowModelersToLoadFamilies": true,
+    "allowModelersToApplySystemTypes": true,
+    "allowModelersToSubmitRequests": true
+  },
   "managedRootPath": "I:\\30. 협력사 전용폴더\\00. BIM_KCIM\\02. 패밀리\\TEST",
   "managedRootPathCandidates": [
     "I:\\30. 협력사 전용폴더\\00. BIM_KCIM\\02. 패밀리\\TEST"
@@ -17,16 +28,5 @@
       "I:\\30. 협력사 전용폴더\\00. BIM_KCIM\\02. 패밀리\\TEST\\Requests"
     ],
     "endpoint": ""
-  },
-  "standardMode": "DisciplineSeparated",
-  "standardLibraries": [],
-  "security": {
-    "adminUsers": [],
-    "requestApproverUsers": [],
-    "readOnlyUsers": [],
-    "allowUnlistedUsersAsModelers": true,
-    "allowModelersToLoadFamilies": true,
-    "allowModelersToApplySystemTypes": true,
-    "allowModelersToSubmitRequests": true
   }
 }
