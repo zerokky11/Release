@@ -1,190 +1,202 @@
-﻿[
-    {
-        "version":  "2.30",
-        "publishedAt":  "2026-05-26",
-        "title":  "버전 2.30",
-        "notes":  [
-                      "BQC 미연결 검토 설정에서 중심축 연결 검토의 허용 범위와 거리 단위를 직접 지정할 수 있게 개선했습니다.",
-                      "미연결 오류와 중심축 오류 수를 요약 및 파일별 결과에서 분리해 확인할 수 있게 정리했습니다.",
-                      "중심축 연결 검토가 탭/분기 검토 설정에 의존하지 않도록 실행 기준을 미연결 설정 안으로 이동했습니다."
-                  ],
-        "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25,27)_v2.30.zip",
-        "installerUrl":  "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25,27)_v2.30.exe"
-    },
-    {
-        "version":  "2.29",
-        "publishedAt":  "2026-05-13",
-        "title":  "버전 2.29",
-        "notes":  [
-                      "수정: 파라미터 연속성 검토에서 같은 이름의 인스턴스/타입/공유파라미터가 함께 있을 때 실제 비교 대상 파라미터를 더 안정적으로 찾도록 보강했습니다.",
-                      "수정: 연결 대상이 근접 후보인 경우에도 선택 파라미터 값이 다르면 Mismatch로 우선 표시되도록 정리했습니다.",
-                      "개선: 결과 엑셀의 Revit 요소 ID 컬럼은 텍스트로 안전하게 표시되도록 정리하고, 링크 경로 엑셀 재적용 시 ID 형식을 안정적으로 해석하도록 보강했습니다."
-                  ],
-        "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.29.zip",
-        "installerUrl":  "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25)_v2.29.exe"
-    },
-    {
-        "version":  "2.28",
-        "publishedAt":  "2026-05-13",
-        "title":  "버전 2.28",
-        "notes":  [
-                      "개선: 패밀리 타입 적합성 검토에서 Runs가 포함된 카테고리를 검토 대상에서 제외했습니다.",
-                      "개선: 패밀리 타입 적합성 결과 엑셀에서 Status 보조 헤더를 제거해 결과표를 더 깔끔하게 정리했습니다.",
-                      "개선: BQC 속성 누락 검토와 웍셋 배정 검토의 대량 모델 처리 및 엑셀 추출 성능을 보강했습니다."
-                  ],
-        "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.28.zip",
-        "installerUrl":  "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25)_v2.28.exe"
-    },
-    {
-        "version":  "2.27",
-        "publishedAt":  "2026-05-11",
-        "title":  "버전 2.27",
-        "notes":  [
-                      "수정: BQC 속성 누락 검토의 객체 필터에서 조건 추가 시 기존 입력값이 유지되고 새 조건 행이 정상 추가되도록 수정했습니다.",
-                      "수정: 객체 필터 설정을 다시 열거나 프리셋을 저장/불러올 때 필터 조건이 유지되도록 보강했습니다.",
-                      "정리: Hub UI 캐시 버전을 갱신해 수정된 설정 화면이 새 배포에서 바로 반영되도록 했습니다."
-                  ],
-        "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.27.zip",
-        "installerUrl":  "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25)_v2.27.exe"
-    },
-    {
-        "version":  "2.26",
-        "publishedAt":  "2026-05-11",
-        "title":  "버전 2.26",
-        "notes":  [
-                      "수정: 프로젝트/공유 파라미터 일괄 추가에서 파라미터 설정 버튼을 눌렀을 때 화면 처리 오류가 발생하던 문제를 수정했습니다.",
-                      "개선: Hub UI 캐시 버전을 갱신해 프로젝트 파라미터 설정 창 수정 사항이 새 버전에 바로 반영되도록 했습니다.",
-                      "정리: 배포 패키지의 Hub UI 리소스에 남아 있던 오래된 백업 파일을 정리했습니다."
-                  ],
-        "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.26.zip",
-        "installerUrl":  "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25)_v2.26.exe"
-    },
-    {
-        "version":  "2.25",
-        "publishedAt":  "2026-05-08",
-        "title":  "버전 2.25",
-        "notes":  [
-                      "수정: View Navigator에서 다른 Revit 버전이나 문서로 이동할 때 최대화된 창이 일반 창으로 풀리던 문제를 수정했습니다.",
-                      "개선: View Navigator 문서 색상을 더 옅게 조정하고, 여러 문서가 열려 있을 때 서로 다른 문서가 같은 색으로 겹치지 않도록 전역 색상 배정을 보강했습니다.",
-                      "개선: BQC 납품용 RVT 정리의 기본/세부 설정에서 정리 결과 폴더를 탐색기 스타일 창으로 선택할 수 있게 개선했습니다."
-                  ],
-        "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.25.zip",
-        "installerUrl":  "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25)_v2.25.exe"
-    },
-    {
-        "version":  "2.24",
-        "publishedAt":  "2026-05-07",
-        "title":  "버전 2.24",
-        "notes":  [
-                      "수정: 문서 색상 도우미의 View Navigator에서 Revit 2019/2021/2023/2025를 함께 사용할 때 선택한 Revit 버전이 다른 버전으로 튀던 문제를 수정했습니다.",
-                      "수정: View Navigator에서 다른 뷰를 선택해도 현재 활성 뷰로 되돌아가고 Go 이동이 되지 않던 문제를 수정했습니다.",
-                      "개선: 버전 탭과 뷰 드롭다운 선택 상태를 안정적으로 유지하도록 Navigator 세션 추적 흐름을 보강했습니다."
-                  ],
-        "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.24.zip",
-        "installerUrl":  "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25)_v2.24.exe"
-    },
-    {
-        "version":  "2.23",
-        "publishedAt":  "2026-05-06",
-        "title":  "버전 2.23",
-        "notes":  [
-                      "수정: Hub UI 전반의 깨진 한글, 영어 혼용 라벨, 기본 툴팁 문구를 정리했습니다.",
-                      "개선: BQC 검토, 파라미터 GUID, 파라미터 수정기, 조건별 객체 속성 추출, 다중 검토, 링크 경로, 납품용 RVT 정리 화면의 진행/완료/오류 안내를 더 명확하게 다듬었습니다.",
-                      "보강: 버전 확인/업데이트 실패 안내와 Windows 프로그램 목록 표시 버전 동기화를 보강했습니다."
-                  ],
-        "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.23.zip",
-        "installerUrl":  "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25)_v2.23.exe"
-    },
-    {
-        "version":  "2.22",
-        "publishedAt":  "2026-04-27",
-        "title":  "버전 2.22",
-        "notes":  [
-                      "기능 추가: 다중 검토에서 패밀리 적합성, 파라미터 누락/중복, 웍셋 배정, 탭/분기 검토를 한 화면에서 선택해 실행할 수 있도록 정리했습니다.",
-                      "기능 추가: Revit 링크 경로 추출/적용 흐름과 즐겨찾기 기반 빠른 접근 기능을 반영했습니다.",
-                      "기능 개선: RVT 드래그앤드롭 인식, 결과 요약, 작업 저장 진행 안내를 더 명확하게 다듬었습니다.",
-                      "수정: Revit 2025 리소스 경로와 업데이트/배포 스크립트 안정성을 정리했습니다."
-                  ],
-        "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.22.zip",
-        "installerUrl":  "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25)_v2.22.exe"
-    },
-    {
-        "version":  "2.21",
-        "publishedAt":  "2026-04-20",
-        "title":  "버전 2.21",
-        "notes":  [
-                      "수정: 중복 객체 검토 결과 엑셀 추출 과정에서 발생하던 오류 항목을 수정했습니다."
-                  ],
-        "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.21.zip",
-        "installerUrl":  "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25)_v2.21.exe"
-    },
-    {
-        "version":  "2.20",
-        "publishedAt":  "2026-04-20",
-        "title":  "버전 2.20",
-        "notes":  [
-                      "기능 추가: 패밀리 및 BQC 검토에 파라미터 누락, 프로젝트 파라미터 중복, 웍셋 배정, 패밀리 적합성 검토를 추가했습니다.",
-                      "기능 추가: Revit 링크 경로 추출/검토와 문서 색상 도우미를 추가했습니다.",
-                      "기능 추가: Hub 화면에 즐겨찾기와 빠른 접근 기능을 추가했습니다.",
-                      "기능 개선: 다중 검토 화면의 뷰 탐색, 중복/자체 간섭 검토 흐름, 조건별 객체 속성 추출, GUID/패밀리 연동, Connector, 공유파라미터 일괄 추가 흐름을 보강했습니다."
-                  ],
-        "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.20.zip",
-        "installerUrl":  "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25)_v2.20.exe"
-    },
-    {
-        "version":  "2.14",
-        "publishedAt":  "2026-04-09",
-        "title":  "버전 2.14",
-        "notes":  [
-                      "기능 추가: KTA 추출 기능과 웍셋 설정 관리 기능을 추가했습니다.",
-                      "기능 추가: 조건별 객체 속성 추출 기능을 추가해 필터 조건에 맞는 객체와 좌표/파라미터 값을 엑셀로 확인할 수 있게 했습니다.",
-                      "기능 수정: 패밀리 연동 검토와 RVT 정리 조건 처리 흐름을 보강했습니다."
-                  ],
-        "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.14.zip",
-        "installerUrl":  "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25)_v2.14.exe"
-    },
-    {
-        "version":  "2.13",
-        "publishedAt":  "2026-03-27",
-        "title":  "버전 2.13",
-        "notes":  [
-                      "수정: 홈페이지 글꼴과 기본 문구 구성을 보기 쉽게 정리했습니다.",
-                      "기능 개선: 업데이트 내역과 기능 요청 페이지 안내 문구를 사용 흐름에 맞게 다듬었습니다.",
-                      "수정: 기능 요청 연동을 위한 Google Sheets 안내 문서를 정리했습니다."
-                  ],
-        "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.13.zip",
-        "installerUrl":  "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25)_v2.13.exe"
-    },
-    {
-        "version":  "2.12",
-        "publishedAt":  "2026-03-25",
-        "title":  "버전 2.12",
-        "notes":  [
-                      "수정: v2.12 배포 패키지를 공개하고 홈페이지 다운로드 기준을 갱신했습니다."
-                  ],
-        "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.12.zip",
-        "installerUrl":  "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25)_v2.12.exe"
-    },
-    {
-        "version":  "2.11",
-        "publishedAt":  "2026-03-24",
-        "title":  "버전 2.11",
-        "notes":  [
-                      "기능 개선: 기능 요청 페이지에 작성자 이름 입력 항목을 추가했습니다.",
-                      "기능 개선: 요청 등록과 목록 표시에서 작성자 정보가 함께 보이도록 정리했습니다.",
-                      "수정: 공유 페이지 문구와 구성을 읽기 쉽게 다듬었습니다."
-                  ],
-        "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.11.zip",
-        "installerUrl":  "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25)_v2.11.exe"
-    },
-    {
-        "version":  "2.10",
-        "publishedAt":  "2026-03-23",
-        "title":  "버전 2.10",
-        "notes":  [
-                      "수정: 홈페이지와 요청 페이지 글꼴 깨짐을 정리하고 문구를 보기 쉽게 다듬었습니다."
-                  ],
-        "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.10.zip",
-        "installerUrl":  "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25)_v2.10.exe"
-    }
+[
+  {
+    "version": "2.31",
+    "publishedAt": "2026-05-26",
+    "title": "버전 2.31",
+    "notes": [
+      "공유파라미터 추가 연동에서 단일 패밀리에도 선택적으로 파라미터를 추가할 수 있게 개선했습니다.",
+      "공유파라미터 연동검토에 단일 패밀리 파라미터 추가 여부 검토 옵션을 추가했습니다.",
+      "BQC 미연결 검토에서 전체 커넥터가 미연결인 객체는 같은 실행의 중심축 연결 오류에서 제외해 결과 추적 순서를 정리했습니다."
+    ],
+    "packageUrl": "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25,27)_v2.31.zip",
+    "installerUrl": "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25,27)_v2.31.exe"
+  },
+  {
+    "version": "2.30",
+    "publishedAt": "2026-05-26",
+    "title": "버전 2.30",
+    "notes": [
+      "BQC 미연결 검토 설정에서 중심축 연결 검토의 허용 범위와 거리 단위를 직접 지정할 수 있게 개선했습니다.",
+      "미연결 오류와 중심축 오류 수를 요약 및 파일별 결과에서 분리해 확인할 수 있게 정리했습니다.",
+      "중심축 연결 검토가 탭/분기 검토 설정에 의존하지 않도록 실행 기준을 미연결 설정 안으로 이동했습니다."
+    ],
+    "packageUrl": "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25,27)_v2.30.zip",
+    "installerUrl": "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25,27)_v2.30.exe"
+  },
+  {
+    "version": "2.29",
+    "publishedAt": "2026-05-13",
+    "title": "버전 2.29",
+    "notes": [
+      "수정: 파라미터 연속성 검토에서 같은 이름의 인스턴스/타입/공유파라미터가 함께 있을 때 실제 비교 대상 파라미터를 더 안정적으로 찾도록 보강했습니다.",
+      "수정: 연결 대상이 근접 후보인 경우에도 선택 파라미터 값이 다르면 Mismatch로 우선 표시되도록 정리했습니다.",
+      "개선: 결과 엑셀의 Revit 요소 ID 컬럼은 텍스트로 안전하게 표시되도록 정리하고, 링크 경로 엑셀 재적용 시 ID 형식을 안정적으로 해석하도록 보강했습니다."
+    ],
+    "packageUrl": "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.29.zip",
+    "installerUrl": "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25)_v2.29.exe"
+  },
+  {
+    "version": "2.28",
+    "publishedAt": "2026-05-13",
+    "title": "버전 2.28",
+    "notes": [
+      "개선: 패밀리 타입 적합성 검토에서 Runs가 포함된 카테고리를 검토 대상에서 제외했습니다.",
+      "개선: 패밀리 타입 적합성 결과 엑셀에서 Status 보조 헤더를 제거해 결과표를 더 깔끔하게 정리했습니다.",
+      "개선: BQC 속성 누락 검토와 웍셋 배정 검토의 대량 모델 처리 및 엑셀 추출 성능을 보강했습니다."
+    ],
+    "packageUrl": "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.28.zip",
+    "installerUrl": "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25)_v2.28.exe"
+  },
+  {
+    "version": "2.27",
+    "publishedAt": "2026-05-11",
+    "title": "버전 2.27",
+    "notes": [
+      "수정: BQC 속성 누락 검토의 객체 필터에서 조건 추가 시 기존 입력값이 유지되고 새 조건 행이 정상 추가되도록 수정했습니다.",
+      "수정: 객체 필터 설정을 다시 열거나 프리셋을 저장/불러올 때 필터 조건이 유지되도록 보강했습니다.",
+      "정리: Hub UI 캐시 버전을 갱신해 수정된 설정 화면이 새 배포에서 바로 반영되도록 했습니다."
+    ],
+    "packageUrl": "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.27.zip",
+    "installerUrl": "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25)_v2.27.exe"
+  },
+  {
+    "version": "2.26",
+    "publishedAt": "2026-05-11",
+    "title": "버전 2.26",
+    "notes": [
+      "수정: 프로젝트/공유 파라미터 일괄 추가에서 파라미터 설정 버튼을 눌렀을 때 화면 처리 오류가 발생하던 문제를 수정했습니다.",
+      "개선: Hub UI 캐시 버전을 갱신해 프로젝트 파라미터 설정 창 수정 사항이 새 버전에 바로 반영되도록 했습니다.",
+      "정리: 배포 패키지의 Hub UI 리소스에 남아 있던 오래된 백업 파일을 정리했습니다."
+    ],
+    "packageUrl": "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.26.zip",
+    "installerUrl": "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25)_v2.26.exe"
+  },
+  {
+    "version": "2.25",
+    "publishedAt": "2026-05-08",
+    "title": "버전 2.25",
+    "notes": [
+      "수정: View Navigator에서 다른 Revit 버전이나 문서로 이동할 때 최대화된 창이 일반 창으로 풀리던 문제를 수정했습니다.",
+      "개선: View Navigator 문서 색상을 더 옅게 조정하고, 여러 문서가 열려 있을 때 서로 다른 문서가 같은 색으로 겹치지 않도록 전역 색상 배정을 보강했습니다.",
+      "개선: BQC 납품용 RVT 정리의 기본/세부 설정에서 정리 결과 폴더를 탐색기 스타일 창으로 선택할 수 있게 개선했습니다."
+    ],
+    "packageUrl": "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.25.zip",
+    "installerUrl": "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25)_v2.25.exe"
+  },
+  {
+    "version": "2.24",
+    "publishedAt": "2026-05-07",
+    "title": "버전 2.24",
+    "notes": [
+      "수정: 문서 색상 도우미의 View Navigator에서 Revit 2019/2021/2023/2025를 함께 사용할 때 선택한 Revit 버전이 다른 버전으로 튀던 문제를 수정했습니다.",
+      "수정: View Navigator에서 다른 뷰를 선택해도 현재 활성 뷰로 되돌아가고 Go 이동이 되지 않던 문제를 수정했습니다.",
+      "개선: 버전 탭과 뷰 드롭다운 선택 상태를 안정적으로 유지하도록 Navigator 세션 추적 흐름을 보강했습니다."
+    ],
+    "packageUrl": "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.24.zip",
+    "installerUrl": "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25)_v2.24.exe"
+  },
+  {
+    "version": "2.23",
+    "publishedAt": "2026-05-06",
+    "title": "버전 2.23",
+    "notes": [
+      "수정: Hub UI 전반의 깨진 한글, 영어 혼용 라벨, 기본 툴팁 문구를 정리했습니다.",
+      "개선: BQC 검토, 파라미터 GUID, 파라미터 수정기, 조건별 객체 속성 추출, 다중 검토, 링크 경로, 납품용 RVT 정리 화면의 진행/완료/오류 안내를 더 명확하게 다듬었습니다.",
+      "보강: 버전 확인/업데이트 실패 안내와 Windows 프로그램 목록 표시 버전 동기화를 보강했습니다."
+    ],
+    "packageUrl": "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.23.zip",
+    "installerUrl": "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25)_v2.23.exe"
+  },
+  {
+    "version": "2.22",
+    "publishedAt": "2026-04-27",
+    "title": "버전 2.22",
+    "notes": [
+      "기능 추가: 다중 검토에서 패밀리 적합성, 파라미터 누락/중복, 웍셋 배정, 탭/분기 검토를 한 화면에서 선택해 실행할 수 있도록 정리했습니다.",
+      "기능 추가: Revit 링크 경로 추출/적용 흐름과 즐겨찾기 기반 빠른 접근 기능을 반영했습니다.",
+      "기능 개선: RVT 드래그앤드롭 인식, 결과 요약, 작업 저장 진행 안내를 더 명확하게 다듬었습니다.",
+      "수정: Revit 2025 리소스 경로와 업데이트/배포 스크립트 안정성을 정리했습니다."
+    ],
+    "packageUrl": "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.22.zip",
+    "installerUrl": "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25)_v2.22.exe"
+  },
+  {
+    "version": "2.21",
+    "publishedAt": "2026-04-20",
+    "title": "버전 2.21",
+    "notes": [
+      "수정: 중복 객체 검토 결과 엑셀 추출 과정에서 발생하던 오류 항목을 수정했습니다."
+    ],
+    "packageUrl": "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.21.zip",
+    "installerUrl": "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25)_v2.21.exe"
+  },
+  {
+    "version": "2.20",
+    "publishedAt": "2026-04-20",
+    "title": "버전 2.20",
+    "notes": [
+      "기능 추가: 패밀리 및 BQC 검토에 파라미터 누락, 프로젝트 파라미터 중복, 웍셋 배정, 패밀리 적합성 검토를 추가했습니다.",
+      "기능 추가: Revit 링크 경로 추출/검토와 문서 색상 도우미를 추가했습니다.",
+      "기능 추가: Hub 화면에 즐겨찾기와 빠른 접근 기능을 추가했습니다.",
+      "기능 개선: 다중 검토 화면의 뷰 탐색, 중복/자체 간섭 검토 흐름, 조건별 객체 속성 추출, GUID/패밀리 연동, Connector, 공유파라미터 일괄 추가 흐름을 보강했습니다."
+    ],
+    "packageUrl": "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.20.zip",
+    "installerUrl": "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25)_v2.20.exe"
+  },
+  {
+    "version": "2.14",
+    "publishedAt": "2026-04-09",
+    "title": "버전 2.14",
+    "notes": [
+      "기능 추가: KTA 추출 기능과 웍셋 설정 관리 기능을 추가했습니다.",
+      "기능 추가: 조건별 객체 속성 추출 기능을 추가해 필터 조건에 맞는 객체와 좌표/파라미터 값을 엑셀로 확인할 수 있게 했습니다.",
+      "기능 수정: 패밀리 연동 검토와 RVT 정리 조건 처리 흐름을 보강했습니다."
+    ],
+    "packageUrl": "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.14.zip",
+    "installerUrl": "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25)_v2.14.exe"
+  },
+  {
+    "version": "2.13",
+    "publishedAt": "2026-03-27",
+    "title": "버전 2.13",
+    "notes": [
+      "수정: 홈페이지 글꼴과 기본 문구 구성을 보기 쉽게 정리했습니다.",
+      "기능 개선: 업데이트 내역과 기능 요청 페이지 안내 문구를 사용 흐름에 맞게 다듬었습니다.",
+      "수정: 기능 요청 연동을 위한 Google Sheets 안내 문서를 정리했습니다."
+    ],
+    "packageUrl": "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.13.zip",
+    "installerUrl": "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25)_v2.13.exe"
+  },
+  {
+    "version": "2.12",
+    "publishedAt": "2026-03-25",
+    "title": "버전 2.12",
+    "notes": [
+      "수정: v2.12 배포 패키지를 공개하고 홈페이지 다운로드 기준을 갱신했습니다."
+    ],
+    "packageUrl": "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.12.zip",
+    "installerUrl": "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25)_v2.12.exe"
+  },
+  {
+    "version": "2.11",
+    "publishedAt": "2026-03-24",
+    "title": "버전 2.11",
+    "notes": [
+      "기능 개선: 기능 요청 페이지에 작성자 이름 입력 항목을 추가했습니다.",
+      "기능 개선: 요청 등록과 목록 표시에서 작성자 정보가 함께 보이도록 정리했습니다.",
+      "수정: 공유 페이지 문구와 구성을 읽기 쉽게 다듬었습니다."
+    ],
+    "packageUrl": "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.11.zip",
+    "installerUrl": "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25)_v2.11.exe"
+  },
+  {
+    "version": "2.10",
+    "publishedAt": "2026-03-23",
+    "title": "버전 2.10",
+    "notes": [
+      "수정: 홈페이지와 요청 페이지 글꼴 깨짐을 정리하고 문구를 보기 쉽게 다듬었습니다."
+    ],
+    "packageUrl": "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25)_v2.10.zip",
+    "installerUrl": "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25)_v2.10.exe"
+  }
 ]

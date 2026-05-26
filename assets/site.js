@@ -1,4 +1,4 @@
-﻿const packageBaseName = "KKY_Tool_Revit(2019,21,23,25)_v";
+const packageBaseName = "KKY_Tool_Revit(2019,21,23,25,27)_v";
 const requestConfig = window.KKY_REQUESTS_CONFIG || {};
 const requestApiUrl = String(requestConfig.requestApiUrl || "").trim();
 const maxVisibleRequests = Number(requestConfig.maxVisibleRequests || 10);
@@ -100,13 +100,41 @@ function updateReleaseNotes(rawText) {
   });
 }
 
+function getDownloadFileName(url) {
+  const raw = String(url || "").trim();
+  if (!raw) {
+    return "";
+  }
+
+  try {
+    const parsed = new URL(raw, window.location.href);
+    return parsed.pathname.split("/").pop() || raw.split("/").pop() || "";
+  } catch (error) {
+    return raw.split("/").pop() || "";
+  }
+}
+
+function resolveInstallerUrl(data, packageUrl, version) {
+  const explicitInstallerUrl = String(data.installerUrl || data.exeUrl || "").trim();
+  if (explicitInstallerUrl) {
+    return explicitInstallerUrl;
+  }
+
+  const packageFileName = getDownloadFileName(packageUrl);
+  if (/\.zip$/i.test(packageFileName)) {
+    return `official/${packageFileName.replace(/\.zip$/i, ".exe")}`;
+  }
+
+  return version ? `official/${packageBaseName}${version}.exe` : "latest.json";
+}
+
 function setReleaseInfo(data) {
   const version = String(data.version || "").trim();
   const releaseDate = String(data.publishedAt || "-").trim() || "-";
   const zipUrl = String(data.url || "latest.json").trim() || "latest.json";
-  const packageName = zipUrl.split("/").pop() || "최신 업데이트 패키지";
-  const exeName = version ? `${packageBaseName}${version}.exe` : "최신 설치 파일";
-  const exeUrl = version ? `${packageBaseName}${version}.exe` : "latest.json";
+  const packageName = getDownloadFileName(zipUrl) || "최신 업데이트 패키지";
+  const exeUrl = resolveInstallerUrl(data, zipUrl, version);
+  const exeName = getDownloadFileName(exeUrl) || "최신 설치 파일";
 
   const versionElement = document.getElementById("release-version");
   const dateElement = document.getElementById("release-date");
