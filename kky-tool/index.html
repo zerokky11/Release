@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>KKY Tool ?ъ슜??愿由?/title>
+  <title>KKY Tool 사용자 관리</title>
   <style>
     body { margin: 0; font-family: "Segoe UI", "Malgun Gothic", sans-serif; color: #1f2937; background: #f7f9fb; }
     main { max-width: 820px; margin: 0 auto; padding: 32px 20px 60px; }
@@ -30,12 +30,12 @@
 </head>
 <body>
   <main>
-    <a class="button" href="../index.html">?덉쑝濡?/a>
-    <h1>KKY Tool ?ъ슜??愿由?/h1>
-    <p>媛?PC?먯꽌 ?ㅼ젙?섏? ?딆뒿?덈떎. ???섏씠吏?먯꽌 以묒븰 ?뺤콉 ?뚯씪 <code>kky-tool/user-access.json</code>????ν븯硫?KKY Tool?????ㅼ썙?쒕? ?쎌뼱 ?몃? ?ъ슜?먮? ?쒗븳?⑸땲??</p>
+    <a class="button" href="../index.html">홈으로</a>
+    <h1>KKY Tool 사용자 관리</h1>
+    <p>각 PC에서 설정하지 않습니다. 이 페이지에서 중앙 정책 파일 <code>kky-tool/user-access.json</code>을 저장하면 KKY Tool이 이 키워드를 읽어 외부 사용자를 제한합니다.</p>
 
     <section id="lock" class="panel">
-      <strong>愿由ъ옄 ?몄쬆</strong>
+      <strong>관리자 인증</strong>
       <label for="password">Password</label>
       <input id="password" type="password" autocomplete="current-password">
       <div class="actions"><button class="primary" id="unlock">Unlock</button></div>
@@ -45,18 +45,18 @@
     <section id="editor" class="panel hidden">
       <label class="check" for="enabled">
         <input id="enabled" type="checkbox" checked>
-        ?몃? ?ъ슜???쒗븳 ?ъ슜
+        외부 사용자 제한 사용
       </label>
 
-      <label for="keywords">?덉슜 Autodesk/Revit ?꾨줈???ㅼ썙??/label>
+      <label for="keywords">허용 Autodesk/Revit 프로필 키워드</label>
       <textarea id="keywords" spellcheck="false" placeholder="KCIM"></textarea>
-      <p class="hint">??以꾩뿉 ?섎굹???낅젰?섏꽭?? ?? KCIM</p>
+      <p class="hint">한 줄에 하나씩 입력하세요. 예: KCIM</p>
 
-      <label for="users">?뺥솗???덉슜???ъ슜??/label>
+      <label for="users">정확히 허용할 사용자</label>
       <textarea id="users" spellcheck="false" placeholder="kim.kky&#10;hong.gildong"></textarea>
 
-      <label for="message">李⑤떒 硫붿떆吏</label>
-      <input id="message" value="?몃? ?ъ슜?먮뒗 ?ъ슜?????놁뒿?덈떎.">
+      <label for="message">차단 메시지</label>
+      <input id="message" value="외부 사용자는 사용할 수 없습니다.">
 
       <div class="row">
         <div>
@@ -127,7 +127,7 @@
         enabled: $("enabled").checked,
         allowedProfileKeywords: keywords,
         allowedUsers: users,
-        blockMessage: $("message").value.trim() || "?몃? ?ъ슜?먮뒗 ?ъ슜?????놁뒿?덈떎.",
+        blockMessage: $("message").value.trim() || "외부 사용자는 사용할 수 없습니다.",
         updatedAtUtc: new Date().toISOString()
       };
     }
@@ -137,7 +137,7 @@
       $("enabled").checked = data.enabled !== false;
       $("keywords").value = Array.isArray(data.allowedProfileKeywords) ? data.allowedProfileKeywords.join("\n") : "KCIM";
       $("users").value = Array.isArray(data.allowedUsers) ? data.allowedUsers.join("\n") : "";
-      $("message").value = data.blockMessage || data.message || "?몃? ?ъ슜?먮뒗 ?ъ슜?????놁뒿?덈떎.";
+      $("message").value = data.blockMessage || data.message || "외부 사용자는 사용할 수 없습니다.";
       build();
     }
 
@@ -155,7 +155,7 @@
         fill(await response.json());
         setStatus("status", "Loaded current user-access.json.", "good");
       } catch (err) {
-        fill({ enabled: true, allowedProfileKeywords: ["KCIM"], allowedUsers: [], blockMessage: "?몃? ?ъ슜?먮뒗 ?ъ슜?????놁뒿?덈떎." });
+        fill({ enabled: true, allowedProfileKeywords: ["KCIM"], allowedUsers: [], blockMessage: "외부 사용자는 사용할 수 없습니다." });
         setStatus("status", "Current policy was not found. Default KCIM policy is ready.", "bad");
       }
     }
@@ -236,7 +236,7 @@
       URL.revokeObjectURL(url);
     });
     $("save").addEventListener("click", () => save().catch((err) => setStatus("status", err.message || String(err), "bad")));
-    fill({ enabled: true, allowedProfileKeywords: ["KCIM"], allowedUsers: [], blockMessage: "?몃? ?ъ슜?먮뒗 ?ъ슜?????놁뒿?덈떎." });
+    fill({ enabled: true, allowedProfileKeywords: ["KCIM"], allowedUsers: [], blockMessage: "외부 사용자는 사용할 수 없습니다." });
   </script>
 </body>
 </html>
