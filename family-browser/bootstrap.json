@@ -18,17 +18,20 @@
   },
   "managedRootPath": "I:\\30. 협력사 전용폴더\\00. BIM_KCIM\\02. 패밀리\\TEST",
   "managedRootPathCandidates": [
-    "I:\\30. 협력사 전용폴더\\00. BIM_KCIM\\02. 패밀리\\TEST"
+    "I:\\30. 협력사 전용폴더\\00. BIM_KCIM\\02. 패밀리\\TEST",
+    "D:\\TEST"
   ],
   "managedPolicyPath": "I:\\30. 협력사 전용폴더\\00. BIM_KCIM\\02. 패밀리\\TEST\\Config\\standard-policy.json",
   "managedPolicyPathCandidates": [
-    "I:\\30. 협력사 전용폴더\\00. BIM_KCIM\\02. 패밀리\\TEST\\Config\\standard-policy.json"
+    "I:\\30. 협력사 전용폴더\\00. BIM_KCIM\\02. 패밀리\\TEST\\Config\\standard-policy.json",
+    "D:\\TEST\\Config\\standard-policy.json"
   ],
   "requestStore": {
     "mode": "NetworkShare",
     "path": "I:\\30. 협력사 전용폴더\\00. BIM_KCIM\\02. 패밀리\\TEST\\Requests",
     "pathCandidates": [
-      "I:\\30. 협력사 전용폴더\\00. BIM_KCIM\\02. 패밀리\\TEST\\Requests"
+      "I:\\30. 협력사 전용폴더\\00. BIM_KCIM\\02. 패밀리\\TEST\\Requests",
+      "D:\\TEST\\Requests"
     ],
     "endpoint": ""
   }
