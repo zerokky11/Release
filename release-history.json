@@ -1,8 +1,10 @@
-﻿{
-    "version":  "2.35",
-    "publishedAt":  "2026-06-10",
-    "title":  "버전 2.35",
-    "notes":  "외부 사용자 제한 정책을 홈페이지 중앙 관리로 변경",
-    "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25,27)_v2.35.zip",
-    "installerUrl":  "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25,27)_v2.35.exe"
-}
+[
+    {
+        "version":  "2.35",
+        "publishedAt":  "2026-06-10",
+        "title":  "버전 2.35",
+        "notes":  "외부 사용자 제한 정책을 홈페이지 중앙 관리로 변경",
+        "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25,27)_v2.35.zip",
+        "installerUrl":  "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25,27)_v2.35.exe"
+    }
+]
