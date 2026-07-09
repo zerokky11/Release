@@ -1,5 +1,13 @@
 [
     {
+        "version":  "2.37",
+        "publishedAt":  "2026-07-09",
+        "title":  "버전 2.37",
+        "notes":  "RVT 정리 기능에서 Purge 기능이 작동하지 않던 일부 환경을 수정하고, v2.36 배포 패키지 문제를 바로잡음",
+        "packageUrl":  "https://update.zerokky.com/KKY_Tool_Revit(2019,21,23,25,27)_v2.37.zip",
+        "installerUrl":  "https://update.zerokky.com/official/KKY_Tool_Revit(2019,21,23,25,27)_v2.37.exe"
+    },
+    {
         "version":  "2.36",
         "publishedAt":  "2026-07-09",
         "title":  "버전 2.36",
