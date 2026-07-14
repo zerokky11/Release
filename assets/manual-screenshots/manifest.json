@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-07-13T15:21:35.730Z",
+  "generatedAt": "2026-07-14T14:21:12.196Z",
   "sourceRoot": "KKY_Tool_Revit_2019-2023/Resources/HubUI",
-  "baseUrl": "http://127.0.0.1:53888",
+  "baseUrl": "http://127.0.0.1:54588",
   "viewport": "1600x1000",
   "baseScreenCount": 25,
-  "extraScreenCount": 12,
-  "count": 37,
+  "extraScreenCount": 23,
+  "count": 48,
   "consoleErrors": [],
   "results": [
     {
@@ -302,6 +302,94 @@
       "note": "PMS 기준 등록과 세그먼트 매핑 단계",
       "file": "Sever/assets/manual-screenshots/segmentpms-compare.png",
       "bytes": 83917,
+      "title": "KKY Tool Hub"
+    },
+    {
+      "id": "schedule-export-source",
+      "kind": "major-module",
+      "note": "기준 스케줄 문서와 추출 방식 선택",
+      "file": "Sever/assets/manual-screenshots/schedule-export-source.png",
+      "bytes": 109248,
+      "title": "KKY Tool Hub"
+    },
+    {
+      "id": "schedule-export-schedules",
+      "kind": "major-module",
+      "note": "기준 스케줄 검색과 선택",
+      "file": "Sever/assets/manual-screenshots/schedule-export-schedules.png",
+      "bytes": 103846,
+      "title": "KKY Tool Hub"
+    },
+    {
+      "id": "schedule-export-target",
+      "kind": "major-module",
+      "note": "활성 문서 또는 여러 RVT 추출 대상 선택",
+      "file": "Sever/assets/manual-screenshots/schedule-export-target.png",
+      "bytes": 108583,
+      "title": "KKY Tool Hub"
+    },
+    {
+      "id": "schedule-export-result",
+      "kind": "major-module-result",
+      "note": "Schedule 추출 완료 요약과 Excel 내보내기 진입",
+      "file": "Sever/assets/manual-screenshots/schedule-export-result.png",
+      "bytes": 157739,
+      "title": "KKY Tool Hub"
+    },
+    {
+      "id": "schedule-import-mapping",
+      "kind": "major-module",
+      "note": "Excel 시트·값 열 선택, Instance/Type 매핑과 Import 옵션",
+      "file": "Sever/assets/manual-screenshots/schedule-import-mapping.png",
+      "bytes": 123786,
+      "title": "KKY Tool Hub"
+    },
+    {
+      "id": "schedule-import-options",
+      "kind": "major-module",
+      "note": "빈 셀 삭제와 중앙파일 동기화 옵션",
+      "file": "Sever/assets/manual-screenshots/schedule-import-options.png",
+      "bytes": 117566,
+      "title": "KKY Tool Hub"
+    },
+    {
+      "id": "nwc-target-links",
+      "kind": "major-module",
+      "note": "활성 문서와 문서별 Revit 링크 Reload 계획",
+      "file": "Sever/assets/manual-screenshots/nwc-target-links.png",
+      "bytes": 135623,
+      "title": "KKY Tool Hub"
+    },
+    {
+      "id": "nwc-view-selection",
+      "kind": "major-module",
+      "note": "문서별 비템플릿 3D View 검색과 선택",
+      "file": "Sever/assets/manual-screenshots/nwc-view-selection.png",
+      "bytes": 112732,
+      "title": "KKY Tool Hub"
+    },
+    {
+      "id": "nwc-export-options",
+      "kind": "major-module",
+      "note": "저장 폴더, 파일명 규칙과 Navisworks Export 옵션",
+      "file": "Sever/assets/manual-screenshots/nwc-export-options.png",
+      "bytes": 127686,
+      "title": "KKY Tool Hub"
+    },
+    {
+      "id": "nwc-export-options-lower",
+      "kind": "major-module",
+      "note": "좌표, 레벨, Room, Faceting Factor와 덮어쓰기 옵션",
+      "file": "Sever/assets/manual-screenshots/nwc-export-options-lower.png",
+      "bytes": 115950,
+      "title": "KKY Tool Hub"
+    },
+    {
+      "id": "nwc-export-result",
+      "kind": "major-module-result",
+      "note": "NWC 결과 건수, 링크 처리와 결과 Excel 진입",
+      "file": "Sever/assets/manual-screenshots/nwc-export-result.png",
+      "bytes": 164398,
       "title": "KKY Tool Hub"
     }
   ]
