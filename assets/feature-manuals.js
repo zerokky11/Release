@@ -1,4 +1,5 @@
 (function () {
+  const staticAssetVersion = '3.0-20260714.2';
   const sharedParamNote = '공유파라미터 목록은 Revit 관리 > 공유 매개변수에 연결된 TXT를 기준으로 읽습니다. 홈페이지/Hub에서 TXT 파일을 별도로 선택하는 흐름은 없습니다.';
   const multiExportNote = '여러 RVT 검토 결과의 파일별 저장명은 공통으로 {RVT파일명}_{기능명}_{오류건수00EA}.xlsx 형식을 사용합니다. 같은 이름이 이미 있으면 뒤에 (2), (3)이 붙습니다.';
 
@@ -2610,7 +2611,7 @@
     getSetupScreens(feature).forEach((screen, index) => {
       gallery.append(createManualVisual({
         ...screen,
-        src: `/assets/manual-screenshots/${screen.file}`,
+        src: `/assets/manual-screenshots/${screen.file}?v=${staticAssetVersion}`,
         alt: `${feature.title} - ${screen.title}`
       }, index, 'screen'));
     });
@@ -2623,7 +2624,7 @@
     if (input) {
       visuals.push({
         ...input,
-        src: `/assets/manual-excel/${feature.id}-input.png`,
+        src: `/assets/manual-excel/${feature.id}-input.png?v=${staticAssetVersion}`,
         alt: `${feature.title} 입력 엑셀 구조 예시`
       });
     }
@@ -2631,7 +2632,7 @@
       title: `${feature.title} 결과표`,
       description: '결과 엑셀의 핵심 열과 값 배치를 보여주는 구조 예시입니다. 실제 열은 선택한 추가 파라미터, 단위 옵션과 Revit 데이터에 따라 더 늘어날 수 있습니다.',
       points: (feature.result || []).slice(0, 3),
-      src: `/assets/manual-excel/${feature.id}-result.png`,
+      src: `/assets/manual-excel/${feature.id}-result.png?v=${staticAssetVersion}`,
       alt: `${feature.title} 결과 엑셀 구조 예시`
     });
 
