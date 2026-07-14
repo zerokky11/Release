@@ -1,0 +1,195 @@
+{
+  "generatedAt": "2026-07-13T14:58:17.209Z",
+  "viewport": "1440x760",
+  "outputCount": 25,
+  "inputCount": 6,
+  "count": 31,
+  "results": [
+    {
+      "featureId": "connector",
+      "kind": "result",
+      "file": "Sever/assets/manual-excel/connector-result.png",
+      "bytes": 33385
+    },
+    {
+      "featureId": "unconnected",
+      "kind": "result",
+      "file": "Sever/assets/manual-excel/unconnected-result.png",
+      "bytes": 30234
+    },
+    {
+      "featureId": "floorinfo",
+      "kind": "result",
+      "file": "Sever/assets/manual-excel/floorinfo-result.png",
+      "bytes": 31193
+    },
+    {
+      "featureId": "familysuitability",
+      "kind": "result",
+      "file": "Sever/assets/manual-excel/familysuitability-result.png",
+      "bytes": 32536
+    },
+    {
+      "featureId": "tapalign",
+      "kind": "result",
+      "file": "Sever/assets/manual-excel/tapalign-result.png",
+      "bytes": 31751
+    },
+    {
+      "featureId": "tapdepth",
+      "kind": "result",
+      "file": "Sever/assets/manual-excel/tapdepth-result.png",
+      "bytes": 32001
+    },
+    {
+      "featureId": "dupclash",
+      "kind": "result",
+      "file": "Sever/assets/manual-excel/dupclash-result.png",
+      "bytes": 32551
+    },
+    {
+      "featureId": "worksetassignment",
+      "kind": "result",
+      "file": "Sever/assets/manual-excel/worksetassignment-result.png",
+      "bytes": 33320
+    },
+    {
+      "featureId": "parameterduplication",
+      "kind": "result",
+      "file": "Sever/assets/manual-excel/parameterduplication-result.png",
+      "bytes": 32252
+    },
+    {
+      "featureId": "parametermissing",
+      "kind": "result",
+      "file": "Sever/assets/manual-excel/parametermissing-result.png",
+      "bytes": 31978
+    },
+    {
+      "featureId": "parameterstandard",
+      "kind": "result",
+      "file": "Sever/assets/manual-excel/parameterstandard-result.png",
+      "bytes": 31174
+    },
+    {
+      "featureId": "tapdepthutility",
+      "kind": "result",
+      "file": "Sever/assets/manual-excel/tapdepthutility-result.png",
+      "bytes": 32072
+    },
+    {
+      "featureId": "familylink",
+      "kind": "result",
+      "file": "Sever/assets/manual-excel/familylink-result.png",
+      "bytes": 33227
+    },
+    {
+      "featureId": "points",
+      "kind": "result",
+      "file": "Sever/assets/manual-excel/points-result.png",
+      "bytes": 31631
+    },
+    {
+      "featureId": "linkworkset",
+      "kind": "result",
+      "file": "Sever/assets/manual-excel/linkworkset-result.png",
+      "bytes": 33881
+    },
+    {
+      "featureId": "deliverycleaner",
+      "kind": "result",
+      "file": "Sever/assets/manual-excel/deliverycleaner-result.png",
+      "bytes": 33885
+    },
+    {
+      "featureId": "conditionextract",
+      "kind": "result",
+      "file": "Sever/assets/manual-excel/conditionextract-result.png",
+      "bytes": 34198
+    },
+    {
+      "featureId": "dup",
+      "kind": "result",
+      "file": "Sever/assets/manual-excel/dup-result.png",
+      "bytes": 32997
+    },
+    {
+      "featureId": "paramprop",
+      "kind": "result",
+      "file": "Sever/assets/manual-excel/paramprop-result.png",
+      "bytes": 33347
+    },
+    {
+      "featureId": "segmentpms",
+      "kind": "result",
+      "file": "Sever/assets/manual-excel/segmentpms-result.png",
+      "bytes": 32321
+    },
+    {
+      "featureId": "parammodifier",
+      "kind": "result",
+      "file": "Sever/assets/manual-excel/parammodifier-result.png",
+      "bytes": 33007
+    },
+    {
+      "featureId": "linkpath",
+      "kind": "result",
+      "file": "Sever/assets/manual-excel/linkpath-result.png",
+      "bytes": 35647
+    },
+    {
+      "featureId": "lateralnozzle",
+      "kind": "result",
+      "file": "Sever/assets/manual-excel/lateralnozzle-result.png",
+      "bytes": 31774
+    },
+    {
+      "featureId": "guid",
+      "kind": "result",
+      "file": "Sever/assets/manual-excel/guid-result.png",
+      "bytes": 30596
+    },
+    {
+      "featureId": "sharedparambatch",
+      "kind": "result",
+      "file": "Sever/assets/manual-excel/sharedparambatch-result.png",
+      "bytes": 33514
+    },
+    {
+      "featureId": "familysuitability",
+      "kind": "input",
+      "file": "Sever/assets/manual-excel/familysuitability-input.png",
+      "bytes": 30142
+    },
+    {
+      "featureId": "parameterstandard",
+      "kind": "input",
+      "file": "Sever/assets/manual-excel/parameterstandard-input.png",
+      "bytes": 31606
+    },
+    {
+      "featureId": "segmentpms",
+      "kind": "input",
+      "file": "Sever/assets/manual-excel/segmentpms-input.png",
+      "bytes": 29371
+    },
+    {
+      "featureId": "linkpath",
+      "kind": "input",
+      "file": "Sever/assets/manual-excel/linkpath-input.png",
+      "bytes": 34051
+    },
+    {
+      "featureId": "lateralnozzle",
+      "kind": "input",
+      "file": "Sever/assets/manual-excel/lateralnozzle-input.png",
+      "bytes": 27873
+    },
+    {
+      "featureId": "guid",
+      "kind": "input",
+      "file": "Sever/assets/manual-excel/guid-input.png",
+      "bytes": 29301
+    }
+  ]
+}

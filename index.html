@@ -3,150 +3,136 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="KKY Tool Hub 최신 배포, 업데이트 내역, 매뉴얼, 기능 요청 페이지">
-  <title>KKY Tool Hub</title>
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/site.css">
+  <title>KKY Tool Revit Hub 3.0</title>
+  <meta name="description" content="KKY Tool Revit Hub 3.0 다운로드, 기능 안내, 사용자 메뉴얼">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/assets/site.css">
 </head>
-<body>
-  <div class="page">
-    <div class="layout">
-      <aside class="side-nav">
-        <div class="site-title">
-          <strong>KKY Tool</strong>
-          <span>배포 · 업데이트 · 기능 요청</span>
-        </div>
-        <nav class="site-nav" aria-label="주요 메뉴">
-          <a class="is-active" href="index.html">홈</a>
-          <a href="kky-tool/">KKY Tool 사용자 관리</a>
-          <a href="updates.html">업데이트 내역</a>
-          <a href="Manual/index.html">매뉴얼</a>
-          <a href="requests.html">기능 요청</a>
-          <a href="family-browser/">패밀리 브라우저 경로</a>
-        </nav>
-      </aside>
-
-      <main class="content">
-        <section class="intro">
-          <div class="intro-badge">내부 배포</div>
-          <h1>KKY Tool Hub</h1>
-          <p class="intro-summary">
-            Revit 납품 전 검토와 반복 정리 작업을 한 곳에서 실행하는 실무 보조 도구입니다.
-          </p>
-          <div class="intro-detail">
-            <p>BQC 검토, 파라미터 확인, 패밀리 타입 적합성 검토, 링크/웍셋 관리, 엑셀 결과 정리를 Hub 안에서 선택해 실행할 수 있습니다.</p>
-            <p>이 페이지에서는 최신 설치 파일, 업데이트 내역, 매뉴얼, 기능 요청 현황을 함께 확인합니다.</p>
-          </div>
-        </section>
-
-        <section class="section">
-          <h2>최신 배포</h2>
-          <div class="panel">
-            <div class="release-head">
-              <div>
-                <div class="meta-label">현재 버전</div>
-                <div class="release-version" id="release-version">-</div>
-              </div>
-              <div>
-                <div class="meta-label">배포일</div>
-                <div class="release-date" id="release-date">-</div>
-              </div>
-            </div>
-
-            <div class="release-links">
-              <a class="release-link" id="download-zip" href="latest.json">
-                <span class="release-link-label">업데이트 패키지 ZIP</span>
-                <span class="release-link-value" id="package-file-label">최신 파일 확인 중</span>
-              </a>
-              <a class="release-link" id="download-exe" href="latest.json">
-                <span class="release-link-label">설치 파일 EXE</span>
-                <span class="release-link-value" id="exe-file-label">최신 파일 확인 중</span>
-              </a>
-              <a class="release-link" href="latest.json">
-                <span class="release-link-label">배포 정보</span>
-                <span class="release-link-value">업데이트 기준 정보</span>
-              </a>
-            </div>
-
-            <div class="release-note-block">
-              <div class="meta-label">이번 버전 변경 사항</div>
-              <ul class="release-notes" id="release-notes">
-                <li>배포 정보를 불러오는 중입니다.</li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <section class="section" id="feature-overview">
-          <div class="section-heading-row">
-            <h2>현재 제공 기능</h2>
-            <a class="text-link" href="Manual/index.html">매뉴얼 보기</a>
-          </div>
-          <div class="feature-overview-grid">
-            <article class="feature-overview-card">
-              <div class="feature-overview-head">
-                <div>
-                  <div class="meta-label">납품 전 검토</div>
-                  <h3>BQC 검토 흐름</h3>
-                </div>
-                <span class="feature-count">12개</span>
-              </div>
-              <ul class="feature-summary-list">
-                <li><strong>RVT 정리 (납품용)</strong><span>납품 파일 작성을 위한 뷰 정리, 불필요 항목 제거(Purge), 검토용 속성 추출</span></li>
-                <li><strong>조건별 객체 대상 속성 추출</strong><span>조건식으로 객체를 추려 지정 속성, 좌표, 선형 정보를 추출</span></li>
-                <li><strong>파라미터 연속성 검토</strong><span>연결된 MEP 객체의 파라미터 연속성 검토</span></li>
-                <li><strong>레벨 영역별 파라미터 검토</strong><span>선택한 레벨 영역 기준 파라미터 일치 여부 검토</span></li>
-                <li><strong>패밀리 타입 적합성 검토</strong><span>기준 엑셀의 카테고리/패밀리/타입 조합 비교</span></li>
-                <li><strong>속성 모수 검토</strong><span>파라미터별 기준값 엑셀을 기준으로 입력값 오/탈자 여부 검토</span></li>
-                <li><strong>미연결 검토</strong><span>커넥터 미연결 상태와 선택 시 중심축 연결 오류를 함께 검토</span></li>
-                <li><strong>탭/분기 축 틀어짐 검토</strong><span>배관/덕트 중심축 기준 탭/분기 피팅 축 검토</span></li>
-                <li><strong>중복 / 자체 간섭 검토</strong><span>여러 RVT 대상 중복 검토 또는 자체 간섭 검토</span></li>
-                <li><strong>웍셋 배정 검토</strong><span>기본 웍셋(Workset1) 또는 입력한 특정 웍셋 기준 검토</span></li>
-                <li><strong>프로젝트 파라미터 중복 검토</strong><span>추가된 프로젝트 파라미터 이름 중복 검토</span></li>
-                <li><strong>파라미터 누락 검토</strong><span>공유 텍스트 파라미터 누락 여부와 예외 규칙 검토</span></li>
-              </ul>
-            </article>
-
-            <article class="feature-overview-card">
-              <div class="feature-overview-head">
-                <div>
-                  <div class="meta-label">반복 작업 보조</div>
-                  <h3>유틸리티 기능</h3>
-                </div>
-                <span class="feature-count">11개</span>
-              </div>
-              <ul class="feature-summary-list">
-                <li><strong>중복 / 자체 간섭 검토</strong><span>활성 문서 또는 선택 RVT에서 중복 객체와 자체 간섭 검토</span></li>
-                <li><strong>패밀리 공유파라미터 추가/연동</strong><span>복합 및 하위 패밀리에 지정 파라미터 추가/연동</span></li>
-                <li><strong>Segment-PMS 비교 검토</strong><span>PMS 양식 기준 Segment OD, ID 비교 검토</span></li>
-                <li><strong>파라미터 수정기</strong><span>조건 기반 필터링 대상으로 파라미터 값 일괄 입력</span></li>
-                <li><strong>Revit 링크 경로 추출/재지정</strong><span>닫힌 RVT의 링크 경로 추출 및 엑셀 기준 반영</span></li>
-                <li><strong>노즐코드 KTA 단일화</strong><span>접수받은 KTA 양식을 하나의 시트 양식으로 추출</span></li>
-                <li><strong>파라미터 GUID 검토 및 정리</strong><span>프로젝트/패밀리 파라미터 GUID 검토 및 삭제 기준 정리</span></li>
-                <li><strong>패밀리 공유파라미터 연동 검토</strong><span>복합 패밀리와 하위 패밀리 파라미터 연동 여부 검토</span></li>
-                <li><strong>기준점/북각 추출</strong><span>RVT의 프로젝트 기준점, 측량 기준점, 북각 값 추출</span></li>
-                <li><strong>링크 기본 웍셋 점검/적용</strong><span>Revit 링크의 열려 있는 웍셋 현황 점검 및 기본 웍셋(Workset1) 적용</span></li>
-                <li><strong>프로젝트 파라미터 일괄 추가</strong><span>프로젝트 파일에 지정 파라미터 일괄 추가</span></li>
-              </ul>
-            </article>
-          </div>
-        </section>
-
-        <section class="section">
-          <div class="section-heading-row">
-            <h2>최근 업데이트 내역</h2>
-            <a class="text-link" href="updates.html">전체 내역 보기</a>
-          </div>
-          <div class="panel">
-            <div class="release-history-list" id="release-history-preview">
-              <p class="empty-state">업데이트 내역을 불러오는 중입니다.</p>
-            </div>
-          </div>
-        </section>
-      </main>
+<body data-page="home">
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="brand" href="/index.html">
+        <span class="brand__mark">K</span>
+        <span><span class="brand__title">KKY Tool</span><span class="brand__sub">Revit Hub 3.0</span></span>
+      </a>
+      <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false">메뉴</button>
+      <nav class="nav" data-nav-menu>
+        <a href="/index.html" data-nav="home">홈</a>
+        <a href="/index.html#download" data-nav="download">다운로드</a>
+        <a href="/Manual/features.html" data-nav="features">기능</a>
+        <a href="/Manual/index.html" data-nav="manual">메뉴얼</a>
+        
+        <a href="/requests.html" data-nav="requests">요청하기</a>
+        
+        <a href="/kky-tool/" data-nav="admin">관리자</a>
+      </nav>
     </div>
-  </div>
+  </header>
 
-  <script src="assets/site.js?v=20260526a"></script>
+  <main class="page-main home-main">
+    <section class="home-products-intro">
+      <div>
+        <span class="home-section-label">KKY REVIT PRODUCTS</span>
+        <h1>현재 운영 중인 KKY 도구</h1>
+        <p>제품 화면과 필요한 문서로 바로 이동할 수 있도록 홈을 두 개의 제품 진입점으로 정리했습니다.</p>
+      </div>
+      <span class="home-product-count"><strong>2</strong> products</span>
+    </section>
+
+    <section class="home-product-grid" aria-label="KKY Revit 제품 목록">
+      <article class="home-product-card home-product-card--hub">
+        <div class="home-product-card__header">
+          <div>
+            <span class="home-product-kicker">BQC · UTILITY · SCHEDULE</span>
+            <h2>KKY Tool 3.0</h2>
+          </div>
+          <span class="home-product-status"><span aria-hidden="true"></span>Preview3 운영</span>
+        </div>
+        <p class="home-product-summary">BQC 검토와 반복 업무, 일정 및 내보내기 도구를 하나의 Revit 작업대에서 실행합니다.</p>
+        <a class="home-product-media" href="/Manual/index.html" aria-label="KKY Tool 3.0 메뉴얼 열기">
+          <img src="/assets/kky-tool/home.png" alt="KKY Tool 3.0 홈 화면" fetchpriority="high" decoding="async">
+          <span>KKY Tool 메뉴얼</span>
+        </a>
+        <div class="home-product-card__footer">
+          <span class="home-product-support">Revit 2019 · 2021 · 2023 · 2025 · 2027</span>
+          <nav class="home-product-links" aria-label="KKY Tool 3.0 바로가기">
+            <a class="home-product-link is-primary" href="/Manual/index.html">메뉴얼</a>
+            <a class="home-product-link" href="/Manual/features.html">기능 보기</a>
+            <a class="home-product-link" href="#download">다운로드</a>
+          </nav>
+        </div>
+      </article>
+
+      <article class="home-product-card home-product-card--family">
+        <div class="home-product-card__header">
+          <div>
+            <span class="home-product-kicker">STANDARD LIBRARY CONTROL</span>
+            <h2>Family Browser 1.0</h2>
+          </div>
+          <span class="home-product-status"><span aria-hidden="true"></span>운영 중</span>
+        </div>
+        <p class="home-product-summary">승인된 표준 RVT를 기준으로 패밀리와 시스템 타입을 찾고 적용하며 현재 모델을 비교합니다.</p>
+        <a class="home-product-media" href="/family-browser/index.html" aria-label="Family Browser 1.0 제품 홈 열기">
+          <img src="/assets/family-browser/home.png" alt="Family Browser 1.0 홈 화면" loading="lazy" decoding="async">
+          <span>Family Browser 제품 홈</span>
+        </a>
+        <div class="home-product-card__footer">
+          <span class="home-product-support">표준 라이브러리 · 모델 검사 · 요청 관리</span>
+          <nav class="home-product-links" aria-label="Family Browser 1.0 바로가기">
+            <a class="home-product-link is-primary" href="/family-browser/index.html">제품 홈</a>
+            <a class="home-product-link" href="/family-browser/library.html">사용 방법</a>
+            <a class="home-product-link" href="/family-browser/admin.html">관리자</a>
+          </nav>
+        </div>
+      </article>
+    </section>
+
+    <section class="home-release" id="download">
+      <div class="home-release__intro">
+        <span class="home-section-label">DOWNLOAD</span>
+        <h2>KKY Tool 설치</h2>
+        <p>3.0 Preview와 기존 Stable 채널만 간단히 구분합니다.</p>
+      </div>
+      <div class="home-release-list">
+        <article class="home-release-row" data-release="preview">
+          <div class="home-release-copy">
+            <span class="badge blue">Preview3</span>
+            <strong>KKY Tool 3.0 <span data-release-field="version">불러오는 중</span></strong>
+            <span data-release-field="notes">preview3/latest.json을 확인하고 있습니다.</span>
+          </div>
+          <div class="home-release-actions">
+            <span class="home-release-date" data-release-field="publishedAt">-</span>
+            <a class="button primary" href="#" data-release-download="installerUrl">설치 파일</a>
+            <a class="button" href="#" data-release-download="url">ZIP</a>
+          </div>
+        </article>
+        <article class="home-release-row" data-release="stable">
+          <div class="home-release-copy">
+            <span class="badge ok">Stable</span>
+            <strong>KKY Tool Stable <span data-release-field="version">불러오는 중</span></strong>
+            <span data-release-field="notes">latest.json을 확인하고 있습니다.</span>
+          </div>
+          <div class="home-release-actions">
+            <span class="home-release-date" data-release-field="publishedAt">-</span>
+            <a class="button primary" href="#" data-release-download="installerUrl">설치 파일</a>
+            <a class="button" href="#" data-release-download="url">ZIP</a>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <span>KKY Tool Revit Hub 3.0</span>
+      <div class="mini-links">
+        <a href="/latest.json">Stable feed</a>
+        <a href="/Release/preview3/latest.json">Preview3 feed</a>
+        <a href="/kky-tool/user-access.json">User policy</a>
+      </div>
+    </div>
+  </footer>
+  <script src="/assets/site.js"></script>
 </body>
 </html>
+

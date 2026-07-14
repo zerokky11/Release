@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>현재 모델 검사 | KKY Family Browser</title>
+  <meta name="description" content="KKY Family Browser 현재 모델 검사 기준, 비교 논리, 결과와 Excel 리포트 매뉴얼">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/assets/site.css">
+</head>
+<body data-page="family-browser">
+  <header class="site-header"><div class="site-header__inner"><a class="brand" href="/index.html"><span class="brand__mark">K</span><span><span class="brand__title">KKY Tool</span><span class="brand__sub">Revit Hub 3.0</span></span></a><button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false">메뉴</button><nav class="nav" data-nav-menu><a href="/index.html" data-nav="home">홈</a><a href="/index.html#download" data-nav="download">다운로드</a><a href="/Manual/features.html" data-nav="features">기능</a><a href="/Manual/index.html" data-nav="manual">메뉴얼</a><a href="/family-browser/index.html" data-nav="family-browser">Family Browser</a><a href="/requests.html" data-nav="requests">요청하기</a><a href="/kky-tool/" data-nav="admin">관리자</a></nav></div></header>
+
+  <main class="page-main">
+    <div class="fb-doc-layout">
+      <aside class="fb-doc-side">
+        <div class="fb-doc-side__title">Family Browser</div>
+        <nav><a href="/family-browser/index.html">제품 개요</a><a href="/family-browser/library.html">패밀리 / 시스템 타입</a><a class="is-current" href="/family-browser/model-check.html">현재 모델 검사</a><a href="/family-browser/requests.html">추가 요청</a><a href="/family-browser/governance.html">권한 / 차단</a><a href="/family-browser/admin.html">관리자 설정</a></nav>
+      </aside>
+
+      <div class="fb-doc-main">
+        <header class="fb-doc-title">
+          <span class="eyebrow">검사 및 유지관리</span>
+          <h1>현재 모델 검사</h1>
+          <p>현재 활성 프로젝트의 로더블 패밀리와 시스템 타입을 선택한 공종의 표준 스냅샷과 비교하고, 차이·누락·추적 상태를 검토합니다.</p>
+        </header>
+
+        <section class="fb-doc-section" id="before">
+          <h2>검사 전 확인</h2>
+          <div class="fb-detail-grid">
+            <div class="fb-detail-block"><h3>현재 프로젝트</h3><p>화면에 표시된 활성 프로젝트가 검사하려는 호스트 RVT인지 확인합니다.</p></div>
+            <div class="fb-detail-block"><h3>선택된 검사 기준</h3><p>건축·전기·소방·설비 등 현재 업무에 맞는 등록 표준을 선택합니다.</p></div>
+            <div class="fb-detail-block"><h3>표준 스냅샷</h3><p>선택 공종의 표준 RVT가 등록·스캔되어 있어야 비교를 실행할 수 있습니다.</p></div>
+            <div class="fb-detail-block"><h3>저장 상태</h3><p>최근 변경 내용을 포함하려면 검사 전에 현재 프로젝트를 저장하거나 동기화하는 것이 좋습니다.</p></div>
+          </div>
+          <div class="fb-callout warn"><strong>공종 기준을 반드시 확인합니다.</strong>다른 공종 표준에도 같은 이름의 패밀리가 있을 수 있습니다. 잘못된 기준을 선택하면 정상 항목도 차이로 판단될 수 있습니다.</div>
+        </section>
+
+        <section class="fb-doc-section" id="run">
+          <h2>실행 방법</h2>
+          <ol class="fb-procedure">
+            <li><div><strong>왼쪽 메뉴에서 모델 검사를 엽니다.</strong><p>화면은 캐시된 기준과 최근 상태만 먼저 표시하며, 이 단계에서 원본 표준 RVT를 다시 스캔하지 않습니다.</p></div></li>
+            <li><div><strong>선택된 검사 기준을 확인합니다.</strong><p>상단 공종 칩 중 사용할 기준을 선택합니다. <b>스캔 필요</b>가 보이면 관리자가 해당 표준을 먼저 갱신해야 합니다.</p></div></li>
+            <li><div><strong>프로젝트 검사를 실행합니다.</strong><p>현재 모델의 로더블 패밀리와 시스템 타입을 선택 기준의 캐시된 표준 스냅샷과 비교합니다.</p></div></li>
+            <li><div><strong>필요한 추가 진단을 실행합니다.</strong><p>시스템 타입 문제는 <b>시스템 타입 정밀 진단</b>, 추적 정보는 <b>추적 스탬프</b>와 <b>추적 확인</b>을 사용합니다.</p></div></li>
+            <li><div><strong>결과와 다음 작업을 확인합니다.</strong><p>일치·차이·프로젝트 전용·실패 건수를 확인하고 관리자 업데이트 또는 요청 등록 여부를 결정합니다.</p></div></li>
+          </ol>
+          <figure class="fb-screen-figure">
+            <a href="/assets/family-browser/model-check.png" target="_blank" rel="noopener"><img src="/assets/family-browser/model-check.png" alt="KKY Family Browser 현재 모델 검사 화면"></a>
+            <figcaption>현재 모델 검사 화면. 검사 기준과 프로젝트 검사, 시스템 정밀 진단, 추적 및 관리자 업데이트 작업이 목적별로 나뉩니다.</figcaption>
+          </figure>
+        </section>
+
+        <section class="fb-doc-section" id="logic">
+          <h2>검사 논리</h2>
+          <p>이름이 같은지만 보는 검사가 아닙니다. 정밀 검사에서는 표준 스냅샷과 현재 프로젝트의 구조적 내용을 비교합니다.</p>
+          <div class="fb-detail-grid">
+            <div class="fb-detail-block"><h3>로더블 패밀리 식별</h3><p>패밀리명과 카테고리 식별을 먼저 맞춥니다. 같은 이름이지만 카테고리가 다르면 불일치로 차단합니다.</p></div>
+            <div class="fb-detail-block"><h3>패밀리 정밀 내용</h3><p>타입, 파라미터, 하위 패밀리 메타데이터, Lookup CSV·사이즈 테이블을 포함한 콘텐츠 Fingerprint를 비교합니다.</p></div>
+            <div class="fb-detail-block"><h3>시스템 타입 정의</h3><p>시스템 패밀리 종류와 타입 정의, 크기 수·범위, 레이어 구성 등 의미 있는 구조를 비교합니다.</p></div>
+            <div class="fb-detail-block"><h3>시스템 의존 관계</h3><p>라우팅 프리퍼런스 그룹·규칙, 연결 부품, 클래스와 카테고리 등 적용에 필요한 의존 항목을 비교합니다.</p></div>
+            <div class="fb-detail-block"><h3>추적 정보</h3><p>Family Browser로 반영한 항목의 출처, 표준 대상, 저장·동기화 확정 여부를 확인합니다.</p></div>
+            <div class="fb-detail-block"><h3>검사 실패 보존</h3><p>Fingerprint를 만들지 못한 패밀리는 누락시키지 않고 실패 목록과 사유를 비교 리포트에 남깁니다.</p></div>
+          </div>
+        </section>
+
+        <section class="fb-doc-section" id="actions">
+          <h2>검사 화면의 작업</h2>
+          <div class="fb-table-wrap">
+            <table>
+              <thead><tr><th>작업</th><th>사용 시점</th><th>결과</th></tr></thead>
+              <tbody>
+                <tr><td>프로젝트 검사</td><td>현재 프로젝트 전체를 선택 표준과 비교할 때</td><td>패밀리·시스템 타입 비교 결과와 Excel용 검토 목록 생성</td></tr>
+                <tr><td>시스템 타입 정밀 진단</td><td>라우팅 프리퍼런스나 의존 항목 문제를 자세히 확인할 때</td><td>시스템 타입 진단 리포트와 적용 가능 여부</td></tr>
+                <tr><td>추적 스탬프</td><td>기존 항목의 Family Browser 출처 추적 정보를 준비할 때</td><td>현재 문서의 추적 데이터 갱신 후보</td></tr>
+                <tr><td>추적 확인</td><td>저장·동기화 후 반영 상태를 점검할 때</td><td>추적 누락·정규화 필요 항목 표시</td></tr>
+                <tr><td>로더블 패밀리 업데이트</td><td>검사 후 표준과 다른 기존 패밀리를 관리자가 덮어쓸 때</td><td>선택 표준 기준 업데이트 후보 처리</td></tr>
+                <tr><td>시스템 타입 업데이트</td><td>기존 시스템 타입을 표준 정의에 맞출 때</td><td>현재 프로젝트에 존재하는 타입만 업데이트</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="fb-callout"><strong>누락 시스템 타입은 업데이트 화면에서 새로 만들지 않습니다.</strong>기존 시스템 타입 업데이트는 현재 프로젝트에 이미 있는 타입을 맞추는 작업입니다. 새 타입은 시스템 타입 라이브러리의 적용 흐름을 사용합니다.</div>
+        </section>
+
+        <section class="fb-doc-section" id="result">
+          <h2>결과 읽기</h2>
+          <p>결과창은 검사 대상과 기준, 비교 건수, 차이 건수, 프로젝트 전용 항목, Fingerprint 실패와 저장된 리포트를 요약합니다.</p>
+          <figure class="fb-screen-figure">
+            <a href="/assets/family-browser/model-check-result.png" target="_blank" rel="noopener"><img src="/assets/family-browser/model-check-result.png" alt="Family Browser 현재 모델 검사 결과창"></a>
+            <figcaption>검사 결과 메시지 예시. 성공 여부뿐 아니라 검토해야 할 차이와 결과 파일 위치를 함께 보여줍니다.</figcaption>
+          </figure>
+          <ul class="fb-bullets">
+            <li><b>표준과 일치:</b> 선택 기준의 구조와 현재 프로젝트 항목이 일치합니다.</li>
+            <li><b>표준과 다름:</b> 대응 항목은 있지만 Fingerprint 또는 의미 구조가 다릅니다.</li>
+            <li><b>프로젝트 전용:</b> 현재 프로젝트에만 있고 승인 표준에 대응 항목이 없습니다.</li>
+            <li><b>카테고리 불일치:</b> 이름은 같아도 다른 카테고리에 있어 자동 반영할 수 없습니다.</li>
+            <li><b>실패 목록:</b> 정밀 내용을 읽지 못한 항목과 원인이 별도로 보존됩니다.</li>
+          </ul>
+        </section>
+
+        <section class="fb-doc-section" id="excel">
+          <h2>Excel 검토 목록</h2>
+          <p>현재 모델 검사는 검토가 필요한 행을 <code>.xlsx</code>로 저장합니다. CSV 결과 내보내기는 제공하지 않습니다.</p>
+          <div class="fb-table-wrap">
+            <table>
+              <thead><tr><th>항목</th><th>규칙</th></tr></thead>
+              <tbody>
+                <tr><td>기본 파일명</td><td><span class="fb-code-name">KKY_CurrentModelReview_{프로젝트명}_{표준대상}_{yyyyMMdd-HHmm}.xlsx</span></td></tr>
+                <tr><td>한글 시트</td><td><b>검토결과</b></td></tr>
+                <tr><td>영문 시트</td><td><b>Review</b></td></tr>
+                <tr><td>주요 열</td><td>공종, 항목 구분, 상태, 카테고리, 패밀리, 타입, 표준/프로젝트 타입 수, 인스턴스 수</td></tr>
+                <tr><td>차이 상세 열</td><td>비고, 차이 항목, 표준, 프로젝트, 차이 요약, 표준 RVT, 프로젝트, 비교 리포트</td></tr>
+                <tr><td>포함 대상</td><td>검토 상태의 로더블 패밀리, 시스템 타입, 프로젝트 패밀리 Fingerprint 생성 실패</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="fb-callout"><strong>예시</strong>프로젝트가 <code>Plant_A</code>, 표준 대상이 <code>설비</code>, 실행 시각이 2026-07-13 14:30이면 <span class="fb-code-name">KKY_CurrentModelReview_Plant_A_설비_20260713-1430.xlsx</span> 형태로 제안됩니다.</div>
+        </section>
+
+        <div class="fb-page-links"><a class="button" href="/family-browser/library.html">이전: 라이브러리</a><a class="button primary" href="/family-browser/requests.html">다음: 추가 요청</a></div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer"><div class="site-footer__inner"><span>KKY Family Browser 1.0 매뉴얼</span><div class="mini-links"><a href="/family-browser/index.html">개요</a><a href="/family-browser/admin.html">관리자</a></div></div></footer>
+  <script src="/assets/site.js"></script>
+</body>
+</html>

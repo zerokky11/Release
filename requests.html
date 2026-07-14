@@ -3,113 +3,145 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="KKY Tool 기능 요청 페이지">
   <title>KKY Tool 기능 요청</title>
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/site.css">
+  <meta name="description" content="KKY Tool 기능 개선과 자동화 요청을 등록합니다.">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/assets/site.css">
 </head>
-<body>
-  <div class="page">
-    <div class="layout">
-      <aside class="side-nav">
-        <div class="site-title">
-          <strong>KKY Tool</strong>
-          <span>배포 · 업데이트 · 기능 요청</span>
-        </div>
-        <nav class="site-nav" aria-label="주요 메뉴">
-          <a href="index.html">홈</a>
-          <a href="updates.html">업데이트 내역</a>
-          <a href="Manual/index.html">매뉴얼</a>
-          <a class="is-active" href="requests.html">기능 요청</a>
-          <a href="family-browser/">패밀리 브라우저 경로</a>
-        </nav>
-      </aside>
-
-      <main class="content">
-        <section class="section">
-          <h1 class="page-heading">기능 요청</h1>
-          <div class="panel panel-soft">
-            <h2>필요한 기능과 반복되는 불편을 남겨 주세요</h2>
-            <p>반복 작업, 오래 걸리는 정리, 새로 필요한 검토 기능을 간단히 등록할 수 있습니다.</p>
-            <p>프로젝트명과 작성자 이름을 함께 적으면 요청 배경과 우선순위를 더 빠르게 판단할 수 있습니다.</p>
-            <p class="muted">등록된 요청은 최근 요청 목록에 표시되어 팀원도 함께 확인할 수 있습니다.</p>
-          </div>
-        </section>
-
-        <section class="section">
-          <div class="panel">
-            <p class="section-note">프로젝트 원본 데이터, 개인 연락처, 보안 정보는 제외하고 필요한 상황과 기대 결과 중심으로 작성해 주세요.</p>
-
-            <form class="request-form" id="request-form">
-              <div class="field-row">
-                <div class="field">
-                  <label for="field-site">프로젝트명</label>
-                  <input id="field-site" name="site" type="text" placeholder="예: 현장 A 유지보수" required>
-                </div>
-                <div class="field">
-                  <label for="field-author">작성자 이름</label>
-                  <input id="field-author" name="author" type="text" placeholder="예: 홍길동" required>
-                </div>
-              </div>
-
-              <div class="field">
-                <label for="field-task">요청 제목</label>
-                <input id="field-task" name="task" type="text" placeholder="예: 납품 자료 정리 자동화 / 링크 경로 검토" required>
-              </div>
-
-              <div class="field">
-                <label for="field-problem">현재 불편한 점</label>
-                <textarea id="field-problem" name="problem" rows="3" placeholder="현재 어떤 작업이 반복되거나 오래 걸리는지 입력해 주세요." required></textarea>
-              </div>
-
-              <div class="field">
-                <label for="field-idea">원하는 개선 방향</label>
-                <textarea id="field-idea" name="idea" rows="3" placeholder="어떤 결과가 나오면 좋은지, 어떤 버튼이나 흐름이면 편할지 입력해 주세요." required></textarea>
-              </div>
-
-              <div class="field-row">
-                <div class="field">
-                  <label for="field-duration">현재 소요 시간</label>
-                  <input id="field-duration" name="duration" type="text" placeholder="예: 1시간 30분">
-                </div>
-                <div class="field">
-                  <label for="field-frequency">반복 빈도</label>
-                  <input id="field-frequency" name="frequency" type="text" placeholder="예: 주 2~3회">
-                </div>
-              </div>
-
-              <div class="field">
-                <label for="field-note">메모</label>
-                <textarea id="field-note" name="note" rows="3" placeholder="추가로 전달하고 싶은 내용이 있으면 입력해 주세요."></textarea>
-              </div>
-            </form>
-
-            <div class="request-actions">
-              <div class="button-row">
-                <button class="submit-button" id="save-request" type="button">요청 등록</button>
-                <button class="ghost-button" id="copy-request" type="button">요청 내용 복사</button>
-              </div>
-              <p class="request-help" id="request-status">요청 등록 후 최근 요청 목록에서 바로 확인할 수 있습니다.</p>
-            </div>
-          </div>
-        </section>
-
-        <section class="section">
-          <div class="section-heading-row">
-            <h2>최근 요청</h2>
-            <button class="text-button" id="refresh-requests" type="button">목록 새로고침</button>
-          </div>
-          <div class="panel">
-            <div class="request-list" id="request-list">
-              <p class="empty-state">등록된 요청을 불러오는 중입니다.</p>
-            </div>
-          </div>
-        </section>
-      </main>
+<body data-page="requests">
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="brand" href="/index.html">
+        <span class="brand__mark">K</span>
+        <span><span class="brand__title">KKY Tool</span><span class="brand__sub">Revit Hub 3.0</span></span>
+      </a>
+      <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false">메뉴</button>
+      <nav class="nav" data-nav-menu>
+        <a href="/index.html" data-nav="home">홈</a>
+        <a href="/index.html#download" data-nav="download">다운로드</a>
+        <a href="/Manual/features.html" data-nav="features">기능</a>
+        <a href="/Manual/index.html" data-nav="manual">메뉴얼</a>
+        <a href="/requests.html" data-nav="requests">요청하기</a>
+        <a href="/kky-tool/" data-nav="admin">관리자</a>
+      </nav>
     </div>
-  </div>
+  </header>
 
-  <script src="assets/site-config.js"></script>
-  <script src="assets/site.js?v=20260526a"></script>
+  <main class="page-main request-page">
+    <section class="page-title request-title">
+      <span class="eyebrow">기능 요청</span>
+      <h1>반복되는 불편을 기능 요청으로 남기기</h1>
+      <p class="lead">검토 자동화, 결과 정리, UI 흐름 개선처럼 실제 프로젝트에서 반복되는 작업을 등록합니다. 저장 방식은 기존 운영 요청 API를 그대로 사용합니다.</p>
+    </section>
+
+    <section class="request-layout">
+      <div class="request-main">
+        <article class="panel request-form-panel">
+          <div class="section-header request-form-head">
+            <div>
+              <h2>요청 내용</h2>
+              <p>프로젝트 원본 데이터, 개인 연락처, 보안 정보는 제외하고 상황과 기대 결과 중심으로 작성하세요.</p>
+            </div>
+          </div>
+
+          <form class="request-form" id="request-form">
+            <div class="form-grid">
+              <div class="field">
+                <label for="field-site">프로젝트명</label>
+                <input id="field-site" name="site" type="text" placeholder="예: 현장 A 유지보수" required>
+              </div>
+              <div class="field">
+                <label for="field-author">작성자 이름</label>
+                <input id="field-author" name="author" type="text" placeholder="예: 홍길동" required>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="field-task">요청 제목</label>
+              <input id="field-task" name="task" type="text" placeholder="예: 납품 자료 정리 자동화 / 링크 경로 검토" required>
+            </div>
+
+            <div class="field">
+              <label for="field-problem">현재 불편한 점</label>
+              <textarea id="field-problem" name="problem" rows="4" placeholder="현재 어떤 작업이 반복되거나 오래 걸리는지 적어주세요." required></textarea>
+            </div>
+
+            <div class="field">
+              <label for="field-idea">원하는 개선 방향</label>
+              <textarea id="field-idea" name="idea" rows="4" placeholder="어떤 결과가 나오면 좋은지, 어떤 버튼이나 흐름이면 편할지 적어주세요." required></textarea>
+            </div>
+
+            <div class="form-grid">
+              <div class="field">
+                <label for="field-duration">현재 소요 시간</label>
+                <input id="field-duration" name="duration" type="text" placeholder="예: 1시간 30분">
+              </div>
+              <div class="field">
+                <label for="field-frequency">반복 빈도</label>
+                <input id="field-frequency" name="frequency" type="text" placeholder="예: 주 2~3회">
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="field-note">메모</label>
+              <textarea id="field-note" name="note" rows="3" placeholder="참고할 조건, 관련 기능, 예상 예외가 있으면 적어주세요."></textarea>
+            </div>
+          </form>
+
+          <div class="request-actions">
+            <button class="button primary" id="save-request" type="button">요청 등록</button>
+            <button class="button secondary" id="copy-request" type="button">요청 내용 복사</button>
+          </div>
+          <p class="status" id="request-status">요청 등록 후 최근 요청 목록에서 바로 확인할 수 있습니다.</p>
+        </article>
+
+        <section class="section request-list-section">
+          <div class="section-header">
+            <div>
+              <h2>최근 요청</h2>
+              <p>팀에서 등록한 최근 요청을 확인합니다.</p>
+            </div>
+            <button class="button" id="refresh-requests" type="button">목록 새로고침</button>
+          </div>
+          <div class="request-list" id="request-list">
+            <p class="empty-state">등록된 요청을 불러오는 중입니다.</p>
+          </div>
+        </section>
+      </div>
+
+      <aside class="request-side">
+        <article class="panel manual-card--accent">
+          <h2>작성 기준</h2>
+          <ul class="manual-list">
+            <li>작업을 누가, 언제, 얼마나 자주 반복하는지 적습니다.</li>
+            <li>현재 수작업 단계와 원하는 자동화 결과를 구분합니다.</li>
+            <li>검토 기준, 엑셀 양식, 결과 파일명처럼 판단에 필요한 조건을 함께 적습니다.</li>
+            <li>프로젝트 보안 정보나 원본 데이터 경로는 제외합니다.</li>
+          </ul>
+        </article>
+        <article class="panel">
+          <h2>처리 흐름</h2>
+          <ol class="steps request-steps">
+            <li><div><strong>요청 등록</strong><p>입력값을 기존 요청 API에 저장합니다.</p></div></li>
+            <li><div><strong>검토</strong><p>반복성, 위험도, 구현 범위를 보고 우선순위를 정합니다.</p></div></li>
+            <li><div><strong>반영</strong><p>기능 카탈로그와 메뉴얼에 반영할 항목을 정리합니다.</p></div></li>
+          </ol>
+        </article>
+      </aside>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <span>KKY Tool Revit Hub 3.0</span>
+      <div class="mini-links">
+        <a href="/Manual/features.html">기능</a>
+        <a href="/Manual/index.html">메뉴얼</a>
+        <a href="/requests.html">요청하기</a>
+      </div>
+    </div>
+  </footer>
+  <script src="/assets/site-config.js"></script>
+  <script src="/assets/site.js"></script>
 </body>
 </html>

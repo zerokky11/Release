@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>추가 요청 | KKY Family Browser</title>
+  <meta name="description" content="KKY Family Browser 패밀리, 시스템 타입, 표준 업데이트 요청 등록과 진행 상태 매뉴얼">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/assets/site.css">
+</head>
+<body data-page="family-browser">
+  <header class="site-header"><div class="site-header__inner"><a class="brand" href="/index.html"><span class="brand__mark">K</span><span><span class="brand__title">KKY Tool</span><span class="brand__sub">Revit Hub 3.0</span></span></a><button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false">메뉴</button><nav class="nav" data-nav-menu><a href="/index.html" data-nav="home">홈</a><a href="/index.html#download" data-nav="download">다운로드</a><a href="/Manual/features.html" data-nav="features">기능</a><a href="/Manual/index.html" data-nav="manual">메뉴얼</a><a href="/family-browser/index.html" data-nav="family-browser">Family Browser</a><a href="/requests.html" data-nav="requests">요청하기</a><a href="/kky-tool/" data-nav="admin">관리자</a></nav></div></header>
+
+  <main class="page-main">
+    <div class="fb-doc-layout">
+      <aside class="fb-doc-side">
+        <div class="fb-doc-side__title">Family Browser</div>
+        <nav><a href="/family-browser/index.html">제품 개요</a><a href="/family-browser/library.html">패밀리 / 시스템 타입</a><a href="/family-browser/model-check.html">현재 모델 검사</a><a class="is-current" href="/family-browser/requests.html">추가 요청</a><a href="/family-browser/governance.html">권한 / 차단</a><a href="/family-browser/admin.html">관리자 설정</a></nav>
+      </aside>
+
+      <div class="fb-doc-main">
+        <header class="fb-doc-title">
+          <span class="eyebrow">업무 흐름</span>
+          <h1>추가 요청</h1>
+          <p>승인 목록에 없는 패밀리·시스템 타입 또는 현재 프로젝트의 더 나은 항목을 표준에 반영해 달라는 요청을 애드인 안에서 등록하고 추적합니다.</p>
+        </header>
+
+        <section class="fb-doc-section" id="types">
+          <h2>요청 종류</h2>
+          <div class="fb-topic-grid">
+            <div class="fb-topic-item"><strong>없는 패밀리</strong><p>승인 표준 라이브러리에 새로 편입되어야 할 로더블 패밀리를 요청합니다.</p></div>
+            <div class="fb-topic-item"><strong>없는 시스템 타입</strong><p>새 시스템 타입, 라우팅 프리퍼런스 또는 필요한 의존 항목을 요청합니다.</p></div>
+            <div class="fb-topic-item"><strong>표준 업데이트</strong><p>현재 프로젝트 항목이 기존 표준보다 낫다고 판단될 때 표준 변경 검토를 요청합니다.</p></div>
+          </div>
+        </section>
+
+        <section class="fb-doc-section" id="register">
+          <h2>요청 등록 방법</h2>
+          <ol class="fb-procedure">
+            <li><div><strong>왼쪽 메뉴에서 요청 탭을 엽니다.</strong><p>요청 목록은 요청 탭을 열 때 읽습니다. 시작할 때 요청 저장소 전체를 미리 읽지 않습니다.</p></div></li>
+            <li><div><strong>요청 종류를 선택합니다.</strong><p><b>패밀리 요청</b>, <b>시스템 요청</b>, <b>업데이트 요청</b> 중 목적에 맞는 카드를 선택하거나 <b>요청 등록하기</b>를 누릅니다.</p></div></li>
+            <li><div><strong>공종을 입력합니다.</strong><p>예: Mechanical, Electrical, 건축, 설비처럼 담당 표준을 구분할 수 있는 공종을 입력합니다.</p></div></li>
+            <li><div><strong>제목과 내용을 작성합니다.</strong><p>제목에는 대상 항목명을 명확히 쓰고, 내용에는 사용 목적, 필요한 타입, 현재 문제와 원하는 결과를 적습니다.</p></div></li>
+            <li><div><strong>필요한 참고 파일을 첨부합니다.</strong><p>RFA, RVT, PDF, DOCX, XLSX, PPTX, TXT 등 설명에 필요한 파일만 선택합니다. 첨부는 선택 사항입니다.</p></div></li>
+            <li><div><strong>등록 후 목록에서 상태를 확인합니다.</strong><p>저장 경로는 Family Browser가 처리합니다. 일반 사용자는 요청 저장소 폴더를 직접 선택하거나 열 필요가 없습니다.</p></div></li>
+          </ol>
+          <figure class="fb-screen-figure">
+            <a href="/assets/family-browser/requests-permissions.png" target="_blank" rel="noopener"><img src="/assets/family-browser/requests-permissions.png" alt="KKY Family Browser 요청 화면"></a>
+            <figcaption>요청 탭은 종류별 진입 카드, 상태 집계, 공종별 현황과 요청 목록을 함께 보여줍니다.</figcaption>
+          </figure>
+        </section>
+
+        <section class="fb-doc-section" id="writing">
+          <h2>작성 예시</h2>
+          <div class="fb-table-wrap">
+            <table>
+              <thead><tr><th>입력</th><th>예시</th><th>작성 기준</th></tr></thead>
+              <tbody>
+                <tr><td>구분</td><td>없는 패밀리</td><td>요청 카드에서 목적에 맞는 종류를 먼저 선택</td></tr>
+                <tr><td>공종</td><td>Mechanical</td><td>관리자가 표준 대상과 연결할 수 있는 공종명</td></tr>
+                <tr><td>제목</td><td>Supply Diffuser 표준 패밀리 추가</td><td>검색 가능한 실제 대상 이름을 포함</td></tr>
+                <tr><td>내용</td><td>600x600 천장 디퓨저 타입과 목 연결 치수 파라미터가 필요함</td><td>사용 위치, 필요한 타입·규격, 현재 불편과 기대 결과를 기술</td></tr>
+                <tr><td>첨부</td><td>마크업 PDF, 참고 RFA</td><td>관리자가 판단하는 데 필요한 파일만 선택</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="fb-doc-section" id="status">
+          <h2>진행 상태</h2>
+          <div class="fb-table-wrap">
+            <table>
+              <thead><tr><th>상태</th><th>의미</th><th>사용자 행동</th></tr></thead>
+              <tbody>
+                <tr><td>접수</td><td>요청이 공용 저장소에 등록되었습니다.</td><td>담당 검토를 기다립니다.</td></tr>
+                <tr><td>검토 중</td><td>관리자 또는 승인 담당자가 내용을 확인하고 있습니다.</td><td>추가 질문이 있으면 내용을 보완합니다.</td></tr>
+                <tr><td>반려</td><td>현재 기준으로 표준 반영이 어렵거나 정보가 부족합니다.</td><td>반려 사유를 확인하고 필요한 경우 재접수합니다.</td></tr>
+                <tr><td>승인</td><td>표준 반영 또는 후속 작업이 승인되었습니다.</td><td>관리자의 스캔·목록 갱신을 기다립니다.</td></tr>
+                <tr><td>완료</td><td>표준 RVT와 승인 목록 반영까지 끝났습니다.</td><td>목록 새로고침 후 라이브러리에서 확인합니다.</td></tr>
+                <tr><td>재접수</td><td>보완한 요청이 다시 검토 대기 상태가 되었습니다.</td><td>변경된 진행 내역을 확인합니다.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="fb-doc-section" id="storage">
+          <h2>저장 방식과 권한</h2>
+          <ul class="fb-bullets">
+            <li>요청 본문은 요청 저장소의 개별 JSON 기록으로 저장되고, 첨부파일은 요청별 관리 폴더에 함께 보관됩니다.</li>
+            <li>일반 사용자 화면에는 내부 저장 경로를 노출하지 않습니다. 연결 실패 시 관리자에게 <b>Family Request Path Settings</b> 확인을 요청합니다.</li>
+            <li><b>목록 새로고침</b>은 현재 저장소의 요청 기록을 다시 읽습니다.</li>
+            <li><b>요청 저장소 열기</b>, 공유 요청 폴더 지정, 첨부 폴더 열기는 관리자 모드에서만 보일 수 있습니다.</li>
+            <li>읽을 수 없는 요청 JSON은 목록에서 완전히 버리지 않고 오류 기록 대상으로 남깁니다.</li>
+          </ul>
+          <div class="fb-callout warn"><strong>공용 관리 폴더를 사용합니다.</strong>팀 공유 요청 저장소는 로컬 C 드라이브, AppData 또는 개인 사용자 폴더가 아니라 팀이 읽고 쓸 수 있는 관리 경로여야 합니다.</div>
+        </section>
+
+        <div class="fb-page-links"><a class="button" href="/family-browser/model-check.html">이전: 현재 모델 검사</a><a class="button primary" href="/family-browser/governance.html">다음: 권한 / 차단</a></div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer"><div class="site-footer__inner"><span>KKY Family Browser 1.0 매뉴얼</span><div class="mini-links"><a href="/family-browser/index.html">개요</a><a href="/family-browser/admin.html">관리자</a></div></div></footer>
+  <script src="/assets/site.js"></script>
+</body>
+</html>

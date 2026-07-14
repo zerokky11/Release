@@ -3,105 +3,240 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>KKY Tool 사용자 관리</title>
-  <style>
-    body { margin: 0; font-family: "Segoe UI", "Malgun Gothic", sans-serif; color: #1f2937; background: #f7f9fb; }
-    main { max-width: 820px; margin: 0 auto; padding: 32px 20px 60px; }
-    h1 { margin: 0 0 10px; font-size: 28px; }
-    p { line-height: 1.6; color: #526173; }
-    .panel { margin-top: 22px; padding: 24px; border: 1px solid #dbe5ee; border-radius: 8px; background: #fff; box-shadow: 0 8px 24px rgba(31,41,55,.06); }
-    label { display: block; margin: 16px 0 6px; font-weight: 700; }
-    input, textarea { width: 100%; box-sizing: border-box; padding: 11px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font: inherit; }
-    textarea { min-height: 96px; resize: vertical; }
-    .check { display: flex; gap: 10px; align-items: center; margin-top: 12px; font-weight: 600; }
-    .check input { width: auto; }
-    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
-    button, a.button { border: 1px solid #9db5c9; border-radius: 6px; background: #fff; color: #1f4f73; padding: 10px 14px; cursor: pointer; text-decoration: none; font: inherit; }
-    button.primary { background: #2f6f9f; color: #fff; border-color: #2f6f9f; }
-    pre { margin-top: 16px; padding: 16px; border-radius: 8px; background: #0f172a; color: #dbeafe; overflow: auto; white-space: pre-wrap; }
-    .status { margin-top: 12px; min-height: 22px; color: #526173; }
-    .good { color: #0f766e; }
-    .bad { color: #b91c1c; }
-    .hidden { display: none; }
-    .hint { font-size: 13px; color: #6b7280; }
-    @media (max-width: 720px) { .row { grid-template-columns: 1fr; } }
-  </style>
+  <title>KKY Tool 중앙 설정 관리</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/assets/site.css?v=20260713-admin2">
 </head>
-<body>
-  <main>
-    <a class="button" href="../index.html">홈으로</a>
-    <h1>KKY Tool 사용자 관리</h1>
-    <p>각 PC에서 설정하지 않습니다. 이 페이지에서 중앙 정책 파일 <code>kky-tool/user-access.json</code>을 저장하면 KKY Tool이 이 키워드를 읽어 외부 사용자를 제한합니다.</p>
+<body data-page="admin">
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="brand" href="/index.html">
+        <span class="brand__mark">K</span>
+        <span><span class="brand__title">KKY Tool</span><span class="brand__sub">Revit Hub 3.0</span></span>
+      </a>
+      <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false">메뉴</button>
+      <nav class="nav" data-nav-menu>
+        <a href="/index.html" data-nav="home">홈</a>
+        <a href="/index.html#download" data-nav="download">다운로드</a>
+        <a href="/Manual/features.html" data-nav="features">기능</a>
+        <a href="/Manual/index.html" data-nav="manual">메뉴얼</a>
+        <a href="/requests.html" data-nav="requests">요청하기</a>
+        <a href="/kky-tool/" data-nav="admin">관리자</a>
+      </nav>
+    </div>
+  </header>
 
-    <section id="lock" class="panel">
-      <strong>관리자 인증</strong>
-      <label for="password">Password</label>
-      <input id="password" type="password" autocomplete="current-password">
-      <div class="actions"><button class="primary" id="unlock">Unlock</button></div>
-      <div id="lockStatus" class="status"></div>
+  <main class="page-main">
+    <section class="page-title">
+      <span class="eyebrow">관리자</span>
+      <h1>중앙 설정 관리</h1>
+      <p class="lead">KKY Tool 사용자 접근 정책과 Family Browser 관리 폴더를 한 화면에서 관리합니다. 두 설정은 기존 공개 경로에 각각 저장됩니다.</p>
     </section>
 
-    <section id="editor" class="panel hidden">
-      <label class="check" for="enabled">
-        <input id="enabled" type="checkbox" checked>
-        외부 사용자 제한 사용
-      </label>
-
-      <label for="keywords">허용 Autodesk/Revit 프로필 키워드</label>
-      <textarea id="keywords" spellcheck="false" placeholder="KCIM"></textarea>
-      <p class="hint">한 줄에 하나씩 입력하세요. 예: KCIM</p>
-
-      <label for="users">정확히 허용할 사용자</label>
-      <textarea id="users" spellcheck="false" placeholder="kim.kky&#10;hong.gildong"></textarea>
-
-      <label for="message">차단 메시지</label>
-      <input id="message" value="외부 사용자는 사용할 수 없습니다.">
-
-      <div class="row">
-        <div>
-          <label for="owner">GitHub Owner</label>
-          <input id="owner" value="zerokky11">
+    <section id="lock" class="section">
+      <div class="panel admin-lock-panel">
+        <h2>관리자 인증</h2>
+        <p>설정 편집 화면을 열려면 관리자 비밀번호를 입력하세요.</p>
+        <div class="form-grid admin-lock-fields">
+          <div class="field">
+            <label for="password">비밀번호</label>
+            <input id="password" type="password" autocomplete="current-password">
+          </div>
         </div>
-        <div>
-          <label for="repo">Repository</label>
-          <input id="repo" value="Release">
+        <div class="actions">
+          <button class="button primary" id="unlock" type="button">관리자 화면 열기</button>
         </div>
+        <div id="lockStatus" class="status" aria-live="polite"></div>
       </div>
-      <div class="row">
-        <div>
-          <label for="branch">Branch</label>
-          <input id="branch" value="main">
-        </div>
-        <div>
-          <label for="path">File path</label>
-          <input id="path" value="kky-tool/user-access.json">
-        </div>
-      </div>
-      <label for="token">GitHub token</label>
-      <input id="token" type="password" autocomplete="off" placeholder="Contents read/write token">
+    </section>
 
-      <div class="actions">
-        <button class="primary" id="build">Build JSON</button>
-        <button id="reload">Reload current</button>
-        <button id="copy">Copy JSON</button>
-        <button id="download">Download</button>
-        <button id="save">Save to GitHub Pages</button>
+    <section id="editor" class="section hidden">
+      <div class="admin-settings-layout">
+        <div class="admin-settings-main">
+          <article class="panel">
+            <div class="admin-panel-heading">
+              <div>
+                <span class="eyebrow">KKY Tool</span>
+                <h2>사용자 접근 정책</h2>
+                <p><code>kky-tool/user-access.json</code>에 저장되는 외부 사용자 제한 설정입니다.</p>
+              </div>
+              <span class="admin-file-badge">user-access.json</span>
+            </div>
+
+            <label class="check" for="enabled">
+              <input id="enabled" type="checkbox" checked>
+              외부 사용자 제한 사용
+            </label>
+            <div class="form-grid admin-form-grid">
+              <div class="field">
+                <label for="keywords">허용 Autodesk/Revit 프로필 키워드</label>
+                <textarea id="keywords" spellcheck="false" placeholder="KCIM"></textarea>
+                <p class="field-help">한 줄에 하나씩 입력합니다. 예: KCIM</p>
+              </div>
+              <div class="field">
+                <label for="users">정확히 허용할 사용자</label>
+                <textarea id="users" spellcheck="false" placeholder="kim.kky&#10;hong.gildong"></textarea>
+                <p class="field-help">키워드와 별개로 정확히 일치하는 사용자 이름을 등록합니다.</p>
+              </div>
+            </div>
+            <div class="field">
+              <label for="message">차단 메시지</label>
+              <input id="message" value="외부 사용자는 사용할 수 없습니다.">
+            </div>
+          </article>
+
+          <article class="panel">
+            <div class="admin-panel-heading">
+              <div>
+                <span class="eyebrow">Family Browser</span>
+                <h2>공유 관리 폴더</h2>
+                <p>첫 번째 경로를 기본으로 사용하고, 접근할 수 없으면 아래 예비 경로를 순서대로 확인합니다.</p>
+              </div>
+              <span class="admin-file-badge">bootstrap.json</span>
+            </div>
+
+            <div class="field">
+              <label>관리 폴더 경로</label>
+              <div id="familyPaths" class="admin-path-list"></div>
+              <div class="actions admin-inline-actions">
+                <button class="button secondary" id="addFamilyPath" type="button">예비 경로 추가</button>
+              </div>
+              <p class="field-help">예: <code>I:\FamilyBrowser\ProjectA</code>. 각 경로 아래의 Config, Requests, Registry, Snapshots, Thumbnails 폴더를 사용합니다.</p>
+            </div>
+
+            <div id="familyDerivedPaths" class="admin-derived-paths" aria-live="polite"></div>
+
+            <div class="form-grid admin-form-grid">
+              <div class="field">
+                <label for="familyMessage">관리자 메시지</label>
+                <input id="familyMessage" placeholder="Family Browser 공유 설정 안내">
+              </div>
+              <div class="field">
+                <label for="familyRefreshMinutes">설정 확인 간격</label>
+                <div class="admin-number-field">
+                  <input id="familyRefreshMinutes" type="number" min="1" max="1440" step="1" value="30">
+                  <span>분</span>
+                </div>
+              </div>
+            </div>
+
+            <label class="check" for="familyDisabled">
+              <input id="familyDisabled" type="checkbox">
+              Family Browser 중앙 설정 사용 중지
+            </label>
+            <p class="field-help">권한, 표준 라이브러리, 프로젝트 규칙 등 이 화면에서 편집하지 않는 기존 값은 그대로 보존합니다.</p>
+          </article>
+        </div>
+
+        <aside class="panel admin-publish-panel">
+          <span class="eyebrow">Publish</span>
+          <h2>GitHub Pages 저장</h2>
+          <p>두 설정은 정해진 공개 경로에 따로 저장됩니다. 토큰은 이 브라우저 화면에서만 사용합니다.</p>
+
+          <div class="form-grid admin-publish-fields">
+            <div class="field">
+              <label for="owner">GitHub Owner</label>
+              <input id="owner" value="zerokky11">
+            </div>
+            <div class="field">
+              <label for="repo">Repository</label>
+              <input id="repo" value="Release">
+            </div>
+            <div class="field">
+              <label for="branch">Branch</label>
+              <input id="branch" value="main">
+            </div>
+          </div>
+          <div class="field">
+            <label for="token">GitHub token</label>
+            <input id="token" type="password" autocomplete="off" placeholder="Contents read/write token">
+          </div>
+
+          <div class="admin-target-list" aria-label="고정 저장 경로">
+            <div><span>사용자 정책</span><code>kky-tool/user-access.json</code></div>
+            <div><span>Family Browser</span><code>family-browser/bootstrap.json</code></div>
+          </div>
+
+          <div class="admin-save-group">
+            <h3>사용자 접근 정책</h3>
+            <div class="actions">
+              <button class="button primary" id="savePolicy" type="button">정책 저장</button>
+              <button class="button" id="reloadPolicy" type="button">현재 값 불러오기</button>
+            </div>
+            <div id="policyStatus" class="status" aria-live="polite"></div>
+          </div>
+
+          <div class="admin-save-group">
+            <h3>Family Browser 경로</h3>
+            <div class="actions">
+              <button class="button primary" id="saveFamily" type="button">경로 저장</button>
+              <button class="button" id="reloadFamily" type="button">현재 값 불러오기</button>
+            </div>
+            <div id="familyStatus" class="status" aria-live="polite"></div>
+          </div>
+        </aside>
       </div>
-      <div id="status" class="status"></div>
-      <pre id="preview"></pre>
+
+      <section class="section admin-preview-section">
+        <div class="grid two admin-preview-grid">
+          <article class="panel">
+            <div class="section-header admin-preview-heading">
+              <div>
+                <h2>사용자 정책 JSON</h2>
+                <p>현재 입력값으로 생성되는 접근 정책입니다.</p>
+              </div>
+              <div class="actions">
+                <button class="button secondary" id="buildPolicy" type="button">미리보기</button>
+                <button class="button" id="copyPolicy" type="button">복사</button>
+                <button class="button" id="downloadPolicy" type="button">다운로드</button>
+              </div>
+            </div>
+            <pre id="policyPreview"></pre>
+          </article>
+
+          <article class="panel">
+            <div class="section-header admin-preview-heading">
+              <div>
+                <h2>Family Browser JSON</h2>
+                <p>경로에서 파생된 정책 파일과 요청 저장소를 함께 확인합니다.</p>
+              </div>
+              <div class="actions">
+                <button class="button secondary" id="buildFamily" type="button">미리보기</button>
+                <button class="button" id="copyFamily" type="button">복사</button>
+                <button class="button" id="downloadFamily" type="button">다운로드</button>
+              </div>
+            </div>
+            <pre id="familyPreview"></pre>
+          </article>
+        </div>
+      </section>
     </section>
   </main>
 
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <span>KKY Tool Revit Hub 3.0</span>
+      <div class="mini-links">
+        <a href="/kky-tool/user-access.json">현재 사용자 정책</a>
+        <a href="/family-browser/bootstrap.json">현재 Family Browser 설정</a>
+        <a href="/Manual/install.html">설치</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/site.js"></script>
   <script>
     const PASSWORD_SHA256 = "9f27c8b87c38e457d773cc4d0c9a1583fec4cbaa9ca9bc75cf76ea4bfee83ba0";
     const POLICY_PATH = "kky-tool/user-access.json";
+    const FAMILY_BOOTSTRAP_PATH = "family-browser/bootstrap.json";
     const $ = (id) => document.getElementById(id);
+    let preservedFamilyBootstrap = {};
 
     function setStatus(id, text, cls = "") {
       const el = $(id);
+      if (!el) return;
       el.textContent = text || "";
-      el.className = "status " + cls;
+      el.className = "status" + (cls ? " " + cls : "");
     }
 
     function toHex(buffer) {
@@ -112,11 +247,21 @@
       return toHex(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text)));
     }
 
-    function splitList(value) {
-      return String(value || "").split(/[\r\n,;]+/).map((x) => x.trim()).filter(Boolean);
+    function uniqueList(items) {
+      const seen = new Set();
+      return (items || []).map((item) => String(item || "").trim()).filter((item) => {
+        const key = item.toLowerCase();
+        if (!item || seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
     }
 
-    function collect() {
+    function splitList(value) {
+      return uniqueList(String(value || "").split(/[\r\n,;]+/));
+    }
+
+    function collectPolicy() {
       let keywords = splitList($("keywords").value);
       const users = splitList($("users").value);
       if (!keywords.length && !users.length) {
@@ -132,31 +277,224 @@
       };
     }
 
-    function fill(data) {
+    function fillPolicy(data) {
       data = data || {};
       $("enabled").checked = data.enabled !== false;
       $("keywords").value = Array.isArray(data.allowedProfileKeywords) ? data.allowedProfileKeywords.join("\n") : "KCIM";
       $("users").value = Array.isArray(data.allowedUsers) ? data.allowedUsers.join("\n") : "";
       $("message").value = data.blockMessage || data.message || "외부 사용자는 사용할 수 없습니다.";
-      build();
+      buildPolicy();
     }
 
-    function build() {
-      const json = JSON.stringify(collect(), null, 2);
-      $("preview").textContent = json;
-      setStatus("status", "JSON preview updated.", "good");
+    function buildPolicy() {
+      const json = JSON.stringify(collectPolicy(), null, 2);
+      $("policyPreview").textContent = json;
       return json;
     }
 
-    async function reload() {
+    function trimTrailingSlash(value) {
+      return String(value || "").trim().replace(/[\\/]+$/, "");
+    }
+
+    function pathSeparator(value) {
+      return String(value || "").includes("\\") ? "\\" : "/";
+    }
+
+    function appendPath(base, child) {
+      const value = trimTrailingSlash(base);
+      return value ? value + pathSeparator(value) + child : child;
+    }
+
+    function looksLikeJsonPath(value) {
+      return /\.json$/i.test(String(value || "").trim());
+    }
+
+    function policyPathToRoot(path) {
+      const value = trimTrailingSlash(path);
+      const normalized = value.replace(/\//g, "\\").toLowerCase();
+      const suffix = "\\config\\standard-policy.json";
+      return normalized.endsWith(suffix) ? value.slice(0, value.length - suffix.length) : "";
+    }
+
+    function rootToPolicyPath(root) {
+      const value = trimTrailingSlash(root);
+      if (!value) return "";
+      if (looksLikeJsonPath(value)) return value;
+      return appendPath(appendPath(value, "Config"), "standard-policy.json");
+    }
+
+    function rootToRequestPath(root) {
+      const value = trimTrailingSlash(root);
+      if (!value) return "";
+      if (looksLikeJsonPath(value)) {
+        const rootPath = policyPathToRoot(value);
+        return rootPath ? appendPath(rootPath, "Requests") : "";
+      }
+      return appendPath(value, "Requests");
+    }
+
+    function getFamilyRootPaths() {
+      return uniqueList(Array.from($("familyPaths").querySelectorAll("input")).map((input) => input.value));
+    }
+
+    function createFamilyPathRow(value = "") {
+      const row = document.createElement("div");
+      row.className = "admin-path-row";
+
+      const input = document.createElement("input");
+      input.type = "text";
+      input.spellcheck = false;
+      input.placeholder = "I:\\FamilyBrowser\\ProjectA";
+      input.value = value;
+      input.setAttribute("aria-label", "Family Browser 관리 폴더 경로");
+      input.addEventListener("input", () => {
+        updateFamilyDerivedPaths();
+        tryBuildFamily();
+      });
+
+      const remove = document.createElement("button");
+      remove.type = "button";
+      remove.className = "button";
+      remove.textContent = "삭제";
+      remove.addEventListener("click", () => {
+        row.remove();
+        if (!$("familyPaths").querySelector(".admin-path-row")) createFamilyPathRow();
+        updateFamilyDerivedPaths();
+        tryBuildFamily();
+      });
+
+      row.append(input, remove);
+      $("familyPaths").appendChild(row);
+    }
+
+    function setFamilyRootPaths(paths) {
+      $("familyPaths").innerHTML = "";
+      const clean = uniqueList(paths);
+      (clean.length ? clean : [""]).forEach((path) => createFamilyPathRow(path));
+      updateFamilyDerivedPaths();
+    }
+
+    function readFamilyRootPaths(data) {
+      let roots = [];
+      if (data.managedRootPath) roots.push(data.managedRootPath);
+      if (Array.isArray(data.managedRootPathCandidates)) roots = roots.concat(data.managedRootPathCandidates);
+      roots = uniqueList(roots);
+      if (roots.length) return roots;
+
+      const policyPaths = [];
+      if (data.managedPolicyPath) policyPaths.push(data.managedPolicyPath);
+      if (Array.isArray(data.managedPolicyPathCandidates)) policyPaths.push(...data.managedPolicyPathCandidates);
+      return uniqueList(policyPaths.map((path) => policyPathToRoot(path) || path));
+    }
+
+    function defaultFamilyBootstrap() {
+      return {
+        version: new Date().toISOString().slice(0, 10).replace(/-/g, "."),
+        message: "",
+        disabled: false,
+        refreshMinutes: 30,
+        standardMode: "DisciplineSeparated",
+        standardLibraries: []
+      };
+    }
+
+    function collectFamilyBootstrap() {
+      const roots = getFamilyRootPaths();
+      if (!roots.length) throw new Error("Family Browser 관리 폴더 경로를 하나 이상 입력해 주세요.");
+
+      const refreshMinutes = Number($("familyRefreshMinutes").value);
+      if (!Number.isInteger(refreshMinutes) || refreshMinutes < 1 || refreshMinutes > 1440) {
+        throw new Error("설정 확인 간격은 1~1440분 사이의 정수로 입력해 주세요.");
+      }
+
+      const policyPaths = uniqueList(roots.map(rootToPolicyPath));
+      const requestPaths = uniqueList(roots.map(rootToRequestPath));
+      const bootstrap = Object.assign(defaultFamilyBootstrap(), preservedFamilyBootstrap || {});
+
+      bootstrap.version = bootstrap.version || defaultFamilyBootstrap().version;
+      bootstrap.message = $("familyMessage").value.trim();
+      bootstrap.disabled = $("familyDisabled").checked;
+      bootstrap.refreshMinutes = refreshMinutes;
+      bootstrap.managedRootPath = roots[0];
+      bootstrap.managedRootPathCandidates = roots;
+      bootstrap.managedPolicyPath = policyPaths[0] || "";
+      bootstrap.managedPolicyPathCandidates = policyPaths;
+      bootstrap.requestStore = Object.assign({}, bootstrap.requestStore || {}, {
+        mode: "NetworkShare",
+        path: requestPaths[0] || "",
+        pathCandidates: requestPaths,
+        endpoint: ""
+      });
+      if (!Array.isArray(bootstrap.standardLibraries)) bootstrap.standardLibraries = [];
+      return bootstrap;
+    }
+
+    function fillFamilyBootstrap(data) {
+      data = data || {};
+      preservedFamilyBootstrap = data;
+      $("familyMessage").value = data.message || "";
+      $("familyDisabled").checked = data.disabled === true;
+      $("familyRefreshMinutes").value = Number(data.refreshMinutes) > 0 ? Number(data.refreshMinutes) : 30;
+      setFamilyRootPaths(readFamilyRootPaths(data));
+      tryBuildFamily();
+    }
+
+    function updateFamilyDerivedPaths() {
+      const roots = getFamilyRootPaths();
+      const target = $("familyDerivedPaths");
+      target.innerHTML = "";
+      if (!roots.length) {
+        target.textContent = "경로를 입력하면 정책 파일과 요청 저장소 경로를 자동으로 표시합니다.";
+        return;
+      }
+
+      const title = document.createElement("strong");
+      title.textContent = roots.length > 1 ? `기본 경로 1개 · 예비 경로 ${roots.length - 1}개` : "기본 경로 1개";
+      const policy = document.createElement("span");
+      policy.textContent = "정책 파일: " + rootToPolicyPath(roots[0]);
+      const requests = document.createElement("span");
+      requests.textContent = "요청 저장소: " + rootToRequestPath(roots[0]);
+      target.append(title, policy, requests);
+    }
+
+    function buildFamily() {
+      const json = JSON.stringify(collectFamilyBootstrap(), null, 2);
+      $("familyPreview").textContent = json;
+      return json;
+    }
+
+    function tryBuildFamily() {
       try {
-        const response = await fetch("user-access.json", { cache: "no-store" });
-        if (!response.ok) throw new Error("HTTP " + response.status);
-        fill(await response.json());
-        setStatus("status", "Loaded current user-access.json.", "good");
+        return buildFamily();
       } catch (err) {
-        fill({ enabled: true, allowedProfileKeywords: ["KCIM"], allowedUsers: [], blockMessage: "외부 사용자는 사용할 수 없습니다." });
-        setStatus("status", "Current policy was not found. Default KCIM policy is ready.", "bad");
+        $("familyPreview").textContent = "";
+        return "";
+      }
+    }
+
+    async function reloadPolicy() {
+      setStatus("policyStatus", "현재 사용자 정책을 불러오는 중...", "");
+      try {
+        const response = await fetch("/kky-tool/user-access.json", { cache: "no-store" });
+        if (!response.ok) throw new Error("HTTP " + response.status);
+        fillPolicy(await response.json());
+        setStatus("policyStatus", "현재 사용자 정책을 불러왔습니다.", "good");
+      } catch (err) {
+        fillPolicy({ enabled: true, allowedProfileKeywords: ["KCIM"], allowedUsers: [], blockMessage: "외부 사용자는 사용할 수 없습니다." });
+        setStatus("policyStatus", "현재 정책을 찾지 못해 기본값을 표시합니다.", "bad");
+      }
+    }
+
+    async function reloadFamily() {
+      setStatus("familyStatus", "현재 Family Browser 설정을 불러오는 중...", "");
+      try {
+        const response = await fetch("/family-browser/bootstrap.json", { cache: "no-store" });
+        if (!response.ok) throw new Error("HTTP " + response.status);
+        fillFamilyBootstrap(await response.json());
+        setStatus("familyStatus", "현재 Family Browser 설정을 불러왔습니다.", "good");
+      } catch (err) {
+        fillFamilyBootstrap(defaultFamilyBootstrap());
+        setStatus("familyStatus", "현재 설정을 찾지 못했습니다. 새 경로를 입력해 저장할 수 있습니다.", "bad");
       }
     }
 
@@ -168,35 +506,37 @@
       return btoa(unescape(encodeURIComponent(text)));
     }
 
-    async function save() {
-      const json = build();
-      const owner = $("owner").value.trim();
-      const repo = $("repo").value.trim();
-      const branch = $("branch").value.trim() || "main";
-      const path = $("path").value.trim() || POLICY_PATH;
-      const token = $("token").value.trim();
-      if (!owner || !repo || !token) {
-        setStatus("status", "Owner, repository, and GitHub token are required.", "bad");
-        return;
+    function githubSettings() {
+      const settings = {
+        owner: $("owner").value.trim(),
+        repo: $("repo").value.trim(),
+        branch: $("branch").value.trim() || "main",
+        token: $("token").value.trim()
+      };
+      if (!settings.owner || !settings.repo || !settings.token) {
+        throw new Error("Owner, repository, GitHub token을 모두 입력해 주세요.");
       }
+      return settings;
+    }
 
-      const apiPath = `https://api.github.com/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}/contents/${encodePath(path)}`;
+    async function saveGitHubFile(path, json, message) {
+      const settings = githubSettings();
+      const apiPath = `https://api.github.com/repos/${encodeURIComponent(settings.owner)}/${encodeURIComponent(settings.repo)}/contents/${encodePath(path)}`;
       const headers = {
         "Accept": "application/vnd.github+json",
-        "Authorization": "Bearer " + token,
+        "Authorization": "Bearer " + settings.token,
         "X-GitHub-Api-Version": "2022-11-28"
       };
 
-      setStatus("status", "Saving user-access.json to GitHub...", "");
-      const currentResponse = await fetch(apiPath + "?ref=" + encodeURIComponent(branch), { headers });
+      const currentResponse = await fetch(apiPath + "?ref=" + encodeURIComponent(settings.branch), { headers });
       let current = null;
       if (currentResponse.ok) current = await currentResponse.json();
       else if (currentResponse.status !== 404) throw new Error("GitHub read failed: " + currentResponse.status);
 
       const body = {
-        message: "Update KKY Tool user access policy",
+        message,
         content: base64Utf8(json + "\n"),
-        branch
+        branch: settings.branch
       };
       if (current && current.sha) body.sha = current.sha;
 
@@ -206,37 +546,101 @@
         body: JSON.stringify(body)
       });
       if (!saveResponse.ok) throw new Error("GitHub save failed: " + saveResponse.status + " " + await saveResponse.text());
-      setStatus("status", "Saved. KKY Tool clients will follow this central policy.", "good");
+    }
+
+    async function savePolicy() {
+      setStatus("policyStatus", "사용자 정책을 저장하는 중...", "");
+      const json = buildPolicy();
+      await saveGitHubFile(POLICY_PATH, json, "Update KKY Tool user access policy");
+      setStatus("policyStatus", "사용자 정책을 저장했습니다.", "good");
+    }
+
+    async function saveFamily() {
+      setStatus("familyStatus", "Family Browser 경로를 저장하는 중...", "");
+      const json = buildFamily();
+      await saveGitHubFile(FAMILY_BOOTSTRAP_PATH, json, "Update Family Browser management folder settings");
+      preservedFamilyBootstrap = JSON.parse(json);
+      setStatus("familyStatus", "Family Browser 경로를 저장했습니다.", "good");
+    }
+
+    async function copyJson(builder, statusId) {
+      try {
+        await navigator.clipboard.writeText(builder());
+        setStatus(statusId, "JSON을 클립보드에 복사했습니다.", "good");
+      } catch (err) {
+        setStatus(statusId, err.message || String(err), "bad");
+      }
+    }
+
+    function downloadJson(builder, fileName, statusId) {
+      try {
+        const blob = new Blob([builder() + "\n"], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const anchor = document.createElement("a");
+        anchor.href = url;
+        anchor.download = fileName;
+        anchor.click();
+        URL.revokeObjectURL(url);
+        setStatus(statusId, fileName + " 파일을 만들었습니다.", "good");
+      } catch (err) {
+        setStatus(statusId, err.message || String(err), "bad");
+      }
     }
 
     $("unlock").addEventListener("click", async () => {
       try {
         if (await sha256($("password").value || "") !== PASSWORD_SHA256) {
-          setStatus("lockStatus", "Wrong password.", "bad");
+          setStatus("lockStatus", "비밀번호가 맞지 않습니다.", "bad");
           return;
         }
         $("lock").classList.add("hidden");
         $("editor").classList.remove("hidden");
-        await reload();
+        await Promise.all([reloadPolicy(), reloadFamily()]);
       } catch (err) {
         setStatus("lockStatus", err.message || String(err), "bad");
       }
     });
-    $("password").addEventListener("keydown", (ev) => { if (ev.key === "Enter") $("unlock").click(); });
-    $("build").addEventListener("click", build);
-    $("reload").addEventListener("click", reload);
-    $("copy").addEventListener("click", () => navigator.clipboard.writeText(build()));
-    $("download").addEventListener("click", () => {
-      const blob = new Blob([build() + "\n"], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "user-access.json";
-      a.click();
-      URL.revokeObjectURL(url);
+
+    $("password").addEventListener("keydown", (event) => {
+      if (event.key === "Enter") $("unlock").click();
     });
-    $("save").addEventListener("click", () => save().catch((err) => setStatus("status", err.message || String(err), "bad")));
-    fill({ enabled: true, allowedProfileKeywords: ["KCIM"], allowedUsers: [], blockMessage: "외부 사용자는 사용할 수 없습니다." });
+    $("addFamilyPath").addEventListener("click", () => {
+      createFamilyPathRow();
+      const inputs = $("familyPaths").querySelectorAll("input");
+      inputs[inputs.length - 1].focus();
+    });
+    $("reloadPolicy").addEventListener("click", reloadPolicy);
+    $("reloadFamily").addEventListener("click", reloadFamily);
+    $("savePolicy").addEventListener("click", () => savePolicy().catch((err) => setStatus("policyStatus", err.message || String(err), "bad")));
+    $("saveFamily").addEventListener("click", () => saveFamily().catch((err) => setStatus("familyStatus", err.message || String(err), "bad")));
+    $("buildPolicy").addEventListener("click", () => {
+      buildPolicy();
+      setStatus("policyStatus", "사용자 정책 미리보기를 갱신했습니다.", "good");
+    });
+    $("buildFamily").addEventListener("click", () => {
+      try {
+        buildFamily();
+        setStatus("familyStatus", "Family Browser 미리보기를 갱신했습니다.", "good");
+      } catch (err) {
+        setStatus("familyStatus", err.message || String(err), "bad");
+      }
+    });
+    $("copyPolicy").addEventListener("click", () => copyJson(buildPolicy, "policyStatus"));
+    $("copyFamily").addEventListener("click", () => copyJson(buildFamily, "familyStatus"));
+    $("downloadPolicy").addEventListener("click", () => downloadJson(buildPolicy, "user-access.json", "policyStatus"));
+    $("downloadFamily").addEventListener("click", () => downloadJson(buildFamily, "bootstrap.json", "familyStatus"));
+
+    ["enabled", "keywords", "users", "message"].forEach((id) => {
+      $(id).addEventListener("input", buildPolicy);
+      $(id).addEventListener("change", buildPolicy);
+    });
+    ["familyMessage", "familyRefreshMinutes", "familyDisabled"].forEach((id) => {
+      $(id).addEventListener("input", tryBuildFamily);
+      $(id).addEventListener("change", tryBuildFamily);
+    });
+
+    fillPolicy({ enabled: true, allowedProfileKeywords: ["KCIM"], allowedUsers: [], blockMessage: "외부 사용자는 사용할 수 없습니다." });
+    fillFamilyBootstrap(defaultFamilyBootstrap());
   </script>
 </body>
 </html>

@@ -3,521 +3,135 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="KKY Family Browser 경로 설정">
-  <title>KKY Family Browser 경로 설정</title>
-  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="../assets/site.css">
-  <style>
-    .settings-grid { display: grid; gap: 18px; }
-    .settings-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-    .settings-field label { display: block; margin-bottom: 8px; color: var(--accent-3); font-size: 13px; font-weight: 700; }
-    .settings-field input,
-    .settings-field textarea {
-      width: 100%;
-      padding: 12px 14px;
-      border: 1px solid var(--border);
-      border-radius: 2px;
-      background: #fafbfc;
-      color: var(--title);
-      font-size: 14px;
-      line-height: 1.45;
-    }
-    .settings-field textarea { min-height: 88px; resize: vertical; }
-    .settings-help { margin: 6px 0 0; color: var(--subtle); font-size: 13px; line-height: 1.55; }
-    .settings-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
-    .settings-actions button,
-    .path-row button {
-      padding: 11px 16px;
-      border: 1px solid var(--border);
-      border-radius: 2px;
-      background: #fff;
-      color: var(--body);
-      cursor: pointer;
-      font-size: 14px;
-    }
-    .settings-actions .primary {
-      border-color: var(--accent-3);
-      background: linear-gradient(90deg, var(--accent-3), var(--accent-4));
-      color: #fff;
-      font-weight: 700;
-    }
-    .path-list { display: grid; gap: 10px; }
-    .path-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: center; }
-    .path-row input { font-family: Consolas, "Courier New", monospace; }
-    .settings-status { margin-top: 14px; color: var(--subtle); font-size: 14px; line-height: 1.6; }
-    .settings-status.good { color: #2d6a4f; }
-    .settings-status.warn { color: #8a6200; }
-    .settings-status.bad { color: #9a4a4a; }
-    .settings-preview {
-      max-height: 360px;
-      overflow: auto;
-      margin: 18px 0 0;
-      padding: 16px;
-      border: 1px solid #cbd8e6;
-      border-radius: 2px;
-      background: #0f172a;
-      color: #dbeafe;
-      font: 13px Consolas, "Courier New", monospace;
-      white-space: pre-wrap;
-      word-break: break-word;
-    }
-    .hidden { display: none; }
-    @media (max-width: 720px) {
-      .settings-row,
-      .path-row { grid-template-columns: 1fr; }
-      .path-row button { width: 100%; }
-    }
-  </style>
+  <title>KKY Family Browser 1.0 매뉴얼</title>
+  <meta name="description" content="KKY Family Browser 1.0 제품 개요와 업무 흐름, 상세 사용자 및 관리자 매뉴얼">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/assets/site.css">
 </head>
-<body>
-  <div class="page">
-    <div class="layout">
-      <aside class="side-nav">
-        <div class="site-title">
-          <strong>KKY Tool</strong>
-          <span>배포 · 업데이트 · 기능 요청</span>
-        </div>
-        <nav class="site-nav" aria-label="주요 메뉴">
-          <a href="../index.html">홈</a>
-          <a href="../updates.html">업데이트 내역</a>
-          <a href="../Manual/index.html">매뉴얼</a>
-          <a href="../requests.html">기능 요청</a>
-          <a class="is-active" href="./">패밀리 브라우저 경로</a>
-        </nav>
-      </aside>
-
-      <main class="content">
-        <section class="section">
-          <h1 class="page-heading">패밀리 브라우저 경로</h1>
-          <div class="panel panel-soft">
-            <h2>Family Browser 관리 폴더를 한 곳에서 관리합니다</h2>
-            <p>관리 폴더 후보 경로를 여러 개 등록하면 애드인이 위에서부터 접근 가능한 경로를 찾습니다.</p>
-            <p>성공한 경로는 PC에 기억되고, 다음 실행 때 그 경로를 우선 사용합니다.</p>
-            <p class="muted">서버 저장은 관리자 비밀번호로 동작합니다. GitHub 토큰은 브라우저에 노출되지 않습니다.</p>
-          </div>
-        </section>
-
-        <section class="section">
-          <div class="panel" id="lock-panel">
-            <h2>관리자 확인</h2>
-            <p class="section-note">설정 편집은 관리자만 사용합니다.</p>
-            <div class="settings-field">
-              <label for="password">비밀번호</label>
-              <input id="password" type="password" autocomplete="current-password">
-            </div>
-            <div class="settings-actions">
-              <button class="primary" id="unlock" type="button">열기</button>
-            </div>
-            <div class="settings-status" id="lock-status"></div>
-          </div>
-
-          <div class="panel hidden" id="editor-panel">
-            <div class="settings-grid">
-              <div class="settings-row">
-                <div class="settings-field">
-                  <label for="profileName">프로필 이름</label>
-                  <input id="profileName" placeholder="예: KCIM TEST">
-                </div>
-                <div class="settings-field">
-                  <label for="message">관리자 메시지</label>
-                  <input id="message" placeholder="예: KCIM Family Browser 공유 설정">
-                </div>
-              </div>
-
-              <div class="settings-field">
-                <label for="adminProfileKeywords">관리자 권한 프로필 키워드</label>
-                <textarea id="adminProfileKeywords" placeholder="예: BIM; KCIM; 관리자"></textarea>
-                <p class="settings-help">Revit에 로그인된 Autodesk 프로필 이름에 이 키워드가 포함된 사용자만 애드인 설정에서 관리자 모드를 켤 수 있습니다.</p>
-              </div>
-
-              <div class="settings-field">
-                <label>패밀리 브라우저 관리 폴더 경로</label>
-                <div class="path-list" id="pathList"></div>
-                <p class="settings-help">한 칸에 하나의 관리 폴더를 입력합니다. 예: I:\30. 협력사 전용폴더\00. BIM_KCIM\02. 패밀리\TEST</p>
-                <p class="settings-help">애드인은 이 폴더 아래의 Config, Requests, Registry, Snapshots, Thumbnails 폴더를 기준으로 사용합니다.</p>
-                <div class="settings-actions">
-                  <button id="addPath" type="button">경로 추가</button>
-                </div>
-              </div>
-
-              <div class="settings-actions">
-                <button id="loadCurrent" type="button">현재 설정 불러오기</button>
-                <button id="build" type="button">JSON 미리보기</button>
-                <button class="primary" id="saveGithub" type="button">서버에 저장</button>
-              </div>
-              <div class="settings-status" id="editor-status"></div>
-              <pre class="settings-preview" id="preview"></pre>
-            </div>
-          </div>
-        </section>
-      </main>
+<body data-page="family-browser">
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="brand" href="/index.html">
+        <span class="brand__mark">K</span>
+        <span><span class="brand__title">KKY Tool</span><span class="brand__sub">Revit Hub 3.0</span></span>
+      </a>
+      <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false">메뉴</button>
+      <nav class="nav" data-nav-menu>
+        <a href="/index.html" data-nav="home">홈</a>
+        <a href="/index.html#download" data-nav="download">다운로드</a>
+        <a href="/Manual/features.html" data-nav="features">기능</a>
+        <a href="/Manual/index.html" data-nav="manual">메뉴얼</a>
+        <a href="/family-browser/index.html" data-nav="family-browser">Family Browser</a>
+        <a href="/requests.html" data-nav="requests">요청하기</a>
+        <a href="/kky-tool/" data-nav="admin">관리자</a>
+      </nav>
     </div>
-  </div>
+  </header>
 
-  <script>
-    (function () {
-      var PASSWORD_SHA256 = '578647f84f744607d061c4da2b27f663946e15c7f12abbe0a2d2130ad56a7626';
-      var BOOTSTRAP_REPO_PATH = 'family-browser/bootstrap.json';
-      var INDEX_REPO_PATH = 'family-browser/bootstrap-index.json';
-      var WORKER_FILE_API = '../api/family-browser/file';
-      var currentAdminPassword = '';
-      var preservedBootstrap = {};
-      var currentIndex = null;
+  <main class="page-main">
+    <section class="fb-doc-hero">
+      <div>
+        <span class="eyebrow">표준 라이브러리 컨트롤</span>
+        <h1>KKY Family Browser 1.0</h1>
+        <p class="lead">승인된 표준 RVT를 기준으로 패밀리와 시스템 타입을 찾고 적용하며, 현재 모델의 차이와 누락 항목을 같은 화면에서 관리하는 Revit 애드인입니다.</p>
+        <div class="actions">
+          <a class="button primary" href="/family-browser/library.html">라이브러리 사용법</a>
+          <a class="button" href="/family-browser/model-check.html">현재 모델 검사</a>
+          <a class="button" href="/family-browser/admin.html">관리자 설정</a>
+        </div>
+        <div class="fb-doc-meta">
+          <span class="pill">Revit 2019</span>
+          <span class="pill">2021</span>
+          <span class="pill">2023</span>
+          <span class="pill">2025</span>
+          <span class="pill">2027</span>
+          <span class="pill">한국어 / English</span>
+        </div>
+      </div>
+      <div class="fb-doc-hero__media">
+        <a href="/assets/family-browser/home.png" target="_blank" rel="noopener" aria-label="KKY Family Browser 홈 대시보드 원본 보기">
+          <img src="/assets/family-browser/home.png" alt="KKY Family Browser 1.0 홈 대시보드" fetchpriority="high" decoding="async">
+        </a>
+      </div>
+    </section>
 
-      function byId(id) { return document.getElementById(id); }
+    <section class="fb-doc-section" id="purpose">
+      <h2>무엇을 해결하는가</h2>
+      <p>프로젝트마다 제각각인 로드 경로와 기억에 의존한 표준 판단을 줄이고, 관리자가 승인한 표준만 사용자에게 보여주는 것을 목표로 합니다.</p>
+      <div class="fb-summary-grid">
+        <div class="fb-summary-item"><strong>승인 목록만 표시</strong><p>관리자가 연결한 표준 RVT 스냅샷과 승인 Excel/JSON 목록에 포함된 항목만 탐색합니다.</p></div>
+        <div class="fb-summary-item"><strong>패밀리와 시스템 타입 분리</strong><p>로드 가능한 패밀리와 프로젝트 내부 시스템 타입을 각각의 적용 방식으로 처리합니다.</p></div>
+        <div class="fb-summary-item"><strong>현재 모델 비교</strong><p>선택한 공종 기준과 현재 활성 프로젝트를 비교하고 검토 항목을 Excel로 저장합니다.</p></div>
+        <div class="fb-summary-item"><strong>요청 흐름 연결</strong><p>없는 패밀리, 없는 시스템 타입, 더 나은 프로젝트 항목의 표준 업데이트를 요청합니다.</p></div>
+        <div class="fb-summary-item"><strong>파일별 명령 차단</strong><p>지정된 RVT에서 Revit 기본 패밀리 명령과 타입 변경 명령을 정책에 따라 막습니다.</p></div>
+        <div class="fb-summary-item"><strong>캐시 우선 시작</strong><p>대시보드를 열 때 표준 RVT를 다시 스캔하지 않습니다. 무거운 검사는 사용자가 직접 실행합니다.</p></div>
+      </div>
+    </section>
 
-      function setStatus(id, text, cls) {
-        var el = byId(id);
-        if (!el) return;
-        el.textContent = text || '';
-        el.className = 'settings-status' + (cls ? ' ' + cls : '');
-      }
+    <section class="fb-doc-section" id="workflow">
+      <h2>기본 업무 흐름</h2>
+      <p>대부분의 작업은 기준 선택부터 저장 또는 동기화까지 아래 순서로 이어집니다.</p>
+      <ol class="fb-flow">
+        <li><strong>기준 확인</strong><span>상단에서 공종과 등록된 표준 대상이 맞는지 확인합니다.</span></li>
+        <li><strong>항목 탐색</strong><span>패밀리 또는 시스템 타입 탭에서 검색·필터링합니다.</span></li>
+        <li><strong>상태 판단</strong><span>로드 가능, 업데이트 가능, 표준과 다름 등의 상태를 확인합니다.</span></li>
+        <li><strong>로드 또는 적용</strong><span>선택한 신규 항목을 현재 활성 프로젝트에 반영합니다.</span></li>
+        <li><strong>저장 또는 동기화</strong><span>성공한 저장·다른 이름으로 저장·동기화 후 추적 상태가 확정됩니다.</span></li>
+      </ol>
+      <div class="fb-callout warn">
+        <strong>표준 대상 선택이 먼저입니다.</strong>
+        공종별 표준에 같은 이름의 항목이 있을 수 있으므로 모델 검사와 업데이트 전에 현재 선택 기준을 확인해야 합니다.
+      </div>
+    </section>
 
-      function uniqueList(items) {
-        var seen = {};
-        var result = [];
-        (items || []).forEach(function (item) {
-          var value = (item || '').trim();
-          var key = value.toLowerCase();
-          if (!value || seen[key]) return;
-          seen[key] = true;
-          result.push(value);
-        });
-        return result;
-      }
+    <section class="fb-doc-section" id="manuals">
+      <h2>상세 매뉴얼</h2>
+      <p>사용 목적에 맞는 페이지부터 읽으면 됩니다.</p>
+      <div class="fb-topic-grid">
+        <a class="fb-topic-item" href="/family-browser/library.html"><strong>패밀리 / 시스템 타입</strong><p>검색, 상세 필터, 선택 로드·적용, 상세 항목 창과 상태 해석</p></a>
+        <a class="fb-topic-item" href="/family-browser/model-check.html"><strong>현재 모델 검사</strong><p>비교 기준, 검사 논리, 결과 해석과 Excel 파일 구조</p></a>
+        <a class="fb-topic-item" href="/family-browser/requests.html"><strong>추가 요청</strong><p>없는 항목과 표준 업데이트 요청, 첨부파일, 진행 상태</p></a>
+        <a class="fb-topic-item" href="/family-browser/governance.html"><strong>권한 / 차단</strong><p>파일별 Revit 기본 명령 차단 대상과 파일 식별 방식</p></a>
+        <a class="fb-topic-item" href="/family-browser/admin.html"><strong>관리자 설정</strong><p>표준 RVT, 표시 목록, 스캔·스냅샷과 요청 저장소 구성</p></a>
+        <a class="fb-topic-item" href="#roles"><strong>사용 범위</strong><p>일반 사용자와 관리자의 화면 및 작업 권한 차이</p></a>
+      </div>
+    </section>
 
-      function splitList(value) {
-        return uniqueList(String(value || '')
-          .split(/[,;\r\n\t]+/)
-          .map(function (item) { return item.trim(); }));
-      }
+    <section class="fb-doc-section" id="roles">
+      <h2>사용자와 관리자</h2>
+      <div class="fb-role-grid">
+        <div class="fb-role-item"><strong>일반 사용자</strong><p>승인 목록 탐색, 신규 항목 로드·적용, 현재 모델 검사, 요청 등록과 진행 상태 확인을 수행합니다.</p></div>
+        <div class="fb-role-item"><strong>관리자</strong><p>표준 RVT와 표시 목록을 연결하고 스캔하며, 기존 프로젝트 항목 업데이트와 요청 처리를 수행합니다.</p></div>
+        <div class="fb-role-item"><strong>파일 정책 적용 사용자</strong><p>지정된 RVT에서는 Family Browser 외의 Revit 기본 명령 일부가 차단될 수 있습니다.</p></div>
+      </div>
+      <div class="fb-callout">
+        <strong>기존 항목 업데이트는 관리자 작업입니다.</strong>
+        일반 사용자가 라이브러리에서 직접 선택해 반영할 수 있는 상태는 기본적으로 <b>로드 가능</b>입니다. 이미 프로젝트에 있는 항목의 표준 업데이트는 관리자 흐름에서 처리합니다.
+      </div>
+    </section>
 
-      function trimTrailingSlash(value) {
-        return (value || '').trim().replace(/[\\\/]+$/, '');
-      }
+    <section class="fb-doc-section" id="runtime">
+      <h2>동작 범위와 확인 사항</h2>
+      <ul class="fb-bullets">
+        <li>활성 프로젝트가 있어야 로드, 적용, 현재 모델 검사 기능을 실행할 수 있습니다.</li>
+        <li>대시보드 열기와 탭 전환은 캐시된 등록 상태를 사용합니다. 표준 RVT 파일 확인과 정밀 스캔은 명시적인 버튼을 눌렀을 때 실행됩니다.</li>
+        <li>카테고리가 다른 동일 이름 패밀리는 자동 덮어쓰지 않고 차단합니다.</li>
+        <li>중복 위험이 있는 시스템 타입은 적용 전에 진단과 대상 확인이 필요합니다.</li>
+        <li>화면에 표시되는 내부 경로와 디버그 로그는 관리자 모드에서만 보일 수 있습니다.</li>
+      </ul>
+    </section>
+  </main>
 
-      function pathSeparator(value) {
-        return value.indexOf('\\') >= 0 ? '\\' : '/';
-      }
-
-      function looksLikeJsonPath(value) {
-        return /\.json$/i.test((value || '').trim());
-      }
-
-      function appendPath(base, child) {
-        var value = trimTrailingSlash(base);
-        if (!value) return child;
-        return value + pathSeparator(value) + child;
-      }
-
-      function rootToPolicyPath(root) {
-        var value = trimTrailingSlash(root);
-        if (!value) return '';
-        if (looksLikeJsonPath(value)) return value;
-        return appendPath(appendPath(value, 'Config'), 'standard-policy.json');
-      }
-
-      function rootToRequestPath(root) {
-        var value = trimTrailingSlash(root);
-        if (!value) return '';
-        if (looksLikeJsonPath(value)) {
-          var rootPath = policyPathToRoot(value);
-          return rootPath ? appendPath(rootPath, 'Requests') : '';
-        }
-        return appendPath(value, 'Requests');
-      }
-
-      function policyPathToRoot(path) {
-        var value = trimTrailingSlash(path);
-        var normalized = value.replace(/\//g, '\\').toLowerCase();
-        var suffix = '\\config\\standard-policy.json';
-        if (normalized.slice(-suffix.length) === suffix) {
-          return value.slice(0, value.length - suffix.length);
-        }
-        return '';
-      }
-
-      function profileNameToId(value) {
-        var id = (value || '').trim().toLowerCase().replace(/[^a-z0-9_-]+/g, '-').replace(/^-+|-+$/g, '');
-        return id || 'default';
-      }
-
-      function toHex(buffer) {
-        return Array.prototype.map.call(new Uint8Array(buffer), function (b) {
-          return b.toString(16).padStart(2, '0');
-        }).join('');
-      }
-
-      function sha256(text) {
-        if (!window.crypto || !window.crypto.subtle || !window.TextEncoder) {
-          return Promise.reject(new Error('이 브라우저에서는 비밀번호 확인을 사용할 수 없습니다.'));
-        }
-        return crypto.subtle.digest('SHA-256', new TextEncoder().encode(text)).then(toHex);
-      }
-
-      function unlock() {
-        var password = byId('password').value || '';
-        sha256(password).then(function (hash) {
-          if (hash !== PASSWORD_SHA256) {
-            setStatus('lock-status', '비밀번호가 맞지 않습니다.', 'bad');
-            return;
-          }
-          currentAdminPassword = password;
-          byId('lock-panel').classList.add('hidden');
-          byId('editor-panel').classList.remove('hidden');
-          loadCurrent();
-        }).catch(function (err) {
-          setStatus('lock-status', err.message || String(err), 'bad');
-        });
-      }
-
-      function createPathRow(value) {
-        var row = document.createElement('div');
-        row.className = 'path-row';
-
-        var input = document.createElement('input');
-        input.type = 'text';
-        input.placeholder = 'I:\\FamilyBrowser\\ProjectA';
-        input.value = value || '';
-        input.addEventListener('input', buildJson);
-
-        var remove = document.createElement('button');
-        remove.type = 'button';
-        remove.textContent = '삭제';
-        remove.addEventListener('click', function () {
-          row.parentNode.removeChild(row);
-          if (!byId('pathList').querySelector('.path-row')) addPathRow('');
-          buildJson();
-        });
-
-        row.appendChild(input);
-        row.appendChild(remove);
-        byId('pathList').appendChild(row);
-      }
-
-      function addPathRow(value) {
-        createPathRow(value || '');
-      }
-
-      function getRootPaths() {
-        return uniqueList(Array.prototype.map.call(byId('pathList').querySelectorAll('input'), function (input) {
-          return input.value;
-        }));
-      }
-
-      function setRootPaths(paths) {
-        byId('pathList').innerHTML = '';
-        var clean = uniqueList(paths);
-        if (!clean.length) clean = [''];
-        clean.forEach(addPathRow);
-      }
-
-      function readRootPathsFromBootstrap(data) {
-        var roots = [];
-        if (data.managedRootPath) roots.push(data.managedRootPath);
-        if (Array.isArray(data.managedRootPathCandidates)) roots = roots.concat(data.managedRootPathCandidates);
-        if (data.managedPolicyPath) roots.push(policyPathToRoot(data.managedPolicyPath) || data.managedPolicyPath);
-        if (Array.isArray(data.managedPolicyPathCandidates)) {
-          data.managedPolicyPathCandidates.forEach(function (path) {
-            roots.push(policyPathToRoot(path) || path);
-          });
-        }
-        return uniqueList(roots);
-      }
-
-      function defaultBootstrap() {
-        return {
-          version: '2026.05.19',
-          message: '',
-          refreshMinutes: 30,
-          standardMode: 'DisciplineSeparated',
-          standardLibraries: [],
-          security: {
-            adminUsers: [],
-            adminProfileKeywords: [],
-            requestApproverUsers: [],
-            readOnlyUsers: [],
-            allowUnlistedUsersAsModelers: true,
-            allowModelersToLoadFamilies: true,
-            allowModelersToApplySystemTypes: true,
-            allowModelersToSubmitRequests: true
-          }
-        };
-      }
-
-      function collectBootstrap() {
-        var rootPaths = getRootPaths();
-        if (!rootPaths.length) throw new Error('패밀리 브라우저 관리 폴더 경로를 하나 이상 입력해 주세요.');
-
-        var policyPaths = uniqueList(rootPaths.map(rootToPolicyPath));
-        var requestPaths = uniqueList(rootPaths.map(rootToRequestPath));
-        var bootstrap = Object.assign(defaultBootstrap(), preservedBootstrap || {});
-
-        bootstrap.version = bootstrap.version || '2026.05.19';
-        bootstrap.message = byId('message').value.trim();
-        bootstrap.refreshMinutes = Number(bootstrap.refreshMinutes) > 0 ? Number(bootstrap.refreshMinutes) : 30;
-        bootstrap.managedRootPath = rootPaths[0];
-        bootstrap.managedRootPathCandidates = rootPaths;
-        bootstrap.managedPolicyPath = policyPaths[0] || '';
-        bootstrap.managedPolicyPathCandidates = policyPaths;
-        bootstrap.requestStore = Object.assign({}, bootstrap.requestStore || {}, {
-          mode: 'NetworkShare',
-          path: requestPaths[0] || '',
-          pathCandidates: requestPaths,
-          endpoint: ''
-        });
-        bootstrap.standardMode = bootstrap.standardMode || 'DisciplineSeparated';
-        if (!Array.isArray(bootstrap.standardLibraries)) bootstrap.standardLibraries = [];
-        bootstrap.security = Object.assign({}, defaultBootstrap().security, bootstrap.security || {});
-        bootstrap.security.adminProfileKeywords = splitList(byId('adminProfileKeywords').value);
-        return bootstrap;
-      }
-
-      function buildJson() {
-        try {
-          var json = JSON.stringify(collectBootstrap(), null, 2);
-          byId('preview').textContent = json;
-          setStatus('editor-status', 'JSON 미리보기를 갱신했습니다.', 'good');
-          return json;
-        } catch (err) {
-          byId('preview').textContent = '';
-          setStatus('editor-status', err.message || String(err), 'bad');
-          return '';
-        }
-      }
-
-      function defaultIndex(profileName) {
-        return {
-          version: '2026.05.19',
-          defaultProfileId: 'default',
-          profiles: [
-            {
-              id: 'default',
-              name: profileName || 'Default',
-              description: 'Family Browser management folder settings',
-              url: 'bootstrap.json'
-            }
-          ],
-          projectRules: []
-        };
-      }
-
-      function collectIndex() {
-        var name = byId('profileName').value.trim() || 'Default';
-        var index = defaultIndex(name);
-        index.profiles[0].description = byId('message').value.trim();
-        index.profiles[0].id = 'default';
-        index.defaultProfileId = 'default';
-        return index;
-      }
-
-      function loadIndex() {
-        return fetch('bootstrap-index.json', { cache: 'no-store' })
-          .then(function (response) {
-            if (!response.ok) throw new Error('bootstrap-index.json이 아직 없습니다.');
-            return response.json();
-          })
-          .then(function (index) {
-            currentIndex = index || defaultIndex();
-            var profiles = Array.isArray(currentIndex.profiles) ? currentIndex.profiles : [];
-            var profile = profiles.filter(function (item) {
-              return item && !item.disabled && item.id === (currentIndex.defaultProfileId || 'default');
-            })[0] || profiles[0];
-            if (profile && profile.name) byId('profileName').value = profile.name;
-          })
-          .catch(function () {
-            currentIndex = defaultIndex();
-          });
-      }
-
-      function loadCurrent() {
-        setStatus('editor-status', '현재 설정을 불러오는 중...', '');
-        return Promise.all([
-          loadIndex(),
-          fetch('bootstrap.json', { cache: 'no-store' })
-            .then(function (response) {
-              if (!response.ok) throw new Error('bootstrap.json 파일을 찾을 수 없습니다.');
-              return response.json();
-            })
-        ])
-          .then(function (results) {
-            var data = results[1] || {};
-            preservedBootstrap = data;
-            byId('message').value = data.message || '';
-            byId('adminProfileKeywords').value = ((data.security && Array.isArray(data.security.adminProfileKeywords))
-              ? data.security.adminProfileKeywords
-              : []).join('; ');
-            setRootPaths(readRootPathsFromBootstrap(data));
-            buildJson();
-            setStatus('editor-status', '현재 설정을 불러왔습니다.', 'good');
-          })
-          .catch(function (err) {
-            preservedBootstrap = defaultBootstrap();
-            if (!byId('profileName').value.trim()) byId('profileName').value = 'Default';
-            setRootPaths([]);
-            buildJson();
-            setStatus('editor-status', err.message + ' 새 설정으로 작성할 수 있습니다.', 'warn');
-          });
-      }
-
-      function saveContent(targetPath, content, message) {
-        if (!currentAdminPassword) throw new Error('관리자 비밀번호가 필요합니다.');
-        return fetch(WORKER_FILE_API, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-KKY-Admin-Password': currentAdminPassword
-          },
-          body: JSON.stringify({
-            path: targetPath,
-            content: content,
-            message: message
-          })
-        }).then(function (response) {
-          if (!response.ok) {
-            return response.text().then(function (body) {
-              throw new Error('서버 저장 실패: ' + response.status + ' ' + body);
-            });
-          }
-          return response.json();
-        });
-      }
-
-      function saveToServer() {
-        var bootstrapJson = buildJson();
-        if (!bootstrapJson) return;
-        var indexJson = JSON.stringify(collectIndex(), null, 2);
-        setStatus('editor-status', '서버에 저장 중...', '');
-        saveContent(BOOTSTRAP_REPO_PATH, bootstrapJson, 'Update Family Browser management folder settings')
-          .then(function () {
-            return saveContent(INDEX_REPO_PATH, indexJson, 'Update Family Browser profile index');
-          })
-          .then(function () {
-            currentIndex = collectIndex();
-            preservedBootstrap = collectBootstrap();
-            setStatus('editor-status', '서버 저장이 완료되었습니다.', 'good');
-          })
-          .catch(function (err) {
-            setStatus('editor-status', err.message || String(err), 'bad');
-          });
-      }
-
-      byId('unlock').addEventListener('click', unlock);
-      byId('password').addEventListener('keydown', function (ev) { if (ev.key === 'Enter') unlock(); });
-      byId('addPath').addEventListener('click', function () { addPathRow(''); });
-      byId('loadCurrent').addEventListener('click', loadCurrent);
-      byId('build').addEventListener('click', buildJson);
-      byId('saveGithub').addEventListener('click', saveToServer);
-      byId('profileName').addEventListener('input', buildJson);
-      byId('message').addEventListener('input', buildJson);
-      byId('adminProfileKeywords').addEventListener('input', buildJson);
-
-      currentIndex = defaultIndex();
-      preservedBootstrap = defaultBootstrap();
-      byId('profileName').value = 'Default';
-      setRootPaths([]);
-      buildJson();
-    })();
-  </script>
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <span>KKY Family Browser 1.0 매뉴얼</span>
+      <div class="mini-links">
+        <a href="/family-browser/library.html">라이브러리</a>
+        <a href="/family-browser/model-check.html">모델 검사</a>
+        <a href="/family-browser/admin.html">관리자</a>
+      </div>
+    </div>
+  </footer>
+  <script src="/assets/site.js"></script>
 </body>
 </html>

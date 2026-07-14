@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>관리자 설정 | KKY Family Browser</title>
+  <meta name="description" content="KKY Family Browser 표준 RVT, 표시 표준 목록, 스캔, 요청 저장소 관리자 설정 매뉴얼">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/assets/site.css">
+</head>
+<body data-page="family-browser">
+  <header class="site-header"><div class="site-header__inner"><a class="brand" href="/index.html"><span class="brand__mark">K</span><span><span class="brand__title">KKY Tool</span><span class="brand__sub">Revit Hub 3.0</span></span></a><button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false">메뉴</button><nav class="nav" data-nav-menu><a href="/index.html" data-nav="home">홈</a><a href="/index.html#download" data-nav="download">다운로드</a><a href="/Manual/features.html" data-nav="features">기능</a><a href="/Manual/index.html" data-nav="manual">메뉴얼</a><a href="/family-browser/index.html" data-nav="family-browser">Family Browser</a><a href="/requests.html" data-nav="requests">요청하기</a><a href="/kky-tool/" data-nav="admin">관리자</a></nav></div></header>
+
+  <main class="page-main">
+    <div class="fb-doc-layout">
+      <aside class="fb-doc-side">
+        <div class="fb-doc-side__title">Family Browser</div>
+        <nav><a href="/family-browser/index.html">제품 개요</a><a href="/family-browser/library.html">패밀리 / 시스템 타입</a><a href="/family-browser/model-check.html">현재 모델 검사</a><a href="/family-browser/requests.html">추가 요청</a><a href="/family-browser/governance.html">권한 / 차단</a><a class="is-current" href="/family-browser/admin.html">관리자 설정</a></nav>
+      </aside>
+
+      <div class="fb-doc-main">
+        <header class="fb-doc-title">
+          <span class="eyebrow">관리자 매뉴얼</span>
+          <h1>표준 라이브러리 설정</h1>
+          <p>표준 RVT, 사용자에게 보일 승인 목록, 스캔 스냅샷과 요청 저장소를 위에서 아래 순서로 준비합니다.</p>
+        </header>
+
+        <section class="fb-doc-section" id="order">
+          <h2>권장 설정 순서</h2>
+          <ol class="fb-flow">
+            <li><strong>표준 모드</strong><span>공종별 표준 또는 하나의 통합 표준을 결정합니다.</span></li>
+            <li><strong>공종 대상</strong><span>건축·전기·소방·설비 등 관리 슬롯을 준비합니다.</span></li>
+            <li><strong>표준 RVT</strong><span>대상별 기준 RVT를 연결하고 정밀 스캔합니다.</span></li>
+            <li><strong>표시 목록</strong><span>사용자에게 보여줄 승인 Excel/JSON 목록을 연결합니다.</span></li>
+            <li><strong>운영 경로</strong><span>요청 저장소와 파일별 가드를 실제 팀 환경에서 검증합니다.</span></li>
+          </ol>
+          <figure class="fb-screen-figure">
+            <a href="/assets/family-browser/admin-settings.png" target="_blank" rel="noopener"><img src="/assets/family-browser/admin-settings.png" alt="KKY Family Browser 관리자 설정 화면"></a>
+            <figcaption>관리자 설정의 표준 기준 / 표시 목록 영역. 왼쪽은 실제 비교 기준, 오른쪽은 스캔과 표시 목록 작업을 담당합니다.</figcaption>
+          </figure>
+        </section>
+
+        <section class="fb-doc-section" id="mode">
+          <h2>표준 모드와 공종</h2>
+          <div class="fb-table-wrap">
+            <table>
+              <thead><tr><th>모드</th><th>사용 방식</th><th>예시</th></tr></thead>
+              <tbody>
+                <tr><td>공종별 표준 사용</td><td>공종마다 별도 표준 RVT와 승인 목록을 연결합니다.</td><td>건축, 전기, 소방, 설비를 서로 다른 RVT로 운영</td></tr>
+                <tr><td>통합 표준 사용</td><td>하나의 표준 RVT를 공통 기준으로 사용합니다. 공종 버튼은 필터와 요청 라우팅 기준으로 유지됩니다.</td><td>하나의 통합 라이브러리 RVT에 모든 공종을 관리</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <ul class="fb-bullets">
+            <li><b>추가:</b> 새 공종 슬롯을 만듭니다.</li>
+            <li><b>이름 변경:</b> 현재 공종의 표시명을 바꿉니다.</li>
+            <li><b>삭제:</b> 공종별 표준 모드에서만 공종 대상을 삭제할 수 있습니다.</li>
+          </ul>
+        </section>
+
+        <section class="fb-doc-section" id="standard-rvt">
+          <h2>기준 RVT 연결</h2>
+          <ol class="fb-procedure">
+            <li><div><strong>관리할 공종을 선택합니다.</strong><p>상단 현재 대상과 공종 선택이 연결하려는 표준과 일치하는지 확인합니다.</p></div></li>
+            <li><div><strong>표준 RVT 연결을 누릅니다.</strong><p>승인된 기준 RVT를 선택합니다. 이 파일이 비교와 로드·적용의 원본 기준이 됩니다.</p></div></li>
+            <li><div><strong>관리 설정을 엽니다.</strong><p>현재 등록 경로, 마지막 스캔 기록, 파일 수정 기록과 최근 후보 로그를 확인합니다.</p></div></li>
+            <li><div><strong>전체 정밀 스캔을 실행합니다.</strong><p>처음 연결하거나 표준 내용이 크게 바뀐 경우 전체 스냅샷과 미리보기를 다시 만듭니다.</p></div></li>
+            <li><div><strong>사용자 목록에서 결과를 확인합니다.</strong><p>표시 목록까지 연결한 뒤 일반 사용자 모드에서 패밀리·시스템 타입과 상태가 맞는지 검증합니다.</p></div></li>
+          </ol>
+          <div class="fb-callout warn"><strong>화면을 여는 것만으로 원본 RVT를 확인하지 않습니다.</strong>관리자 설정은 캐시된 등록·스캔 기록을 표시합니다. 실제 파일 수정일 확인과 재스캔은 유지관리 버튼을 눌렀을 때 수행됩니다.</div>
+        </section>
+
+        <section class="fb-doc-section" id="scan">
+          <h2>스캔 선택 기준</h2>
+          <div class="fb-table-wrap">
+            <table>
+              <thead><tr><th>작업</th><th>수집 범위</th><th>사용 시점</th></tr></thead>
+              <tbody>
+                <tr><td>전체 정밀 스캔</td><td>Fingerprint, 파라미터, 하위 패밀리 메타데이터, 3D 미리보기, 시스템 타입 정의와 의존 관계</td><td>최초 등록, 대규모 표준 변경, 전체 기준 재구축</td></tr>
+                <tr><td>빠른 변경 확인</td><td>표준 RVT 파일 스탬프를 확인하고 변경 시 빠른 스냅샷 갱신 경로 실행</td><td>일상적인 파일 변경 여부 확인</td></tr>
+                <tr><td>선택 패밀리 정밀 갱신</td><td>업데이트되었거나 관리자가 선택한 패밀리만 정밀 재수집</td><td>소수 패밀리 변경 후 전체 스캔 비용을 줄일 때</td></tr>
+                <tr><td>등록/스캔 초기화</td><td>선택 대상의 등록과 스캔 상태를 제거</td><td>잘못 연결한 기준을 완전히 다시 구성할 때</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="fb-callout"><strong>빠른 스캔의 한계</strong>빠른 경로는 패밀리 편집, 하위 패밀리 메타데이터와 3D 이미지 재생성을 생략할 수 있습니다. 정밀 내용이 바뀌었다면 전체 또는 선택 정밀 갱신을 사용합니다.</div>
+        </section>
+
+        <section class="fb-doc-section" id="visible-list">
+          <h2>사용자에게 보일 표준 목록</h2>
+          <p>표준 RVT를 스캔했다고 모든 항목이 자동 공개되는 것은 아닙니다. 별도의 승인 목록으로 사용자 화면에 보일 범위를 제어합니다.</p>
+          <div class="fb-detail-grid">
+            <div class="fb-detail-block"><h3>표준 목록 Excel 연결</h3><p>검토·승인한 Excel 목록을 현재 공종의 표시 목록으로 연결합니다.</p></div>
+            <div class="fb-detail-block"><h3>RVT에서 목록 생성</h3><p>등록된 표준 스냅샷을 바탕으로 검토용 목록 초안을 만듭니다.</p></div>
+            <div class="fb-detail-block"><h3>빈 양식 저장</h3><p>관리자가 승인 목록을 새로 작성할 수 있는 기본 양식을 저장합니다.</p></div>
+            <div class="fb-detail-block"><h3>Fingerprint 점검</h3><p>승인 목록 항목과 정밀 스냅샷 연결 상태를 검사합니다.</p></div>
+            <div class="fb-detail-block"><h3>목록 해제</h3><p>현재 표시 목록 연결을 제거합니다. 일반 사용자 목록은 다시 비게 됩니다.</p></div>
+            <div class="fb-detail-block"><h3>Excel / JSON</h3><p>운영 화면은 연결된 승인 목록의 관리 결과를 사용하며, 내부 형식은 관리 경로에서 유지됩니다.</p></div>
+          </div>
+        </section>
+
+        <section class="fb-doc-section" id="request-store">
+          <h2>요청 저장소와 홈페이지 관리 경로</h2>
+          <ul class="fb-bullets">
+            <li>공용 요청 저장소는 홈페이지에서 배포되는 Family Browser 관리 경로 설정을 우선 사용합니다.</li>
+            <li>관리자 페이지에서 패밀리 브라우저 경로를 바꾸면 기존 저장 방식과 bootstrap JSON 주소는 유지해야 합니다.</li>
+            <li>예외적으로 수동 요청 폴더를 지정할 때는 팀이 읽고 쓸 수 있는 공유 관리 폴더를 사용합니다.</li>
+            <li>일반 사용자에게 내부 경로를 보여주지 않고, 요청 등록·목록 새로고침 작업만 제공합니다.</li>
+            <li>요청 저장소 연결 후 다른 사용자 PC에서도 같은 요청 목록이 보이는지 확인합니다.</li>
+          </ul>
+          <div class="fb-callout warn"><strong>bootstrap 경로는 배포 계약입니다.</strong><code>/family-browser/bootstrap-index.json</code>과 <code>/family-browser/bootstrap.json</code>은 기존 설치가 관리 루트를 찾는 공개 경로이므로 홈페이지 문서 파일과 별개로 보존해야 합니다.</div>
+        </section>
+
+        <section class="fb-doc-section" id="settings">
+          <h2>개인 설정과 운영 점검</h2>
+          <div class="fb-detail-grid">
+            <div class="fb-detail-block"><h3>언어</h3><p>한국어와 English를 개인 설정으로 전환합니다. 목록 데이터와 표준 자체는 바꾸지 않습니다.</p></div>
+            <div class="fb-detail-block"><h3>관리자 모드</h3><p>표준 등록, 내부 경로, 요청 처리와 기존 항목 업데이트 같은 관리 기능을 표시합니다.</p></div>
+            <div class="fb-detail-block"><h3>운영 준비 상태</h3><p>정책, 표준 RVT, 표시 목록과 요청 저장소의 차단·주의·준비 상태를 확인합니다.</p></div>
+            <div class="fb-detail-block"><h3>디버그 로그</h3><p>F12와 내부 진단은 관리자 확인용입니다. 일반 사용자 매뉴얼의 실행 절차에는 포함하지 않습니다.</p></div>
+          </div>
+        </section>
+
+        <section class="fb-doc-section" id="validation">
+          <h2>배포 전 관리자 확인표</h2>
+          <ul class="fb-bullets">
+            <li>지원 Revit 버전 2019, 2021, 2023, 2025, 2027에서 대시보드가 열리는지 확인합니다.</li>
+            <li>일반 사용자 모드에서 내부 파일 경로와 관리자 버튼이 숨겨지는지 확인합니다.</li>
+            <li>공종별 패밀리·시스템 타입 수와 승인 목록 행 수가 일치하는지 확인합니다.</li>
+            <li>신규 패밀리 로드와 시스템 타입 적용 후 저장·동기화 대기 상태가 확정되는지 확인합니다.</li>
+            <li>현재 모델 검사 결과와 <code>.xlsx</code> 검토 목록이 실제 프로젝트에서 생성되는지 확인합니다.</li>
+            <li>다른 사용자 PC에서 요청 등록, 첨부, 목록 새로고침과 상태 변경이 공유되는지 확인합니다.</li>
+            <li>파일별 가드를 적용한 중앙·로컬·분리 문서에서 대상 식별이 맞는지 확인합니다.</li>
+          </ul>
+        </section>
+
+        <div class="fb-page-links"><a class="button" href="/family-browser/governance.html">이전: 권한 / 차단</a><a class="button primary" href="/family-browser/index.html">제품 개요로</a></div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer"><div class="site-footer__inner"><span>KKY Family Browser 1.0 매뉴얼</span><div class="mini-links"><a href="/family-browser/index.html">개요</a><a href="/family-browser/library.html">라이브러리</a></div></div></footer>
+  <script src="/assets/site.js"></script>
+</body>
+</html>
