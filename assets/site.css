@@ -720,6 +720,13 @@ button:disabled {
   margin-top: 18px;
 }
 
+.release-edition-note {
+  margin-bottom: 8px !important;
+  color: #0f766e;
+  font-size: 14px;
+  font-weight: 800;
+}
+
 .status-row {
   display: grid;
   grid-template-columns: 1fr auto;
