@@ -126,7 +126,7 @@
               <thead><tr><th>대상</th><th>등록 방법</th><th>실행 동작</th><th>적합한 상황</th></tr></thead>
               <tbody>
                 <tr><td>활성 문서</td><td>현재 Revit의 <code>ActiveUIDocument.Document</code>를 사용</td><td>열린 프로젝트 문서를 닫지 않고 즉시 추출합니다. 링크·패밀리 문서는 대상에서 제외됩니다.</td><td>현재 작업 모델을 빠르게 확인</td></tr>
-                <tr><td>여러 RVT</td><td>대상 RVT 등록 창에서 파일 선택 또는 드롭</td><td>등록 순서대로 RVT를 열어 추출한 뒤 닫습니다. 같은 파일명은 한 번만 등록됩니다.</td><td>납품 폴더의 여러 모델을 같은 양식으로 추출</td></tr>
+                <tr><td>여러 RVT</td><td>대상 RVT 등록 창에서 파일 선택 또는 드롭</td><td>등록 순서대로 RVT를 열어 추출한 뒤 닫습니다. 동일 경로는 목록에서 한 번만 등록되고, 서로 다른 폴더라도 기본 파일명이 같은 RVT가 둘 이상이면 실행 전 검사에서 중단됩니다.</td><td>납품 폴더의 여러 모델을 같은 양식으로 추출</td></tr>
               </tbody>
             </table>
           </div>
@@ -184,10 +184,11 @@
                 </tbody>
               </table>
             </div>
+            <p class="manual-note">Import는 각 시트의 처음 31개 행만 헤더 후보로 확인하고, 값이 2개 이상 들어 있는 첫 행을 헤더로 사용합니다. 제목 행을 길게 두지 말고 실제 열 이름 행을 위쪽에 배치합니다. 빈 헤더는 <code>Column N</code>, 중복 헤더는 <code>(2)</code>, <code>(3)</code>을 붙여 구분합니다.</p>
           </div>
           <div class="module-subsection">
             <h3>2. 시트와 값 열</h3>
-            <p>입력할 시트를 체크한 뒤 <code>Comments</code>, <code>Mark</code>, <code>Asset Code</code>처럼 실제로 쓸 값 열만 선택합니다. 선택한 열마다 매핑 행이 하나씩 생깁니다.</p>
+            <p>읽을 수 있는 시트는 처음에 모두 선택되지만 Export 처리 이력용 <code>Export Log</code> 시트는 자동 제외됩니다. 입력할 시트를 확인한 뒤 <code>Comments</code>, <code>Mark</code>, <code>Asset Code</code>처럼 실제로 쓸 값 열만 선택합니다. 선택한 열마다 같은 이름의 Revit 파라미터를 가리키는 Instance 매핑 행이 하나씩 생기며, 필요할 때 이름과 범위를 바꿉니다.</p>
           </div>
           <div class="module-subsection">
             <h3>3. Instance / Type 매핑</h3>
@@ -268,6 +269,8 @@
           <ul class="module-checklist">
             <li>Export 전 선택 Schedule 수가 1개 이상인지 확인</li>
             <li>Import Excel에 RVT·ID·Family·Type 헤더가 있는지 확인</li>
+            <li>실제 헤더 행이 각 시트의 처음 31개 행 안에 있는지 확인</li>
+            <li>다른 폴더의 RVT라도 기본 파일명이 중복되지 않는지 확인</li>
             <li>Type 매핑은 같은 Type의 값이 모두 같은지 확인</li>
             <li>빈 셀 삭제 옵션은 사본에서 먼저 시험</li>
             <li>여러 RVT는 원본 백업과 쓰기 권한 확인</li>

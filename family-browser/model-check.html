@@ -98,9 +98,20 @@
           </ul>
         </section>
 
+        <section class="fb-doc-section" id="protected-deletion">
+          <h2>보호 항목 삭제 검토</h2>
+          <p>관리 대상으로 추적하던 패밀리 또는 타입이 삭제되면 관리자 화면에 <b>보호 항목 삭제 검토</b>가 표시됩니다. 삭제 항목은 항상 자동 복구되는 것이 아니므로 현재 모델 검사를 다시 실행해 표준과 비교해야 합니다.</p>
+          <ol class="fb-procedure">
+            <li><div><strong>삭제 감지 기록을 확인합니다.</strong><p>감지 시각, 사용자, 항목 구분, 이름, 카테고리, Element ID와 필요한 작업이 표시됩니다.</p></div></li>
+            <li><div><strong>현재 모델 검사 실행을 누릅니다.</strong><p>등록된 표준 RVT 스냅샷을 기준으로 실제 누락 여부와 차이를 다시 계산합니다.</p></div></li>
+            <li><div><strong>누락 항목을 표준 RVT에서 복구합니다.</strong><p>검사 결과가 누락 또는 표준과 다름이면 표준 패밀리·타입을 다시 로드하거나 적용한 뒤 검사를 반복합니다.</p></div></li>
+          </ol>
+          <div class="fb-callout warn"><strong>삭제 감지 표시는 복구 완료 표시가 아닙니다.</strong>현재 모델 검사 결과가 표준과 일치하는지 확인한 뒤 운영을 계속합니다.</div>
+        </section>
+
         <section class="fb-doc-section" id="excel">
           <h2>Excel 검토 목록</h2>
-          <p>현재 모델 검사는 검토가 필요한 행을 <code>.xlsx</code>로 저장합니다. CSV 결과 내보내기는 제공하지 않습니다.</p>
+          <p>현재 모델 검사는 검토가 필요한 행을 <code>.xlsx</code>로 저장합니다. CSV 결과 내보내기는 제공하지 않습니다. <b>Excel 추출</b> 버튼은 검토 필요·표준과 다름 항목 또는 자동 처리된 대화상자 기록이 1건 이상 있을 때만 표시됩니다.</p>
           <div class="fb-table-wrap">
             <table>
               <thead><tr><th>항목</th><th>규칙</th></tr></thead>

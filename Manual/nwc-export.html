@@ -151,8 +151,8 @@
                   <tr><td>Convert element IDs</td><td>Element ID 속성을 별도 내보내지 않음</td><td>Revit Element ID를 속성으로 포함</td><td>Navisworks 결과를 Revit 요소와 대조</td></tr>
                   <tr><td>Convert element parameters</td><td><b>None</b>: 파라미터 제외<br><b>Elements</b>: Export 요소 파라미터</td><td><b>All</b>: Exporter가 지원하는 전체 범위 파라미터</td><td>데이터 검토가 필요하면 Elements부터 사용</td></tr>
                   <tr><td>Convert element properties</td><td>요소 속성 변환 안 함</td><td>Exporter가 제공하는 Revit 요소 속성 범주를 포함</td><td>Selection Tree 속성 확인</td></tr>
-                  <tr><td>Convert lights</td><td colspan="2">화면에서 바꾸지 않고 설치된 Exporter 기본값을 사용합니다.</td><td>조명 데이터는 Exporter 설정에 따름</td></tr>
-                  <tr><td>Convert linked CAD formats</td><td colspan="2">화면에서 바꾸지 않고 설치된 Exporter 기본값을 사용합니다.</td><td>DWG 등 링크 CAD 변환</td></tr>
+                  <tr><td>Convert lights</td><td colspan="2">읽기 전용입니다. Revit 2019 네이티브 경로는 <b>끔</b>으로 고정하고, API 경로는 설치된 Exporter 동작을 따릅니다.</td><td>조명 Geometry가 필요하면 결과를 샘플 확인</td></tr>
+                  <tr><td>Convert linked CAD formats</td><td colspan="2">읽기 전용입니다. Revit 2019 네이티브 경로는 <b>켬</b>으로 고정하고, API 경로는 설치된 Exporter 동작을 따릅니다.</td><td>링크된 DWG 등 CAD 변환</td></tr>
                   <tr><td>Convert linked files</td><td colspan="2">1단계 문서별 <b>링크 모델 포함</b>과 링크 체크 상태가 제어합니다.</td><td>ARCH 링크만 선택 Export</td></tr>
                   <tr><td>Convert room as attribute</td><td>Room 정보를 속성으로 추가하지 않음</td><td>요소에 연관된 Room 정보를 속성으로 포함</td><td>공간별 장비 검색</td></tr>
                   <tr><td>Convert URLs</td><td>URL 데이터 제외</td><td>Revit URL 속성을 변환</td><td>자산 문서 링크 전달</td></tr>
@@ -192,7 +192,7 @@
           </ol>
           <div class="module-callout warn">
             <strong>Revit 2019의 Faceting Factor</strong>
-            값이 <b>1</b>이면 리본이나 Options Editor를 열지 않고 Revit API로 바로 추출합니다. 1이 아니면 Navisworks 설정 창에 값을 자동 반영하는 별도 흐름을 사용하므로 화면 전환이 발생할 수 있습니다.
+            값이 <b>1</b>이면 리본이나 Options Editor를 열지 않고 Revit API로 바로 추출합니다. 1이 아니면 Options Editor에 15개 Navisworks 옵션을 자동 반영하고 네이티브 값을 다시 읽어 일치 여부를 확인한 뒤 Export합니다. 활성 문서 실행은 처음 선택한 문서가 그대로 활성 상태인지 확인하며, 여러 RVT는 문서·View를 차례로 활성화한 뒤 작업 전 문서로 돌아옵니다. 이 네이티브 작업은 동시에 두 개 실행할 수 없습니다.
           </div>
         </section>
 
@@ -200,14 +200,15 @@
           <div class="module-section__head">
             <span class="eyebrow">결과와 Excel</span>
             <h2>생성 건수와 링크 처리 결과를 함께 확인합니다</h2>
-            <p>결과창은 문서 수, Export 성공, 건너뜀, 오류, 링크 Reload·Unload·오류 건수를 구분합니다. 결과 Excel은 한글 또는 영문으로 반복 저장할 수 있습니다.</p>
+            <p>결과창은 문서 수, Export 성공, 건너뜀, 자동 처리 경고, 오류, 링크 Reload·Unload·오류 건수를 구분합니다. 결과 Excel은 한글 또는 영문으로 반복 저장할 수 있습니다.</p>
           </div>
           <div class="module-table-wrap">
             <table>
               <thead><tr><th>결과</th><th>의미</th><th>확인할 내용</th></tr></thead>
               <tbody>
                 <tr><td>Export 성공</td><td>NWC 생성과 파일 유효성 검증까지 통과한 View 수</td><td>출력 경로와 View 이름</td></tr>
-                <tr><td>건너뜀</td><td>덮어쓰기 끔 상태에서 기존 파일이 있거나 실행 조건상 생성을 생략한 View 수</td><td>기존 파일을 유지할지 덮어쓸지</td></tr>
+                <tr><td>건너뜀</td><td>덮어쓰기 끔 상태에서 기존 파일이 있거나 View에 내보낼 Geometry가 없어 생성을 생략한 View 수</td><td>기존 파일, View 표시 상태와 Geometry</td></tr>
+                <tr><td>자동 처리 경고</td><td>호환되지 않는 프린터 또는 Print Setup 경고를 자동으로 닫고 Export를 계속한 기록</td><td>NWC가 정상 생성됐는지와 Message</td></tr>
                 <tr><td>오류</td><td>문서 열기, View 찾기, Export, 파일 검증 실패 수</td><td>행별 Message</td></tr>
                 <tr><td>링크 Reload / Unload</td><td>Export 전에 실제 상태를 바꾼 링크 수</td><td>의도한 링크 계획과 같은지</td></tr>
                 <tr><td>링크 오류</td><td>Reload·Unload 또는 원상 복구에 실패한 링크 수</td><td>링크 경로와 권한</td></tr>
@@ -222,8 +223,8 @@
                 <thead><tr><th>열</th><th>예시</th><th>용도</th></tr></thead>
                 <tbody>
                   <tr><td>RVT File</td><td><code>Plant_A.rvt</code></td><td>원본 문서</td></tr>
-                  <tr><td>3D View</td><td><code>Coordination 3D</code></td><td>Export한 View</td></tr>
-                  <tr><td>Status</td><td>정상 / 건너뜀 / 오류</td><td>처리 판정</td></tr>
+                  <tr><td>Target (3D View / Revit Link)</td><td><code>Coordination 3D</code> 또는 <code>Revit Link / ARCH</code></td><td>Export View 또는 링크 처리 대상</td></tr>
+                  <tr><td>Status</td><td>정상 / 건너뜀 / 경고 / 링크 오류 / 오류</td><td>처리 판정</td></tr>
                   <tr><td>NWC Path</td><td><code>D:\Coordination\NWC\Plant_A_Coordination 3D.nwc</code></td><td>생성 파일 위치</td></tr>
                   <tr><td>Message</td><td>Export 완료</td><td>상세 원인과 처리 메시지</td></tr>
                 </tbody>

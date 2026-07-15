@@ -62,12 +62,12 @@
           <h2>기준 RVT 연결</h2>
           <ol class="fb-procedure">
             <li><div><strong>관리할 공종을 선택합니다.</strong><p>상단 현재 대상과 공종 선택이 연결하려는 표준과 일치하는지 확인합니다.</p></div></li>
-            <li><div><strong>표준 RVT 연결을 누릅니다.</strong><p>승인된 기준 RVT를 선택합니다. 이 파일이 비교와 로드·적용의 원본 기준이 됩니다.</p></div></li>
+            <li><div><strong>표준 RVT 연결을 누릅니다.</strong><p>승인된 기준 RVT를 선택합니다. 이 파일이 비교와 로드·적용의 원본 기준이 됩니다. 선택 파일이 Revit에 열려 있으면 닫은 뒤 등록합니다.</p></div></li>
             <li><div><strong>관리 설정을 엽니다.</strong><p>현재 등록 경로, 마지막 스캔 기록, 파일 수정 기록과 최근 후보 로그를 확인합니다.</p></div></li>
             <li><div><strong>전체 정밀 스캔을 실행합니다.</strong><p>처음 연결하거나 표준 내용이 크게 바뀐 경우 전체 스냅샷과 미리보기를 다시 만듭니다.</p></div></li>
             <li><div><strong>사용자 목록에서 결과를 확인합니다.</strong><p>표시 목록까지 연결한 뒤 일반 사용자 모드에서 패밀리·시스템 타입과 상태가 맞는지 검증합니다.</p></div></li>
           </ol>
-          <div class="fb-callout warn"><strong>화면을 여는 것만으로 원본 RVT를 확인하지 않습니다.</strong>관리자 설정은 캐시된 등록·스캔 기록을 표시합니다. 실제 파일 수정일 확인과 재스캔은 유지관리 버튼을 눌렀을 때 수행됩니다.</div>
+          <div class="fb-callout warn"><strong>화면을 여는 것만으로 원본 RVT를 확인하지 않습니다.</strong>관리자 설정은 캐시된 등록·스캔 기록을 표시합니다. 실제 파일 수정일 확인과 재스캔은 유지관리 버튼을 눌렀을 때 수행됩니다. 같은 표준 RVT가 Revit에 열린 상태에서는 별도 스캔용으로 다시 열 수 없으므로 등록이 중단됩니다.</div>
         </section>
 
         <section class="fb-doc-section" id="scan">
@@ -91,12 +91,13 @@
           <p>표준 RVT를 스캔했다고 모든 항목이 자동 공개되는 것은 아닙니다. 별도의 승인 목록으로 사용자 화면에 보일 범위를 제어합니다.</p>
           <div class="fb-detail-grid">
             <div class="fb-detail-block"><h3>표준 목록 Excel 연결</h3><p>검토·승인한 Excel 목록을 현재 공종의 표시 목록으로 연결합니다.</p></div>
-            <div class="fb-detail-block"><h3>RVT에서 목록 생성</h3><p>등록된 표준 스냅샷을 바탕으로 검토용 목록 초안을 만듭니다.</p></div>
+            <div class="fb-detail-block"><h3>RVT에서 목록 생성</h3><p>등록된 표준 스냅샷을 바탕으로 검토용 Excel 초안을 저장합니다. 저장만 수행하며 표시 목록에는 자동 연결하지 않습니다.</p></div>
             <div class="fb-detail-block"><h3>빈 양식 저장</h3><p>관리자가 승인 목록을 새로 작성할 수 있는 기본 양식을 저장합니다.</p></div>
             <div class="fb-detail-block"><h3>Fingerprint 점검</h3><p>승인 목록 항목과 정밀 스냅샷 연결 상태를 검사합니다.</p></div>
             <div class="fb-detail-block"><h3>목록 해제</h3><p>현재 표시 목록 연결을 제거합니다. 일반 사용자 목록은 다시 비게 됩니다.</p></div>
             <div class="fb-detail-block"><h3>Excel / JSON</h3><p>운영 화면은 연결된 승인 목록의 관리 결과를 사용하며, 내부 형식은 관리 경로에서 유지됩니다.</p></div>
           </div>
+          <div class="fb-callout"><strong>RVT 목록 초안의 저장 규칙</strong>기본 파일명은 <span class="fb-code-name">KKY_FamilyBrowser_StandardList_{표준대상}_{표준RVT명}.xlsx</span>입니다. 로더블 패밀리는 패밀리 단위로 저장하고 하위 패밀리는 제외합니다. 시스템 타입은 <code>Family=타입 클래스</code>, <code>Type=타입 이름</code>으로 저장합니다. 초안을 검토한 뒤 <b>표준 목록 Excel 연결</b>을 실행해야 일반 사용자 목록에 반영됩니다.</div>
         </section>
 
         <section class="fb-doc-section" id="request-store">
