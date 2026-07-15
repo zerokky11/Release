@@ -10,21 +10,30 @@
     return Array.from((scope || document).querySelectorAll(selector));
   }
 
-  function ensureFamilyBrowserNav() {
+  function normalizeManualNav() {
     const nav = qs('[data-nav-menu]');
-    if (!nav || qs('[data-nav="family-browser"]', nav)) return;
-    const link = document.createElement('a');
-    link.href = '/family-browser/index.html';
-    link.dataset.nav = 'family-browser';
-    link.textContent = 'Family Browser';
-    const requests = qs('[data-nav="requests"]', nav);
-    if (requests) nav.insertBefore(link, requests);
-    else nav.appendChild(link);
+    if (!nav) return;
+
+    qsa('[data-nav="features"], [data-nav="family-browser"]', nav)
+      .forEach((link) => link.remove());
+
+    let manual = qs('[data-nav="manual"]', nav);
+    if (!manual) {
+      manual = document.createElement('a');
+      manual.dataset.nav = 'manual';
+      const requests = qs('[data-nav="requests"]', nav);
+      if (requests) nav.insertBefore(manual, requests);
+      else nav.appendChild(manual);
+    }
+    manual.href = '/Manual/index.html';
+    manual.textContent = '매뉴얼';
   }
 
   function setActiveNav() {
+    const activePage = page === 'features' || page === 'family-browser' ? 'manual' : page;
     qsa('[data-nav]').forEach((link) => {
-      if (link.dataset.nav === page) link.setAttribute('aria-current', 'page');
+      if (link.dataset.nav === activePage) link.setAttribute('aria-current', 'page');
+      else link.removeAttribute('aria-current');
     });
   }
 
@@ -471,7 +480,7 @@
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    ensureFamilyBrowserNav();
+    normalizeManualNav();
     setActiveNav();
     initNavToggle();
     initReleasePanels();

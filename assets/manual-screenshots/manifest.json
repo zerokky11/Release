@@ -1,7 +1,10 @@
 {
-  "generatedAt": "2026-07-14T14:21:12.196Z",
+  "generatedAt": "2026-07-15T04:27:37.051Z",
+  "productVersion": "3.0",
+  "displayedVersion": "v3.0",
+  "homeScreenshot": "Sever/assets/kky-tool/home.png",
   "sourceRoot": "KKY_Tool_Revit_2019-2023/Resources/HubUI",
-  "baseUrl": "http://127.0.0.1:54588",
+  "baseUrl": "http://127.0.0.1:49320",
   "viewport": "1600x1000",
   "baseScreenCount": 25,
   "extraScreenCount": 23,
@@ -13,7 +16,7 @@
       "kind": "settings",
       "note": "기능 설정 화면 전체",
       "file": "Sever/assets/manual-screenshots/connector.png",
-      "bytes": 163155,
+      "bytes": 162991,
       "title": "KKY Tool Hub"
     },
     {
@@ -21,7 +24,7 @@
       "kind": "settings",
       "note": "기능 설정 화면 전체",
       "file": "Sever/assets/manual-screenshots/unconnected.png",
-      "bytes": 173514,
+      "bytes": 173370,
       "title": "KKY Tool Hub"
     },
     {
@@ -29,7 +32,7 @@
       "kind": "settings",
       "note": "기능 설정 화면 전체",
       "file": "Sever/assets/manual-screenshots/floorinfo.png",
-      "bytes": 125388,
+      "bytes": 125215,
       "title": "KKY Tool Hub"
     },
     {
@@ -37,7 +40,7 @@
       "kind": "settings",
       "note": "기능 설정 화면 전체",
       "file": "Sever/assets/manual-screenshots/familysuitability.png",
-      "bytes": 188055,
+      "bytes": 187886,
       "title": "KKY Tool Hub"
     },
     {
@@ -45,7 +48,7 @@
       "kind": "settings",
       "note": "기능 설정 화면 전체",
       "file": "Sever/assets/manual-screenshots/tapalign.png",
-      "bytes": 142464,
+      "bytes": 142306,
       "title": "KKY Tool Hub"
     },
     {
@@ -53,7 +56,7 @@
       "kind": "settings",
       "note": "기능 설정 화면 전체",
       "file": "Sever/assets/manual-screenshots/tapdepth.png",
-      "bytes": 146604,
+      "bytes": 146429,
       "title": "KKY Tool Hub"
     },
     {
@@ -61,7 +64,7 @@
       "kind": "settings",
       "note": "기능 설정 화면 전체",
       "file": "Sever/assets/manual-screenshots/dupclash.png",
-      "bytes": 136455,
+      "bytes": 136291,
       "title": "KKY Tool Hub"
     },
     {
@@ -69,7 +72,7 @@
       "kind": "settings",
       "note": "기능 설정 화면 전체",
       "file": "Sever/assets/manual-screenshots/worksetassignment.png",
-      "bytes": 112498,
+      "bytes": 112346,
       "title": "KKY Tool Hub"
     },
     {
@@ -77,7 +80,7 @@
       "kind": "settings",
       "note": "기능 설정 화면 전체",
       "file": "Sever/assets/manual-screenshots/parameterduplication.png",
-      "bytes": 178206,
+      "bytes": 178030,
       "title": "KKY Tool Hub"
     },
     {
@@ -85,7 +88,7 @@
       "kind": "settings",
       "note": "기능 설정 화면 전체",
       "file": "Sever/assets/manual-screenshots/parametermissing.png",
-      "bytes": 174247,
+      "bytes": 174082,
       "title": "KKY Tool Hub"
     },
     {
@@ -93,7 +96,7 @@
       "kind": "settings",
       "note": "기능 설정 화면 전체",
       "file": "Sever/assets/manual-screenshots/parameterstandard.png",
-      "bytes": 146822,
+      "bytes": 146673,
       "title": "KKY Tool Hub"
     },
     {
@@ -101,7 +104,7 @@
       "kind": "settings",
       "note": "기능 설정 화면 전체",
       "file": "Sever/assets/manual-screenshots/tapdepthutility.png",
-      "bytes": 145212,
+      "bytes": 145026,
       "title": "KKY Tool Hub"
     },
     {
@@ -109,7 +112,7 @@
       "kind": "settings",
       "note": "기능 설정 화면 전체",
       "file": "Sever/assets/manual-screenshots/familylink.png",
-      "bytes": 150769,
+      "bytes": 150568,
       "title": "KKY Tool Hub"
     },
     {
@@ -117,7 +120,7 @@
       "kind": "settings",
       "note": "기능 설정 화면 전체",
       "file": "Sever/assets/manual-screenshots/points.png",
-      "bytes": 101017,
+      "bytes": 100822,
       "title": "KKY Tool Hub"
     },
     {
@@ -125,7 +128,7 @@
       "kind": "settings",
       "note": "기능 설정 화면 전체",
       "file": "Sever/assets/manual-screenshots/linkworkset.png",
-      "bytes": 132075,
+      "bytes": 131894,
       "title": "KKY Tool Hub"
     },
     {
@@ -133,7 +136,7 @@
       "kind": "direct",
       "note": "기능 설정 화면 전체",
       "file": "Sever/assets/manual-screenshots/deliverycleaner.png",
-      "bytes": 108408,
+      "bytes": 108238,
       "title": "KKY Tool Hub"
     },
     {
@@ -141,7 +144,7 @@
       "kind": "direct",
       "note": "기능 설정 화면 전체",
       "file": "Sever/assets/manual-screenshots/conditionextract.png",
-      "bytes": 101722,
+      "bytes": 101560,
       "title": "KKY Tool Hub"
     },
     {
@@ -149,7 +152,7 @@
       "kind": "direct",
       "note": "기능 설정 화면 전체",
       "file": "Sever/assets/manual-screenshots/dup.png",
-      "bytes": 72164,
+      "bytes": 72004,
       "title": "KKY Tool Hub"
     },
     {
@@ -157,7 +160,7 @@
       "kind": "direct",
       "note": "기능 설정 화면 전체",
       "file": "Sever/assets/manual-screenshots/paramprop.png",
-      "bytes": 99282,
+      "bytes": 85337,
       "title": "KKY Tool Hub"
     },
     {
@@ -165,7 +168,7 @@
       "kind": "direct",
       "note": "기능 설정 화면 전체",
       "file": "Sever/assets/manual-screenshots/segmentpms.png",
-      "bytes": 84506,
+      "bytes": 84343,
       "title": "KKY Tool Hub"
     },
     {
@@ -173,7 +176,7 @@
       "kind": "direct",
       "note": "기능 설정 화면 전체",
       "file": "Sever/assets/manual-screenshots/parammodifier.png",
-      "bytes": 111160,
+      "bytes": 110978,
       "title": "KKY Tool Hub"
     },
     {
@@ -181,7 +184,7 @@
       "kind": "direct",
       "note": "기능 설정 화면 전체",
       "file": "Sever/assets/manual-screenshots/linkpath.png",
-      "bytes": 95982,
+      "bytes": 95803,
       "title": "KKY Tool Hub"
     },
     {
@@ -189,7 +192,7 @@
       "kind": "direct",
       "note": "기능 설정 화면 전체",
       "file": "Sever/assets/manual-screenshots/lateralnozzle.png",
-      "bytes": 83049,
+      "bytes": 82903,
       "title": "KKY Tool Hub"
     },
     {
@@ -197,7 +200,7 @@
       "kind": "direct",
       "note": "기능 설정 화면 전체",
       "file": "Sever/assets/manual-screenshots/guid.png",
-      "bytes": 92962,
+      "bytes": 92784,
       "title": "KKY Tool Hub"
     },
     {
@@ -205,7 +208,7 @@
       "kind": "direct",
       "note": "기능 설정 화면 전체",
       "file": "Sever/assets/manual-screenshots/sharedparambatch.png",
-      "bytes": 92074,
+      "bytes": 91917,
       "title": "KKY Tool Hub"
     },
     {
@@ -213,7 +216,7 @@
       "kind": "shared-settings",
       "note": "선택형 기능이 공통으로 사용하는 포함/제외/추가 파라미터 설정",
       "file": "Sever/assets/manual-screenshots/workflow-common-settings.png",
-      "bytes": 172045,
+      "bytes": 171867,
       "title": "KKY Tool Hub"
     },
     {
@@ -237,7 +240,7 @@
       "kind": "detail-settings",
       "note": "객체 조건과 입력값 설정 탭",
       "file": "Sever/assets/manual-screenshots/deliverycleaner-object-parameters.png",
-      "bytes": 125737,
+      "bytes": 125576,
       "title": "KKY Tool Hub"
     },
     {
@@ -245,7 +248,7 @@
       "kind": "detail-settings",
       "note": "뷰 필터 적용 조건 탭",
       "file": "Sever/assets/manual-screenshots/deliverycleaner-view-filters.png",
-      "bytes": 126475,
+      "bytes": 126260,
       "title": "KKY Tool Hub"
     },
     {
@@ -253,7 +256,7 @@
       "kind": "detail-settings",
       "note": "Imported Categories와 Imports in Families 표시 설정",
       "file": "Sever/assets/manual-screenshots/deliverycleaner-vg.png",
-      "bytes": 133982,
+      "bytes": 133816,
       "title": "KKY Tool Hub"
     },
     {
@@ -261,7 +264,7 @@
       "kind": "detail-settings",
       "note": "카테고리별 표시와 서브카테고리 숨김 규칙 창",
       "file": "Sever/assets/manual-screenshots/deliverycleaner-vg-rules.png",
-      "bytes": 146339,
+      "bytes": 146296,
       "title": "KKY Tool Hub"
     },
     {
@@ -269,7 +272,7 @@
       "kind": "detail-settings",
       "note": "추출 파라미터와 좌표/선형 추출 설정",
       "file": "Sever/assets/manual-screenshots/conditionextract-extract.png",
-      "bytes": 123266,
+      "bytes": 123108,
       "title": "KKY Tool Hub"
     },
     {
@@ -277,7 +280,7 @@
       "kind": "detail-settings",
       "note": "길이/면적/체적 출력 단위 설정",
       "file": "Sever/assets/manual-screenshots/conditionextract-units.png",
-      "bytes": 102029,
+      "bytes": 101866,
       "title": "KKY Tool Hub"
     },
     {
@@ -285,7 +288,7 @@
       "kind": "detail-settings",
       "note": "End/Dummy 제외 등 추가 추출 옵션",
       "file": "Sever/assets/manual-screenshots/conditionextract-options.png",
-      "bytes": 97831,
+      "bytes": 97677,
       "title": "KKY Tool Hub"
     },
     {
@@ -293,7 +296,7 @@
       "kind": "detail-settings",
       "note": "선택 파라미터의 바인딩, Parameter Group, 카테고리 편집 영역",
       "file": "Sever/assets/manual-screenshots/sharedparambatch-editor.png",
-      "bytes": 92998,
+      "bytes": 92830,
       "title": "KKY Tool Hub"
     },
     {
@@ -301,7 +304,7 @@
       "kind": "detail-settings",
       "note": "PMS 기준 등록과 세그먼트 매핑 단계",
       "file": "Sever/assets/manual-screenshots/segmentpms-compare.png",
-      "bytes": 83917,
+      "bytes": 83761,
       "title": "KKY Tool Hub"
     },
     {
@@ -309,7 +312,7 @@
       "kind": "major-module",
       "note": "기준 스케줄 문서와 추출 방식 선택",
       "file": "Sever/assets/manual-screenshots/schedule-export-source.png",
-      "bytes": 109248,
+      "bytes": 109103,
       "title": "KKY Tool Hub"
     },
     {
@@ -317,7 +320,7 @@
       "kind": "major-module",
       "note": "기준 스케줄 검색과 선택",
       "file": "Sever/assets/manual-screenshots/schedule-export-schedules.png",
-      "bytes": 103846,
+      "bytes": 103703,
       "title": "KKY Tool Hub"
     },
     {
@@ -325,7 +328,7 @@
       "kind": "major-module",
       "note": "활성 문서 또는 여러 RVT 추출 대상 선택",
       "file": "Sever/assets/manual-screenshots/schedule-export-target.png",
-      "bytes": 108583,
+      "bytes": 108446,
       "title": "KKY Tool Hub"
     },
     {
@@ -333,7 +336,7 @@
       "kind": "major-module-result",
       "note": "Schedule 추출 완료 요약과 Excel 내보내기 진입",
       "file": "Sever/assets/manual-screenshots/schedule-export-result.png",
-      "bytes": 157739,
+      "bytes": 157689,
       "title": "KKY Tool Hub"
     },
     {
@@ -341,7 +344,7 @@
       "kind": "major-module",
       "note": "Excel 시트·값 열 선택, Instance/Type 매핑과 Import 옵션",
       "file": "Sever/assets/manual-screenshots/schedule-import-mapping.png",
-      "bytes": 123786,
+      "bytes": 123678,
       "title": "KKY Tool Hub"
     },
     {
@@ -349,7 +352,7 @@
       "kind": "major-module",
       "note": "빈 셀 삭제와 중앙파일 동기화 옵션",
       "file": "Sever/assets/manual-screenshots/schedule-import-options.png",
-      "bytes": 117566,
+      "bytes": 117455,
       "title": "KKY Tool Hub"
     },
     {
@@ -357,7 +360,7 @@
       "kind": "major-module",
       "note": "활성 문서와 문서별 Revit 링크 Reload 계획",
       "file": "Sever/assets/manual-screenshots/nwc-target-links.png",
-      "bytes": 135623,
+      "bytes": 136268,
       "title": "KKY Tool Hub"
     },
     {
@@ -365,7 +368,7 @@
       "kind": "major-module",
       "note": "문서별 비템플릿 3D View 검색과 선택",
       "file": "Sever/assets/manual-screenshots/nwc-view-selection.png",
-      "bytes": 112732,
+      "bytes": 113694,
       "title": "KKY Tool Hub"
     },
     {
@@ -373,7 +376,7 @@
       "kind": "major-module",
       "note": "저장 폴더, 파일명 규칙과 Navisworks Export 옵션",
       "file": "Sever/assets/manual-screenshots/nwc-export-options.png",
-      "bytes": 127686,
+      "bytes": 127545,
       "title": "KKY Tool Hub"
     },
     {
@@ -381,7 +384,7 @@
       "kind": "major-module",
       "note": "좌표, 레벨, Room, Faceting Factor와 덮어쓰기 옵션",
       "file": "Sever/assets/manual-screenshots/nwc-export-options-lower.png",
-      "bytes": 115950,
+      "bytes": 115813,
       "title": "KKY Tool Hub"
     },
     {
@@ -389,7 +392,7 @@
       "kind": "major-module-result",
       "note": "NWC 결과 건수, 링크 처리와 결과 Excel 진입",
       "file": "Sever/assets/manual-screenshots/nwc-export-result.png",
-      "bytes": 164398,
+      "bytes": 165087,
       "title": "KKY Tool Hub"
     }
   ]

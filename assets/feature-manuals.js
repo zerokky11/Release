@@ -1,5 +1,5 @@
 (function () {
-  const staticAssetVersion = '3.0-20260714.2';
+  const staticAssetVersion = '3.0-20260715.1';
   const sharedParamNote = '공유파라미터 목록은 Revit 관리 > 공유 매개변수에 연결된 TXT를 기준으로 읽습니다. 홈페이지/Hub에서 TXT 파일을 별도로 선택하는 흐름은 없습니다.';
   const multiExportNote = '여러 RVT 검토 결과의 파일별 저장명은 공통으로 {RVT파일명}_{기능명}_{오류건수00EA}.xlsx 형식을 사용합니다. 같은 이름이 이미 있으면 뒤에 (2), (3)이 붙습니다.';
 
@@ -2449,7 +2449,8 @@
       const section = el('section', 'section');
       const header = el('div', 'section-header');
       const text = el('div');
-      text.append(el('h2', '', group));
+      text.append(el('span', 'eyebrow', group === 'BQC 검토' ? 'QUALITY CONTROL' : 'GENERAL TOOLS'));
+      text.append(el('h2', '', group === 'BQC 검토' ? 'BQC 검토 기능' : '유틸리티 기능'));
       text.append(el('p', '', group === 'BQC 검토'
         ? '납품 검토 과정에서 여러 기능을 선택해 같은 대상에 적용합니다.'
         : '반복 작업과 운영 도구를 단독 또는 배치 흐름으로 실행합니다.'));
@@ -2660,8 +2661,8 @@
     document.title = `${feature.title} | KKY Tool 기능 매뉴얼`;
 
     const breadcrumb = el('div', 'breadcrumb');
-    const back = el('a', '', '기능 목록');
-    back.href = '/Manual/features.html';
+    const back = el('a', '', 'KKY Tool 매뉴얼');
+    back.href = '/Manual/kky-tool.html';
     breadcrumb.append(back, el('span', '', '/'), el('span', '', feature.title));
 
     const hero = el('section', 'manual-hero');
@@ -2670,9 +2671,9 @@
     heroText.append(el('h1', '', feature.title));
     heroText.append(el('p', 'lead', feature.summary));
     const actions = el('div', 'actions');
-    const listLink = el('a', 'button secondary', '기능 목록으로');
-    listLink.href = '/Manual/features.html';
-    const manualLink = el('a', 'button', '기본 사용 흐름');
+    const listLink = el('a', 'button secondary', 'KKY Tool 매뉴얼로');
+    listLink.href = '/Manual/kky-tool.html';
+    const manualLink = el('a', 'button', '다른 제품 선택');
     manualLink.href = '/Manual/index.html';
     actions.append(listLink, manualLink);
     heroText.append(actions);

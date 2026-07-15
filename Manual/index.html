@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>KKY Tool 3.0 사용자 메뉴얼</title>
-  <meta name="description" content="KKY Tool 3.0 기능 설정, 대상 선택, 실행, 결과와 Excel 저장 흐름 안내">
+  <title>KKY 제품 매뉴얼</title>
+  <meta name="description" content="KKY Tool 3.0과 Family Browser 1.0 제품별 사용자 매뉴얼">
   <link rel="icon" href="data:,">
-  <link rel="stylesheet" href="/assets/site.css?v=3.0-20260714.3">
+  <link rel="stylesheet" href="/assets/site.css?v=3.0-20260715.1">
 </head>
 <body data-page="manual">
   <header class="site-header">
@@ -19,114 +19,79 @@
       <nav class="nav" data-nav-menu>
         <a href="/index.html" data-nav="home">홈</a>
         <a href="/index.html#download" data-nav="download">다운로드</a>
-        <a href="/Manual/features.html" data-nav="features">기능</a>
-        <a href="/Manual/index.html" data-nav="manual">메뉴얼</a>
+        <a href="/Manual/index.html" data-nav="manual">매뉴얼</a>
         <a href="/requests.html" data-nav="requests">요청하기</a>
         <a href="/kky-tool/" data-nav="admin">관리자</a>
       </nav>
     </div>
   </header>
 
-  <main class="page-main">
-    <section class="page-title">
-      <span class="eyebrow">사용자 메뉴얼</span>
-      <h1>설정부터 결과 저장까지</h1>
-      <p class="lead">기능을 고른 뒤 무엇을 설정하고, 어떤 문서를 대상으로 실행하며, 결과와 Excel을 어떻게 확인하는지 순서대로 안내합니다.</p>
-      <div class="actions">
-        <a class="button primary" href="/Manual/features.html">기능별 상세 메뉴얼</a>
-        <a class="button" href="/Manual/install.html">설치와 업데이트</a>
-      </div>
+  <main class="page-main manual-hub">
+    <section class="page-title manual-hub__intro">
+      <span class="eyebrow">PRODUCT MANUALS</span>
+      <h1>어떤 제품의 매뉴얼을 볼까요?</h1>
+      <p class="lead">KKY Tool과 Family Browser의 설정·실행 흐름은 서로 다릅니다. 사용할 제품을 먼저 선택하면 해당 제품의 문서만 이어서 볼 수 있습니다.</p>
     </section>
 
-    <section class="major-module-band" aria-labelledby="manual-major-modules-title">
-      <div class="major-module-band__head">
-        <div>
-          <span class="eyebrow">주요 업무 모듈</span>
-          <h2 id="manual-major-modules-title">큰 업무 흐름부터 시작</h2>
-          <p>Schedule과 NWC는 설정·파일 등록·결과 저장이 여러 단계로 이어지는 독립 업무입니다. 일반 기능보다 먼저 찾을 수 있도록 별도 상세 매뉴얼로 분리했습니다.</p>
-        </div>
-      </div>
-      <div class="major-module-grid">
-        <article class="major-module-card">
-          <div class="major-module-card__copy">
-            <span class="major-module-card__mark">S</span>
-            <h3>Schedule 추출·입력</h3>
-            <p>기준 Schedule과 추출 방식, Excel 구성, 여러 RVT, Instance·Type 매핑, 식별·충돌 검증을 순서대로 확인합니다.</p>
-            <div class="actions"><a class="button primary" href="/Manual/schedule-io.html">Schedule 매뉴얼</a></div>
+    <section class="manual-product-grid" aria-label="제품별 매뉴얼 선택">
+      <article class="manual-product-card manual-product-card--tool">
+        <a class="manual-product-card__media" href="/Manual/kky-tool.html" aria-label="KKY Tool 3.0 매뉴얼 열기">
+          <img src="/assets/kky-tool/home.png?v=3.0-20260715.1" alt="KKY Tool 3.0 홈 화면" fetchpriority="high" decoding="async">
+        </a>
+        <div class="manual-product-card__body">
+          <div class="manual-product-card__heading">
+            <span class="manual-product-card__mark">K</span>
+            <div><span class="eyebrow">BQC · GENERAL · SCHEDULE · NWC</span><h2>KKY Tool 3.0</h2></div>
           </div>
-          <div class="major-module-card__media"><a href="/Manual/schedule-io.html"><img src="/assets/manual-screenshots/schedule-export-source.png?v=3.0-20260714.3" alt="Schedule 추출 입력 화면"></a></div>
-        </article>
-        <article class="major-module-card">
-          <div class="major-module-card__copy">
-            <span class="major-module-card__mark">N</span>
-            <h3>NWC Export</h3>
-            <p>대상 RVT, 링크 Reload 계획, 3D View, Navisworks 옵션, 파일명과 생성 검증을 단계별로 확인합니다.</p>
-            <div class="actions"><a class="button primary" href="/Manual/nwc-export.html">NWC 매뉴얼</a></div>
-          </div>
-          <div class="major-module-card__media"><a href="/Manual/nwc-export.html"><img src="/assets/manual-screenshots/nwc-export-options.png?v=3.0-20260714.3" alt="NWC Export 옵션 화면"></a></div>
-        </article>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="section-header">
-        <div>
-          <span class="eyebrow">기본 흐름</span>
-          <h2>대부분의 기능은 같은 순서로 실행합니다</h2>
-          <p>기능마다 설정 내용은 달라도 대상 선택과 실행, 결과 확인의 위치는 같은 원칙을 사용합니다.</p>
+          <p>BQC 검토, 일반 도구, Schedule 추출·입력과 NWC Export의 설정 방법, 처리 논리, 결과와 Excel 저장 규칙을 확인합니다.</p>
+          <ul class="manual-product-card__points">
+            <li>Schedule과 NWC 주요 업무 모듈</li>
+            <li>BQC 검토 13개 기능</li>
+            <li>일반 도구 12개 기능</li>
+          </ul>
+          <div class="actions"><a class="button primary" href="/Manual/kky-tool.html">KKY Tool 매뉴얼 열기</a></div>
         </div>
-      </div>
-      <ol class="steps">
-        <li><div><strong>기능 선택</strong><p>BQC 검토 또는 일반 도구에서 필요한 기능을 선택합니다. 별도 화면 기능은 해당 기능의 전용 작업 화면으로 이동합니다.</p></div></li>
-        <li><div><strong>기능 설정</strong><p>중앙 설정 영역에서 검토 기준, 파라미터, 허용값과 옵션을 입력합니다. 선택 실행형 기능은 공통 설정과 기능별 설정을 모두 확인합니다.</p></div></li>
-        <li><div><strong>대상 선택</strong><p>현재 열린 모델은 활성 문서 실행을 사용합니다. 여러 파일을 처리할 때는 여러 RVT 실행을 눌러 별도 등록 창에서 RVT를 추가합니다.</p></div></li>
-        <li><div><strong>실행</strong><p>필수 설정과 대상이 준비되면 오른쪽 실행 버튼이 활성화됩니다. 비활성 상태라면 같은 패널의 준비 조건을 먼저 확인합니다.</p></div></li>
-        <li><div><strong>결과와 Excel</strong><p>결과창에서 정상·오류 건수와 상세 항목을 확인합니다. 여러 RVT 결과는 한글/영문과 한 파일/파일별 저장 방식을 조합해 내보낼 수 있습니다.</p></div></li>
-      </ol>
+      </article>
+
+      <article class="manual-product-card manual-product-card--family">
+        <a class="manual-product-card__media" href="/family-browser/index.html" aria-label="Family Browser 1.0 매뉴얼 열기">
+          <img src="/assets/family-browser/home.png?v=3.0-20260715.1" alt="Family Browser 1.0 홈 화면" loading="lazy" decoding="async">
+        </a>
+        <div class="manual-product-card__body">
+          <div class="manual-product-card__heading">
+            <span class="manual-product-card__mark">F</span>
+            <div><span class="eyebrow">STANDARD LIBRARY CONTROL</span><h2>Family Browser 1.0</h2></div>
+          </div>
+          <p>표준 RVT 연결과 정밀 스캔부터 패밀리·시스템 타입 탐색, 현재 모델 검사, 요청 및 관리자 운영까지 확인합니다.</p>
+          <ul class="manual-product-card__points">
+            <li>처음 사용자를 위한 3단계 초기 설정</li>
+            <li>표준 라이브러리 탐색과 적용</li>
+            <li>현재 모델 검사와 운영 관리</li>
+          </ul>
+          <div class="actions">
+            <a class="button primary" href="/family-browser/index.html">Family Browser 매뉴얼 열기</a>
+            <a class="button" href="/family-browser/getting-started.html">처음 설정</a>
+          </div>
+        </div>
+      </article>
     </section>
 
-    <section class="section">
-      <div class="grid two">
-        <article class="panel">
-          <span class="badge blue">기능별 안내</span>
-          <h3>설정값과 예시를 함께 확인</h3>
-          <p>주요 업무 모듈 2개와 일반 기능 25개에 대해 설정 의미, 입력 예시, 실제 화면, 작동 논리, 결과와 Excel 파일명을 따로 정리했습니다.</p>
-          <div class="actions"><a class="button primary" href="/Manual/features.html">기능 목록 열기</a></div>
-        </article>
-        <article class="panel">
-          <span class="badge ok">설치 안내</span>
-          <h3>Stable과 Preview3 구분</h3>
-          <p>지원 Revit 버전과 설치 채널, 업데이트 피드 상태를 확인한 뒤 필요한 패키지를 선택합니다.</p>
-          <div class="actions"><a class="button" href="/Manual/install.html">설치 안내 열기</a></div>
-        </article>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="grid two">
-        <article class="manual-card manual-card--accent">
-          <h2>공유파라미터 사용 전 확인</h2>
-          <p>KKY Tool은 Revit의 <strong>관리 &gt; 공유 매개변수</strong>에 연결된 TXT만 읽습니다. 목록이 비어 있으면 Revit에서 파일을 먼저 연결한 뒤 설정 화면의 목록을 다시 확인합니다.</p>
-        </article>
-        <article class="manual-card">
-          <h2>Family Browser 메뉴얼</h2>
-          <p>표준 패밀리와 시스템 타입 검색, 현재 모델 검사, 추가 요청과 관리자 설정은 Family Browser 전용 문서에서 확인합니다.</p>
-          <div class="actions"><a class="button" href="/family-browser/index.html">Family Browser 열기</a></div>
-        </article>
-      </div>
+    <section class="manual-hub__support" aria-label="공통 도움말">
+      <div><span class="eyebrow">INSTALL</span><strong>설치와 업데이트가 먼저 필요한가요?</strong></div>
+      <a class="button" href="/Manual/install.html">설치 안내</a>
     </section>
   </main>
 
   <footer class="site-footer">
     <div class="site-footer__inner">
-      <span>KKY Tool Revit Hub 3.0</span>
+      <span>KKY Revit Products</span>
       <div class="mini-links">
-        <a href="/Manual/features.html">기능</a>
-        <a href="/Manual/install.html">설치</a>
+        <a href="/Manual/kky-tool.html">KKY Tool</a>
+        <a href="/family-browser/index.html">Family Browser</a>
         <a href="/requests.html">요청하기</a>
       </div>
     </div>
   </footer>
-  <script src="/assets/site.js?v=3.0-20260714.3"></script>
+  <script src="/assets/site.js?v=3.0-20260715.1"></script>
 </body>
 </html>
