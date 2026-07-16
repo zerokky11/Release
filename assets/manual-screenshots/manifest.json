@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-07-15T08:17:52.578Z",
+  "generatedAt": "2026-07-16T06:12:50.335Z",
   "productVersion": "3.0",
   "displayedVersion": "v3.0",
   "homeScreenshot": "Sever/assets/kky-tool/home.png",
   "sourceRoot": "KKY_Tool_Revit_2019-2023/Resources/HubUI",
-  "baseUrl": "http://127.0.0.1:52910",
+  "baseUrl": "http://127.0.0.1:62650",
   "viewport": "1600x1000",
   "baseScreenCount": 25,
   "extraScreenCount": 23,
@@ -312,7 +312,7 @@
       "kind": "major-module",
       "note": "기준 스케줄 문서와 추출 방식 선택",
       "file": "Sever/assets/manual-screenshots/schedule-export-source.png",
-      "bytes": 109103,
+      "bytes": 110398,
       "title": "KKY Tool Hub"
     },
     {
@@ -320,23 +320,23 @@
       "kind": "major-module",
       "note": "기준 스케줄 검색과 선택",
       "file": "Sever/assets/manual-screenshots/schedule-export-schedules.png",
-      "bytes": 103703,
+      "bytes": 104696,
       "title": "KKY Tool Hub"
     },
     {
       "id": "schedule-export-target",
       "kind": "major-module",
-      "note": "활성 문서 또는 여러 RVT 추출 대상 선택",
+      "note": "활성 문서 포함, 여러 RVT 등록과 링크 파일 포함 설정",
       "file": "Sever/assets/manual-screenshots/schedule-export-target.png",
-      "bytes": 108446,
+      "bytes": 114223,
       "title": "KKY Tool Hub"
     },
     {
       "id": "schedule-export-result",
       "kind": "major-module-result",
-      "note": "Schedule 추출 완료 요약과 Excel 내보내기 진입",
+      "note": "Schedule 추출 완료 집계와 문서별 처리 결과",
       "file": "Sever/assets/manual-screenshots/schedule-export-result.png",
-      "bytes": 157689,
+      "bytes": 163706,
       "title": "KKY Tool Hub"
     },
     {
@@ -344,7 +344,7 @@
       "kind": "major-module",
       "note": "Excel 시트·값 열 선택, Instance/Type 매핑과 Import 옵션",
       "file": "Sever/assets/manual-screenshots/schedule-import-mapping.png",
-      "bytes": 123678,
+      "bytes": 116894,
       "title": "KKY Tool Hub"
     },
     {
@@ -352,7 +352,7 @@
       "kind": "major-module",
       "note": "빈 셀 삭제와 중앙파일 동기화 옵션",
       "file": "Sever/assets/manual-screenshots/schedule-import-options.png",
-      "bytes": 117455,
+      "bytes": 110436,
       "title": "KKY Tool Hub"
     },
     {
