@@ -82,18 +82,24 @@
 
   async function initReleasePanels() {
     const needsStable = qs('[data-release="stable"]');
-    const needsPreview = qs('[data-release="preview"]');
-    if (!needsStable && !needsPreview) return;
+    const needsKky3 = qs('[data-release="kky3"]');
+    const needsFamilyBrowser = qs('[data-release="family-browser"]');
+    if (!needsStable && !needsKky3 && !needsFamilyBrowser) return;
     const tasks = [];
     if (needsStable) {
       tasks.push(loadJson('/latest.json')
         .then((data) => applyRelease('stable', data))
         .catch(() => applyRelease('stable', { version: '확인 실패', notes: 'latest.json을 불러오지 못했습니다.' })));
     }
-    if (needsPreview) {
-      tasks.push(loadJson('/Release/preview3/latest.json')
-        .then((data) => applyRelease('preview', data))
-        .catch(() => applyRelease('preview', { version: '확인 실패', notes: 'preview3/latest.json을 불러오지 못했습니다.' })));
+    if (needsKky3) {
+      tasks.push(loadJson('/Release/kky-tool-3/latest.json')
+        .then((data) => applyRelease('kky3', data))
+        .catch(() => applyRelease('kky3', { version: '확인 실패', notes: 'KKY Tool 정식 배포 정보를 불러오지 못했습니다.' })));
+    }
+    if (needsFamilyBrowser) {
+      tasks.push(loadJson('/Release/family-browser/latest.json')
+        .then((data) => applyRelease('family-browser', data))
+        .catch(() => applyRelease('family-browser', { version: '확인 실패', notes: 'Family Browser 정식 배포 정보를 불러오지 못했습니다.' })));
     }
     await Promise.all(tasks);
   }
@@ -102,8 +108,8 @@
     const list = qs('[data-health-list]');
     if (!list) return;
     const checks = [
-      ['Stable feed', '/latest.json'],
-      ['Preview3 feed', '/Release/preview3/latest.json'],
+      ['KKY Tool 3.0 feed', '/Release/kky-tool-3/latest.json'],
+      ['Family Browser 1.0 feed', '/Release/family-browser/latest.json'],
       ['User policy', '/kky-tool/user-access.json'],
       ['Family Browser bootstrap index', '/family-browser/bootstrap-index.json'],
       ['Family Browser bootstrap', '/family-browser/bootstrap.json']

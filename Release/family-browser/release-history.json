@@ -1,0 +1,17 @@
+[
+  {
+    "version": "1.0",
+    "publishedAt": "2026-07-16",
+    "title": "Version 1.0",
+    "notes": "Family Browser 1.0 official release",
+    "installerUrl": "https://update.zerokky.com/Release/family-browser/official/KKY_FamilyBrowser_RevitHost(2019,21,23,25,27)_v1.0_Setup.exe",
+    "sha256": "2F5D29FDA146392D0D059DAF7A48814FA2AAC539CD0990C7E3AF5C5BCBEE5718",
+    "supportedRevit": [
+      "2019",
+      "2021",
+      "2023",
+      "2025",
+      "2027"
+    ]
+  }
+]
