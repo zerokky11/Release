@@ -6,7 +6,7 @@
   <title>권한과 파일별 차단 | KKY Family Browser</title>
   <meta name="description" content="KKY Family Browser 파일별 Revit 기본 명령 차단 범위와 적용 기준 매뉴얼">
   <link rel="icon" href="data:,">
-  <link rel="stylesheet" href="/assets/site.css?v=3.0-20260716.2">
+  <link rel="stylesheet" href="/assets/site.css?v=3.0-20260720.1">
 </head>
 <body data-page="family-browser">
   <header class="site-header"><div class="site-header__inner"><a class="brand" href="/index.html"><span class="brand__mark">K</span><span><span class="brand__title">KKY Tool</span><span class="brand__sub">Revit Hub 3.0</span></span></a><button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false">메뉴</button><nav class="nav" data-nav-menu><a href="/index.html" data-nav="home">홈</a><a href="/index.html#download" data-nav="download">다운로드</a><a href="/Manual/index.html" data-nav="manual">매뉴얼</a><a href="/requests.html" data-nav="requests">요청하기</a><a href="/kky-tool/" data-nav="admin">관리자</a></nav></div></header>
@@ -15,7 +15,7 @@
     <div class="fb-doc-layout">
       <aside class="fb-doc-side">
         <div class="fb-doc-side__title">Family Browser</div>
-        <nav><a href="/family-browser/index.html">프로그램 소개</a><a href="/family-browser/getting-started.html">처음 설정</a><a href="/family-browser/library.html">패밀리 / 시스템 타입</a><a href="/family-browser/model-check.html">현재 모델 검사</a><a href="/family-browser/requests.html">추가 요청</a><a class="is-current" href="/family-browser/governance.html">권한 / 차단</a><a href="/family-browser/admin.html">관리자 설정</a></nav>
+        <nav><a href="/family-browser/index.html">프로그램 소개</a><a href="/family-browser/getting-started.html">처음 설정</a><a href="/family-browser/library.html">패밀리 / 시스템 타입</a><a href="/family-browser/model-check.html">현재 모델 검사</a><a href="/family-browser/tracking.html">프로젝트 변경 추적</a><a href="/family-browser/requests.html">추가 요청</a><a class="is-current" href="/family-browser/governance.html">권한 / 차단</a><a href="/family-browser/admin.html">관리자 설정</a></nav>
       </aside>
 
       <div class="fb-doc-main">
@@ -71,6 +71,22 @@
           </ul>
         </section>
 
+        <section class="fb-doc-section" id="policy-files">
+          <h2>권한 정책 Excel과 운영 내보내기</h2>
+          <p>여러 파일의 권한 정책을 한 번에 준비하거나 현재 가드 상태를 검토할 때 관리자용 Excel을 사용합니다.</p>
+          <div class="fb-table-wrap">
+            <table>
+              <thead><tr><th>작업</th><th>기본 파일명</th><th>사용 방법</th></tr></thead>
+              <tbody>
+                <tr><td>권한 정책 빈 양식</td><td><span class="fb-code-name">FamilyBrowser_PermissionPolicy_Template.xlsx</span></td><td>대상 RVT와 차단 그룹을 새로 작성할 때 사용합니다.</td></tr>
+                <tr><td>현재 권한 정책 저장</td><td><span class="fb-code-name">FamilyBrowser_PermissionPolicy_{관리폴더}.xlsx</span></td><td>현재 관리 폴더에 연결된 정책을 검토·백업합니다.</td></tr>
+                <tr><td>파일 가드 상태 저장</td><td><span class="fb-code-name">FamilyBrowser_FileGuards_{yyyyMMdd-HHmm}.xlsx</span></td><td>현재 등록 대상과 중앙·로컬·분리 문서 식별 결과를 확인합니다.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="fb-callout warn"><strong>Excel 파일을 바꾼 것만으로 즉시 정책이 적용되지는 않습니다.</strong>관리자 화면에서 가져오기 또는 정책 적용을 완료한 뒤 실제 중앙·로컬·분리 문서에서 명령 가드를 시험합니다.</div>
+        </section>
+
         <section class="fb-doc-section" id="admin-note">
           <h2>관리자 적용 원칙</h2>
           <p>파일 가드는 표준 라이브러리와 요청 흐름이 준비된 뒤 적용해야 합니다. 사용자가 필요한 항목을 얻을 수 없는 상태에서 먼저 차단하면 업무가 멈춥니다.</p>
@@ -89,6 +105,6 @@
   </main>
 
   <footer class="site-footer"><div class="site-footer__inner"><span>KKY Family Browser 1.0 매뉴얼</span><div class="mini-links"><a href="/family-browser/index.html">개요</a><a href="/family-browser/admin.html">관리자</a></div></div></footer>
-  <script src="/assets/site.js?v=3.0-20260716.2"></script>
+  <script src="/assets/site.js?v=3.0-20260720.1"></script>
 </body>
 </html>

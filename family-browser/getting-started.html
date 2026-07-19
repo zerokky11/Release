@@ -6,7 +6,7 @@
   <title>처음 설정 | KKY Family Browser</title>
   <meta name="description" content="KKY Family Browser를 처음 사용할 때 표준 RVT 연결, 전체 정밀 스캔, 표준 목록 Excel 연결까지 준비하는 상세 매뉴얼">
   <link rel="icon" href="data:,">
-  <link rel="stylesheet" href="/assets/site.css?v=3.0-20260716.2">
+  <link rel="stylesheet" href="/assets/site.css?v=3.0-20260720.1">
 </head>
 <body data-page="family-browser">
   <header class="site-header"><div class="site-header__inner"><a class="brand" href="/index.html"><span class="brand__mark">K</span><span><span class="brand__title">KKY Tool</span><span class="brand__sub">Revit Hub 3.0</span></span></a><button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false">메뉴</button><nav class="nav" data-nav-menu><a href="/index.html" data-nav="home">홈</a><a href="/index.html#download" data-nav="download">다운로드</a><a href="/Manual/index.html" data-nav="manual">매뉴얼</a><a href="/requests.html" data-nav="requests">요청하기</a><a href="/kky-tool/" data-nav="admin">관리자</a></nav></div></header>
@@ -20,6 +20,7 @@
           <a class="is-current" href="/family-browser/getting-started.html">처음 설정</a>
           <a href="/family-browser/library.html">패밀리 / 시스템 타입</a>
           <a href="/family-browser/model-check.html">현재 모델 검사</a>
+          <a href="/family-browser/tracking.html">프로젝트 변경 추적</a>
           <a href="/family-browser/requests.html">추가 요청</a>
           <a href="/family-browser/governance.html">권한 / 차단</a>
           <a href="/family-browser/admin.html">관리자 설정</a>
@@ -44,10 +45,27 @@
           <div class="fb-callout warn"><strong>일반 사용자는 이 설정을 반복하지 않습니다.</strong>관리자가 한 번 준비하면 일반 사용자는 패밀리 / 시스템 타입 화면에서 승인 목록을 검색하고 로드·적용합니다. 목록이 비어 있다면 먼저 관리자에게 아래 세 단계의 완료 여부를 확인합니다.</div>
         </section>
 
+        <section class="fb-doc-section" id="managed-folder">
+          <h2>0. 홈페이지 관리 경로 연결</h2>
+          <p>표준 목록, 요청, 권한 정책과 운영 기록은 홈페이지 관리자가 지정한 공용 관리 폴더를 기준으로 읽습니다. 처음 실행했을 때 이 경로를 사용할 수 없으면 표준 RVT를 등록하기 전에 연결 문제부터 해결합니다.</p>
+          <ol class="fb-procedure">
+            <li><div><strong>홈 화면의 운영 준비 상태를 확인합니다.</strong><p><b>관리 경로</b>가 연결됨인지 확인합니다. 경로가 비어 있거나 접근 불가이면 홈페이지에 등록된 Family Browser 경로, 네트워크 연결, 폴더 권한 순서로 점검합니다.</p></div></li>
+            <li><div><strong>경로가 일시적으로 끊겼다면 다시 시도합니다.</strong><p>VPN 또는 사내 네트워크를 연결한 뒤 <b>새로고침</b>을 눌러 홈페이지 경로를 다시 읽습니다.</p></div></li>
+            <li><div><strong>독립 검증이 필요할 때만 TEST 관리 폴더를 사용합니다.</strong><p>TEST 폴더는 실제 운영 폴더를 대신하는 임시 우회 경로가 아니라 분리된 시험 환경입니다. 여기에 만든 표준·요청 데이터는 운영 데이터와 합쳐지지 않습니다.</p></div></li>
+            <li><div><strong>운영 경로가 복구되면 전환 또는 마이그레이션합니다.</strong><p>충돌 파일은 덮어쓰지 않으므로 결과를 확인한 뒤 운영 폴더를 다시 기본 경로로 사용합니다.</p></div></li>
+          </ol>
+          <figure class="fb-screen-figure">
+            <a href="/assets/family-browser/first-run-managed-folder.png?v=20260720.1" target="_blank" rel="noopener"><img src="/assets/family-browser/first-run-managed-folder.png?v=20260720.1" alt="Family Browser 홈페이지 관리 경로를 찾지 못한 최초 실행 화면"></a>
+            <figcaption>관리 경로를 사용할 수 없는 상태입니다. 운영 경로 재시도와 TEST 관리 폴더는 용도가 다르므로, 실제 배포에서는 먼저 홈페이지 경로와 접근 권한을 복구합니다.</figcaption>
+          </figure>
+          <div class="fb-callout warn"><strong>관리 폴더 내부 파일은 직접 정리하지 않습니다.</strong>애드인이 만든 폴더와 JSON, 첨부파일, 추적 기록을 탐색기에서 이름 변경·이동·삭제하면 요청 이력이나 변경 추적 연결이 끊길 수 있습니다.</div>
+        </section>
+
         <section class="fb-doc-section" id="setup-order">
           <h2>처음 설정 순서</h2>
           <p>중간 단계를 건너뛰면 목록이 비어 있거나 상세 정보와 미리보기가 부족하게 표시될 수 있습니다.</p>
           <ol class="fb-flow">
+            <li><strong>관리 경로</strong><span>홈페이지에서 받은 공용 관리 폴더가 연결되었는지 확인합니다.</span></li>
             <li><strong>관리자 ON</strong><span>상단 관리자 모드를 켜서 표준 관리 메뉴를 표시합니다.</span></li>
             <li><strong>대상 선택</strong><span>표준 모드와 공종 / 라이브러리 대상을 확인합니다.</span></li>
             <li><strong>표준 RVT 연결</strong><span>승인 RVT를 등록하고 빠른 스냅샷을 만듭니다.</span></li>
@@ -55,7 +73,7 @@
             <li><strong>표준 Excel 연결</strong><span>승인 목록을 가져와 실제 사용자 목록을 공개합니다.</span></li>
           </ol>
           <figure class="fb-screen-figure">
-            <a href="/assets/family-browser/admin-settings.png?v=3.0-20260715.3" target="_blank" rel="noopener"><img src="/assets/family-browser/admin-settings.png?v=3.0-20260715.3" alt="Family Browser 관리자 설정의 표준 RVT와 표시 표준 목록 영역"></a>
+            <a href="/assets/family-browser/admin-settings-current.png?v=20260720.1" target="_blank" rel="noopener"><img src="/assets/family-browser/admin-settings-current.png?v=20260720.1" alt="Family Browser 최신 관리자 설정의 표준 RVT와 표시 표준 목록 영역"></a>
             <figcaption>관리자 설정의 <b>표준 기준 / 표시 목록</b> 영역입니다. 먼저 왼쪽의 표준 RVT를 준비하고, 오른쪽의 표시 표준 목록을 연결합니다. 이미지를 누르면 글자를 크게 볼 수 있습니다.</figcaption>
           </figure>
         </section>
@@ -101,6 +119,11 @@
               </tbody>
             </table>
           </div>
+          <div class="fb-callout warn"><strong>스캔 뒤 표준 RVT가 바뀌면 다시 검사해야 합니다.</strong>등록된 파일의 수정 시각이나 내용 지문이 마지막 스캔과 다르면 이전 스냅샷을 이용한 로드·적용·모델 검사는 차단됩니다. 변경된 파일이 맞는지 확인하고 정밀 스캔을 다시 실행합니다.</div>
+          <figure class="fb-screen-figure">
+            <a href="/assets/family-browser/standard-rvt-changed.png?v=20260720.1" target="_blank" rel="noopener"><img src="/assets/family-browser/standard-rvt-changed.png?v=20260720.1" alt="Family Browser 표준 RVT 변경 감지 상태"></a>
+            <figcaption>표준 RVT가 마지막 스캔 이후 변경된 상태입니다. 오래된 캐시를 그대로 적용하지 않고 관리자에게 재스캔을 요구합니다.</figcaption>
+          </figure>
         </section>
 
         <section class="fb-doc-section" id="standard-list">
@@ -168,6 +191,6 @@
   </main>
 
   <footer class="site-footer"><div class="site-footer__inner"><span>KKY Family Browser 1.0 매뉴얼</span><div class="mini-links"><a href="/family-browser/getting-started.html">처음 설정</a><a href="/family-browser/library.html">라이브러리</a><a href="/family-browser/admin.html">관리자</a></div></div></footer>
-  <script src="/assets/site.js?v=3.0-20260716.2"></script>
+  <script src="/assets/site.js?v=3.0-20260720.1"></script>
 </body>
 </html>
