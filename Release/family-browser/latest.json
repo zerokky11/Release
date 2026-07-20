@@ -1,10 +1,10 @@
 {
-  "version": "1.0.1",
-  "url": "https://update.zerokky.com/Release/family-browser/official/KKY_FamilyBrowser_RevitHost(2019,21,23,25,27)_v1.0.1_Setup.exe",
+  "version": "1.0",
+  "url": "https://update.zerokky.com/Release/family-browser/official/KKY_FamilyBrowser_RevitHost(2019,21,23,25,27)_v1.0_Setup.exe",
   "publishedAt": "2026-07-20",
-  "notes": "Family Browser 1.0.1 - current implementation, system type detail comparison, project tracking, and manual refresh",
-  "installerUrl": "https://update.zerokky.com/Release/family-browser/official/KKY_FamilyBrowser_RevitHost(2019,21,23,25,27)_v1.0.1_Setup.exe",
-  "sha256": "029A3681E70DD30B76DD727A765F5892BE77DB24004108A686EA450CAA9E9D56",
+  "notes": "Family Browser 1.0 - current implementation, system type detail comparison, project tracking, and manual refresh",
+  "installerUrl": "https://update.zerokky.com/Release/family-browser/official/KKY_FamilyBrowser_RevitHost(2019,21,23,25,27)_v1.0_Setup.exe",
+  "sha256": "1435E8E06F0DDF0430D4117BC5E2B8E6AE312DBB50B88426AEB78D02516C6BF5",
   "supportedRevit": [
     "2019",
     "2021",
