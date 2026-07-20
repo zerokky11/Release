@@ -61,12 +61,19 @@
 
   function applyRelease(kind, data) {
     qsa(`[data-release="${kind}"]`).forEach((panel) => {
+      const downloadDisabled = panel.dataset.downloadDisabled === 'true';
       qsa('[data-release-field]', panel).forEach((el) => {
         const field = el.dataset.releaseField;
         if (field === 'publishedAt') el.textContent = formatDate(data.publishedAt);
         else el.textContent = data[field] || '-';
       });
       qsa('[data-release-download]', panel).forEach((el) => {
+        if (downloadDisabled) {
+          el.removeAttribute('href');
+          el.setAttribute('aria-disabled', 'true');
+          if ('disabled' in el) el.disabled = true;
+          return;
+        }
         const field = el.dataset.releaseDownload || 'installerUrl';
         const url = data[field] || data.url || '';
         if (url) {
