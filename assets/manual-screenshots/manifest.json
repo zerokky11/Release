@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-07-16T06:12:50.335Z",
+  "generatedAt": "2026-07-20T03:04:11.261Z",
   "productVersion": "3.0",
   "displayedVersion": "v3.0",
   "homeScreenshot": "Sever/assets/kky-tool/home.png",
   "sourceRoot": "KKY_Tool_Revit_2019-2023/Resources/HubUI",
-  "baseUrl": "http://127.0.0.1:62650",
+  "baseUrl": "http://127.0.0.1:61147",
   "viewport": "1600x1000",
   "baseScreenCount": 25,
   "extraScreenCount": 23,
-  "count": 48,
+  "count": 51,
   "consoleErrors": [],
   "results": [
     {
@@ -393,6 +393,30 @@
       "note": "NWC 결과 건수, 링크 처리와 결과 Excel 진입",
       "file": "Sever/assets/manual-screenshots/nwc-export-result.png",
       "bytes": 165087,
+      "title": "KKY Tool Hub"
+    },
+    {
+      "id": "nwc-compare-settings",
+      "kind": "major-module",
+      "note": "기준/현재 NWC·TXT 폴더와 변화율, 하위 폴더, SHA-256 설정",
+      "file": "Sever/assets/manual-screenshots/nwc-compare-settings.png",
+      "bytes": 117355,
+      "title": "KKY Tool Hub"
+    },
+    {
+      "id": "nwc-compare-classification",
+      "kind": "major-module",
+      "note": "분류 축 이름·파일명 규칙·순서, 프리셋과 분류표 Excel 왕복",
+      "file": "Sever/assets/manual-screenshots/nwc-compare-classification.png",
+      "bytes": 108555,
+      "title": "KKY Tool Hub"
+    },
+    {
+      "id": "nwc-compare-result",
+      "kind": "major-module-result",
+      "note": "상태별 건수, 순서별 필터, 그룹 집계와 모델별 상세 결과",
+      "file": "Sever/assets/manual-screenshots/nwc-compare-result.png",
+      "bytes": 98284,
       "title": "KKY Tool Hub"
     }
   ]

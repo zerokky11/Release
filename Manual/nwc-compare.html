@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NWC 용량 비교 검토 상세 매뉴얼 | KKY Tool 3.0</title>
+  <meta name="description" content="KKY Tool 3.0 NWC 용량 비교 검토의 폴더, 판정 기준, 사용자 정의 분류, 결과와 Excel 안내">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/assets/site.css?v=3.0-20260720.2">
+</head>
+<body data-page="features">
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="brand" href="/index.html">
+        <span class="brand__mark">K</span>
+        <span><span class="brand__title">KKY Tool</span><span class="brand__sub">Revit Hub 3.0</span></span>
+      </a>
+      <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false">메뉴</button>
+      <nav class="nav" data-nav-menu>
+        <a href="/index.html" data-nav="home">홈</a>
+        <a href="/index.html#download" data-nav="download">다운로드</a>
+        <a href="/Manual/index.html" data-nav="manual">매뉴얼</a>
+        <a href="/requests.html" data-nav="requests">요청하기</a>
+        <a href="/kky-tool/" data-nav="admin">관리자</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page-main module-page">
+    <nav class="breadcrumb" aria-label="현재 위치">
+      <a href="/Manual/index.html">매뉴얼 선택</a><span>/</span><a href="/Manual/kky-tool.html">KKY Tool 3.0</a><span>/</span><span>NWC 용량 비교 검토</span>
+    </nav>
+
+    <section class="module-hero">
+      <div>
+        <span class="eyebrow">주요 업무 모듈 · Navisworks</span>
+        <h1>NWC 용량 비교 검토</h1>
+        <p class="lead">이전 주기와 현재 주기의 NWC 또는 객체 없음 TXT를 파일명으로 짝지어 용량·SHA-256 변화를 찾고, 동·공종처럼 업무에 필요한 분류로 결과를 묶어 확인합니다.</p>
+        <div class="actions">
+          <a class="button primary" href="#quick-start">처음부터 실행하기</a>
+          <a class="button" href="#judgment">판정 논리 보기</a>
+        </div>
+      </div>
+      <div class="module-hero__facts" aria-label="기능 요약">
+        <div class="module-hero__fact"><span>입력</span><strong>기준 / 현재 폴더</strong></div>
+        <div class="module-hero__fact"><span>대상</span><strong>.nwc / .txt</strong></div>
+        <div class="module-hero__fact"><span>판정</span><strong>용량 · SHA-256</strong></div>
+        <div class="module-hero__fact"><span>결과</span><strong>화면 집계 + Excel</strong></div>
+      </div>
+    </section>
+
+    <div class="module-manual-layout">
+      <div class="module-manual-main">
+        <section class="module-section" id="quick-start">
+          <div class="module-section__head">
+            <span class="eyebrow">빠른 시작</span>
+            <h2>두 폴더를 정한 뒤 분류와 판정 기준을 확인합니다</h2>
+            <p>이 기능은 RVT를 다시 열거나 NWC를 생성하지 않습니다. 이미 만들어진 이전 결과 폴더와 이번 결과 폴더를 직접 비교합니다.</p>
+          </div>
+          <ol class="module-flow">
+            <li><strong>기준 폴더</strong><p>승인했거나 직전에 배포한 NWC/TXT 폴더를 선택합니다.</p></li>
+            <li><strong>현재 폴더</strong><p>이번 주기에 새로 만든 NWC/TXT 폴더를 선택합니다.</p></li>
+            <li><strong>판정 기준</strong><p>허용 변화율, 하위 폴더, SHA-256 확인 여부를 정합니다.</p></li>
+            <li><strong>분류 구성</strong><p>동·공종 등 결과를 묶어 볼 축과 파일명 규칙을 입력합니다.</p></li>
+            <li><strong>비교 실행</strong><p>오른쪽의 NWC/TXT 비교 실행을 누릅니다.</p></li>
+            <li><strong>결과 저장</strong><p>상태별로 확인한 뒤 결과 Excel을 내보냅니다.</p></li>
+          </ol>
+          <div class="module-callout">
+            <strong>처음 실행할 때</strong>
+            검토 필요 기준은 기본값 <b>5%</b>, 하위 폴더 포함은 끔, 같은 용량 SHA-256 확인은 켬으로 시작하는 편이 좋습니다. 먼저 소규모 폴더로 파일명 짝이 의도대로 잡히는지 확인합니다.
+          </div>
+        </section>
+
+        <section class="module-section" id="folders">
+          <div class="module-section__head">
+            <span class="eyebrow">1 / 3</span>
+            <h2>비교 폴더와 판정 기준을 설정합니다</h2>
+            <p>두 폴더에서 확장자가 <code>.nwc</code> 또는 <code>.txt</code>인 파일만 읽습니다. 파일명은 대소문자를 구분하지 않지만, 확장자를 뺀 나머지 이름은 정확히 같아야 한 모델로 묶입니다.</p>
+          </div>
+          <div class="module-table-wrap">
+            <table>
+              <thead><tr><th>설정</th><th>의미</th><th>예시</th></tr></thead>
+              <tbody>
+                <tr><td>기준 NWC/TXT 폴더</td><td>변경 전 상태입니다. 지난 승인본이나 지난 주기 결과를 선택합니다.</td><td><code>D:\Coordination\2026-07-13</code></td></tr>
+                <tr><td>현재 NWC/TXT 폴더</td><td>변경 후 상태입니다. 이번 주기에 생성한 결과를 선택합니다.</td><td><code>D:\Coordination\2026-07-20</code></td></tr>
+                <tr><td>검토 필요 기준 (%)</td><td>용량 증감률의 절댓값이 이 값을 초과하면 <b>검토 필요</b>입니다. 같거나 작으면 <b>허용 범위</b>입니다.</td><td>기준 100 MB, 현재 106 MB, 기준 5% → 검토 필요</td></tr>
+                <tr><td>하위 폴더 포함</td><td>켜면 선택 폴더 아래의 모든 하위 폴더까지 재귀적으로 찾습니다. 같은 논리 이름이 여러 개면 중복으로 판정될 수 있습니다.</td><td>동별 하위 폴더까지 한 번에 비교</td></tr>
+                <tr><td>같은 용량도 SHA-256 확인</td><td>켜면 파일 크기가 같아도 내용이 다른 NWC를 찾습니다. 파일 수와 용량이 많으면 비교 시간이 늘어납니다.</td><td>184 MB ↔ 184 MB지만 해시가 다르면 검토 필요</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <figure class="module-shot">
+            <a href="/assets/manual-screenshots/nwc-compare-settings.png?v=3.0-20260720.2" target="_blank" rel="noopener"><img src="/assets/manual-screenshots/nwc-compare-settings.png?v=3.0-20260720.2" alt="NWC 용량 비교 폴더와 판정 기준 설정 화면"></a>
+            <figcaption>왼쪽에서 기준·현재 폴더와 판정 기준을 정합니다. 오른쪽 실행 영역에 두 폴더가 모두 선택됨으로 표시되어야 비교 버튼이 활성화됩니다.</figcaption>
+          </figure>
+          <div class="module-callout warn">
+            <strong>파일명 본체가 비교 키입니다</strong>
+            <code>A01_MEP.nwc</code>와 <code>A01_MEP.txt</code>는 같은 모델입니다. <code>A01_MEP.nwc</code>와 <code>A01_MEP_객체없음.txt</code>처럼 본체가 다르면 별도 모델로 읽으므로, 두 주기의 파일명과 접미사 규칙을 동일하게 유지해야 합니다.
+          </div>
+        </section>
+
+        <section class="module-section" id="classification">
+          <div class="module-section__head">
+            <span class="eyebrow">2 / 3</span>
+            <h2>업무에 맞는 분류 축을 직접 구성합니다</h2>
+            <p>기본 축은 <b>동</b>, <b>공종</b>, <b>파일</b>입니다. 동과 공종은 예시일 뿐이며 축을 추가·삭제·이름 변경·순서 이동할 수 있습니다. 파일 축은 논리 파일명을 자동으로 표시하는 고정 축입니다.</p>
+          </div>
+          <div class="module-table-wrap">
+            <table>
+              <thead><tr><th>항목</th><th>입력 방법</th><th>예시와 결과</th></tr></thead>
+              <tbody>
+                <tr><td>헤더 이름</td><td>결과 필터, 그룹 집계, Excel 열에 표시할 이름입니다.</td><td><code>동</code>, <code>공종</code>, <code>구역</code>, <code>협력사</code></td></tr>
+                <tr><td>파일명 판정 규칙</td><td><code>분류값=키워드1|키워드2</code> 형식을 사용하고, 여러 분류값은 세미콜론 또는 줄바꿈으로 구분합니다.</td><td><code>A동=A01|A02; B동=B01|B02</code></td></tr>
+                <tr><td>키워드 매칭</td><td>확장자를 뺀 파일명에 키워드가 포함되는지 대소문자 구분 없이 확인합니다. 위에서부터 처음 일치한 규칙을 사용합니다.</td><td><code>A01_MEP</code> → 동 <b>A동</b></td></tr>
+                <tr><td>일치하지 않는 파일</td><td>분류값을 빈칸으로 둡니다. 결과 표에서 직접 입력하거나 분류표 Excel로 채울 수 있습니다.</td><td>예외 파일만 수동으로 <b>공용</b> 입력</td></tr>
+                <tr><td>순서 이동</td><td>위·아래 버튼으로 축 순서를 바꿉니다. 화면 필터, 그룹 집계, 상세 표, Excel 열도 같은 순서를 따릅니다.</td><td>공종 → 동 → 파일 순으로 변경</td></tr>
+                <tr><td>분류 구성 프리셋</td><td>현재 축 이름·규칙·순서를 이름을 붙여 저장하고 다음 비교에서 다시 불러옵니다.</td><td><code>주간 통합 NWC</code> 프리셋</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <figure class="module-shot">
+            <a href="/assets/manual-screenshots/nwc-compare-classification.png?v=3.0-20260720.2" target="_blank" rel="noopener"><img src="/assets/manual-screenshots/nwc-compare-classification.png?v=3.0-20260720.2" alt="NWC 비교 사용자 정의 분류와 프리셋 화면"></a>
+            <figcaption>예시는 파일명의 A01·A02를 A동으로, ARCH·MEP·STR을 공종으로 분류합니다. 규칙이 많다면 비교 후 분류표 Excel을 내보내 일괄 입력하는 편이 빠릅니다.</figcaption>
+          </figure>
+        </section>
+
+        <section class="module-section" id="classification-excel">
+          <div class="module-section__head">
+            <span class="eyebrow">분류표 Excel</span>
+            <h2>비교된 파일 목록을 내보내 분류값을 채울 수 있습니다</h2>
+            <p>분류표 버튼은 비교 결과가 생긴 뒤 활성화됩니다. 현재 결과의 파일명을 행으로 내보낸 다음, 사용자 정의 축의 값을 채워 다시 가져옵니다.</p>
+          </div>
+          <div class="module-table-wrap">
+            <table>
+              <thead><tr><th>단계</th><th>동작</th><th>확인 사항</th></tr></thead>
+              <tbody>
+                <tr><td>분류표 내보내기</td><td><code>NWC_Classification_yyyyMMdd_HHmmss.xlsx</code> 한 파일을 만듭니다.</td><td>첫 열은 <b>파일명</b>, 뒤에는 파일 축을 제외한 사용자 정의 축이 이어집니다.</td></tr>
+                <tr><td>값 입력</td><td>파일명은 유지하고 동·공종·구역 등의 빈 셀만 채웁니다.</td><td>규칙으로 이미 채워진 값도 필요하면 수정할 수 있습니다.</td></tr>
+                <tr><td>분류표 가져오기</td><td>첫 번째 시트를 읽고 현재 비교 결과의 논리 파일명과 매칭합니다.</td><td>경로와 <code>.nwc</code>/<code>.txt</code> 확장자는 무시합니다.</td></tr>
+                <tr><td>파일명 열</td><td><b>파일명</b> 외에도 모델 파일, NWC 파일, File Name, Model File, NWC File, File을 인식합니다.</td><td>파일명 열이 없으면 가져오기를 중단합니다.</td></tr>
+                <tr><td>일치하지 않는 행</td><td>현재 결과에 없는 파일명은 건너뜁니다. 같은 파일명이 두 번 나오면 첫 행만 사용하고 중복 건수로 알립니다.</td><td>완료 메시지에서 적용·건너뜀·중복 건수를 확인합니다.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="manual-note">Excel에 일부 분류 열이 없어도 오류로 중단하지 않고 존재하는 열만 반영합니다. 축 이름을 바꾼 뒤에는 새 양식을 다시 내보내는 것이 안전합니다.</p>
+        </section>
+
+        <section class="module-section" id="judgment">
+          <div class="module-section__head">
+            <span class="eyebrow">작동 논리</span>
+            <h2>파일명, 출력 종류, 용량과 해시 순서로 판정합니다</h2>
+            <p>먼저 확장자를 제외한 파일명으로 기준·현재 파일을 짝짓고, 중복과 존재 여부를 확인한 뒤 NWC 용량과 SHA-256을 비교합니다.</p>
+          </div>
+          <div class="module-table-wrap">
+            <table>
+              <thead><tr><th>상태</th><th>판정 조건</th><th>예시</th></tr></thead>
+              <tbody>
+                <tr><td>정상</td><td>NWC 용량이 같고, SHA-256 확인을 켰다면 해시도 같습니다. 해시 확인을 끈 경우 같은 용량만으로 정상 처리합니다.</td><td>184 MB ↔ 184 MB, 해시 동일</td></tr>
+                <tr><td>허용 범위</td><td>NWC 용량이 바뀌었지만 증감률 절댓값이 검토 기준 이하입니다.</td><td>96 MB → 99 MB, +3.13%, 기준 5%</td></tr>
+                <tr><td>검토 필요</td><td>변화율이 기준을 초과하거나, 같은 용량의 해시가 다르거나, 기준 TXT에서 현재 NWC로 바뀌었습니다. 해시 계산 오류도 여기에 포함됩니다.</td><td>210 MB → 185 MB, -11.9%</td></tr>
+                <tr><td>객체 없음</td><td>현재 파일이 TXT입니다. 기준이 NWC였으면 객체가 사라진 변화이고, 기준과 현재가 모두 TXT여도 같은 상태로 집계합니다.</td><td>기준 NWC → 현재 TXT</td></tr>
+                <tr><td>신규</td><td>기준에는 없고 현재 폴더에 NWC가 새로 생겼습니다.</td><td><code>B01_MEP.nwc</code> 신규</td></tr>
+                <tr><td>누락</td><td>기준에는 있었지만 현재 폴더에서 같은 논리 이름의 NWC/TXT를 찾지 못했습니다.</td><td><code>B01_STR</code> 현재 결과 없음</td></tr>
+                <tr><td>중복</td><td>같은 논리 이름의 NWC/TXT가 기준 또는 현재 한쪽에 두 개 이상 있습니다.</td><td>하위 폴더 두 곳에 <code>A01_MEP.nwc</code> 존재</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <ol class="module-logic">
+            <li><div><strong>파일 수집</strong><p>선택한 폴더 또는 하위 폴더에서 NWC와 TXT만 읽습니다.</p></div></li>
+            <li><div><strong>논리 이름 구성</strong><p>경로와 확장자를 제외한 파일명으로 기준·현재 인덱스를 만듭니다.</p></div></li>
+            <li><div><strong>중복·존재 판정</strong><p>중복, 신규, 누락을 먼저 결정합니다.</p></div></li>
+            <li><div><strong>출력 종류 판정</strong><p>현재 TXT는 객체 없음, 기준 TXT에서 현재 NWC로 바뀌면 검토 필요입니다.</p></div></li>
+            <li><div><strong>용량·해시 판정</strong><p>NWC끼리는 용량 변화율과 선택한 SHA-256 조건을 적용합니다.</p></div></li>
+            <li><div><strong>분류·집계</strong><p>사용자 규칙과 수동 입력값을 적용해 필터와 그룹 집계를 만듭니다.</p></div></li>
+          </ol>
+        </section>
+
+        <section class="module-section" id="results">
+          <div class="module-section__head">
+            <span class="eyebrow">3 / 3</span>
+            <h2>상태별 건수에서 모델 상세까지 내려가며 확인합니다</h2>
+            <p>결과 상단의 상태 버튼은 바로 필터로 동작합니다. 그 아래에서 분류 축 순서대로 조건을 좁히고, 그룹 집계와 모델별 상세를 같은 화면에서 확인합니다.</p>
+          </div>
+          <div class="module-table-wrap">
+            <table>
+              <thead><tr><th>영역</th><th>표시 내용</th><th>사용 방법</th></tr></thead>
+              <tbody>
+                <tr><td>상태 요약</td><td>전체, 정상, 허용 범위, 검토 필요, 객체 없음, 신규, 누락, 중복 건수</td><td>상태 카드를 눌러 해당 결과만 표시</td></tr>
+                <tr><td>순서별 필터</td><td>상태와 사용자 정의 분류값, 파일명 검색</td><td>공종 MEP + 동 A동처럼 조합</td></tr>
+                <tr><td>그룹 집계</td><td>분류 조합별 전체·검토·객체 없음·신규·누락 건수</td><td>문제가 많은 동·공종을 먼저 파악</td></tr>
+                <tr><td>모델별 상세</td><td>기준/현재 출력, MB, 증감 MB·%, 상태, 메시지</td><td>원인이 필요한 개별 파일 확인</td></tr>
+                <tr><td>분류값 직접 입력</td><td>파일 축 외의 분류 셀은 화면에서 수정 가능</td><td>규칙에 걸리지 않은 예외 파일 보정</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <figure class="module-shot">
+            <a href="/assets/manual-screenshots/nwc-compare-result.png?v=3.0-20260720.2" target="_blank" rel="noopener"><img src="/assets/manual-screenshots/nwc-compare-result.png?v=3.0-20260720.2" alt="NWC 비교 상태 요약과 그룹 및 모델별 상세 결과"></a>
+            <figcaption>예시는 8개 모델을 동·공종·파일 순서로 집계한 화면입니다. 오른쪽에는 전체 모델 수와 확인이 필요한 상태 수가 함께 표시됩니다.</figcaption>
+          </figure>
+        </section>
+
+        <section class="module-section" id="excel">
+          <div class="module-section__head">
+            <span class="eyebrow">결과 Excel</span>
+            <h2>언어와 저장 속도를 선택해 한 파일로 내보냅니다</h2>
+            <p>기본 파일명은 <code>NWC_Compare_Result_yyyyMMdd_HHmmss.xlsx</code>입니다. RVT별 또는 폴더별로 나누지 않고 현재 비교 결과 전체를 한 통합 문서에 저장합니다.</p>
+          </div>
+          <div class="module-table-wrap">
+            <table>
+              <thead><tr><th>선택</th><th>파일명</th><th>차이</th></tr></thead>
+              <tbody>
+                <tr><td>한글 + 일반 저장</td><td><code>NWC_Compare_Result_20260720_103000.xlsx</code></td><td>한글 헤더·상태 문구를 쓰고 열 너비를 내용에 맞춰 정리합니다.</td></tr>
+                <tr><td>영문 + 일반 저장</td><td>동일</td><td>영문 헤더와 Same, Within tolerance, Review required 등의 상태를 사용합니다.</td></tr>
+                <tr><td>한글 + 빠른 저장</td><td>동일</td><td>한글 내용은 유지하고 대량 결과에서 열 너비 자동 맞춤을 생략해 더 빨리 저장합니다.</td></tr>
+                <tr><td>영문 + 빠른 저장</td><td>동일</td><td>영문 내용과 빠른 저장을 함께 사용합니다.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="module-subsection">
+            <h3>저장되는 열</h3>
+            <p>사용자 정의 분류 축이 먼저 나오고, 기준/현재 출력, 기준/현재 용량, 증감, 상태와 메시지가 이어집니다. 파일 축을 제거했다면 맨 앞에 모델 파일 열이 자동으로 추가됩니다.</p>
+            <div class="module-table-wrap">
+              <table>
+                <thead><tr><th>열 묶음</th><th>한글 예시</th><th>영문 예시</th></tr></thead>
+                <tbody>
+                  <tr><td>분류</td><td>동, 공종, 파일</td><td>사용자가 지정한 동일 헤더</td></tr>
+                  <tr><td>출력 종류</td><td>기준 출력, 현재 출력</td><td>Baseline Output, Current Output</td></tr>
+                  <tr><td>용량</td><td>기준 용량 (MB), 현재 용량 (MB), 증감 (MB), 증감률 (%)</td><td>Baseline (MB), Current (MB), Difference (MB), Difference (%)</td></tr>
+                  <tr><td>판정</td><td>상태, 메시지</td><td>Status, Message</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="module-callout">
+            <strong>결과창은 유지됩니다</strong>
+            Excel을 저장한 뒤에도 비교 화면과 필터 상태는 닫히지 않습니다. 다른 언어나 저장 방식이 필요하면 같은 결과에서 다시 내보낼 수 있습니다.
+          </div>
+        </section>
+
+        <section class="module-section" id="checklist">
+          <div class="module-section__head">
+            <span class="eyebrow">실행 전 점검</span>
+            <h2>이름과 폴더 범위를 먼저 확인합니다</h2>
+          </div>
+          <ul class="module-checklist">
+            <li>기준 폴더가 변경 전 승인본인지 확인</li>
+            <li>현재 폴더가 이번 주기 결과인지 확인</li>
+            <li>두 폴더의 파일명 본체 규칙이 동일한지 확인</li>
+            <li>하위 폴더 포함 시 같은 이름이 중복되지 않는지 확인</li>
+            <li>업무 기준에 맞는 허용 변화율 입력</li>
+            <li>대용량 파일이 많으면 SHA-256 소요 시간 고려</li>
+            <li>분류 축 순서가 원하는 Excel 열 순서와 같은지 확인</li>
+            <li>규칙 미일치 파일은 화면 또는 분류표 Excel로 보정</li>
+          </ul>
+        </section>
+      </div>
+
+      <aside class="module-manual-side">
+        <section class="module-side-card">
+          <h2>이 페이지에서 찾기</h2>
+          <nav class="module-side-nav">
+            <a href="#quick-start">빠른 시작</a>
+            <a href="#folders">폴더와 판정 기준</a>
+            <a href="#classification">사용자 정의 분류</a>
+            <a href="#classification-excel">분류표 Excel</a>
+            <a href="#judgment">판정 논리</a>
+            <a href="#results">결과 화면</a>
+            <a href="#excel">결과 Excel</a>
+            <a href="#checklist">실행 전 점검</a>
+          </nav>
+        </section>
+        <section class="module-side-card">
+          <h3>기본값</h3>
+          <ul class="module-side-list">
+            <li><strong>검토 기준</strong><br>±5%</li>
+            <li><strong>하위 폴더</strong><br>포함 안 함</li>
+            <li><strong>같은 용량</strong><br>SHA-256 확인</li>
+            <li><strong>분류 축</strong><br>동 · 공종 · 파일</li>
+            <li><strong>결과</strong><br>Excel 한 파일</li>
+          </ul>
+        </section>
+        <section class="module-side-card">
+          <h3>관련 문서</h3>
+          <div class="actions">
+            <a class="button" href="/Manual/nwc-export.html">NWC Export</a>
+            <a class="button" href="/Manual/kky-tool.html">KKY Tool 매뉴얼</a>
+          </div>
+        </section>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <span>KKY Tool Revit Hub 3.0</span>
+      <div class="mini-links"><a href="/Manual/nwc-export.html">NWC Export</a><a href="/Manual/kky-tool.html">KKY Tool 매뉴얼</a><a href="/requests.html">요청하기</a></div>
+    </div>
+  </footer>
+  <script src="/assets/site.js?v=3.0-20260716.2"></script>
+</body>
+</html>

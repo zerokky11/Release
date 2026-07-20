@@ -1834,6 +1834,11 @@ pre {
   padding: 22px;
 }
 
+.major-module-card--wide {
+  grid-column: 1 / -1;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.42fr);
+}
+
 .major-module-card__copy {
   display: flex;
   flex-direction: column;
