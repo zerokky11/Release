@@ -2,9 +2,9 @@
   "version": "1.0",
   "url": "https://update.zerokky.com/Release/family-browser/official/KKY_FamilyBrowser_RevitHost(2019,21,23,25,27)_v1.0_Setup.exe",
   "publishedAt": "2026-07-20",
-  "notes": "Family Browser 1.0 정식 버전 · Revit 2019, 2021, 2023, 2025, 2027 지원",
+  "notes": "KKY Family Browser 1.0 official release",
   "installerUrl": "https://update.zerokky.com/Release/family-browser/official/KKY_FamilyBrowser_RevitHost(2019,21,23,25,27)_v1.0_Setup.exe",
-  "sha256": "2FF5FD4C730141827ED702AAF5DB8B38593DACC0A21162A801E0794D2C6C57EB",
+  "sha256": "42A21F2410BD1A709B22D0D8E44FC33F57C9BB5CE1786D2C4CB57E773B4C5AF7",
   "supportedRevit": [
     "2019",
     "2021",
