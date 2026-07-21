@@ -29,6 +29,26 @@
     manual.textContent = '매뉴얼';
   }
 
+  function normalizeUpdatesNav() {
+    const nav = qs('[data-nav-menu]');
+    if (!nav) return;
+
+    const matches = qsa('[data-nav="updates"]', nav);
+    matches.slice(1).forEach((link) => link.remove());
+
+    let updates = matches[0];
+    if (!updates) {
+      updates = document.createElement('a');
+      updates.dataset.nav = 'updates';
+    }
+    updates.href = '/updates/index.html';
+    updates.textContent = '업데이트 내역';
+
+    const requests = qs('[data-nav="requests"]', nav);
+    if (requests) nav.insertBefore(updates, requests);
+    else nav.appendChild(updates);
+  }
+
   function setActiveNav() {
     const activePage = page === 'features' || page === 'family-browser' ? 'manual' : page;
     qsa('[data-nav]').forEach((link) => {
@@ -494,6 +514,7 @@
 
   document.addEventListener('DOMContentLoaded', () => {
     normalizeManualNav();
+    normalizeUpdatesNav();
     setActiveNav();
     initNavToggle();
     initReleasePanels();
