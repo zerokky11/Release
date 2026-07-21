@@ -1,10 +1,10 @@
 [
   {
-    "version": "3.0",
-    "publishedAt": "2026-07-20",
-    "title": "버전 3.0",
-    "notes": "KKY Tool 3.0 정식 설치 파일입니다. Revit 2019, 2021, 2023, 2025, 2027을 지원합니다.",
-    "packageUrl": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.zip",
-    "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.exe"
+    "version": "3.0.1",
+    "publishedAt": "2026-07-21",
+    "title": "버전 3.0.1",
+    "notes": "BIA2 분석 기능을 정식 제품에서 분리한 KKY Tool 3.0.1입니다. Revit 2019, 2021, 2023, 2025, 2027을 지원합니다.",
+    "packageUrl": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.1.zip",
+    "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.1.exe"
   }
 ]
