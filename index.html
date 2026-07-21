@@ -105,15 +105,15 @@
             <a class="button" href="#" data-release-download="url">압축 파일</a>
           </div>
         </article>
-        <article class="home-release-row" data-release="family-browser">
+        <article class="home-release-row" data-release="family-browser" data-download-disabled="true">
           <div class="home-release-copy">
-            <span class="badge ok">정식 배포</span>
+            <span class="badge blue">재배포 준비 중</span>
             <strong>Family Browser <span data-release-field="version">불러오는 중</span></strong>
-            <span data-release-field="notes">Family Browser 1.0.1 정식 설치 파일 정보를 확인하고 있습니다.</span>
+            <span>수정된 설치 파일을 준비하고 있습니다. 잠시만 기다려 주세요.</span>
           </div>
           <div class="home-release-actions">
             <span class="home-release-date" data-release-field="publishedAt">-</span>
-            <a class="button primary" href="#" data-release-download="installerUrl">설치 파일</a>
+            <button class="button primary" type="button" disabled aria-disabled="true" data-release-download="installerUrl">다운로드 준비 중</button>
           </div>
         </article>
         <article class="home-release-row home-release-row--stable" data-stable-version="2.37">
