@@ -136,7 +136,7 @@
     if (!list) return;
     const checks = [
       ['KKY Tool 3.0 feed', '/Release/kky-tool-3/latest.json'],
-      ['Family Browser feed', '/Release/family-browser/latest.json'],
+      ['Family Browser 1.0.1 feed', '/Release/family-browser/latest.json'],
       ['User policy', '/kky-tool/user-access.json'],
       ['Family Browser bootstrap index', '/family-browser/bootstrap-index.json'],
       ['Family Browser bootstrap', '/family-browser/bootstrap.json']
