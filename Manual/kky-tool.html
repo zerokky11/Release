@@ -6,7 +6,7 @@
   <title>KKY Tool 3.0 매뉴얼</title>
   <meta name="description" content="KKY Tool 3.0 Schedule, NWC Export와 비교, BQC 검토와 일반 도구 기능별 상세 매뉴얼">
   <link rel="icon" href="data:,">
-  <link rel="stylesheet" href="/assets/site.css?v=3.0-20260716.2">
+  <link rel="stylesheet" href="/assets/site.css?v=3.0-20260731.1">
 </head>
 <body data-page="manual">
   <header class="site-header">
@@ -58,7 +58,7 @@
             <p>Schedule 기준 선택, 여러 RVT 데이터 추출, Excel 구성, Instance·Type 매핑과 안전한 Import 검증 흐름을 설명합니다.</p>
             <div class="actions"><a class="button primary" href="/Manual/schedule-io.html">Schedule 상세 매뉴얼</a></div>
           </div>
-          <div class="major-module-card__media"><a href="/Manual/schedule-io.html"><img src="/assets/manual-screenshots/schedule-export-source.png?v=3.0-20260715.3" alt="Schedule 추출 입력 화면"></a></div>
+          <div class="major-module-card__media"><a href="/Manual/schedule-io.html"><img src="/assets/manual-screenshots/schedule-export-source.png?v=3.0-20260731.1" alt="Schedule 추출 입력 화면"></a></div>
         </article>
         <article class="major-module-card">
           <div class="major-module-card__copy">
@@ -67,7 +67,7 @@
             <p>대상 RVT와 링크 상태, 3D View, Navisworks 옵션, 파일명과 생성 검증, 결과 Excel 흐름을 단계별로 설명합니다.</p>
             <div class="actions"><a class="button primary" href="/Manual/nwc-export.html">NWC 상세 매뉴얼</a></div>
           </div>
-          <div class="major-module-card__media"><a href="/Manual/nwc-export.html"><img src="/assets/manual-screenshots/nwc-export-options.png?v=3.0-20260715.3" alt="NWC Export 옵션 화면"></a></div>
+          <div class="major-module-card__media"><a href="/Manual/nwc-export.html"><img src="/assets/manual-screenshots/nwc-export-options.png?v=3.0-20260731.1" alt="NWC Export 옵션 화면"></a></div>
         </article>
         <article class="major-module-card major-module-card--wide">
           <div class="major-module-card__copy">
@@ -78,6 +78,30 @@
           </div>
           <div class="major-module-card__media"><a href="/Manual/nwc-compare.html"><img src="/assets/manual-screenshots/nwc-compare-result.png?v=3.0-20260720.2" alt="NWC 용량 비교 결과 화면"></a></div>
         </article>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="common-workflow-title">
+      <div class="section-header">
+        <div>
+          <span class="eyebrow">공통 작업 흐름</span>
+          <h2 id="common-workflow-title">여러 기능을 준비할 때 달라진 점</h2>
+          <p>기능별 판정 논리와 별개로, 반복해서 쓰는 선택·저장·필터 흐름을 정리했습니다.</p>
+        </div>
+      </div>
+      <div class="manual-setting-list">
+        <div class="manual-setting-row">
+          <div class="manual-setting-label"><span class="manual-setting-index">01</span><h3>전체 선택</h3></div>
+          <div class="manual-setting-copy"><p class="manual-setting-description">BQC 검토 또는 일반 도구 목록에서 현재 그룹의 선택 가능한 기능을 한 번에 추가합니다. 검색 결과만 선택하는 버튼이 아니라 해당 그룹 전체를 대상으로 합니다.</p><p class="manual-setting-example"><strong>예시</strong>BQC 전체 기준을 한 번에 준비한 뒤 필요 없는 기능만 선택 해제합니다.</p></div>
+        </div>
+        <div class="manual-setting-row">
+          <div class="manual-setting-label"><span class="manual-setting-index">02</span><h3>즐겨찾기 세트 파일</h3></div>
+          <div class="manual-setting-copy"><p class="manual-setting-description">현재 즐겨찾기 세트의 이름, 선택 기능, 기능별 설정을 <code>.kkyfav.json</code> 파일로 저장하거나 다시 불러옵니다. 비어 있는 파일을 불러오면 현재 세트를 비웁니다.</p><p class="manual-setting-example"><strong>예시</strong>프로젝트 공통 BQC 세트를 팀 폴더에 저장하고 다른 PC에서 같은 설정으로 불러옵니다.</p></div>
+        </div>
+        <div class="manual-setting-row">
+          <div class="manual-setting-label"><span class="manual-setting-index">03</span><h3>공통 필터 적용</h3></div>
+          <div class="manual-setting-copy"><p class="manual-setting-description">공통 설정의 포함·제외 필터는 해당 기능이 지원하는 대상 수와 실제 판정에 같은 기준으로 적용됩니다. 추가 파라미터는 판정 조건이 아니라 결과 Excel의 참고 열입니다.</p><p class="manual-setting-example"><strong>예시</strong>Category=Pipe Curves 포함 필터를 두면 대상 수와 실제 검토가 모두 배관 곡선 기준으로 맞춰집니다.</p></div>
+        </div>
       </div>
     </section>
 
@@ -99,7 +123,7 @@
       </div>
     </div>
   </footer>
-  <script src="/assets/site.js?v=3.0-20260716.2"></script>
-  <script src="/assets/feature-manuals.js?v=3.0-20260716.2"></script>
+  <script src="/assets/site.js?v=3.0-20260731.1"></script>
+  <script src="/assets/feature-manuals.js?v=3.0-20260731.1"></script>
 </body>
 </html>

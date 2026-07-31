@@ -6,7 +6,7 @@
   <title>NWC Export 상세 매뉴얼 | KKY Tool 3.0</title>
   <meta name="description" content="KKY Tool 3.0 NWC Export 대상, Revit 링크, 3D View, Navisworks 옵션, 파일명과 결과 검증 안내">
   <link rel="icon" href="data:,">
-  <link rel="stylesheet" href="/assets/site.css?v=3.0-20260716.2">
+  <link rel="stylesheet" href="/assets/site.css?v=3.0-20260731.1">
 </head>
 <body data-page="features">
   <header class="site-header">
@@ -37,7 +37,7 @@
       <div>
         <span class="eyebrow">주요 업무 모듈 · Navisworks</span>
         <h1>NWC Export</h1>
-        <p class="lead">활성 문서 또는 여러 RVT의 비템플릿 3D View를 선택하고, 문서별 Revit 링크 로드 상태와 Navisworks Export 옵션을 적용해 NWC 파일을 일괄 생성합니다.</p>
+        <p class="lead">활성 문서 또는 여러 RVT의 비템플릿 3D View를 직접 고르거나 이름으로 일괄 지정하고, Revit 링크 처리와 Navisworks Export 옵션을 적용해 NWC 파일을 생성합니다.</p>
         <div class="actions">
           <a class="button primary" href="#quick-start">처음부터 실행하기</a>
           <a class="button" href="#options">옵션 차이 보기</a>
@@ -58,19 +58,19 @@
           <div class="module-section__head">
             <span class="eyebrow">빠른 시작</span>
             <h2>세 단계만 순서대로 준비합니다</h2>
-            <p>대상과 링크를 정한 뒤 3D View를 고르고, 마지막에 저장 폴더와 Export 옵션을 설정합니다. 오른쪽 Workflow의 준비 항목이 모두 완료되어야 추출 버튼이 활성화됩니다.</p>
+            <p>여러 RVT는 View 목록을 미리 읽는 방식과 View 이름만 먼저 적는 빠른 방식 중 하나를 선택합니다. 그 다음 링크 처리, 3D View, 저장 폴더와 Export 옵션을 준비합니다. 오른쪽 Workflow의 준비 항목이 모두 완료되어야 추출 버튼이 활성화됩니다.</p>
           </div>
           <ol class="module-flow">
-            <li><strong>대상 선택</strong><p>활성 문서 또는 여러 RVT를 등록합니다.</p></li>
-            <li><strong>링크 계획</strong><p>문서별 링크 포함 여부와 Reload 대상을 정합니다.</p></li>
-            <li><strong>3D View 선택</strong><p>문서별 View를 검색하고 체크합니다.</p></li>
+            <li><strong>대상 선택</strong><p>활성 문서를 사용하거나 여러 RVT를 등록하고 View 선택 방식을 정합니다.</p></li>
+            <li><strong>링크 계획</strong><p>직접 선택은 문서별 링크를 고르고, 빠른 방식은 모든 링크 포함 여부를 한 번에 정합니다.</p></li>
+            <li><strong>3D View 선택</strong><p>조회 목록에서 체크하거나 쉼표·줄바꿈으로 정확한 View 이름을 입력합니다.</p></li>
             <li><strong>저장 폴더</strong><p>NWC 파일을 만들 폴더를 선택합니다.</p></li>
             <li><strong>Export 옵션</strong><p>좌표, 파라미터, 형상 세부 수준 등을 정합니다.</p></li>
             <li><strong>실행·검증</strong><p>파일 생성과 크기·갱신 상태를 확인합니다.</p></li>
           </ol>
           <div class="module-callout">
             <strong>가장 단순한 권장 설정</strong>
-            처음 실행은 활성 문서, <b>Coordination 3D</b> 한 개, <b>Shared 좌표</b>, <b>Faceting Factor 1</b>, 기존 파일 덮어쓰기 끔으로 시험합니다.
+            처음 실행은 활성 문서 또는 <b>목록에서 직접 선택</b>, <b>Coordination 3D</b> 한 개, <b>Shared 좌표</b>, <b>Faceting Factor 1</b>, 기존 파일 덮어쓰기 끔으로 시험합니다. 여러 파일에서 같은 View 이름을 반복 추출할 때만 빠른 방식을 사용합니다.
           </div>
         </section>
 
@@ -78,23 +78,25 @@
           <div class="module-section__head">
             <span class="eyebrow">1 / 3</span>
             <h2>대상 RVT와 링크 로드 계획을 정합니다</h2>
-            <p>활성 문서는 현재 Revit의 호스트 프로젝트 문서를 사용합니다. 여러 RVT는 별도 등록 창에서 파일을 선택하거나 드롭하고, 확인을 눌렀을 때 링크와 3D View 목록을 조회합니다.</p>
+            <p>활성 문서는 현재 Revit의 호스트 프로젝트 문서를 사용합니다. 여러 RVT는 별도 등록 창에서 파일을 선택하거나 드롭한 뒤 <b>목록에서 직접 선택</b>과 <b>뷰 이름으로 일괄 추출 (빠른 방식)</b> 중 하나를 고릅니다.</p>
           </div>
           <div class="module-table-wrap">
             <table>
               <thead><tr><th>설정</th><th>동작</th><th>예시</th></tr></thead>
               <tbody>
                 <tr><td>활성 문서</td><td><code>ActiveUIDocument.Document</code> 기준의 현재 호스트 프로젝트를 바로 조회합니다. 패밀리 문서와 링크 문서는 대상에서 제외합니다.</td><td>현재 작업 중인 <code>Plant_A.rvt</code></td></tr>
-                <tr><td>여러 RVT</td><td>등록 순서대로 RVT를 열어 링크·View 정보만 수집하고 닫습니다. 동일 경로는 한 번만 등록합니다.</td><td>분야별 납품 모델 12개 일괄 조회</td></tr>
+                <tr><td>여러 RVT · 목록에서 직접 선택</td><td>등록 확인 시 RVT를 하나씩 열어 링크와 비템플릿 3D View 목록을 수집한 뒤 닫습니다. 이후 문서별 링크와 View를 직접 고를 수 있습니다.</td><td>파일마다 View·링크 구성이 다를 때</td></tr>
+                <tr><td>여러 RVT · 뷰 이름으로 일괄 추출</td><td>등록 시에는 RVT를 열지 않습니다. 쉼표 또는 줄바꿈으로 View 이름을 적고, 실제 추출할 때 각 RVT를 한 번씩 열어 정확히 같은 이름의 View를 찾습니다.</td><td>모든 납품 RVT의 <code>NWC_EXPORT</code> View 추출</td></tr>
                 <tr><td>링크 모델 포함</td><td>문서 단위로 Revit 링크를 NWC에 포함할지 결정합니다. 끄면 그 문서의 모든 링크를 Export 대상에서 제외합니다.</td><td>MEP 단독 NWC에는 링크 제외</td></tr>
                 <tr><td>링크 체크</td><td>체크한 링크는 Export 직전에 Reload하고, 체크하지 않은 Loaded 링크는 Unload합니다.</td><td>ARCH만 포함하고 STRUCT·SITE 제외</td></tr>
                 <tr><td>현재 상태</td><td>처음 조회했을 때의 Loaded / Unloaded 상태로 선택을 되돌립니다.</td><td>수동 조정 전 상태 복구</td></tr>
                 <tr><td>전체 Reload / Unload</td><td>현재 선택 문서의 모든 링크를 한 번에 포함 또는 제외합니다.</td><td>간섭 검토용 전체 링크 포함</td></tr>
+                <tr><td>빠른 방식 · 모든 Revit 링크 포함</td><td>빠른 방식은 문서를 미리 열지 않으므로 개별 링크를 선택하지 않습니다. 켜면 추출 시 각 RVT의 모든 링크를 Reload해 포함하고, 끄면 링크를 Reload하지 않고 NWC에서도 제외합니다.</td><td>전체 링크를 동일 정책으로 처리하는 정기 배치</td></tr>
               </tbody>
             </table>
           </div>
           <figure class="module-shot">
-            <a href="/assets/manual-screenshots/nwc-target-links.png?v=3.0-20260715.3" target="_blank" rel="noopener"><img src="/assets/manual-screenshots/nwc-target-links.png?v=3.0-20260715.3" alt="NWC Export 대상과 Revit 링크 설정 화면"></a>
+            <a href="/assets/manual-screenshots/nwc-target-links.png?v=3.0-20260731.1" target="_blank" rel="noopener"><img src="/assets/manual-screenshots/nwc-target-links.png?v=3.0-20260731.1" alt="NWC Export 대상과 Revit 링크 설정 화면"></a>
             <figcaption>문서 목록에서 RVT를 고른 뒤 오른쪽 상세 영역에서 링크 포함 여부와 Reload 대상을 정합니다. 현재 Loaded 표시는 조회 시점의 실제 상태입니다.</figcaption>
           </figure>
           <div class="module-callout warn">
@@ -106,7 +108,11 @@
         <section class="module-section" id="views">
           <div class="module-section__head">
             <span class="eyebrow">2 / 3</span>
-            <h2>문서별 3D View를 선택합니다</h2>
+            <h2>업무에 맞는 방식으로 3D View를 지정합니다</h2>
+            <p>목록을 미리 조회한 경우에는 문서별 선택과 간편 뷰 설정을 사용할 수 있습니다. 빠른 방식은 View 이름만 입력해 두고 실제 추출 단계에서 각 문서의 정확히 같은 이름을 찾습니다.</p>
+          </div>
+          <div class="module-subsection">
+            <h3>목록에서 직접 선택</h3>
             <p>템플릿이 아닌 3D View만 표시됩니다. 왼쪽 문서 목록에서 RVT를 바꾸고, 오른쪽에서 이름 검색·전체 선택·선택 해제를 수행합니다.</p>
           </div>
           <ol class="module-logic">
@@ -114,10 +120,34 @@
             <li><div><strong>이름 검색</strong><p><code>NWC</code>, <code>Coordination</code> 같은 View 이름 일부로 현재 문서 목록을 좁힙니다. 검색은 다른 문서의 기존 선택을 지우지 않습니다.</p></div></li>
             <li><div><strong>View 체크</strong><p>선택한 View마다 NWC 파일 하나를 생성합니다. Perspective View는 별도 표시되므로 의도한 화면인지 확인합니다.</p></div></li>
             <li><div><strong>전체 선택 사용</strong><p>모든 문서 전체 선택은 조회된 모든 비템플릿 3D View를 선택합니다. 대량 생성이 될 수 있으므로 오른쪽 선택 View 수를 확인합니다.</p></div></li>
+            <li><div><strong>간편 뷰 설정</strong><p>모든 조회 문서의 View 이름을 한 창에서 검색합니다. 정확히 같은 이름을 먼저 보여주고 비슷한 이름은 접힌 목록으로 구분합니다. 선택 적용은 현재 단계에 머물고, 적용 후 다음 설정은 선택을 반영한 뒤 3단계로 이동합니다.</p></div></li>
           </ol>
           <figure class="module-shot">
-            <a href="/assets/manual-screenshots/nwc-view-selection.png?v=3.0-20260715.3" target="_blank" rel="noopener"><img src="/assets/manual-screenshots/nwc-view-selection.png?v=3.0-20260715.3" alt="NWC Export 문서별 3D View 선택 화면"></a>
+            <a href="/assets/manual-screenshots/nwc-view-selection.png?v=3.0-20260731.1" target="_blank" rel="noopener"><img src="/assets/manual-screenshots/nwc-view-selection.png?v=3.0-20260731.1" alt="NWC Export 문서별 3D View 선택 화면"></a>
             <figcaption>예시처럼 문서별 View 수와 선택 수를 함께 확인합니다. 3단계는 View를 하나 이상 선택해야 열립니다.</figcaption>
+          </figure>
+          <figure class="module-shot">
+            <a href="/assets/manual-screenshots/nwc-quick-view.png?v=3.0-20260731.1" target="_blank" rel="noopener"><img src="/assets/manual-screenshots/nwc-quick-view.png?v=3.0-20260731.1" alt="NWC Export 간편 3D View 설정 화면"></a>
+            <figcaption>간편 뷰 설정은 이미 조회한 목록을 다시 스캔하지 않고 한 창에 모읍니다. 같은 View 이름 아래에 RVT 파일명과 상위 폴더를 함께 표시하므로 같은 파일명을 가진 다른 폴더도 구분할 수 있습니다.</figcaption>
+          </figure>
+          <div class="module-subsection">
+            <h3>뷰 이름으로 일괄 추출 (빠른 방식)</h3>
+            <p>RVT 등록 단계에서 View 이름을 쉼표 또는 줄바꿈으로 입력합니다. 앞뒤 공백과 대소문자 차이는 정리해 중복 이름을 하나로 합치지만, 실제 View 검색은 이름 전체가 정확히 같은 비템플릿 3D View만 대상으로 합니다.</p>
+            <div class="module-table-wrap">
+              <table>
+                <thead><tr><th>설정</th><th>동작</th><th>예시</th></tr></thead>
+                <tbody>
+                  <tr><td>View 이름 입력</td><td>쉼표 또는 줄바꿈으로 여러 이름을 입력합니다. 등록 확인 단계에서는 RVT를 열지 않습니다.</td><td><code>NWC_EXPORT</code><br><code>Coordination 3D</code></td></tr>
+                  <tr><td>정확한 이름 검색</td><td>추출 시작 후 각 RVT를 한 번 열고 입력 이름과 정확히 일치하는 비템플릿 3D View를 찾습니다.</td><td><code>NWC_EXPORT</code>는 <code>NWC_EXPORT_MEP</code>와 일치하지 않음</td></tr>
+                  <tr><td>View 누락</td><td>해당 이름이 없는 RVT는 건너뜀으로 기록하고 다음 이름과 다음 파일을 계속 처리합니다.</td><td>ARCH에 Coordination 3D가 없어도 MEP·STR 추출은 계속</td></tr>
+                  <tr><td>링크 처리</td><td>모든 Revit 링크 포함을 켜거나 끄는 전역 정책만 사용합니다. 문서별·개별 링크 선택이 필요하면 직접 선택 방식으로 돌아갑니다.</td><td>정기 배치에서 모든 파일에 같은 링크 정책 적용</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <figure class="module-shot">
+            <a href="/assets/manual-screenshots/nwc-fast-view-names.png?v=3.0-20260731.1" target="_blank" rel="noopener"><img src="/assets/manual-screenshots/nwc-fast-view-names.png?v=3.0-20260731.1" alt="NWC Export View 이름 일괄 추출 빠른 방식 설정 화면"></a>
+            <figcaption>RVT 목록과 View 이름만 준비하고 확인합니다. 문서를 미리 열지 않으므로 대량 등록이 빠르지만, View와 링크를 파일별로 눈으로 확인해야 하는 작업에는 직접 선택 방식을 사용합니다.</figcaption>
           </figure>
         </section>
 
@@ -170,11 +200,11 @@
             </div>
           </div>
           <figure class="module-shot">
-            <a href="/assets/manual-screenshots/nwc-export-options.png?v=3.0-20260715.3" target="_blank" rel="noopener"><img src="/assets/manual-screenshots/nwc-export-options.png?v=3.0-20260715.3" alt="NWC Export 저장 폴더와 Navisworks 옵션 화면"></a>
+            <a href="/assets/manual-screenshots/nwc-export-options.png?v=3.0-20260731.1" target="_blank" rel="noopener"><img src="/assets/manual-screenshots/nwc-export-options.png?v=3.0-20260731.1" alt="NWC Export 저장 폴더와 Navisworks 옵션 화면"></a>
             <figcaption>상단에서 저장 폴더와 파일명 규칙을 정하고, 아래에서 Navisworks 옵션을 설정합니다. 오른쪽 저장 폴더와 Exporter 준비 상태가 모두 완료인지 확인합니다.</figcaption>
           </figure>
           <figure class="module-shot">
-            <a href="/assets/manual-screenshots/nwc-export-options-lower.png?v=3.0-20260715.3" target="_blank" rel="noopener"><img src="/assets/manual-screenshots/nwc-export-options-lower.png?v=3.0-20260715.3" alt="NWC Export 좌표와 형상 세부 옵션 화면"></a>
+            <a href="/assets/manual-screenshots/nwc-export-options-lower.png?v=3.0-20260731.1" target="_blank" rel="noopener"><img src="/assets/manual-screenshots/nwc-export-options-lower.png?v=3.0-20260731.1" alt="NWC Export 좌표와 형상 세부 옵션 화면"></a>
             <figcaption>옵션 아래쪽에는 좌표, 레벨 분할, Room 형상, Faceting Factor, 누락 재질과 기존 NWC 덮어쓰기 설정이 있습니다.</figcaption>
           </figure>
         </section>
@@ -187,9 +217,10 @@
           </div>
           <ol class="module-logic">
             <li><div><strong>Exporter 확인</strong><p>현재 Revit에 Navisworks Exporter가 사용 가능한지 확인합니다. 없으면 실행 버튼이 준비되지 않습니다.</p></div></li>
-            <li><div><strong>문서 열기</strong><p>활성 문서는 그대로 사용하고, 여러 RVT는 등록 순서대로 열어 처리합니다.</p></div></li>
-            <li><div><strong>링크 상태 기록</strong><p>현재 링크 Loaded / Unloaded 상태를 저장한 뒤 선택 계획에 따라 Reload 또는 Unload합니다.</p></div></li>
-            <li><div><strong>View별 Export</strong><p>선택한 View ID를 찾아 파일명 규칙과 옵션을 적용해 NWC를 생성합니다.</p></div></li>
+            <li><div><strong>문서 열기</strong><p>활성 문서는 그대로 사용하고, 여러 RVT는 등록 순서대로 한 번씩 열어 처리합니다. 빠른 방식은 이 시점에 처음 문서를 엽니다.</p></div></li>
+            <li><div><strong>링크 상태 기록</strong><p>직접 선택은 문서별 선택 계획에 따라 Reload 또는 Unload합니다. 빠른 방식은 모든 링크 포함 전역 설정을 적용합니다.</p></div></li>
+            <li><div><strong>View 해석</strong><p>직접 선택은 조회 때 저장한 View ID를 찾습니다. 빠른 방식은 입력한 이름과 정확히 일치하는 비템플릿 3D View를 현재 문서에서 찾고, 없는 이름은 건너뜀으로 기록합니다.</p></div></li>
+            <li><div><strong>View별 Export</strong><p>찾은 View마다 파일명 규칙과 옵션을 적용해 NWC를 생성합니다. 한 View가 실패하거나 없어도 다음 View와 다음 RVT를 계속 처리합니다.</p></div></li>
             <li><div><strong>파일 유효성 확인</strong><p>NWC가 실제로 존재하고, 크기가 0보다 크며, 실행 시작 뒤 갱신됐는지 확인합니다. 파일 크기가 연속 두 번 안정될 때 완료로 판단합니다.</p></div></li>
             <li><div><strong>링크 복원·문서 닫기</strong><p>링크를 원래 상태로 돌리고 배치 문서를 닫은 뒤 다음 RVT로 넘어갑니다.</p></div></li>
           </ol>
@@ -210,7 +241,7 @@
               <thead><tr><th>결과</th><th>의미</th><th>확인할 내용</th></tr></thead>
               <tbody>
                 <tr><td>Export 성공</td><td>NWC 생성과 파일 유효성 검증까지 통과한 View 수</td><td>출력 경로와 View 이름</td></tr>
-                <tr><td>건너뜀</td><td>덮어쓰기 끔 상태에서 기존 파일이 있거나 View에 내보낼 Geometry가 없어 생성을 생략한 View 수</td><td>기존 파일, View 표시 상태와 Geometry</td></tr>
+                <tr><td>건너뜀</td><td>덮어쓰기 끔 상태에서 기존 파일이 있거나, View에 Geometry가 없거나, 빠른 방식의 입력 이름과 정확히 같은 View가 없어 생성을 생략한 수</td><td>기존 파일, View 이름, 표시 상태와 Geometry</td></tr>
                 <tr><td>자동 처리 경고</td><td>호환되지 않는 프린터 또는 Print Setup 경고를 자동으로 닫고 Export를 계속한 기록</td><td>NWC가 정상 생성됐는지와 Message</td></tr>
                 <tr><td>오류</td><td>문서 열기, View 찾기, Export, 파일 검증 실패 수</td><td>행별 Message</td></tr>
                 <tr><td>링크 Reload / Unload</td><td>Export 전에 실제 상태를 바꾼 링크 수</td><td>의도한 링크 계획과 같은지</td></tr>
@@ -236,7 +267,7 @@
             <p class="manual-note">NWC 결과 Excel은 한 파일로 저장되며 한글/영문과 일반/빠른 저장을 선택합니다. RVT별 Excel 분리는 제공하지 않습니다.</p>
           </div>
           <figure class="module-shot">
-            <a href="/assets/manual-screenshots/nwc-export-result.png?v=3.0-20260715.3" target="_blank" rel="noopener"><img src="/assets/manual-screenshots/nwc-export-result.png?v=3.0-20260715.3" alt="NWC Export 완료 결과창"></a>
+            <a href="/assets/manual-screenshots/nwc-export-result.png?v=3.0-20260731.1" target="_blank" rel="noopener"><img src="/assets/manual-screenshots/nwc-export-result.png?v=3.0-20260731.1" alt="NWC Export 완료 결과창"></a>
             <figcaption>결과 Excel을 저장해도 전체 결과창은 유지됩니다. 필요한 언어·속도 조합으로 다시 내보내거나 결과 폴더를 열 수 있습니다.</figcaption>
           </figure>
           <div class="module-callout">
@@ -254,7 +285,8 @@
             <li>Navisworks Exporter가 현재 Revit 버전에 설치되어 있음</li>
             <li>통합 좌표가 필요하면 Coordinates를 Shared로 선택</li>
             <li>필요한 링크만 Reload 대상으로 체크</li>
-            <li>선택 View 수가 예상 NWC 수와 같은지 확인</li>
+            <li>직접 선택은 선택 View 수, 빠른 방식은 입력한 정확한 View 이름 수를 확인</li>
+            <li>빠른 방식에서 View가 없는 파일은 건너뜀으로 남는 것을 작업 기준에 포함</li>
             <li>저장 폴더의 쓰기 권한과 여유 공간 확인</li>
             <li>기존 파일 덮어쓰기 여부를 의도대로 선택</li>
             <li>Faceting Factor를 높이기 전 샘플 한 개로 용량 확인</li>
@@ -304,6 +336,6 @@
       <div class="mini-links"><a href="/Manual/kky-tool.html">KKY Tool 매뉴얼</a><a href="/Manual/index.html">프로그램 선택</a><a href="/requests.html">요청하기</a></div>
     </div>
   </footer>
-  <script src="/assets/site.js?v=3.0-20260716.2"></script>
+  <script src="/assets/site.js?v=3.0-20260731.1"></script>
 </body>
 </html>
