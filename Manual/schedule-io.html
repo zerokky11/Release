@@ -77,7 +77,7 @@
           <div class="module-section__head">
             <span class="eyebrow">Export 1 / 3</span>
             <h2>기준 Schedule과 추출 방식을 정합니다</h2>
-            <p>화면의 Schedule을 그대로 읽을지, Schedule에 잡히는 실제 요소를 행 단위로 읽을지 먼저 결정합니다.</p>
+            <p>화면의 Schedule을 그대로 읽을지, Schedule에 잡히는 요소만 읽을지, 모델 전체 대상에 Schedule 필드를 적용할지 먼저 결정합니다.</p>
           </div>
           <div class="module-table-wrap">
             <table>
@@ -87,16 +87,17 @@
                 <tr><td>기준 Schedule 문서</td><td>Schedule RVT 선택</td><td>Schedule을 모아 둔 별도 RVT에서 정의를 읽습니다. 대상 RVT가 달라도 같은 기준을 반복 적용할 때 사용합니다.</td><td><code>Schedule_Standards.rvt</code>의 표준 일람표를 여러 납품 RVT에 적용</td></tr>
                 <tr><td>추출 방식</td><td>Schedule 표시 그대로</td><td>Revit 화면에 표시되는 본문 셀을 읽습니다. 그룹, 합계, 계산 결과와 표시 순서를 보이는 형태로 보존합니다.</td><td>수량 합계와 그룹 제목까지 보고서처럼 저장</td></tr>
                 <tr><td>추출 방식</td><td>해당 객체 전체</td><td>Schedule에 해당하는 실제 요소를 한 행씩 읽습니다. <code>Element ID</code>는 항상 첫 식별 열로 넣고, 그 뒤에는 선택 Schedule에서 실제로 보이는 필드만 붙입니다. <code>Family</code>, <code>Type</code>, <code>Category</code>를 고정 열로 강제로 추가하지 않습니다.</td><td>추출 후 Comments를 수정해 다시 Import</td></tr>
+                <tr><td>추출 방식</td><td>전체 객체 + 스케줄 필드</td><td><b>조건별 객체 속성 추출</b>과 같은 범위에서 주석 및 제외 카테고리를 거른 모델 객체를 한 행씩 읽고, 선택 Schedule의 표시 파라미터만 붙입니다. 길이·면적·체적·각도 등 수치 단위는 대상 RVT가 아니라 기준 Schedule 문서의 프로젝트 단위를 따릅니다.</td><td>Schedule 카테고리 밖 객체까지 같은 속성 열로 검토</td></tr>
               </tbody>
             </table>
           </div>
           <figure class="module-shot">
-            <a href="/assets/manual-screenshots/schedule-export-source.png?v=3.0-20260731.1" target="_blank" rel="noopener"><img src="/assets/manual-screenshots/schedule-export-source.png?v=3.0-20260731.1" alt="Schedule Export 기준 문서와 추출 방식 설정 화면"></a>
+            <a href="/assets/manual-screenshots/schedule-export-source.png?v=3.0-20260731.2" target="_blank" rel="noopener"><img src="/assets/manual-screenshots/schedule-export-source.png?v=3.0-20260731.2" alt="Schedule Export 기준 문서와 추출 방식 설정 화면"></a>
             <figcaption>왼쪽 중앙에서 기준 문서와 추출 방식을 설정하고, 오른쪽 Workflow에서 다음 단계 준비 상태를 확인합니다.</figcaption>
           </figure>
           <div class="module-callout warn">
             <strong>Import에 다시 사용할 파일이라면</strong>
-            <b>Schedule 표시 그대로</b>에는 요소 식별 열이 없습니다. 값 재입력이 목적이면 <b>해당 객체 전체</b>를 사용하고, 대상 단계에서 <b>파일 이름 포함</b>도 켭니다.
+            <b>Schedule 표시 그대로</b>에는 요소 식별 열이 없습니다. 값 재입력이 목적이면 <b>해당 객체 전체</b> 또는 <b>전체 객체 + 스케줄 필드</b>를 사용하고, 대상 단계에서 <b>파일 이름 포함</b>도 켭니다.
           </div>
         </section>
 
@@ -112,7 +113,7 @@
             <li><div><strong>대상별 임시 적용</strong><p>기준 문서와 대상 문서가 다르면 선택 Schedule을 대상 문서에 임시 복사해 데이터를 읽은 뒤 트랜잭션을 되돌립니다. 대상 RVT에는 복사본이 저장되지 않습니다.</p></div></li>
           </ol>
           <figure class="module-shot">
-            <a href="/assets/manual-screenshots/schedule-export-schedules.png?v=3.0-20260731.1" target="_blank" rel="noopener"><img src="/assets/manual-screenshots/schedule-export-schedules.png?v=3.0-20260731.1" alt="Schedule Export Schedule 선택 화면"></a>
+            <a href="/assets/manual-screenshots/schedule-export-schedules.png?v=3.0-20260731.2" target="_blank" rel="noopener"><img src="/assets/manual-screenshots/schedule-export-schedules.png?v=3.0-20260731.2" alt="Schedule Export Schedule 선택 화면"></a>
             <figcaption>예시에서는 장비 일람표와 배관 시스템 요약 두 개를 선택했습니다. 다음 단계는 하나 이상 선택해야 열립니다.</figcaption>
           </figure>
         </section>
@@ -121,26 +122,29 @@
           <div class="module-section__head">
             <span class="eyebrow">Export 3 / 3</span>
             <h2>추출할 문서와 링크 포함 방식을 정합니다</h2>
-            <p>활성 문서만 바로 처리하거나, 대상 관리 창에서 활성 문서와 여러 RVT를 하나의 일괄 작업으로 구성합니다. 일괄 추출에서는 등록 RVT의 링크·워크셋 로드 방식도 선택할 수 있습니다.</p>
+            <p>활성 문서만 바로 처리하거나, 대상 관리 창에서 활성 문서와 여러 RVT를 하나의 일괄 작업으로 구성합니다. <b>전체 객체 + 스케줄 필드</b>에서는 활성 문서와 여러 RVT 모두 현재 로드된 직접 Revit 링크를 함께 추출할 수 있습니다.</p>
           </div>
           <div class="module-table-wrap">
             <table>
               <thead><tr><th>설정</th><th>선택 방법</th><th>실행 동작</th><th>적합한 상황</th></tr></thead>
               <tbody>
-                <tr><td>활성 문서</td><td>현재 Revit의 <code>ActiveUIDocument.Document</code>를 사용</td><td>열린 프로젝트 문서를 닫지 않고 즉시 추출합니다. 링크·패밀리 문서는 대상에서 제외됩니다.</td><td>현재 작업 모델을 빠르게 확인</td></tr>
+                <tr><td>활성 문서</td><td>현재 Revit의 <code>ActiveUIDocument.Document</code>를 사용</td><td>열린 프로젝트 문서를 닫지 않고 즉시 추출합니다. <b>전체 객체 + 스케줄 필드</b>에서 링크 포함을 켜면 현재 로드된 직접 Revit 링크도 함께 읽습니다.</td><td>현재 작업 모델과 로드된 링크를 함께 확인</td></tr>
                 <tr><td>여러 RVT</td><td><b>대상 RVT 등록</b>에서 파일 선택 또는 드롭</td><td>등록 순서대로 RVT를 열어 추출한 뒤 닫습니다. 동일 경로는 한 번만 등록되고, 서로 다른 폴더라도 기본 파일명이 같은 RVT가 둘 이상이면 실행 전 중단됩니다.</td><td>납품 폴더의 여러 모델을 같은 양식으로 추출</td></tr>
                 <tr><td>활성 문서 포함</td><td>여러 RVT의 <b>대상 문서 관리</b> 창에서 켬</td><td>현재 활성 문서를 다시 열지 않고 등록 RVT와 함께 처리합니다. 활성 문서 경로가 등록 목록과 같으면 한 문서로 계산합니다.</td><td>현재 모델과 외부 RVT를 한 결과로 비교</td></tr>
-                <tr><td>링크 파일 포함 · 꺼짐</td><td>추출 대상 단계에서 끔</td><td>등록 RVT를 모든 워크셋이 닫힌 상태로 빠르게 열어 링크 데이터를 제외합니다. 활성 문서는 다시 열지 않고 현재 로드 상태를 유지합니다.</td><td>호스트 모델 데이터만 빠르게 추출</td></tr>
-                <tr><td>링크 파일 포함 · 켜짐</td><td>추출 대상 단계에서 켬</td><td>등록 RVT의 모든 워크셋을 열어 링크 데이터까지 읽습니다. 활성 문서는 현재 로드된 링크·워크셋 상태를 그대로 사용합니다.</td><td>링크 요소를 포함한 Schedule 데이터가 필요할 때</td></tr>
-                <tr><td>파일 이름 포함 · 꺼짐</td><td>대상 단계에서 끔</td><td><code>RVT File</code> 열을 만들지 않습니다. 해당 객체 전체는 <code>Element ID</code>와 선택 Schedule의 표시 필드만, Schedule 표시 그대로는 화면의 표시 열만 저장합니다.</td><td>한 문서의 보고서만 만들고 다시 Import하지 않을 때</td></tr>
-                <tr><td>파일 이름 포함 · 켜짐</td><td>대상 단계에서 켬</td><td>각 결과 행 앞에 <code>RVT File</code> 열을 추가합니다. 여러 문서를 구분하거나 Export 파일을 Import에 다시 사용할 때 필요합니다.</td><td>여러 RVT 통합 또는 Excel 재입력</td></tr>
+                <tr><td>링크 파일 포함 · 꺼짐</td><td>추출 대상 단계에서 끔</td><td>등록 RVT는 모든 워크셋을 닫아 빠르게 열고, 활성 문서는 현재 로드 상태를 유지합니다. <b>전체 객체 + 스케줄 필드</b>도 호스트 객체만 추출합니다.</td><td>호스트 모델 데이터만 빠르게 추출</td></tr>
+                <tr><td>링크 파일 포함 · 켜짐</td><td><b>Schedule 표시 그대로</b> 또는 <b>해당 객체 전체</b>에서 켬</td><td>등록 RVT의 모든 워크셋을 열어 기존 Schedule 추출의 링크 로드 상태를 유지합니다. 활성 문서는 현재 로드 상태를 그대로 사용하며, 링크 객체를 별도 행으로 추가하지는 않습니다.</td><td>기존 Schedule 방식에서 링크 로드 상태가 필요한 경우</td></tr>
+                <tr><td>링크 파일 포함 · 켜짐</td><td><b>전체 객체 + 스케줄 필드</b>에서 켬</td><td>대상 문서에 로드된 직접 Revit 링크를 링크 문서별 한 번씩 읽어 같은 BQC 제외 범위와 Schedule 필드를 적용합니다. 언로드 링크는 건너뛰고 로그에 남깁니다.</td><td>호스트와 링크 객체 속성을 한 번에 검토</td></tr>
+                <tr><td>파일 이름 포함 · 꺼짐</td><td>대상 단계에서 끔</td><td><code>RVT File</code> 열을 만들지 않습니다. 단, 링크 파일 포함을 켜면 링크 출처를 보존하기 위해 자동으로 켜지고 해제할 수 없습니다.</td><td>한 문서의 호스트 보고서만 만들 때</td></tr>
+                <tr><td>파일 이름 포함 · 켜짐</td><td>대상 단계에서 켬</td><td>각 결과 행 앞에 실제 원본 문서명인 <code>RVT File</code>을 추가합니다. 링크 포함 시 호스트 파일명은 <code>Host RVT File</code>에도 기록됩니다.</td><td>여러 RVT 통합 또는 Excel 재입력</td></tr>
               </tbody>
             </table>
           </div>
+          <p class="manual-note"><b>링크 행 구분:</b> 링크 원본 파일명은 <code>RVT File</code>, 링크가 배치된 호스트 파일명은 <code>Host RVT File</code>에 기록합니다. 같은 링크 문서가 여러 인스턴스로 배치되어도 한 번만 처리하며, Schedule에 Revit 링크 파일명 필드가 이미 있으면 같은 열을 중복 생성하지 않습니다.</p>
+          <p class="manual-note"><b>링크 행 Import 차단:</b> 링크 행은 <code>KKY Source Kind = LINKED_RVT</code>, <code>KKY Import Policy = BLOCK:LINKED_RVT</code>, <code>Linked Element ID</code>로 구분합니다. 호스트용 <code>Element ID</code>는 비워 두며, 파라미터 확인과 실제 Import에서 모두 제외됩니다.</p>
           <p class="manual-note"><b>대상 수 확인:</b> 여러 RVT 모드의 대상 수는 등록 RVT와 <b>활성 문서 포함</b>을 합산한 문서 수입니다. 대상 관리 창을 닫기 전에 목록과 활성 문서 포함 상태를 함께 확인합니다.</p>
           <figure class="module-shot">
-            <a href="/assets/manual-screenshots/schedule-export-target.png?v=3.0-20260731.1" target="_blank" rel="noopener"><img src="/assets/manual-screenshots/schedule-export-target.png?v=3.0-20260731.1" alt="Schedule Export 여러 문서와 링크 및 파일 이름 포함 설정 화면"></a>
-            <figcaption>예시는 활성 문서와 등록 RVT를 함께 선택하고 링크 파일 포함과 파일 이름 포함을 켠 상태입니다. Import에 사용할 파일이라면 요약의 Excel 열에 <code>RVT File + Element ID + 선택 필드</code>가 표시되는지 확인합니다.</figcaption>
+            <a href="/assets/manual-screenshots/schedule-export-target.png?v=3.0-20260731.2" target="_blank" rel="noopener"><img src="/assets/manual-screenshots/schedule-export-target.png?v=3.0-20260731.2" alt="Schedule Export 여러 문서와 링크 및 파일 이름 포함 설정 화면"></a>
+            <figcaption>링크 파일 포함을 켜면 파일 이름 포함도 자동으로 켜집니다. 결과에는 호스트의 <code>Element ID</code>와 링크의 <code>Linked Element ID</code>가 분리되어 표시되고 링크 행은 Import에서 제외됩니다.</figcaption>
           </figure>
         </section>
 
@@ -167,7 +171,7 @@
           </div>
           <p class="manual-note">모든 Export 파일에는 처리 내역을 기록하는 <code>Export Log</code> 시트가 추가됩니다. 동일 시트명이 생기면 Excel 제한에 맞게 정리하고 뒤에 <code>(2)</code>, <code>(3)</code>을 붙입니다.</p>
           <figure class="module-shot">
-            <a href="/assets/manual-screenshots/schedule-export-result.png?v=3.0-20260731.1" target="_blank" rel="noopener"><img src="/assets/manual-screenshots/schedule-export-result.png?v=3.0-20260731.1" alt="Schedule Export 전체 집계와 문서별 완료 결과창"></a>
+            <a href="/assets/manual-screenshots/schedule-export-result.png?v=3.0-20260731.2" target="_blank" rel="noopener"><img src="/assets/manual-screenshots/schedule-export-result.png?v=3.0-20260731.2" alt="Schedule Export 전체 집계와 문서별 완료 결과창"></a>
             <figcaption>상단 전체 합계 아래에서 문서별 처리 행·건너뜀·오류를 확인합니다. 엑셀 내보내기를 취소하거나 완료해도 결과창으로 돌아와 다른 조합으로 다시 저장할 수 있습니다.</figcaption>
           </figure>
         </section>
@@ -189,6 +193,7 @@
                   <tr><td>필수 · 요소 ID</td><td><code>Element ID</code> 또는 <code>Unique ID</code></td><td>둘 중 하나가 있어야 합니다. Element ID를 먼저 찾고, 없거나 일치하지 않으면 Unique ID를 사용합니다.</td></tr>
                   <tr><td>선택 · Family</td><td><code>Family</code>, <code>패밀리</code></td><td>열이 있으면 찾은 요소의 Family와 비교해 불일치를 경고합니다. 불일치만으로 적용을 중단하지는 않습니다.</td></tr>
                   <tr><td>선택 · Type</td><td><code>Type</code>, <code>타입</code></td><td>열이 있으면 찾은 요소의 Type과 비교해 불일치를 경고합니다. 실제 반영 대상은 Element ID/Unique ID 매칭 결과입니다.</td></tr>
+                  <tr><td>예약 · 링크 출처</td><td><code>Host RVT File</code>, <code>Linked Element ID</code>, <code>KKY Source Kind</code>, <code>KKY Import Policy</code></td><td>링크 포함 Export가 자동 생성합니다. 매핑 후보에 표시되지 않으며 링크 행은 정책 값으로 Import에서 강제 제외됩니다.</td></tr>
                 </tbody>
               </table>
             </div>
@@ -242,7 +247,8 @@
             <p>파일명과 Element ID 또는 Unique ID로 실제 요소를 찾은 뒤 파라미터 상태를 확인합니다. Family와 Type 열이 있으면 잘못된 행을 알아보기 위한 경고를 남기지만, ID로 찾은 요소에 계속 반영합니다.</p>
           </div>
           <ol class="module-logic">
-            <li><div><strong>대상 문서 일치</strong><p><code>RVT File</code> 값을 경로와 확장자를 정리한 파일명으로 비교해 대상 RVT를 찾습니다.</p></div></li>
+            <li><div><strong>링크 행 선제 제외</strong><p><code>KKY Source Kind</code> 또는 <code>KKY Import Policy</code>가 링크 행을 나타내면 대상 파일명이나 ID를 검사하기 전에 Import 대상에서 제외합니다.</p></div></li>
+            <li><div><strong>대상 문서 일치</strong><p>남은 호스트 행의 <code>RVT File</code> 값을 경로와 확장자를 정리한 파일명으로 비교해 대상 RVT를 찾습니다.</p></div></li>
             <li><div><strong>요소 찾기</strong><p><code>Element ID</code>를 먼저 사용하고, 해당 값이 없거나 찾지 못하면 <code>Unique ID</code>를 사용합니다.</p></div></li>
             <li><div><strong>Family / Type 보조 검증</strong><p>Excel에 열과 값이 있으면 실제 요소의 Family와 Type을 비교합니다. 다르면 경고 로그를 남기되 Element ID/Unique ID로 찾은 요소를 기준으로 계속 반영합니다.</p></div></li>
             <li><div><strong>파라미터 상태 확인</strong><p>매핑 이름으로 Instance 또는 Type 파라미터를 찾고, 읽기 전용이면 오류로 기록합니다.</p></div></li>
@@ -269,6 +275,7 @@
                 <tr><td>대상 파일</td><td>Schedule을 읽은 RVT 수</td><td>값 적용 대상으로 처리한 RVT 수</td></tr>
                 <tr><td>처리 행</td><td>추출한 데이터 행 수</td><td>Excel에서 검토한 행 수</td></tr>
                 <tr><td>변경 값</td><td>표시하지 않음</td><td>실제로 바뀐 파라미터 값 수</td></tr>
+                <tr><td>링크 Import 제외</td><td>표시하지 않음</td><td>링크 문서 출처 정책으로 검사·반영 전에 제외한 행 수</td></tr>
                 <tr><td>건너뜀</td><td>추출할 데이터가 없거나 조건상 제외된 행</td><td>문서·요소를 찾지 못함, 빈 값 보존, Type 값 충돌 등으로 쓰지 않은 행. Family/Type 불일치는 경고 후 ID 매칭 요소에 계속 반영</td></tr>
                 <tr><td>오류</td><td>Schedule 복사·읽기 실패</td><td>읽기 전용, 형식 변환 실패, 저장 실패 등</td></tr>
                 <tr><td>파일별 결과</td><td>각 문서의 처리 행·건너뜀·오류를 별도로 표시</td><td>각 문서의 처리 행·변경 값·건너뜀·오류를 집계해 문제 파일을 구분</td></tr>
@@ -308,6 +315,7 @@
           <ul class="module-side-list">
             <li><strong>표시 그대로</strong><br>보고서 형태 보존</li>
             <li><strong>해당 객체 전체</strong><br>요소 식별과 재입력</li>
+            <li><strong>전체 객체 + 스케줄 필드</strong><br>BQC 전체 범위에 Schedule 열 적용</li>
             <li><strong>Instance</strong><br>개별 요소 값</li>
             <li><strong>Type</strong><br>같은 Type이 공유하는 값</li>
           </ul>

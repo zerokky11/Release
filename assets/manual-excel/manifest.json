@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-07-13T14:58:17.209Z",
+  "generatedAt": "2026-07-31T05:44:55.230Z",
   "viewport": "1440x760",
-  "outputCount": 25,
+  "outputCount": 26,
   "inputCount": 6,
-  "count": 31,
+  "count": 32,
   "results": [
     {
       "featureId": "connector",
@@ -70,6 +70,12 @@
       "kind": "result",
       "file": "Sever/assets/manual-excel/parameterstandard-result.png",
       "bytes": 31174
+    },
+    {
+      "featureId": "ghostcleaner",
+      "kind": "result",
+      "file": "Sever/assets/manual-excel/ghostcleaner-result.png",
+      "bytes": 30873
     },
     {
       "featureId": "tapdepthutility",
