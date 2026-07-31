@@ -1,5 +1,13 @@
 [
   {
+    "version": "3.0.2",
+    "publishedAt": "2026-07-31",
+    "title": "버전 3.0.2",
+    "notes": "전체 기능 설정의 재실행 유지와 Revit 창 간 실시간 공유를 추가하고, 유령객체 제거, NWC Export View 이름 일괄 추출, 커넥터 진단, Schedule Import/Export, 기능 선택 화면을 개선한 KKY Tool 3.0.2입니다. Revit 2019, 2021, 2023, 2025, 2027을 지원합니다.",
+    "packageUrl": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.2.zip",
+    "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.2.exe"
+  },
+  {
     "version": "3.0.1",
     "publishedAt": "2026-07-21",
     "title": "버전 3.0.1",

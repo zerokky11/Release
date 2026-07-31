@@ -1,11 +1,11 @@
 {
-  "version": "3.0.1",
-  "url": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.1.zip",
-  "publishedAt": "2026-07-21",
-  "notes": "BIA2 분석 기능을 정식 제품에서 분리한 KKY Tool 3.0.1입니다. Revit 2019, 2021, 2023, 2025, 2027을 지원합니다.",
-  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.1.exe",
-  "sha256": "6BA1361C2B7A7166665EA3ADEAD687FE94E09DC12F58CE3C3FAC3D7A2F5BB9ED",
-  "updateZipSha256": "1BBEBD114622E9990D639D075C679401B812F036C0D56879C603C46910E69017",
+  "version": "3.0.2",
+  "url": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.2.zip",
+  "publishedAt": "2026-07-31",
+  "notes": "전체 기능 설정의 재실행 유지와 Revit 창 간 실시간 공유를 추가하고, 유령객체 제거, NWC Export View 이름 일괄 추출, 커넥터 진단, Schedule Import/Export, 기능 선택 화면을 개선한 KKY Tool 3.0.2입니다. Revit 2019, 2021, 2023, 2025, 2027을 지원합니다.",
+  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.2.exe",
+  "sha256": "7BA5AA92CE0B3493B4C4A82A170C944C8D104AA538EDAB4D7C8125F2F5836B26",
+  "updateZipSha256": "390C1625639E93D366F8A3E5C853666E5BB6633A0D5F43ED76417E085EFACE5B",
   "supportedRevit": [
     2019,
     2021,
