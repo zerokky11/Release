@@ -1,11 +1,11 @@
 {
-  "version": "3.0.2",
-  "url": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.2.zip",
-  "publishedAt": "2026-07-31",
-  "notes": "전체 기능 설정의 재실행 유지와 Revit 창 간 실시간 공유를 추가하고, 유령객체 제거, NWC Export View 이름 일괄 추출, 커넥터 진단, Schedule Import/Export, 기능 선택 화면을 개선한 KKY Tool 3.0.2입니다. Revit 2019, 2021, 2023, 2025, 2027을 지원합니다.",
-  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.2.exe",
-  "sha256": "7BA5AA92CE0B3493B4C4A82A170C944C8D104AA538EDAB4D7C8125F2F5836B26",
-  "updateZipSha256": "390C1625639E93D366F8A3E5C853666E5BB6633A0D5F43ED76417E085EFACE5B",
+  "version": "3.0.3",
+  "url": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.3.zip",
+  "publishedAt": "2026-08-03",
+  "notes": "Schedule Export의 전체 객체 + 스케줄 필드 모드에 Shared GUID/일반 Project 이름 기반의 안전한 파라미터 매핑과 빈값 사유 집계 로그를 추가하고, 기존 임시 Schedule 복사 경고 처리를 보강한 KKY Tool 3.0.3입니다. Revit 2019, 2021, 2023, 2025, 2027을 지원합니다.",
+  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.3.exe",
+  "sha256": "47FD559A8B6C37FA9CB39A0AE81A35663831A27874017AE11FC93C1945049BC9",
+  "updateZipSha256": "2310284B462CACE13D45D15EE89B50DC34D6D8F2994C5C5015FD803963062CA8",
   "supportedRevit": [
     2019,
     2021,

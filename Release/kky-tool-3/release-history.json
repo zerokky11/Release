@@ -1,5 +1,13 @@
 [
   {
+    "version": "3.0.3",
+    "publishedAt": "2026-08-03",
+    "title": "버전 3.0.3",
+    "notes": "Schedule Export의 전체 객체 + 스케줄 필드 모드에 Shared GUID/일반 Project 이름 기반의 안전한 파라미터 매핑과 빈값 사유 집계 로그를 추가하고, 기존 임시 Schedule 복사 경고 처리를 보강한 KKY Tool 3.0.3입니다. Revit 2019, 2021, 2023, 2025, 2027을 지원합니다.",
+    "packageUrl": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.3.zip",
+    "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.3.exe"
+  },
+  {
     "version": "3.0.2",
     "publishedAt": "2026-07-31",
     "title": "버전 3.0.2",

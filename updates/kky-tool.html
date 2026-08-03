@@ -31,7 +31,7 @@
         <h1>KKY Tool 업데이트 내역</h1>
         <p>현재 운영하는 3.x 계열과 초기 레이아웃 계열의 마지막 Stable 2.x 변경 기록입니다.</p>
       </div>
-      <div class="updates-current"><span class="badge ok">현재 배포</span><strong>3.0.2</strong><span>2026.07.31</span></div>
+      <div class="updates-current"><span class="badge ok">현재 배포</span><strong>3.0.3</strong><span>2026.08.03</span></div>
     </section>
 
     <nav class="updates-program-tabs" aria-label="업데이트 내역 프로그램 선택">
@@ -44,7 +44,20 @@
       <header class="release-series__header"><div><h2 id="kky-3-series">KKY Tool 3.x</h2><p>새 작업대 UI와 확장 기능을 사용하는 현재 계열입니다.</p></div><a class="button primary" href="/index.html#download">현재 버전 받기</a></header>
       <ol class="release-notes">
         <li class="release-note">
-          <div class="release-note__version"><span class="badge ok">현재 배포</span><strong>3.0.2</strong><span class="release-note__date">2026.07.31</span></div>
+          <div class="release-note__version"><span class="badge ok">현재 배포</span><strong>3.0.3</strong><span class="release-note__date">2026.08.03</span></div>
+          <div class="release-note__content">
+            <h3>Schedule Export 파라미터 매핑과 대상 RVT 처리 안정화</h3>
+            <p class="release-note__summary"><b>전체 객체 + 스케줄 필드</b> 추출에서 기준 Schedule의 필드를 대상 RVT 파라미터에 연결하는 규칙을 명확히 하고, 임시 Schedule 적용 과정에서 생길 수 있는 경고와 문서 변경을 안전하게 처리했습니다.</p>
+            <ul class="release-note__list">
+              <li>Revit 기본 파라미터는 내부 ID, Shared Parameter는 GUID, 일반 Project Parameter는 대소문자까지 같은 유일한 이름을 기준으로 연결합니다.</li>
+              <li>GUID 불일치, 이름 중복, 계산 필드, 실제 빈 값은 임의의 다른 파라미터로 대체하지 않고 빈 셀로 유지하며, 원인별 건수와 Element ID 예시를 <code>Export Log</code>에 남깁니다.</li>
+              <li>다른 문서의 Schedule을 대상 RVT에 임시 적용할 때 타입 중복과 패밀리 이름 관련 알림을 처리하고, 데이터 추출 뒤 트랜잭션 전체를 되돌려 대상 파일에 복사본을 남기지 않습니다.</li>
+              <li>길이·면적·체적·각도 등 수치 값은 기준 Schedule 문서의 프로젝트 단위를 따르며 Revit 2019, 2021, 2023, 2025, 2027 지원을 유지합니다.</li>
+            </ul>
+          </div>
+        </li>
+        <li class="release-note">
+          <div class="release-note__version"><span class="badge blue">정식 버전</span><strong>3.0.2</strong><span class="release-note__date">2026.07.31</span></div>
           <div class="release-note__content">
             <h3>모델 정리와 반복 추출 흐름 보강</h3>
             <p class="release-note__summary">3.0.1 이후 추가·수정된 기능과 작업 흐름을 현재 구현 기준으로 묶어 정식 배포한 버전입니다.</p>
