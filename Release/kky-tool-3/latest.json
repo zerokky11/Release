@@ -1,11 +1,11 @@
 {
-  "version": "3.0.3",
-  "url": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.3.zip",
-  "publishedAt": "2026-08-03",
-  "notes": "Schedule Export의 전체 객체 + 스케줄 필드 모드에 Shared GUID/일반 Project 이름 기반의 안전한 파라미터 매핑과 빈값 사유 집계 로그를 추가하고, 기존 임시 Schedule 복사 경고 처리를 보강한 KKY Tool 3.0.3입니다. Revit 2019, 2021, 2023, 2025, 2027을 지원합니다.",
-  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.3.exe",
-  "sha256": "47FD559A8B6C37FA9CB39A0AE81A35663831A27874017AE11FC93C1945049BC9",
-  "updateZipSha256": "2310284B462CACE13D45D15EE89B50DC34D6D8F2994C5C5015FD803963062CA8",
+  "version": "3.0.4",
+  "url": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.4.zip",
+  "publishedAt": "2026-08-04",
+  "notes": "Schedule Export 실행 전에 Excel 구성과 저장 위치를 먼저 확정하고, 여러 RVT를 문서별로 추출·기록·해제하는 저메모리 순차 처리와 통합 Excel 스트리밍 저장을 적용한 KKY Tool 3.0.4입니다. 취소·실패 시 미완성 파일을 정리하며 Revit 2019, 2021, 2023, 2025, 2027을 지원합니다.",
+  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.4.exe",
+  "sha256": "CA815A85CD265B489FFEB5D27A45D1224B7A22F5A9D42E44921DD05598356F0D",
+  "updateZipSha256": "AE30CAAD347D3AC7FA5BAB908400E6766BA1F9DB1DA79D37B88456E055D87C70",
   "supportedRevit": [
     2019,
     2021,

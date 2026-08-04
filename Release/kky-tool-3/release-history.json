@@ -1,5 +1,13 @@
 [
   {
+    "version": "3.0.4",
+    "publishedAt": "2026-08-04",
+    "title": "버전 3.0.4",
+    "notes": "Schedule Export 실행 전에 Excel 구성과 저장 위치를 먼저 확정하고, 여러 RVT를 문서별로 추출·기록·해제하는 저메모리 순차 처리와 통합 Excel 스트리밍 저장을 적용한 KKY Tool 3.0.4입니다. 취소·실패 시 미완성 파일을 정리하며 Revit 2019, 2021, 2023, 2025, 2027을 지원합니다.",
+    "packageUrl": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.4.zip",
+    "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.4.exe"
+  },
+  {
     "version": "3.0.3",
     "publishedAt": "2026-08-03",
     "title": "버전 3.0.3",

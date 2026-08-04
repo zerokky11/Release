@@ -64,8 +64,8 @@
             <li><strong>기준과 대상 준비</strong><p>Export는 기준 Schedule과 추출할 문서를, Import는 Excel과 값을 적용할 문서를 준비합니다.</p></li>
             <li><strong>세부 설정</strong><p>추출 형태 또는 Instance·Type 매핑을 지정합니다.</p></li>
             <li><strong>사전 확인</strong><p>선택 개수, 식별 열, 파라미터 검사 결과를 확인합니다.</p></li>
-            <li><strong>실행</strong><p>활성 문서 또는 등록한 여러 RVT를 실행합니다.</p></li>
-            <li><strong>결과 저장</strong><p>Export는 결과창에서 Excel 형식과 저장 위치를 선택합니다.</p></li>
+            <li><strong>저장 방식 선택 및 실행</strong><p>Export는 실행 버튼을 누른 뒤 추출 전에 Excel 구성과 저장 위치를 먼저 정합니다.</p></li>
+            <li><strong>결과 확인</strong><p>저장 완료 후 전체 합계, 문서별 처리 행과 오류, 생성된 파일 또는 폴더를 확인합니다.</p></li>
           </ol>
           <div class="module-callout">
             <strong>권장 첫 작업</strong>
@@ -123,7 +123,7 @@
           <div class="module-section__head">
             <span class="eyebrow">Export 3 / 3</span>
             <h2>추출할 문서와 링크 포함 방식을 정합니다</h2>
-            <p>활성 문서만 바로 처리하거나, 대상 관리 창에서 활성 문서와 여러 RVT를 하나의 일괄 작업으로 구성합니다. <b>전체 객체 + 스케줄 필드</b>에서는 활성 문서와 여러 RVT 모두 현재 로드된 직접 Revit 링크를 함께 추출할 수 있습니다.</p>
+            <p>활성 문서만 바로 처리하거나, 대상 관리 창에서 활성 문서와 여러 RVT를 하나의 일괄 작업으로 구성합니다. <b>전체 객체 + 스케줄 필드</b>에서는 활성 문서와 여러 RVT 모두 현재 로드된 직접 Revit 링크를 함께 추출할 수 있습니다. 실행 버튼을 누르면 실제 추출보다 먼저 Excel 구성과 저장 위치를 선택합니다.</p>
           </div>
           <div class="module-table-wrap">
             <table>
@@ -152,8 +152,8 @@
         <section class="module-section" id="export-excel">
           <div class="module-section__head">
             <span class="eyebrow">Export 결과</span>
-            <h2>추출 후 Excel 구성과 저장 방식을 고릅니다</h2>
-            <p>Revit 데이터 추출이 끝나면 결과창은 닫히지 않은 채 Excel을 한 번 이상 내보낼 수 있습니다. 여러 문서 작업은 전체 합계와 문서별 처리·건너뜀·오류를 함께 보여주며, 통합 파일과 RVT별 파일 중 하나를 선택해 저장합니다.</p>
+            <h2>추출 전에 Excel 구성과 저장 방식을 고릅니다</h2>
+            <p>실행 버튼을 누르면 먼저 통합 파일 또는 RVT별 파일, 시트 구성, 빠른·일반 추출, 한글·영문을 선택합니다. 이어서 파일이나 폴더 위치를 정한 뒤에만 Revit 데이터 추출을 시작합니다. 저장 선택을 취소하면 RVT를 열지 않습니다.</p>
           </div>
           <div class="module-table-wrap">
             <table>
@@ -165,15 +165,16 @@
                 <tr><td>Schedule별 시트</td><td>선택 Schedule마다 시트를 하나 만듭니다. 여러 RVT를 한 파일로 저장하면 RVT 이름을 시트명 앞에 붙입니다.</td><td><code>Plant_A_MEP Equipment Schedule</code></td></tr>
                 <tr><td>한 시트로 통합</td><td>모든 행을 <code>Schedule Data</code>에 모으고 <code>Schedule Name</code>을 추가합니다. <code>RVT File</code>은 대상 단계에서 파일 이름 포함을 켠 경우에만 추가합니다.</td><td>필터와 피벗으로 전체 파일 비교</td></tr>
                 <tr><td>카테고리별 시트</td><td>Schedule 카테고리를 기준으로 시트를 나누고 출처 열을 추가합니다.</td><td>Mechanical Equipment, Pipes 등</td></tr>
-                <tr><td>여러 RVT · 한 파일</td><td>모든 대상 결과를 사용자가 선택한 하나의 xlsx로 저장합니다.</td><td><code>KKY_Schedule_Export_20260714_153012.xlsx</code></td></tr>
-                <tr><td>여러 RVT · 파일별</td><td>선택 폴더에 RVT마다 별도 xlsx를 생성합니다.</td><td><code>Plant_A_Schedule_Export_20260714_153012.xlsx</code></td></tr>
+                <tr><td>여러 RVT · 한 파일</td><td>RVT를 하나씩 열고 닫은 뒤 현재 문서 행을 통합 xlsx의 임시 스트림에 바로 기록하고 메모리에서 해제합니다. 마지막 대상까지 끝나면 사용자가 고른 파일을 완성합니다.</td><td><code>KKY_Schedule_Export_20260714_153012.xlsx</code></td></tr>
+                <tr><td>여러 RVT · 파일별</td><td>RVT 하나를 열어 추출하고 닫은 뒤 해당 xlsx를 즉시 저장·해제하고 다음 RVT를 엽니다.</td><td><code>Plant_A_Schedule_Export_20260714_153012.xlsx</code></td></tr>
               </tbody>
             </table>
           </div>
+          <p class="manual-note"><b>대용량 배치 메모리:</b> 등록한 RVT 전체의 표를 메모리에 모으지 않습니다. 현재 RVT의 추출 표만 저장기에 전달하고 해제하므로 70개처럼 파일 수가 많은 작업도 처리량은 늘지만 메모리가 파일 수에 비례해 계속 쌓이지 않습니다.</p>
           <p class="manual-note">모든 Export 파일에는 처리 내역을 기록하는 <code>Export Log</code> 시트가 추가됩니다. 동일 시트명이 생기면 Excel 제한에 맞게 정리하고 뒤에 <code>(2)</code>, <code>(3)</code>을 붙입니다.</p>
           <figure class="module-shot">
             <a href="/assets/manual-screenshots/schedule-export-result.png?v=3.0-20260731.2" target="_blank" rel="noopener"><img src="/assets/manual-screenshots/schedule-export-result.png?v=3.0-20260731.2" alt="Schedule Export 전체 집계와 문서별 완료 결과창"></a>
-            <figcaption>상단 전체 합계 아래에서 문서별 처리 행·건너뜀·오류를 확인합니다. 엑셀 내보내기를 취소하거나 완료해도 결과창으로 돌아와 다른 조합으로 다시 저장할 수 있습니다.</figcaption>
+            <figcaption>저장 완료 후 상단 전체 합계 아래에서 문서별 처리 행·건너뜀·오류를 확인하고, 생성된 파일이나 폴더를 바로 열 수 있습니다. 다른 저장 조합이 필요하면 옵션을 바꿔 다시 실행합니다.</figcaption>
           </figure>
         </section>
 
