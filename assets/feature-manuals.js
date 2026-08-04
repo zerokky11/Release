@@ -1,7 +1,7 @@
 (function () {
-  const staticAssetVersion = '3.0-20260731.2';
+  const staticAssetVersion = '3.0-20260805.1';
   const sharedParamNote = '공유파라미터 목록은 Revit 관리 > 공유 매개변수에 연결된 TXT를 기준으로 읽습니다. 홈페이지/Hub에서 TXT 파일을 별도로 선택하는 흐름은 없습니다.';
-  const multiExportNote = '여러 RVT 검토 결과의 파일별 저장명은 공통으로 {RVT파일명}_{기능명}_{오류건수00EA}.xlsx 형식을 사용합니다. 같은 이름이 이미 있으면 뒤에 (2), (3)이 붙습니다.';
+  const multiExportNote = '여러 RVT는 실행 전에 저장 방식을 정합니다. 실행 후 직접 저장은 결과를 화면에 남겨 사용자가 내보내고, 기능별 통합 Excel 순차 저장은 기능마다 통합 파일 하나를 만들며, RVT별 Excel 즉시 저장은 문서가 끝날 때마다 파일을 저장하고 메모리에서 결과를 해제합니다. 파일별 저장명은 {RVT파일명}_{기능명}_{오류건수00EA}.xlsx 형식이며 같은 이름이 있으면 뒤에 (2), (3)이 붙습니다.';
 
   const features = [
     {
@@ -113,6 +113,81 @@
         splitKo: '레벨영역별파라미터검토',
         splitEn: '레벨영역별파라미터검토'
       }
+    },
+    {
+      id: 'gridlevelconsistency',
+      group: 'BQC 검토',
+      title: 'Grid / Level 기준 정합성 검토',
+      badge: '기준 필요',
+      summary: '기준 RVT 또는 Level 기준 Excel과 대상 문서의 Grid 위치·방향·교차점, Level 높이를 Internal Origin 기준으로 비교합니다.',
+      target: '활성 문서와 여러 RVT 검토를 지원합니다.',
+      userGuide: '프로젝트마다 Grid와 Level이 같은 기준으로 작성됐는지 확인하는 기능입니다. 기준 문서 하나를 등록한 뒤 Grid, Level 또는 둘 다를 선택해 검토합니다. Grid는 직선 위치와 방향, 교차점을 보고 Level은 Project Elevation을 비교합니다.',
+      setupLead: '검토할 항목과 기준 출처를 먼저 정한 다음 허용 오차와 보고 범위를 설정합니다.',
+      setup: [
+        '검토 범위에서 Grid 검토, Level 검토 또는 둘 다를 켭니다. 둘 다 끄면 설정을 완료하거나 실행할 수 없습니다.',
+        '기준 RVT 등록에서 활성 문서 등록 또는 기준 RVT 선택을 고릅니다. Grid와 “등록한 기준 RVT” 방식의 Level은 이 기준 문서를 함께 사용합니다.',
+        'Level 기준은 등록한 기준 RVT 또는 Level 기준 Excel 중 하나를 선택합니다. Excel을 사용할 때는 기본 양식을 저장해 Levels 시트에 사용할 레벨명과 높이를 작성한 뒤 다시 선택합니다.',
+        '거리 단위는 mm 또는 inch를 선택합니다. Grid 위치, Grid 방향각, Level 높이 허용 오차의 기본값 0은 반올림 없이 정확히 일치해야 정상이라는 뜻입니다.',
+        '이름까지 비교를 켜면 위치나 높이가 같아도 이름만 다를 때 “이름만 다름”으로 구분합니다. 대상 문서의 추가 Grid / Level도 보고를 켜면 기준에는 없고 대상에만 있는 항목도 결과에 남깁니다.'
+      ],
+      settingDetails: [
+        {
+          label: '검토 범위',
+          description: 'Grid와 Level 중 실제로 비교할 항목만 선택합니다.',
+          example: 'Grid 배치만 확인하는 납품 검토라면 Grid 검토만 켜고 Level 검토는 끕니다.'
+        },
+        {
+          label: '기준 RVT 등록',
+          description: '현재 열린 활성 문서를 캡처하거나 기준 RVT 파일 하나를 선택합니다. 이 기준은 모든 대상 RVT에 공통 적용됩니다.',
+          example: '표준 좌표가 들어 있는 A_Grid_Level_Standard.rvt를 기준 RVT로 등록합니다.'
+        },
+        {
+          label: 'Level 기준 Excel',
+          description: 'RVT 대신 표준 레벨명과 높이를 표로 관리할 때 사용합니다. Levels 시트의 사용 열, 레벨명, 표고를 읽습니다.',
+          example: '1F 0 mm, 2F 4200 mm, RF 8400 mm를 기준표에 입력해 여러 분야 모델에 같은 기준을 적용합니다.'
+        },
+        {
+          label: '허용 오차',
+          description: 'Grid 위치와 Level 높이는 선택한 거리 단위, Grid 방향은 degree로 입력합니다. 입력값 이하의 차이는 정상입니다.',
+          example: 'Grid 위치 1 mm, 방향 0.001°, Level 높이 1 mm로 설정하면 각 차이가 해당 값 이하일 때 정상으로 봅니다.'
+        },
+        {
+          label: '이름과 추가 항목',
+          description: '기하 위치와 별도로 이름 차이를 보고하고, 기준에 없는 대상 문서의 추가 Grid/Level을 결과에 포함할지 정합니다.',
+          example: '기준 A와 같은 위치의 대상 A-1은 이름만 다름, 기준에 없는 대상 C는 추가로 기록됩니다.'
+        }
+      ],
+      run: [
+        '기준 문서 카드에 Grid와 Level 개수가 표시되는지 확인합니다. Grid 검토에는 Grid가, 같은 RVT Level 검토에는 Level이 실제로 있어야 합니다.',
+        'Level Excel을 사용한다면 파일 경로와 읽은 Level 개수가 표시되는지 확인합니다. 유효한 행이 없으면 검토를 시작할 수 없습니다.',
+        '활성 문서 검토는 현재 열린 호스트 문서를 대상으로 실행합니다. 여러 호스트 문서가 열려 있으면 대상 문서를 선택합니다.',
+        '여러 RVT 검토는 대상 RVT 등록 창에서 파일을 추가하고 Excel 저장 방식을 선택한 뒤 실행합니다. 등록한 하나의 기준은 선택한 모든 대상 파일에 공통 적용됩니다.',
+        '완료 후 검토 기준 수, 불일치/누락 수, 정상 기준 수를 확인하고 필요하면 오류사항 Excel을 저장합니다.'
+      ],
+      logic: [
+        '모든 위치 비교는 Internal Origin을 기준으로 합니다. Level은 화면에 보이는 이름이 아니라 Revit의 ProjectElevation 값을 사용합니다.',
+        '직선 Grid는 방향을 앞뒤가 없는 하나의 선으로 정규화한 뒤 무한 직선의 위치와 방향각을 비교합니다. Arc Grid와 MultiSegmentGrid는 지원하지 않음으로 기록합니다.',
+        '두 직선 Grid의 교차점도 계산해 기준과 대상의 교차 관계가 같은지 확인합니다. 평행, 교차점 차이, 기준 누락을 각각 구분합니다.',
+        'Level은 기준 ProjectElevation과 대상 ProjectElevation의 차이를 선택 단위로 환산해 비교합니다.',
+        '0 허용 오차는 정확 일치, 0보다 큰 값은 입력값 이하를 정상으로 판정합니다.',
+        '상태는 정상, 이름만 다름, 위치 불일치, 높이 불일치, 교차점 불일치, 대상 평행, 누락, 추가, 모호함, 지원하지 않음으로 구분합니다. 이름만 다름과 지원하지 않음은 확인 필요 항목이며 위치 오류와 같은 오류로 합치지 않습니다.'
+      ],
+      result: [
+        '결과 카드에는 전체 검토 기준, 불일치/누락, 정상 기준 건수를 표시합니다.',
+        'Excel은 오류사항 시트 하나로 만들며 정상 행은 생략합니다.',
+        '오류사항 시트에는 대상 파일, 구분, 기준 이름, 대상 이름, 기준과 차이, 오류 사항을 기록합니다.'
+      ],
+      export: {
+        multi: true,
+        single: '{RVT파일명}_GridLevelConsistency.xlsx 또는 GridLevelConsistency_Selected_{파일수}_Files_yyyyMMdd_HHmm.xlsx',
+        splitKo: 'GridLevel정합성검토',
+        splitEn: 'Grid Level Consistency Review',
+        note: '결과 파일은 오류사항 시트만 사용하고 정상 항목은 저장하지 않습니다. Level 기준 Excel은 결과 파일과 별개의 입력 양식입니다.'
+      },
+      notes: [
+        '기준 RVT 자체를 대상 목록에 다시 넣으면 자기 자신과 비교하는 결과가 생길 수 있으므로 기준 파일은 대상에서 제외합니다.',
+        'Arc Grid와 MultiSegmentGrid는 현재 기하 비교 대상이 아니며 지원하지 않음 상태로 확인합니다.'
+      ]
     },
     {
       id: 'familysuitability',
@@ -682,6 +757,85 @@
       }
     },
     {
+      id: 'linksharedcoord',
+      group: '유틸리티',
+      title: 'Link 파일 Shared Coordination 검토/설정',
+      badge: '별도 화면',
+      summary: '활성 호스트의 링크를 Grid 교차점과 기준 Level로 분석하고 Shared Site 배치와 Publish를 검토·설정합니다.',
+      target: '현재 활성 호스트 문서와 그 문서에 직접 로드된 Revit 링크를 대상으로 실행합니다.',
+      userGuide: '현재 호스트에 배치된 Revit 링크가 링크 파일의 Shared Site 기준과 맞는지 먼저 분석하고, 사용자가 결과를 확인한 뒤 호스트 링크 배치 적용과 Publish를 각각 실행하는 기능입니다. 분석만으로는 문서를 바꾸지 않습니다.',
+      setupLead: '호스트에 로드된 링크, 기준 Grid 교차점과 Level, 방향 기준, 목표 Shared Site를 순서대로 선택합니다.',
+      setup: [
+        '현재 작업 기준에서 활성 호스트 문서와 Project Location을 확인합니다. 패밀리 문서, 링크 문서 자체, 읽기 전용 상태에서는 실행할 수 없습니다.',
+        '링크와 기준 앵커에서 호스트에 직접 로드된 최상위 Revit 링크를 선택하고 Anchor Grid 두 개와 기준 Level을 고릅니다. 기본 예시는 A × 1 교차점과 1FL입니다.',
+        '방향 기준은 두 번째 교차점 또는 Project North 중 선택합니다. 두 번째 교차점은 방향 Grid 두 개를 추가로 선택해 180° 방향 모호성을 없애므로 일반적으로 더 안전합니다.',
+        '목표 Shared Coordination은 링크 저장 Shared Site 또는 직접 입력을 선택합니다. 저장 Site를 쓸 때는 링크 안의 Named Position/Site를 고르고, 직접 입력은 E, N, Z와 Bearing(CW+)을 mm 또는 m 단위로 입력합니다.',
+        '직접 입력을 사용해도 Publish할 목적 Site는 필요합니다. 분석 결과의 현재값, 목표값, 차이를 확인한 뒤에만 적용과 Publish 버튼이 활성화됩니다.'
+      ],
+      settingDetails: [
+        {
+          label: 'Anchor Grid와 기준 Level',
+          description: '링크 내부의 두 Grid 교차점과 Level 높이를 하나의 기준점으로 사용합니다.',
+          example: 'Anchor Grid A와 1, Level 1FL을 선택하면 A × 1 교차점의 1FL 높이를 배치 기준점으로 계산합니다.'
+        },
+        {
+          label: '두 번째 교차점',
+          description: '첫 기준점에서 어느 방향을 앞쪽으로 볼지 추가 Grid 교차점으로 정합니다.',
+          example: 'A × 1을 기준점으로 두고 A × 2를 방향점으로 선택하면 1에서 2로 향하는 축을 사용합니다.'
+        },
+        {
+          label: 'Project North',
+          description: '추가 교차점 대신 링크의 Project North 방향을 사용합니다. 선택 Grid가 Project North와 평행하지 않으면 경고를 확인해야 합니다.',
+          example: '정방향으로 작성된 링크처럼 Grid A가 Project North와 확실히 평행한 경우에 사용합니다.'
+        },
+        {
+          label: '링크 저장 Shared Site',
+          description: '링크 파일에 저장된 Named Position/Site의 E, N, Z와 Bearing을 목표값으로 사용합니다.',
+          example: 'A동_건축.rvt의 A동_A1 Site를 선택해 현재 호스트 배치와 저장 좌표를 비교합니다.'
+        },
+        {
+          label: '직접 입력',
+          description: '목표 E/N/Z와 시계 방향 Bearing을 숫자로 입력합니다. 모든 칸이 유효한 숫자여야 합니다.',
+          example: '단위 mm에서 E 125000, N 83000, Z 0, Bearing 12.5를 입력합니다.'
+        },
+        {
+          label: '분석·적용·Publish',
+          description: '분석은 읽기 전용 계산, 적용은 호스트 링크 인스턴스 이동·회전, Publish는 링크 파일에 좌표 관계를 기록하고 저장하는 별도 단계입니다.',
+          example: '먼저 분석해 잔차를 확인하고 호스트 링크 배치 적용을 실행한 뒤, 승인된 경우에만 확인 체크 후 Publish를 실행합니다.'
+        }
+      ],
+      run: [
+        '활성 호스트, 링크, Anchor Grid 두 개, 기준 Level과 방향 기준을 선택합니다. 두 번째 교차점 방식이면 방향 Grid 두 개도 선택합니다.',
+        '목표 출처와 Site 또는 직접 입력값을 정한 뒤 Shared Coordination 분석을 누릅니다. 이 단계는 문서를 변경하지 않습니다.',
+        '분석 결과에서 현재/목표/차이의 E, N, Z, Bearing과 경고를 확인합니다. 기본 검증 허용값은 거리 1.0 mm, 각도 0.001°입니다.',
+        '호스트의 링크 인스턴스를 목표 위치로 맞추려면 호스트 링크 배치 적용을 실행합니다. 회전 후 이동하고 남은 차이를 다시 검증합니다.',
+        '좌표 관계를 링크 파일에 기록해야 할 때만 Publish 확인을 체크하고 Publish + Link 파일 저장을 실행합니다. Cloud 링크는 분석과 호스트 배치만 가능하고 Publish는 지원하지 않습니다.'
+      ],
+      logic: [
+        '활성 UIDocument의 호스트 문서를 기준으로 직접 로드된 최상위 RevitLinkInstance만 수집합니다. 중첩 링크와 Forma Scenario는 대상에서 제외합니다.',
+        '선택한 Grid 교차점과 Level ProjectElevation으로 링크 내부 기준점을 만들고, 현재 링크 Transform을 적용해 호스트 좌표를 계산합니다.',
+        '두 번째 교차점 또는 Project North로 방향 벡터를 만든 뒤 현재 배치의 E/N/Z/Bearing과 목표 Site 값을 비교합니다.',
+        '적용은 호스트 문서에서 링크를 회전한 다음 이동하고, 계산된 잔차가 허용값 안인지 다시 확인합니다.',
+        'Publish는 hostDocument.PublishCoordinates를 사용해 선택 Site에 좌표 관계를 기록하고 링크 위치와 파일을 저장합니다.',
+        '기존 Save Positions 대기 상태, 읽기 전용, 지원하지 않는 링크, 경고/오류가 발생하면 작업을 중단하고 Transaction을 되돌립니다.'
+      ],
+      result: [
+        '분석 화면에 현재값, 목표값, 차이값의 E, N, Z, Bearing을 나란히 표시합니다.',
+        '분석 경고, 적용 가능 여부, Publish 가능 여부를 확인할 수 있습니다.',
+        '이 기능은 결과 Excel을 만들지 않습니다. 문서 변경은 사용자가 별도로 적용 또는 Publish를 실행한 경우에만 발생합니다.'
+      ],
+      export: {
+        available: false,
+        multi: false,
+        note: '화면에서 Shared Coordination 분석 결과를 확인하는 기능이며 Excel 내보내기는 제공하지 않습니다.'
+      },
+      notes: [
+        '분석 결과를 확인하기 전에는 적용하거나 Publish하지 않습니다. Publish는 링크 파일에 좌표 관계를 기록하는 작업입니다.',
+        '기존 링크가 다른 Shared Site에 묶여 Save Positions 대기 상태가 생기면 적용이 롤백될 수 있습니다. 필요한 경우 Revit에서 링크 위치를 <Not Shared>로 정리한 뒤 다시 시도합니다.',
+        'Cloud 링크는 Publish할 수 없고 Forma Scenario 링크는 읽기 전용 대상이라 이 기능에서 제외됩니다.'
+      ]
+    },
+    {
       id: 'lateralnozzle',
       group: '유틸리티',
       title: '노즐코드 KTA 단일화',
@@ -816,7 +970,7 @@
       group: '유틸리티',
       title: '기준점/북각 추출',
       badge: '배치 선택',
-      summary: 'RVT의 프로젝트 기준점, 측량 기준점, 프로젝트 북각 값을 추출합니다.',
+      summary: 'RVT의 프로젝트 기준점, 측량 기준점, 내부 원점 공유좌표, 프로젝트 북각 값을 추출합니다.',
       target: '활성 문서 또는 여러 RVT 검토를 지원합니다.',
       setup: [
         '별도 상세 설정 없이 대상 문서를 선택합니다.',
@@ -827,13 +981,13 @@
         '결과를 확인하고 엑셀로 저장합니다.'
       ],
       logic: [
-        '각 문서의 프로젝트 기준점과 측량 기준점 파라미터를 읽습니다.',
+        '각 문서의 프로젝트 기준점, 측량 기준점, 내부 원점 공유좌표를 읽습니다.',
         '좌표와 북각 값을 현재 프로젝트 기준으로 정리합니다.',
         '읽을 수 없는 값은 빈 값 또는 오류 상태로 기록합니다.'
       ],
       result: [
         '파일별 기준점/북각 값이 표로 표시됩니다.',
-        '엑셀에는 파일명, 기준점 좌표, 측량 기준점 좌표, 북각이 저장됩니다.'
+        '엑셀에는 파일명, 프로젝트 기준점 좌표, 측량 기준점 좌표, 내부 원점 공유좌표, 북각이 저장됩니다.'
       ],
       export: {
         multi: true,
@@ -1375,7 +1529,7 @@
       ]
     },
     points: {
-      userGuide: 'RVT의 프로젝트 기준점, 측량 기준점, 프로젝트 북각 정보를 선택한 출력 단위로 파일별 추출하는 기능입니다.',
+      userGuide: 'RVT의 프로젝트 기준점, 측량 기준점, 내부 원점 공유좌표, 프로젝트 북각 정보를 선택한 출력 단위로 파일별 추출하는 기능입니다.',
       setup: [
         '단위에서 좌표를 십진 피트, 미터(m), 밀리미터(mm) 중 어떤 값으로 출력할지 선택합니다.',
         '활성 문서를 검토하려면 현재 열린 호스트 문서를 준비합니다.',
@@ -1384,13 +1538,13 @@
       ],
       run: [
         '출력 단위를 선택한 뒤 활성 문서 검토 또는 여러 RVT 검토를 선택합니다.',
-        '여러 RVT 검토에서는 등록된 파일별로 기준점/북각 값을 추출합니다.',
+        '여러 RVT 검토에서는 등록된 파일별로 프로젝트 기준점, 측량 기준점, 내부 원점 공유좌표, 북각 값을 추출합니다.',
         '추출 완료 후 결과를 표로 확인합니다.',
         '엑셀 내보내기로 좌표 정보를 저장합니다.'
       ],
       result: [
-        '파일별 프로젝트 기준점, 측량 기준점, 북각 값이 표시됩니다.',
-        '엑셀에는 파일명, 선택한 단위의 기준점 좌표, 측량 기준점 좌표, 프로젝트 북각 값이 저장됩니다.',
+        '파일별 프로젝트 기준점, 측량 기준점, 내부 원점 공유좌표, 북각 값이 표시됩니다.',
+        '엑셀에는 파일명, 선택한 단위의 프로젝트 기준점 좌표, 측량 기준점 좌표, 내부 원점 공유좌표, 프로젝트 북각 값이 저장됩니다.',
         '읽을 수 없는 값은 빈 값 또는 오류 상태로 기록됩니다.'
       ]
     },
@@ -2238,7 +2392,7 @@
       ]
     },
     points: {
-      userGuide: 'RVT의 프로젝트 기준점, 측량 기준점, 프로젝트 북각을 선택한 출력 단위로 추출하는 기능입니다.',
+      userGuide: 'RVT의 프로젝트 기준점, 측량 기준점, 내부 원점 공유좌표, 프로젝트 북각을 선택한 출력 단위로 추출하는 기능입니다.',
       setupLead: '판정 기준은 없고 결과 좌표에 사용할 단위만 선택합니다.',
       settingDetails: [
         {
@@ -2257,6 +2411,11 @@
           example: 'Survey E/N/Z가 같아도 True North가 15.25°와 0°로 다르면 좌표 운용 기준을 다시 확인합니다.'
         },
         {
+          label: '내부 원점 공유좌표',
+          description: 'Internal Origin 자체의 고정 (0, 0, 0)이 아니라 활성 Project Location에서의 공유좌표 E/N/Z를 선택 단위로 기록합니다.',
+          example: '모델별 내부 원점의 공유좌표가 같은지 비교해 링크 원점과 좌표 설정 차이를 확인합니다.'
+        },
+        {
           label: '활성 문서와 여러 RVT',
           description: '현재 열린 모델 하나는 활성 문서 검토를, 여러 파일의 좌표를 비교할 때는 여러 RVT 검토를 사용합니다. Revit 링크 문서는 활성 문서 대상에 자동 포함되지 않습니다.',
           example: 'A-Main, S-Main, M-Main 세 파일의 기준점을 비교하려면 여러 RVT에 세 파일을 등록해 실행합니다.'
@@ -2270,7 +2429,7 @@
       run: [
         '좌표 출력 단위를 선택합니다.',
         '현재 모델은 활성 문서 검토, 여러 파일 비교는 여러 RVT 검토를 실행합니다.',
-        '파일별 프로젝트 기준점, 측량 기준점, 북각 값을 결과에서 비교합니다.',
+        '파일별 프로젝트 기준점, 측량 기준점, 내부 원점 공유좌표, 북각 값을 결과에서 비교합니다.',
         '선택한 단위가 적용된 좌표 엑셀을 저장합니다.'
       ]
     },
@@ -2363,7 +2522,7 @@
   const featureMap = new Map(features.map((item) => [item.id, item]));
 
   const selectableFeatureIds = new Set([
-    'connector', 'unconnected', 'floorinfo', 'familysuitability', 'tapalign', 'tapdepth',
+    'connector', 'unconnected', 'floorinfo', 'gridlevelconsistency', 'familysuitability', 'tapalign', 'tapdepth',
     'dupclash', 'worksetassignment', 'parameterduplication', 'parametermissing',
     'parameterstandard', 'ghostcleaner', 'tapdepthutility', 'familylink', 'points', 'linkworkset'
   ]);
@@ -2387,6 +2546,21 @@
           title: '파라미터 값 일치 처리 매핑',
           description: '모델에서 선택 파라미터의 고유값을 스캔하고 같은 뜻으로 볼 표기를 한 그룹으로 묶습니다.',
           points: ['매핑할 검토 파라미터', '활성 문서·여러 RVT 스캔', '현재값과 매핑값', 'Excel 양식 저장·가져오기']
+        }
+      ]
+    },
+    gridlevelconsistency: {
+      base: {
+        title: '검토 범위와 기준 등록',
+        description: 'Grid/Level 검토 범위를 선택하고 활성 문서 또는 기준 RVT를 공용 기준으로 등록합니다.',
+        points: ['Grid·Level 검토 범위', '활성 문서 또는 기준 RVT', '기준 Grid·Level 개수', 'Level 기준 출처']
+      },
+      extra: [
+        {
+          file: 'gridlevelconsistency-options.png',
+          title: '허용 오차와 결과 판정 옵션',
+          description: 'mm/inch 단위, Grid 위치·방향, Level 높이 허용 오차와 이름·추가 항목 보고 여부를 설정합니다.',
+          points: ['거리 단위', 'Grid 위치·방향 허용 오차', 'Level 높이 허용 오차', '이름과 추가 항목 보고']
         }
       ]
     },
@@ -2515,10 +2689,36 @@
           points: ['PMS 양식 추출과 등록', '매핑 준비', '추천값 확인 후 검토 시작']
         }
       ]
+    },
+    linksharedcoord: {
+      base: {
+        title: '활성 호스트와 기준 앵커',
+        description: '활성 호스트에 로드된 링크, Anchor Grid 교차점, 기준 Level과 방향 기준을 선택합니다.',
+        points: ['활성 Project Location', '최상위 로드 링크', 'Anchor Grid 두 개', '기준 Level과 방향 교차점']
+      },
+      extra: [
+        {
+          file: 'linksharedcoord-target.png',
+          title: '목표 Shared Coordination',
+          description: '링크에 저장된 Shared Site를 사용하거나 E/N/Z/Bearing 목표값을 직접 입력합니다.',
+          points: ['저장 Shared Site', '직접 입력', 'mm/m 단위', 'Bearing CW+']
+        },
+        {
+          file: 'linksharedcoord-analysis.png',
+          title: '분석 결과와 반영 단계',
+          description: '현재값, 목표값과 차이를 확인한 뒤 호스트 배치 적용과 Publish를 각각 실행합니다.',
+          points: ['현재·목표·차이', '분석 경고', '호스트 링크 배치 적용', 'Publish 확인과 링크 저장']
+        }
+      ]
     }
   };
 
   const excelInputVisuals = {
+    gridlevelconsistency: {
+      title: 'Level 기준 입력표',
+      description: 'Levels 시트에 사용할 Level 이름과 표고를 작성합니다. 사용 열이 꺼진 행과 빈 행은 기준에서 제외됩니다.',
+      points: ['사용 여부', '레벨명', '선택 단위의 표고', '_Levels예시 시트 참고']
+    },
     familysuitability: {
       title: '승인 패밀리 타입 기준표',
       description: 'Category, Family, Type 열에 승인할 조합을 한 행씩 입력합니다. 헤더는 한글 또는 영문 인식 이름을 사용합니다.',
@@ -2830,19 +3030,23 @@
     addManualCard(main, '검토 논리', feature.logic, { className: 'manual-list manual-list--logic' });
     addManualCard(main, '결과 확인', feature.result);
 
-    const exportWrap = el('div', 'table-wrap');
-    const table = document.createElement('table');
-    table.className = 'export-table';
-    const thead = document.createElement('thead');
-    const tr = document.createElement('tr');
-    ['선택 조합', '파일명 또는 저장 방식', '설명'].forEach((head) => tr.append(el('th', '', head)));
-    thead.append(tr);
-    table.append(thead, renderExportRows(feature));
-    exportWrap.append(table);
-    const exportCard = addManualCard(main, '엑셀 추출', exportWrap);
-    if (feature.export?.note) exportCard.append(el('p', 'manual-note', feature.export.note));
-    if (feature.export?.multi) exportCard.append(el('p', 'manual-note', multiExportNote));
-    appendExcelVisuals(exportCard, feature);
+    if (feature.export?.available === false) {
+      addManualCard(main, '엑셀 추출', feature.export.note || '이 기능은 Excel 결과를 생성하지 않습니다.');
+    } else {
+      const exportWrap = el('div', 'table-wrap');
+      const table = document.createElement('table');
+      table.className = 'export-table';
+      const thead = document.createElement('thead');
+      const tr = document.createElement('tr');
+      ['선택 조합', '파일명 또는 저장 방식', '설명'].forEach((head) => tr.append(el('th', '', head)));
+      thead.append(tr);
+      table.append(thead, renderExportRows(feature));
+      exportWrap.append(table);
+      const exportCard = addManualCard(main, '엑셀 추출', exportWrap);
+      if (feature.export?.note) exportCard.append(el('p', 'manual-note', feature.export.note));
+      if (feature.export?.multi) exportCard.append(el('p', 'manual-note', multiExportNote));
+      appendExcelVisuals(exportCard, feature);
+    }
 
     if (feature.notes && feature.notes.length) {
       addManualCard(main, '주의할 점', feature.notes, { className: 'manual-list manual-list--notice' });
@@ -2861,16 +3065,18 @@
 
     const exportCardSide = el('section', 'manual-card manual-card--compact');
     exportCardSide.append(el('h2', '', '파일명 핵심'));
-    appendList(exportCardSide, feature.export?.multi
-      ? [
-          `한 파일: ${feature.export.single}`,
-          `파일별 한글: {RVT파일명}_${feature.export.splitKo}_00EA.xlsx`,
-          `파일별 영문: {RVT파일명}_${feature.export.splitEn || feature.export.splitKo}_00EA.xlsx`
-        ]
-      : [
-          feature.export?.single || '사용자가 저장 위치와 파일명을 선택합니다.',
-          '공통 파일별 저장 옵션 없음'
-        ]);
+    appendList(exportCardSide, feature.export?.available === false
+      ? ['Excel 출력 없음', feature.export.note || '화면에서 결과를 확인합니다.']
+      : feature.export?.multi
+        ? [
+            `한 파일: ${feature.export.single}`,
+            `파일별 한글: {RVT파일명}_${feature.export.splitKo}_00EA.xlsx`,
+            `파일별 영문: {RVT파일명}_${feature.export.splitEn || feature.export.splitKo}_00EA.xlsx`
+          ]
+        : [
+            feature.export?.single || '사용자가 저장 위치와 파일명을 선택합니다.',
+            '공통 파일별 저장 옵션 없음'
+          ]);
 
     side.append(navCard, exportCardSide);
     layout.append(main, side);

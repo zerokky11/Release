@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-07-31T05:44:55.230Z",
+  "generatedAt": "2026-08-04T23:29:26.953Z",
   "viewport": "1440x760",
-  "outputCount": 26,
-  "inputCount": 6,
-  "count": 32,
+  "outputCount": 27,
+  "inputCount": 7,
+  "count": 34,
   "results": [
     {
       "featureId": "connector",
@@ -22,6 +22,12 @@
       "kind": "result",
       "file": "Sever/assets/manual-excel/floorinfo-result.png",
       "bytes": 31193
+    },
+    {
+      "featureId": "gridlevelconsistency",
+      "kind": "result",
+      "file": "Sever/assets/manual-excel/gridlevelconsistency-result.png",
+      "bytes": 36324
     },
     {
       "featureId": "familysuitability",
@@ -93,7 +99,7 @@
       "featureId": "points",
       "kind": "result",
       "file": "Sever/assets/manual-excel/points-result.png",
-      "bytes": 31631
+      "bytes": 33174
     },
     {
       "featureId": "linkworkset",
@@ -160,6 +166,12 @@
       "kind": "result",
       "file": "Sever/assets/manual-excel/sharedparambatch-result.png",
       "bytes": 33514
+    },
+    {
+      "featureId": "gridlevelconsistency",
+      "kind": "input",
+      "file": "Sever/assets/manual-excel/gridlevelconsistency-input.png",
+      "bytes": 23768
     },
     {
       "featureId": "familysuitability",

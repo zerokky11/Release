@@ -105,9 +105,37 @@
       </div>
     </section>
 
+    <section class="section" aria-labelledby="multi-excel-title">
+      <div class="section-header">
+        <div>
+          <span class="eyebrow">여러 RVT · EXCEL</span>
+          <h2 id="multi-excel-title">검토를 시작하기 전에 저장 방식을 선택합니다</h2>
+          <p>파일이 많은 작업에서 결과를 메모리에 계속 쌓지 않도록, 대상 RVT 등록 창에서 Excel 생성 시점을 먼저 정할 수 있습니다.</p>
+        </div>
+      </div>
+      <div class="manual-setting-list">
+        <div class="manual-setting-row">
+          <div class="manual-setting-label"><span class="manual-setting-index">01</span><h3>실행 후 직접 저장</h3></div>
+          <div class="manual-setting-copy"><p class="manual-setting-description">기존 방식입니다. 검토가 끝난 뒤 결과창을 열어 한글/영문과 한 파일/파일별 저장을 직접 선택합니다. 결과를 다시 살펴보거나 여러 기능의 Excel을 차례로 저장할 때 사용합니다.</p><p class="manual-setting-example"><strong>예시</strong>3개 RVT의 결과를 화면에서 비교한 뒤 필요한 기능만 Excel로 내보냅니다.</p></div>
+        </div>
+        <div class="manual-setting-row">
+          <div class="manual-setting-label"><span class="manual-setting-index">02</span><h3>기능별 통합 Excel 순차 저장</h3></div>
+          <div class="manual-setting-copy"><p class="manual-setting-description">검토 전에 폴더를 선택하고, 기능마다 통합 Workbook 하나를 만든 뒤 RVT 결과를 완료 순서대로 추가합니다. 같은 이름이 있으면 <code>_2</code>처럼 번호를 붙입니다.</p><p class="manual-setting-example"><strong>예시</strong><code>bqc_gridlevelconsistency_20260805_143000.xlsx</code> 한 파일에 선택한 RVT의 Grid/Level 결과를 순서대로 기록합니다.</p></div>
+        </div>
+        <div class="manual-setting-row">
+          <div class="manual-setting-label"><span class="manual-setting-index">03</span><h3>RVT별 Excel 즉시 저장</h3></div>
+          <div class="manual-setting-copy"><p class="manual-setting-description">RVT 하나의 검토가 끝날 때마다 기능별 파일을 바로 저장하고 해당 결과 캐시를 해제합니다. 대상 파일 수가 많고 파일별 납품 결과가 필요할 때 적합합니다.</p><p class="manual-setting-example"><strong>예시</strong><code>Plant_A_GridLevel정합성검토_03EA.xlsx</code>를 저장한 뒤 Plant_A 결과를 해제하고 다음 RVT를 처리합니다.</p></div>
+        </div>
+        <div class="manual-setting-row">
+          <div class="manual-setting-label"><span class="manual-setting-index">04</span><h3>저장 폴더·언어·열 너비</h3></div>
+          <div class="manual-setting-copy"><p class="manual-setting-description">자동 저장 두 방식은 실행 전에 저장 폴더를 선택합니다. 폴더 선택을 취소하면 검토도 시작하지 않습니다. 한글/영문은 마지막 내보내기 언어 설정을 따르며, 열 너비 자동 맞춤을 끄면 대용량 결과를 더 빠르게 저장합니다.</p><p class="manual-setting-example"><strong>참고</strong>활성 문서 검토는 이 자동 저장 방식을 사용하지 않고 결과창에서 직접 저장합니다. 자동 저장 결과창은 이미 저장된 폴더를 여는 용도로 표시됩니다.</p></div>
+        </div>
+      </div>
+    </section>
+
     <section class="manual-index-note">
       <strong>일반 기능 결과 저장</strong>
-      <p>여러 RVT 검토 결과는 한글/영문과 한 파일/파일별 저장을 조합할 수 있습니다. 각 상세 페이지에서 기능별 결과 항목과 실제 파일명 규칙을 확인할 수 있습니다.</p>
+      <p>실행 후 직접 저장에서는 한글/영문과 한 파일/파일별 저장을 조합할 수 있습니다. 각 상세 페이지에서 기능별 결과 항목과 실제 파일명 규칙을 확인할 수 있습니다.</p>
     </section>
 
     <div data-feature-index></div>
@@ -124,6 +152,6 @@
     </div>
   </footer>
   <script src="/assets/site.js?v=3.0-20260731.1"></script>
-  <script src="/assets/feature-manuals.js?v=3.0-20260731.2"></script>
+  <script src="/assets/feature-manuals.js?v=3.0-20260805.1"></script>
 </body>
 </html>
