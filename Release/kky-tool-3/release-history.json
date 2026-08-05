@@ -1,5 +1,13 @@
 [
   {
+    "version": "3.0.5",
+    "publishedAt": "2026-08-05",
+    "title": "버전 3.0.5",
+    "notes": "그리드·레벨 일관성 검토와 링크 Shared Coordination 검토를 추가하고, 여러 RVT 결과 저장, Excel 서식 안정성, 기준점 좌표 처리, 업데이트 버전 표시와 홈 업데이트 안내를 개선한 KKY Tool 3.0.5입니다. Revit 2019, 2021, 2023, 2025, 2027을 지원합니다.",
+    "packageUrl": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.5.zip",
+    "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.5.exe"
+  },
+  {
     "version": "3.0.4",
     "publishedAt": "2026-08-04",
     "title": "버전 3.0.4",
@@ -27,7 +35,7 @@
     "version": "3.0.1",
     "publishedAt": "2026-07-21",
     "title": "버전 3.0.1",
-    "notes": "BIA2 분석 기능을 정식 제품에서 분리한 KKY Tool 3.0.1입니다. Revit 2019, 2021, 2023, 2025, 2027을 지원합니다.",
+    "notes": "BIA2 분석 기능을 정식 프로그램에서 분리한 KKY Tool 3.0.1입니다. Revit 2019, 2021, 2023, 2025, 2027을 지원합니다.",
     "packageUrl": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.1.zip",
     "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.1.exe"
   }
