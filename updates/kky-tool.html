@@ -31,7 +31,7 @@
         <h1>KKY Tool 업데이트 내역</h1>
         <p>현재 운영하는 3.x 계열과 초기 레이아웃 계열의 마지막 Stable 2.x 변경 기록입니다.</p>
       </div>
-      <div class="updates-current"><span class="badge ok">현재 배포</span><strong>3.0.6</strong><span>2026.08.06</span></div>
+      <div class="updates-current"><span class="badge ok">현재 배포</span><strong>3.0.7</strong><span>2026.08.06</span></div>
     </section>
 
     <nav class="updates-program-tabs" aria-label="업데이트 내역 프로그램 선택">
@@ -44,7 +44,20 @@
       <header class="release-series__header"><div><h2 id="kky-3-series">KKY Tool 3.x</h2><p>새 작업대 UI와 확장 기능을 사용하는 현재 계열입니다.</p></div><a class="button primary" href="/index.html#download">현재 버전 받기</a></header>
       <ol class="release-notes">
         <li class="release-note">
-          <div class="release-note__version"><span class="badge ok">현재 배포</span><strong>3.0.6</strong><span class="release-note__date">2026.08.06</span></div>
+          <div class="release-note__version"><span class="badge ok">현재 배포</span><strong>3.0.7</strong><span class="release-note__date">2026.08.06</span></div>
+          <div class="release-note__content">
+            <h3>미연결 Nozzle 예외와 여러 RVT 설정 흐름 보완</h3>
+            <p class="release-note__summary">미연결 검토에서 프로젝트별 Nozzle 연결 기준을 선택적으로 적용하고, 긴 설정 화면과 여러 RVT 링크 경로 작업의 반응을 정리한 버전입니다.</p>
+            <ul class="release-note__list">
+              <li><b>Nozzle 허용 미연결 규칙</b>을 추가했습니다. 켜면 Family 이름에 Nozzle이 있는 객체는 기본 1개 미연결을 허용하며, Box Nozzle은 이름의 숫자만큼을 허용합니다. 단, 양 끝단이 끊긴 경우는 계속 오류로 남깁니다.</li>
+              <li><b>경사도 설정값</b>은 소수 각도를 입력 중일 때 자동으로 잘리지 않고, Enter·포커스 이동 시 현재 값으로 확정되도록 보완했습니다.</li>
+              <li><b>여러 기능 설정 화면</b>은 상세 설정을 열거나 값을 적용한 뒤에도 현재 보고 있던 스크롤 위치를 유지하도록 정리했습니다.</li>
+              <li><b>여러 RVT 링크 경로 검토·적용</b>은 링크 정보 읽기, 경로 적용, 진행 상태와 열린 문서 정리 흐름을 보완했습니다.</li>
+            </ul>
+          </div>
+        </li>
+        <li class="release-note">
+          <div class="release-note__version"><span class="badge blue">정식 버전</span><strong>3.0.6</strong><span class="release-note__date">2026.08.06</span></div>
           <div class="release-note__content">
             <h3>Reducer 기준 검토, 새 센트럴 생성과 링크 좌표 검토표 보강</h3>
             <p class="release-note__summary">반복 확인이 필요했던 배관 Reducer 표기, 센트럴 파일 생성·웍셋 추가, 여러 RVT 링크 좌표 검토 흐름을 각각 독립 기능과 검토표 기준으로 정리한 버전입니다.</p>
