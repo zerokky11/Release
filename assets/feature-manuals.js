@@ -1,5 +1,5 @@
 (function () {
-  const staticAssetVersion = '3.0-20260805.1';
+  const staticAssetVersion = '3.0-20260806.2';
   const sharedParamNote = '공유파라미터 목록은 Revit 관리 > 공유 매개변수에 연결된 TXT를 기준으로 읽습니다. 홈페이지/Hub에서 TXT 파일을 별도로 선택하는 흐름은 없습니다.';
   const multiExportNote = '여러 RVT는 실행 전에 저장 방식을 정합니다. 실행 후 직접 저장은 결과를 화면에 남겨 사용자가 내보내고, 기능별 통합 Excel 순차 저장은 기능마다 통합 파일 하나를 만들며, RVT별 Excel 즉시 저장은 문서가 끝날 때마다 파일을 저장하고 메모리에서 결과를 해제합니다. 파일별 저장명은 {RVT파일명}_{기능명}_{오류건수00EA}.xlsx 형식이며 같은 이름이 있으면 뒤에 (2), (3)이 붙습니다.';
 
@@ -55,10 +55,29 @@
       badge: '배치 선택',
       summary: '배관, 덕트, 트레이, 컨듀잇 피팅과 장비류의 커넥터가 연결되지 않은 상태를 찾습니다.',
       target: '활성 문서와 여러 RVT 검토를 지원합니다.',
+      userGuide: '기본 커넥터 미연결 여부와 필요 시 배관·덕트·트레이 경사도, 탭/새들 묻힘을 함께 검토합니다. 경사도는 "오류 인정 최소 각도"보다 크고 "오류 인정 최대 각도" 이하인 경우만 오류로 기록합니다.',
+      setupLead: '기본 미연결 범위를 먼저 정하고, 경사도 또는 탭/새들 묻힘 검토가 필요한 경우에만 해당 세부 설정을 켭니다.',
       setup: [
-        '검토 허용 범위와 단위를 지정합니다.',
+        '검토 허용 범위와 단위를 지정합니다. 경사도 검토를 함께 실행할 때 최소 각도 기본값은 0.01도 초과, 최대 각도 기본값은 15도 이하입니다.',
         '탭/새들 묻힘 오류를 함께 출력할지 선택합니다.',
         '필요하면 검토 제외 필터를 설정합니다.'
+      ],
+      settingDetails: [
+        {
+          label: '경사도 검토 함께 실행',
+          description: '배관·덕트·트레이의 실제 경사각이 설정한 오류 범위 안에 있을 때만 경사도 오류로 추가 기록합니다. Conduit와 수직 입상은 경사도 대상이 아닙니다.',
+          example: '기본 0.01도 초과~15도 이하에서는 정확히 0.01도는 정상, 0.010001도와 정확히 15도는 오류, 15도를 넘는 각도는 정상으로 처리합니다.'
+        },
+        {
+          label: '최소·최대 오류 각도',
+          description: '최소값은 초과, 최대값은 이하 경계입니다. 화면에는 각도와 함께 퍼센트·분수·소수 경사비 환산값도 표시됩니다.',
+          example: '최소 0.5도, 최대 5도로 바꾸면 0.5도를 초과하면서 5도 이하인 경사만 오류로 기록됩니다.'
+        },
+        {
+          label: '탭/새들 묻힘과 공통 필터',
+          description: '탭/새들 묻힘 검토는 켠 경우에만 별도 오류를 기록합니다. 공통 포함·제외 필터는 커넥터와 경사도 검토 모두에 같은 대상 범위로 적용됩니다.',
+          example: '특정 설비 패밀리를 제외하면 해당 패밀리의 열린 커넥터와 경사도 모두 결과에서 빠집니다.'
+        }
       ],
       run: [
         '대상 문서를 선택한 뒤 검토를 실행합니다.',
@@ -67,6 +86,7 @@
       logic: [
         '커넥터를 가진 MEP 요소를 수집합니다.',
         '각 커넥터가 실제 연결 상태인지 확인하고, 열린 커넥터 또는 중심축 미연결 상태를 오류로 기록합니다.',
+        '경사도 옵션이 켜진 경우 실제 각도를 계산한 뒤 최소값 초과 및 최대값 이하 조건을 모두 만족하는 객체만 경사도 오류로 기록합니다. 작은 각도는 판정값이 보이도록 더 많은 소수 자릿수로 표시합니다.',
         '탭/새들 관련 옵션이 켜져 있으면 묻힘 기준도 함께 검토합니다.',
         '제외 필터에 걸리는 요소는 결과에서 제외합니다.'
       ],
@@ -119,14 +139,15 @@
       group: 'BQC 검토',
       title: 'Grid / Level 기준 정합성 검토',
       badge: '기준 필요',
-      summary: '기준 RVT 또는 Level 기준 Excel과 대상 문서의 Grid 위치·방향·교차점, Level 높이를 Internal Origin 기준으로 비교합니다.',
+      summary: '기준 RVT에서 추출하거나 기존에 보관한 통합 기준 Excel로 Grid 위치·방향·교차점과 Level 이름·높이를 비교합니다.',
       target: '활성 문서와 여러 RVT 검토를 지원합니다.',
-      userGuide: '프로젝트마다 Grid와 Level이 같은 기준으로 작성됐는지 확인하는 기능입니다. 기준 문서 하나를 등록한 뒤 Grid, Level 또는 둘 다를 선택해 검토합니다. Grid는 직선 위치와 방향, 교차점을 보고 Level은 Project Elevation을 비교합니다.',
-      setupLead: '검토할 항목과 기준 출처를 먼저 정한 다음 허용 오차와 보고 범위를 설정합니다.',
+      userGuide: '좌표 기준을 정하고 표준 RVT에서 Grid와 Level을 통합 기준 Excel로 추출한 뒤, 그 Excel을 실제 검토 기준으로 등록합니다. 이미 추출한 기준 Excel이 있으면 RVT 등록과 추출 단계는 건너뛸 수 있습니다.',
+      setupLead: '좌표 기준 → 기준 Excel 생성 또는 선택 → 검토 범위와 허용 오차 → 대상 선택 순서로 설정합니다.',
       setup: [
+        '좌표 기준은 Shared Coordinates가 기본 권장값입니다. 모든 RVT에 같은 공유좌표가 저장되어 있지 않다면 내부 원점과 축이 실제로 같은 프로젝트에서만 Internal Origin을 선택합니다.',
+        '새 기준을 만들 때는 활성 문서 또는 기준 RVT를 등록하고 통합 기준 Excel을 추출합니다. 기존 기준 Excel이 있으면 이 단계는 건너뜁니다.',
+        '추출한 파일 또는 기존 통합 기준 Excel을 등록합니다. 실제 검토는 등록된 Excel의 Grid와 Level 원시값만 사용합니다.',
         '검토 범위에서 Grid 검토, Level 검토 또는 둘 다를 켭니다. 둘 다 끄면 설정을 완료하거나 실행할 수 없습니다.',
-        '기준 RVT 등록에서 활성 문서 등록 또는 기준 RVT 선택을 고릅니다. Grid와 “등록한 기준 RVT” 방식의 Level은 이 기준 문서를 함께 사용합니다.',
-        'Level 기준은 등록한 기준 RVT 또는 Level 기준 Excel 중 하나를 선택합니다. Excel을 사용할 때는 기본 양식을 저장해 Levels 시트에 사용할 레벨명과 높이를 작성한 뒤 다시 선택합니다.',
         '거리 단위는 mm 또는 inch를 선택합니다. Grid 위치, Grid 방향각, Level 높이 허용 오차의 기본값 0은 반올림 없이 정확히 일치해야 정상이라는 뜻입니다.',
         '이름까지 비교를 켜면 위치나 높이가 같아도 이름만 다를 때 “이름만 다름”으로 구분합니다. 대상 문서의 추가 Grid / Level도 보고를 켜면 기준에는 없고 대상에만 있는 항목도 결과에 남깁니다.'
       ],
@@ -137,14 +158,14 @@
           example: 'Grid 배치만 확인하는 납품 검토라면 Grid 검토만 켜고 Level 검토는 끕니다.'
         },
         {
-          label: '기준 RVT 등록',
-          description: '현재 열린 활성 문서를 캡처하거나 기준 RVT 파일 하나를 선택합니다. 이 기준은 모든 대상 RVT에 공통 적용됩니다.',
-          example: '표준 좌표가 들어 있는 A_Grid_Level_Standard.rvt를 기준 RVT로 등록합니다.'
+          label: '좌표 기준',
+          description: 'Shared Coordinates 또는 Internal Origin 중 모든 기준·대상 RVT가 공통으로 사용할 좌표계를 선택합니다.',
+          example: '분야별 RVT가 같은 공유좌표를 Acquire/Publish해 저장했다면 Shared Coordinates를 선택합니다.'
         },
         {
-          label: 'Level 기준 Excel',
-          description: 'RVT 대신 표준 레벨명과 높이를 표로 관리할 때 사용합니다. Levels 시트의 사용 열, 레벨명, 표고를 읽습니다.',
-          example: '1F 0 mm, 2F 4200 mm, RF 8400 mm를 기준표에 입력해 여러 분야 모델에 같은 기준을 적용합니다.'
+          label: '통합 기준 Excel 생성·등록',
+          description: '표준 RVT의 Grid 선형과 Level 높이를 한 Excel로 추출하고, 검증된 그 파일을 실제 기준으로 등록합니다.',
+          example: 'A_Grid_Level_Standard.rvt를 Shared Coordinates로 등록해 기준 Excel을 추출한 뒤 바로 다시 등록합니다.'
         },
         {
           label: '허용 오차',
@@ -158,34 +179,35 @@
         }
       ],
       run: [
-        '기준 문서 카드에 Grid와 Level 개수가 표시되는지 확인합니다. Grid 검토에는 Grid가, 같은 RVT Level 검토에는 Level이 실제로 있어야 합니다.',
-        'Level Excel을 사용한다면 파일 경로와 읽은 Level 개수가 표시되는지 확인합니다. 유효한 행이 없으면 검토를 시작할 수 없습니다.',
+        '등록한 통합 기준 Excel의 좌표 기준, 파일 단위, Schema 버전과 Grid/Level 개수를 확인합니다.',
+        '설정한 좌표 기준과 Excel의 좌표 기준이 다르거나 선택한 범위에 유효한 기준 행이 없으면 검토를 시작할 수 없습니다.',
         '활성 문서 검토는 현재 열린 호스트 문서를 대상으로 실행합니다. 여러 호스트 문서가 열려 있으면 대상 문서를 선택합니다.',
-        '여러 RVT 검토는 대상 RVT 등록 창에서 파일을 추가하고 Excel 저장 방식을 선택한 뒤 실행합니다. 등록한 하나의 기준은 선택한 모든 대상 파일에 공통 적용됩니다.',
+        '여러 RVT 검토는 기존 대상 RVT 등록 목록을 그대로 사용합니다. 등록한 통합 기준 Excel 하나가 선택한 모든 대상 파일에 공통 적용됩니다.',
         '완료 후 검토 기준 수, 불일치/누락 수, 정상 기준 수를 확인하고 필요하면 오류사항 Excel을 저장합니다.'
       ],
       logic: [
-        '모든 위치 비교는 Internal Origin을 기준으로 합니다. Level은 화면에 보이는 이름이 아니라 Revit의 ProjectElevation 값을 사용합니다.',
+        'Shared Coordinates는 각 문서의 활성 Project Location을 이용해 Grid와 Level을 같은 공유 좌표계로 변환하고, 기준 Excel에 저장된 공통 Anchor를 모든 대상에 적용합니다.',
+        'Internal Origin은 각 RVT 자체의 내부 원점과 축을 그대로 비교합니다. 공유좌표나 링크 인스턴스의 수동 이동·회전은 반영하지 않습니다.',
         '직선 Grid는 방향을 앞뒤가 없는 하나의 선으로 정규화한 뒤 무한 직선의 위치와 방향각을 비교합니다. Arc Grid와 MultiSegmentGrid는 지원하지 않음으로 기록합니다.',
-        '두 직선 Grid의 교차점도 계산해 기준과 대상의 교차 관계가 같은지 확인합니다. 평행, 교차점 차이, 기준 누락을 각각 구분합니다.',
-        'Level은 기준 ProjectElevation과 대상 ProjectElevation의 차이를 선택 단위로 환산해 비교합니다.',
+        '두 직선 Grid의 교차점도 계산해 기준과 대상의 교차 관계가 같은지 확인합니다. 방향선 사이의 예각이 20도보다 작은 거의 평행한 조합은 원거리 허위 교차점을 만들 수 있어 교차점 계산과 결과에서 제외합니다. 정확히 20도 이상인 조합만 비교합니다.',
+        'Level은 Revit ProjectElevation을 선택 좌표계의 Z로 변환한 뒤 기준 Excel 값과 비교합니다.',
         '0 허용 오차는 정확 일치, 0보다 큰 값은 입력값 이하를 정상으로 판정합니다.',
         '상태는 정상, 이름만 다름, 위치 불일치, 높이 불일치, 교차점 불일치, 대상 평행, 누락, 추가, 모호함, 지원하지 않음으로 구분합니다. 이름만 다름과 지원하지 않음은 확인 필요 항목이며 위치 오류와 같은 오류로 합치지 않습니다.'
       ],
       result: [
         '결과 카드에는 전체 검토 기준, 불일치/누락, 정상 기준 건수를 표시합니다.',
         'Excel은 오류사항 시트 하나로 만들며 정상 행은 생략합니다.',
-        '오류사항 시트에는 대상 파일, 구분, 기준 이름, 대상 이름, 기준과 차이, 오류 사항을 기록합니다.'
+        '오류사항 시트에는 대상 파일명, 구분, 기준 이름, 대상 이름, 기준과 차이, 오류 사항을 기록합니다. 대상 파일은 폴더 경로와 .rvt 확장자를 제외한 이름으로 표시합니다.'
       ],
       export: {
         multi: true,
         single: '{RVT파일명}_GridLevelConsistency.xlsx 또는 GridLevelConsistency_Selected_{파일수}_Files_yyyyMMdd_HHmm.xlsx',
         splitKo: 'GridLevel정합성검토',
         splitEn: 'Grid Level Consistency Review',
-        note: '결과 파일은 오류사항 시트만 사용하고 정상 항목은 저장하지 않습니다. Level 기준 Excel은 결과 파일과 별개의 입력 양식입니다.'
+        note: '결과 파일은 오류사항 시트만 사용하고 정상 항목은 저장하지 않습니다. 통합 기준 Excel은 결과 파일과 별개의 입력 파일입니다.'
       },
       notes: [
-        '기준 RVT 자체를 대상 목록에 다시 넣으면 자기 자신과 비교하는 결과가 생길 수 있으므로 기준 파일은 대상에서 제외합니다.',
+        '호스트에서 링크를 임의로 이동·회전해 화면상 맞춘 위치는 독립 RVT 파일만으로 복원할 수 없습니다. Shared Coordinates 모드는 모든 파일에 동일 공유좌표가 실제로 저장되어 있어야 합니다.',
         'Arc Grid와 MultiSegmentGrid는 현재 기하 비교 대상이 아니며 지원하지 않음 상태로 확인합니다.'
       ]
     },
@@ -424,10 +446,30 @@
       badge: '기준 엑셀',
       summary: '기준 엑셀에 정의된 파라미터 기준값과 모델 객체의 실제 값을 비교합니다.',
       target: '활성 문서와 여러 RVT 검토를 지원합니다.',
+      userGuide: '일반 기준 시트는 한 파라미터의 허용값 목록을, CUSTOM# 시트는 여러 파라미터의 허용 조합을 정의합니다. 값은 대소문자까지 정확히 비교합니다.',
+      setupLead: '기준 Excel의 시트 형식을 먼저 확인한다. 단일 파라미터는 일반 시트, 서로 묶여야 하는 값은 CUSTOM# 시트로 작성합니다.',
       setup: [
-        '기준 엑셀을 선택합니다.',
+        '기준 엑셀을 선택합니다. 일반 시트는 시트명 또는 A1에 파라미터명, B2 아래에 허용값을 입력합니다.',
+        '여러 파라미터 조합을 검사할 때는 CUSTOM1, CUSTOM2처럼 CUSTOM# 이름의 시트를 만들고 B1, C1, D1부터 빈 열 없이 파라미터명을 입력한 뒤 B2 아래에 정상 조합을 작성합니다.',
         '비교할 파라미터, 카테고리, 예외 조건을 확인합니다.',
         '필요하면 공통 필터로 대상 객체를 제한합니다.'
+      ],
+      settingDetails: [
+        {
+          label: '일반 기준 시트',
+          description: '한 파라미터에 허용되는 개별 값을 등록합니다. 값은 대소문자까지 같은 경우만 정상입니다.',
+          example: '시트명이 System Classification이면 B2부터 Supply Air, Return Air를 입력합니다. 모델 값 supply air는 다른 값으로 오류입니다.'
+        },
+        {
+          label: 'CUSTOM# 조합 시트',
+          description: 'B1, C1, D1부터 두 개 이상 파라미터명을 연속으로 적고, 각 행에는 허용되는 하나의 값 조합을 입력합니다. 같은 조합이 아니면 오류입니다.',
+          example: 'CUSTOM1의 B1=System, C1=Zone이고 B2=Supply, C2=A라면 System=Supply와 Zone=A 조합만 정상입니다.'
+        },
+        {
+          label: '기준 파일 유효성',
+          description: 'CUSTOM# 헤더 사이에 빈 열이 있거나 같은 파라미터명이 중복되면 해당 시트는 건너뛰고 경고를 남깁니다. 입력방법, Guide, ReadMe 시트는 기준 시트로 읽지 않습니다.',
+          example: 'B1=System, C1을 비워 두고 D1=Zone으로 작성하면 CUSTOM# 시트가 무효로 처리됩니다.'
+        }
       ],
       run: [
         '기준 엑셀 등록 후 검토를 실행합니다.',
@@ -435,8 +477,9 @@
       ],
       logic: [
         '기준 엑셀의 키와 모델 객체의 파라미터 값을 매칭합니다.',
-        '기준값과 실제값이 다르면 오류로 기록합니다.',
-        '값 비교는 문자열 정규화와 빈 값 처리를 거친 뒤 수행합니다.'
+        '일반 시트는 해당 파라미터의 허용값 집합에 실제값이 있는지, CUSTOM# 시트는 한 행의 전체 파라미터 조합이 일치하는지 검사합니다.',
+        '기준값과 실제값이 대소문자까지 다르면 오류로 기록합니다. 다른 값으로 자동 보정하지 않습니다.',
+        '공란 표기는 기준 Excel에서 정의한 공란 규칙으로 처리하고, 그 밖의 문자열은 임의의 대소문자 정규화를 하지 않습니다.'
       ],
       result: [
         '기준 불일치 건수와 정상 건수를 표시합니다.',
@@ -761,11 +804,13 @@
       group: '유틸리티',
       title: 'Link 파일 Shared Coordination 검토/설정',
       badge: '별도 화면',
-      summary: '활성 호스트의 링크를 Grid 교차점과 기준 Level로 분석하고 Shared Site 배치와 Publish를 검토·설정합니다.',
-      target: '현재 활성 호스트 문서와 그 문서에 직접 로드된 Revit 링크를 대상으로 실행합니다.',
-      userGuide: '현재 호스트에 배치된 Revit 링크가 링크 파일의 Shared Site 기준과 맞는지 먼저 분석하고, 사용자가 결과를 확인한 뒤 호스트 링크 배치 적용과 Publish를 각각 실행하는 기능입니다. 분석만으로는 문서를 바꾸지 않습니다.',
-      setupLead: '호스트에 로드된 링크, 기준 Grid 교차점과 Level, 방향 기준, 목표 Shared Site를 순서대로 선택합니다.',
+      summary: '활성 문서 또는 여러 RVT의 Revit 링크를 검토하고, 현재 Shared Site·Transform 정보를 Excel 검토표에서 확인한 뒤 APPLY 행만 안전하게 반영합니다.',
+      target: '현재 활성 호스트 문서 또는 RVT 등록 창에서 고른 Revit 프로젝트 파일의 직접 로드 링크입니다.',
+      userGuide: '기본 작업은 Excel 일괄 검토/설정입니다. 링크 상태를 읽어 검토 Excel을 만든 뒤 Action 열에서 APPLY할 행만 지정하고 다시 불러오면, 현재 상태를 다시 검증한 후 호스트 링크 배치를 반영합니다. 활성 문서 단일 링크 모드에서는 기존처럼 Grid/Level 기준으로 분석·적용·Publish를 별도로 진행할 수 있습니다.',
+      setupLead: '여러 파일을 다룰 때는 Excel 일괄 검토/설정을 먼저 사용하고, 한 호스트의 좌표 관계를 직접 조정할 때만 활성 문서 단일 링크 모드로 전환합니다.',
       setup: [
+        'Excel 일괄 검토/설정에서는 활성 문서를 검토하거나 RVT 등록 창에서 여러 파일을 추가합니다. 여러 RVT는 사용자 웍셋을 열지 않는 상태로 한 파일씩 읽습니다.',
+        '검토가 끝나면 Excel 내보내기로 행별 상태를 저장합니다. 노란색 Action 열은 REVIEW, APPLY, SKIP 중 하나로 설정하며, 실제 반영은 APPLY 행만 대상입니다.',
         '현재 작업 기준에서 활성 호스트 문서와 Project Location을 확인합니다. 패밀리 문서, 링크 문서 자체, 읽기 전용 상태에서는 실행할 수 없습니다.',
         '링크와 기준 앵커에서 호스트에 직접 로드된 최상위 Revit 링크를 선택하고 Anchor Grid 두 개와 기준 Level을 고릅니다. 기본 예시는 A × 1 교차점과 1FL입니다.',
         '방향 기준은 두 번째 교차점 또는 Project North 중 선택합니다. 두 번째 교차점은 방향 Grid 두 개를 추가로 선택해 180° 방향 모호성을 없애므로 일반적으로 더 안전합니다.',
@@ -773,6 +818,21 @@
         '직접 입력을 사용해도 Publish할 목적 Site는 필요합니다. 분석 결과의 현재값, 목표값, 차이를 확인한 뒤에만 적용과 Publish 버튼이 활성화됩니다.'
       ],
       settingDetails: [
+        {
+          label: 'Excel 일괄 검토/설정',
+          description: '활성 문서 또는 여러 RVT의 링크를 먼저 읽고, 검토 결과와 적용 후보를 하나의 Excel로 내보냅니다. 결과를 읽는 단계에서는 모델을 변경하지 않습니다.',
+          example: '건축·구조·설비 RVT 3개를 등록해 여러 RVT 검토를 실행한 뒤, 링크별 현재 SITE와 배치 상태가 담긴 검토 Excel을 만듭니다.'
+        },
+        {
+          label: 'Action 열과 검토 Excel 다시 불러오기',
+          description: 'Excel의 Action은 REVIEW, APPLY, SKIP만 허용합니다. 행을 삭제하거나 숨김 식별 열을 바꾸지 말고, 반영할 링크만 APPLY로 바꾼 뒤 저장하여 다시 불러옵니다.',
+          example: '건축 링크 한 행만 APPLY로 바꾸고 나머지는 REVIEW로 유지하면, 다시 불러온 뒤 건축 링크만 반영 후보가 됩니다.'
+        },
+        {
+          label: 'SITE와 배치 정보',
+          description: 'OriginalPlacementMethod는 최초 링크 옵션을 Revit API가 되읽을 수 없어 확인 불가로 표시합니다. 대신 현재 배치 추정, 인스턴스 Shared Site, 링크 파일의 Active Project Location을 구분해 보여줍니다.',
+          example: 'Instance Shared Site가 A동_A1이고 Link Active Site가 Internal이면 두 값이 다른 성격의 정보임을 확인한 뒤 좌표 관계를 판단합니다.'
+        },
         {
           label: 'Anchor Grid와 기준 Level',
           description: '링크 내부의 두 Grid 교차점과 Level 높이를 하나의 기준점으로 사용합니다.',
@@ -805,6 +865,10 @@
         }
       ],
       run: [
+        'Excel 일괄 검토/설정에서는 활성 문서 검토 또는 여러 RVT 검토를 선택합니다. 여러 RVT는 등록 목록에서 체크한 파일만 순서대로 읽습니다.',
+        '검토 결과에서 Link Instance, Instance Shared Site, Link Active Site, 현재 배치 추정, 경고와 적용 가능 여부를 확인하고 Excel 내보내기를 누릅니다.',
+        '검토 Excel에서 Action을 REVIEW, APPLY, SKIP으로 정합니다. 행 삭제, 숨김 식별 열 수정, 수식 입력은 허용되지 않습니다.',
+        '선택한 Excel 다시 불러오기를 누르면 파일 해시와 현재 모델 상태를 다시 검증합니다. 통과한 APPLY 행만 APPLY 행 적용 버튼으로 실행합니다.',
         '활성 호스트, 링크, Anchor Grid 두 개, 기준 Level과 방향 기준을 선택합니다. 두 번째 교차점 방식이면 방향 Grid 두 개도 선택합니다.',
         '목표 출처와 Site 또는 직접 입력값을 정한 뒤 Shared Coordination 분석을 누릅니다. 이 단계는 문서를 변경하지 않습니다.',
         '분석 결과에서 현재/목표/차이의 E, N, Z, Bearing과 경고를 확인합니다. 기본 검증 허용값은 거리 1.0 mm, 각도 0.001°입니다.',
@@ -812,6 +876,10 @@
         '좌표 관계를 링크 파일에 기록해야 할 때만 Publish 확인을 체크하고 Publish + Link 파일 저장을 실행합니다. Cloud 링크는 분석과 호스트 배치만 가능하고 Publish는 지원하지 않습니다.'
       ],
       logic: [
+        '최초 링크 Positioning 방식은 Revit API가 기존 인스턴스에서 제공하지 않으므로 결과에서 확인 불가로 명시합니다. 현재 Transform과 Shared Site 관계로 보이는 현재 배치만 추정으로 표시합니다.',
+        '링크 인스턴스의 GEO_LOCATION에서 Instance Shared Site를 읽고, 열 수 있는 링크 파일에서는 활성 Project Location을 별도 값으로 기록합니다.',
+        '여러 RVT 검토는 파일을 하나씩 열고 사용자 웍셋을 열지 않습니다. 닫힌 웍셋 때문에 인스턴스 정보를 읽지 못한 경우에는 값을 추정하지 않고 정보 없음과 사유를 남깁니다.',
+        'Excel 가져오기와 재검토 단계는 모델을 바꾸지 않으며, 내보낸 행의 식별 정보와 현재 모델 지문이 다르면 APPLY를 차단합니다.',
         '활성 UIDocument의 호스트 문서를 기준으로 직접 로드된 최상위 RevitLinkInstance만 수집합니다. 중첩 링크와 Forma Scenario는 대상에서 제외합니다.',
         '선택한 Grid 교차점과 Level ProjectElevation으로 링크 내부 기준점을 만들고, 현재 링크 Transform을 적용해 호스트 좌표를 계산합니다.',
         '두 번째 교차점 또는 Project North로 방향 벡터를 만든 뒤 현재 배치의 E/N/Z/Bearing과 목표 Site 값을 비교합니다.',
@@ -820,15 +888,25 @@
         '기존 Save Positions 대기 상태, 읽기 전용, 지원하지 않는 링크, 경고/오류가 발생하면 작업을 중단하고 Transaction을 되돌립니다.'
       ],
       result: [
+        'Excel 일괄 검토 결과에는 Host File, Link Instance, Original Placement Method, Current Placement Method, Instance Shared Site, Link Active Site, 워크셋·파일 상태와 경고가 포함됩니다.',
+        'Original Placement Method가 확인 불가인 것은 오류가 아니라 Revit API가 최초 배치 이력을 제공하지 않는다는 뜻입니다.',
+        'APPLY 전 재검토에서 링크, 좌표 기준, 파일 지문이 바뀌었거나 적용 불가 상태면 해당 행은 차단되고 사유가 표시됩니다.',
         '분석 화면에 현재값, 목표값, 차이값의 E, N, Z, Bearing을 나란히 표시합니다.',
         '분석 경고, 적용 가능 여부, Publish 가능 여부를 확인할 수 있습니다.',
         '이 기능은 결과 Excel을 만들지 않습니다. 문서 변경은 사용자가 별도로 적용 또는 Publish를 실행한 경우에만 발생합니다.'
       ],
       export: {
-        available: false,
-        multi: false,
-        note: '화면에서 Shared Coordination 분석 결과를 확인하는 기능이며 Excel 내보내기는 제공하지 않습니다.'
+        workflow: true,
+        title: '검토 Excel',
+        steps: [
+          'Excel 양식 예시는 열 구성을 확인하기 위한 샘플 파일이며 실제 적용 데이터로 사용할 수 없습니다.',
+          '활성 문서 검토 또는 여러 RVT 검토가 끝나면 Excel 내보내기로 검토 행을 새 파일에 저장합니다. 기본 파일명은 LinkSharedCoord_yyyyMMdd_HHmmss.xlsx입니다.',
+          '검토 Excel의 노란색 Action 열에서 APPLY할 행만 지정하고 저장합니다. 행을 삭제하지 말고 REVIEW 또는 SKIP으로 남겨야 합니다.',
+          '선택한 Excel 다시 불러오기로 재검토를 통과한 뒤 APPLY 행 적용을 실행합니다.'
+        ],
+        note: '이 Excel은 단순 결과 파일이 아니라 검토와 적용 사이의 안전한 작업표입니다. 숨김 식별 열, 기준 행과 수식 셀을 수정하면 가져오기가 거부됩니다.'
       },
+      excelOutputVisuals: false,
       notes: [
         '분석 결과를 확인하기 전에는 적용하거나 Publish하지 않습니다. Publish는 링크 파일에 좌표 관계를 기록하는 작업입니다.',
         '기존 링크가 다른 Shared Site에 묶여 Save Positions 대기 상태가 생기면 적용이 롤백될 수 있습니다. 필요한 경우 Revit에서 링크 위치를 <Not Shared>로 정리한 뒤 다시 시도합니다.',
@@ -1060,10 +1138,155 @@
         note: '이 기능은 프로젝트 파라미터 일괄 추가 결과를 한 파일로 저장합니다.'
       },
       notes: [sharedParamNote]
+    },
+    {
+      id: 'reducerpoint',
+      group: 'BQC 검토',
+      title: 'Reducer Point 정합성 검토',
+      badge: '배치 선택',
+      summary: 'Pipe Fittings의 Reducer 타입명과 Point 파라미터의 ECC/CON 표기가 서로 맞는지 검토합니다.',
+      target: '활성 호스트 문서 또는 등록한 여러 RVT의 Pipe Fittings 중 패밀리명에 Reducer가 포함된 인스턴스입니다.',
+      setup: [
+        '이 기능은 별도 기준값을 입력하지 않습니다. Pipe Fittings 카테고리와 패밀리명 Reducer 조건이 자동으로 적용됩니다.',
+        '공통 설정에서 포함/제외 필터를 추가하면 자동 대상 안에서도 검토 범위를 더 좁힐 수 있습니다.',
+        '결과에 함께 확인할 파라미터가 있으면 공통 설정의 추가 파라미터에 등록합니다.'
+      ],
+      run: [
+        'BQC 검토에서 Reducer Point 정합성 검토를 선택하고 설정 상태를 확인합니다.',
+        '활성 문서 검토는 현재 Revit의 호스트 문서를 바로 검토합니다. 링크 문서는 대상이 아닙니다.',
+        '여러 RVT 검토는 RVT 등록 창에서 파일을 추가하고, 체크된 파일만 실행합니다.',
+        '결과창에서 오류와 정상 건수를 확인한 뒤 필요하면 엑셀 내보내기를 누릅니다.'
+      ],
+      logic: [
+        'Pipe Fittings 중 패밀리명에 Reducer가 포함된 FamilyInstance만 수집합니다. 타입명만 Reducer인 객체는 대상이 아닙니다.',
+        '타입명과 Point 파라미터에서 ECC 또는 CON 표기를 대소문자 구분 없이 찾습니다.',
+        'Point는 인스턴스 파라미터를 먼저 읽고, 없으면 타입 파라미터를 읽습니다.',
+        '두 표기가 다르거나 한쪽에만 표기가 있거나 하나의 값에서 ECC와 CON이 함께 발견되면 오류입니다.',
+        '이 기능은 값을 수정하지 않고 판정과 결과 기록만 수행합니다.'
+      ],
+      result: [
+        '대상 수, 오류 수, 정상 수가 결과 카드에 표시됩니다.',
+        '오류 결과에는 RVT 파일, 카테고리, 패밀리, 타입, 요소 ID, 타입명, Point 값과 판정 사유가 기록됩니다.',
+        '공통 설정의 추가 파라미터를 지정한 경우 해당 값도 오류 행에 함께 출력됩니다.',
+        '오류가 없는 경우에도 전체 대상/정상 집계는 결과 카드에서 확인할 수 있습니다.'
+      ],
+      export: {
+        multi: true,
+        single: 'ReducerPointReview_yyyyMMdd_HHmm.xlsx',
+        splitKo: 'Reducer Point 정합성 검토',
+        splitEn: 'Reducer Point Consistency Review',
+        note: '엑셀에는 오류로 판정된 항목만 저장됩니다. 같은 이름의 파일이 있으면 Revit이 파일명 뒤에 번호를 붙여 보존합니다.'
+      },
+      notes: [
+        '패밀리명에 Reducer가 포함되지 않은 Pipe Fittings는 검토하지 않습니다.',
+        'Point 값에 ECC와 CON이 모두 들어 있으면 어느 한 쪽으로 판단하지 않고 오류로 표시됩니다.',
+        '타입명과 Point의 표기 규칙을 프로젝트 전체에서 먼저 통일해 두는 것이 좋습니다.'
+      ]
+    },
+    {
+      id: 'centralworkset',
+      group: '유틸리티',
+      title: '센트럴 파일 생성 및 웍셋 추가',
+      badge: '별도 화면',
+      summary: '활성 문서 또는 여러 RVT를 원본과 분리된 새 센트럴 파일로 만들고, 필요한 사용자 웍셋을 추가합니다.',
+      target: '활성 Revit 프로젝트 문서 또는 RVT 등록 창에 추가한 로컬/센트럴 Revit 프로젝트 파일입니다.',
+      setup: [
+        '대상 문서 영역에서 활성 문서를 쓰거나 RVT 등록 창으로 대상 파일을 추가합니다.',
+        '파일 상태를 확인한 뒤 새 센트럴 파일을 만들 출력 폴더와 파일명을 정합니다. 원본 파일 경로는 출력 경로로 쓸 수 없습니다.',
+        '추가할 웍셋은 세미콜론(;)으로 구분해 입력합니다. 이미 존재하는 이름은 중복 생성하지 않습니다.',
+        '여러 파일을 반복 설정해야 하면 Excel 일괄 설정에서 양식을 내보내고, Source Path를 기준으로 출력 경로와 웍셋 목록을 작성해 다시 가져옵니다.',
+        '기존 파일 덮어쓰기는 기본으로 꺼져 있습니다. 같은 출력 파일명이 있으면 먼저 경로와 덮어쓰기 선택을 확인합니다.'
+      ],
+      run: [
+        '대상 목록의 파일 종류와 열기 가능 상태를 확인하고, 출력 경로와 추가 웍셋을 설정합니다.',
+        '새 센트럴만 만들면 오른쪽의 1단계 센트럴 파일 생성을 실행합니다.',
+        '이미 만든 센트럴에 웍셋만 추가하려면 2단계 웍셋 추가를 실행합니다.',
+        '새 센트럴 생성과 웍셋 추가를 한 번에 하려면 전체 실행을 선택합니다.',
+        '처리가 끝나면 각 파일의 성공, 건너뜀, 실패 상태와 출력 센트럴 경로를 결과에서 확인합니다.'
+      ],
+      logic: [
+        '원본 RVT에는 Save 또는 SaveAs를 수행하지 않고, 지정한 출력 경로에만 새 센트럴 파일을 만듭니다.',
+        '일반 모델은 워크셰어링을 사용하도록 새 센트럴을 만들고, 워크셰어링 원본은 안전하게 분리해 새 출력 파일로 처리합니다.',
+        '웍셋 추가 단계는 지정된 출력 센트럴 파일을 열어 기존 웍셋과 이름을 비교한 뒤 없는 이름만 추가합니다.',
+        '가족 문서, 클라우드 모델, Revit Server 모델, 현재 Revit보다 높은 형식의 파일은 안전하게 처리할 수 없어 대상에서 제외하거나 실패로 기록합니다.'
+      ],
+      result: [
+        '파일별 센트럴 생성 성공/실패/건너뜀 상태와 출력 경로가 표시됩니다.',
+        '웍셋 단계에서는 새로 추가된 웍셋과 이미 존재해 건너뛴 웍셋을 구분해 확인할 수 있습니다.',
+        '실패한 파일은 오류 사유를 남기므로 경로, 파일 상태, 덮어쓰기 설정을 확인한 뒤 다시 실행할 수 있습니다.'
+      ],
+      export: {
+        available: false,
+        title: 'Excel 일괄 설정',
+        note: '이 화면의 Excel은 검토 결과를 내보내는 기능이 아니라, 여러 RVT의 Source Path를 기준으로 Output Central Path와 Add Worksets를 한 번에 작성해 가져오는 설정 양식입니다.'
+      },
+      excelOutputVisuals: false,
+      notes: [
+        '출력 경로는 원본과 다른 위치를 사용하고, 덮어쓰기는 파일명이 확실할 때만 켭니다.',
+        '원본이 열려 있거나 다른 사용자가 작업 중인 워크셰어링 파일은 파일 상태에 따라 처리하지 못할 수 있습니다.',
+        '웍셋 이름은 세미콜론으로 구분하며, 빈 이름과 이미 존재하는 이름은 추가하지 않습니다.'
+      ]
     }
   ];
 
   const manualEnhancements = {
+    reducerpoint: {
+      userGuide: 'Reducer Point 정합성 검토는 배관 Reducer의 타입명 표기와 Point 파라미터의 ECC/CON 표기가 같은 의미인지 확인하는 BQC 기능입니다. 기준을 직접 입력하는 기능이 아니라, 프로젝트에 이미 들어 있는 Reducer 명명 규칙과 Point 값을 비교합니다.',
+      setupLead: '판정 기준은 고정되어 있고, 필요한 경우 공통 설정으로 대상 범위와 결과 열만 조정합니다.',
+      settingDetails: [
+        {
+          label: '자동 검토 대상',
+          description: 'Pipe Fittings 중 패밀리명에 Reducer가 포함된 인스턴스만 자동으로 검토합니다. 다른 카테고리나 타입명만 Reducer인 객체는 대상이 아닙니다.',
+          example: '패밀리명이 Pipe Reducer - Concentric인 피팅은 검토하지만, 일반 엘보 타입명에 Reducer라는 단어가 있는 경우는 검토하지 않습니다.'
+        },
+        {
+          label: '타입명과 Point 비교',
+          description: '타입명과 Point 값에서 ECC 또는 CON 문자열을 대소문자 구분 없이 찾아 같은 표기인지 비교합니다. Point는 인스턴스에서 먼저 찾고 없으면 타입 파라미터에서 찾습니다.',
+          example: '타입명이 R-100x50 ECC이고 Point가 ECC라면 정상입니다. 타입명은 CON인데 Point가 ECC이면 오류입니다.'
+        },
+        {
+          label: '판정 불가 값',
+          description: '한쪽에만 ECC/CON이 있거나, 한 값에 ECC와 CON이 함께 있어 어느 하나로 판단할 수 없으면 오류로 기록합니다.',
+          example: 'Point가 ECC/CON처럼 두 표기를 동시에 포함하면 자동 수정하지 않고 오류 행으로 남깁니다.'
+        },
+        {
+          label: '공통 설정',
+          description: '포함 필터와 제외 필터로 검토 범위를 더 좁히고, 추가 파라미터를 결과 행에 함께 출력할 수 있습니다.',
+          example: '특정 System Type만 확인하려면 포함 필터를 추가하고, Line No를 추가 파라미터로 선택해 오류 엑셀에서 함께 확인합니다.'
+        }
+      ]
+    },
+    centralworkset: {
+      userGuide: '센트럴 파일 생성 및 웍셋 추가는 원본 모델을 건드리지 않고 지정한 위치에 새 센트럴 파일을 만들고, 필요한 사용자 웍셋을 반복 작업 없이 추가하는 기능입니다. 여러 파일을 처리할 때는 파일별 설정을 Excel 양식으로 준비할 수 있습니다.',
+      setupLead: '대상 파일, 새 센트럴 출력 경로, 웍셋 목록을 확인한 뒤 1단계, 2단계 또는 전체 실행 중 필요한 흐름을 선택합니다.',
+      settingDetails: [
+        {
+          label: '대상 문서와 RVT 등록',
+          description: '현재 활성 문서를 대상으로 쓰거나 RVT 등록 창에서 여러 파일을 추가합니다. 등록 목록에는 파일 종류와 상태가 표시됩니다.',
+          example: '현재 열어 둔 호스트 문서 하나만 처리할 때는 활성 문서를 사용하고, 납품 폴더의 여러 모델은 RVT 등록에서 선택합니다.'
+        },
+        {
+          label: '새 센트럴 출력 경로',
+          description: '새 파일을 만들 폴더와 파일명을 지정합니다. 원본 파일과 같은 경로가 아니라 별도 출력 위치를 사용해야 원본을 보호할 수 있습니다.',
+          example: 'D:\\Central_Output\\A동_설비_중앙.rvt처럼 원본 폴더와 다른 Central_Output 폴더를 지정합니다.'
+        },
+        {
+          label: '추가 웍셋',
+          description: '생성할 사용자 웍셋 이름을 세미콜론(;)으로 구분해 입력합니다. 이미 있는 이름은 건너뜁니다.',
+          example: 'A-Arch; MEP; Coordination을 입력하면 세 개의 이름을 순서대로 확인하고 없는 웍셋만 추가합니다.'
+        },
+        {
+          label: 'Excel 일괄 설정',
+          description: '여러 파일의 설정을 표로 관리할 때 사용하는 입력 양식입니다. Source Path를 식별키로 유지하고 Output Central Path와 Add Worksets만 수정해 가져옵니다.',
+          example: '20개 RVT의 출력 폴더와 웍셋 구성을 Excel에서 채운 뒤 가져와 각 행의 설정을 한 번에 반영합니다.'
+        },
+        {
+          label: '기존 파일 덮어쓰기',
+          description: '동일한 출력 파일이 있을 때 교체할지 정합니다. 기본은 꺼져 있으며, 켜기 전에 출력 경로가 맞는지 다시 확인해야 합니다.',
+          example: '테스트로 생성한 이전 센트럴을 교체해야 할 때만 덮어쓰기를 켜고 전체 실행합니다.'
+        }
+      ]
+    },
     connector: {
       userGuide: '연결된 배관, 덕트, 트레이, 컨듀잇 계열 객체 사이에서 선택한 공유파라미터 값이 같은 흐름으로 이어지는지 확인하는 기능입니다. 먼저 Revit의 공유 매개변수 TXT가 연결되어 있어야 하며, 검토할 파라미터를 선택해야 실행할 수 있습니다.',
       setup: [
@@ -2522,18 +2745,32 @@
   const featureMap = new Map(features.map((item) => [item.id, item]));
 
   const selectableFeatureIds = new Set([
-    'connector', 'unconnected', 'floorinfo', 'gridlevelconsistency', 'familysuitability', 'tapalign', 'tapdepth',
+    'connector', 'unconnected', 'floorinfo', 'gridlevelconsistency', 'reducerpoint', 'familysuitability', 'tapalign', 'tapdepth',
     'dupclash', 'worksetassignment', 'parameterduplication', 'parametermissing',
     'parameterstandard', 'ghostcleaner', 'tapdepthutility', 'familylink', 'points', 'linkworkset'
   ]);
 
   const commonSettingsFeatureIds = new Set([
-    'connector', 'unconnected', 'floorinfo', 'familysuitability', 'tapalign', 'tapdepth',
+    'connector', 'unconnected', 'floorinfo', 'reducerpoint', 'familysuitability', 'tapalign', 'tapdepth',
     'dupclash', 'worksetassignment', 'parameterduplication', 'parametermissing',
     'parameterstandard', 'tapdepthutility', 'familylink', 'points', 'linkworkset'
   ]);
 
   const manualScreenOverrides = {
+    reducerpoint: {
+      base: {
+        title: '고정 판정 기준과 공통 설정',
+        description: 'Reducer 대상과 ECC/CON 비교 기준은 자동으로 적용되며, 공통 설정에서 검토 범위와 결과 보조 열만 조정합니다.',
+        points: ['Pipe Fittings + Reducer 패밀리', 'ECC/CON 문자열 비교', 'Point 인스턴스/타입 탐색', '공통 필터와 결과 보조 열']
+      }
+    },
+    centralworkset: {
+      base: {
+        title: '대상 등록과 센트럴 출력 설정',
+        description: '활성 문서 또는 RVT를 등록하고, 원본과 분리된 센트럴 출력 경로와 추가 웍셋을 정한 뒤 단계별로 실행합니다.',
+        points: ['활성 문서 또는 RVT 등록', '파일 종류와 상태 확인', '새 센트럴 출력 경로', '1단계·2단계·전체 실행']
+      }
+    },
     connector: {
       base: {
         title: '연속성 판정과 결과 열 설정',
@@ -2551,9 +2788,9 @@
     },
     gridlevelconsistency: {
       base: {
-        title: '검토 범위와 기준 등록',
-        description: 'Grid/Level 검토 범위를 선택하고 활성 문서 또는 기준 RVT를 공용 기준으로 등록합니다.',
-        points: ['Grid·Level 검토 범위', '활성 문서 또는 기준 RVT', '기준 Grid·Level 개수', 'Level 기준 출처']
+        title: '좌표 기준과 통합 기준 Excel 워크플로',
+        description: '좌표계를 선택하고 표준 RVT에서 통합 기준 Excel을 만들거나 기존 기준 Excel을 등록합니다.',
+        points: ['Shared 또는 Internal', '활성 문서 또는 기준 RVT', '통합 기준 Excel 추출·등록', 'Grid·Level 기준 개수']
       },
       extra: [
         {
@@ -2748,6 +2985,16 @@
       title: 'GUID 삭제용 작업표',
       description: '검토 결과로 만든 삭제용 엑셀에서 실제 삭제할 행의 Delete/삭제여부 열만 수정합니다.',
       points: ['삭제 대상 행에 삭제 입력', 'GUID와 HiddenKey는 수정하지 않음', '빈 Delete 셀은 유지 대상']
+    },
+    centralworkset: {
+      title: '센트럴/웍셋 일괄 설정표',
+      description: '등록한 RVT별로 새 센트럴 출력 경로와 추가할 웍셋을 입력한 뒤 다시 가져오는 양식입니다.',
+      points: ['SourceRvtPath와 RowId는 유지', 'OutputCentralPath 입력', 'AddWorkset1~10 입력', 'Action은 APPLY 또는 SKIP']
+    },
+    linksharedcoord: {
+      title: 'Link Shared Coordination 검토표',
+      description: '링크별 현재 SITE와 배치 상태를 읽고, 필요한 행만 Action을 APPLY로 지정해 다시 불러오는 작업표입니다.',
+      points: ['Action은 REVIEW/APPLY/SKIP', 'Shared Site와 Active Site를 분리 확인', '현재 배치는 추정값으로 표시', '숨김 식별 열은 수정하지 않음']
     }
   };
 
@@ -2957,13 +3204,15 @@
         alt: `${feature.title} 입력 엑셀 구조 예시`
       });
     }
-    visuals.push({
-      title: `${feature.title} 결과표`,
-      description: '결과 엑셀의 핵심 열과 값 배치를 보여주는 구조 예시입니다. 실제 열은 선택한 추가 파라미터, 단위 옵션과 Revit 데이터에 따라 더 늘어날 수 있습니다.',
-      points: (feature.result || []).slice(0, 3),
-      src: `/assets/manual-excel/${feature.id}-result.png?v=${staticAssetVersion}`,
-      alt: `${feature.title} 결과 엑셀 구조 예시`
-    });
+    if (feature.excelOutputVisuals !== false) {
+      visuals.push({
+        title: `${feature.title} 결과표`,
+        description: '결과 엑셀의 핵심 열과 값 배치를 보여주는 구조 예시입니다. 실제 열은 선택한 추가 파라미터, 단위 옵션과 Revit 데이터에 따라 더 늘어날 수 있습니다.',
+        points: (feature.result || []).slice(0, 3),
+        src: `/assets/manual-excel/${feature.id}-result.png?v=${staticAssetVersion}`,
+        alt: `${feature.title} 결과 엑셀 구조 예시`
+      });
+    }
 
     const intro = el('div', 'manual-visual-section-head manual-visual-section-head--excel');
     intro.append(
@@ -3030,8 +3279,13 @@
     addManualCard(main, '검토 논리', feature.logic, { className: 'manual-list manual-list--logic' });
     addManualCard(main, '결과 확인', feature.result);
 
-    if (feature.export?.available === false) {
-      addManualCard(main, '엑셀 추출', feature.export.note || '이 기능은 Excel 결과를 생성하지 않습니다.');
+    if (feature.export?.workflow) {
+      const exportCard = addManualCard(main, feature.export.title || '검토 Excel', feature.export.steps || []);
+      if (feature.export.note) exportCard.append(el('p', 'manual-note', feature.export.note));
+      if (feature.excelVisuals !== false) appendExcelVisuals(exportCard, feature);
+    } else if (feature.export?.available === false) {
+      const exportCard = addManualCard(main, feature.export.title || '엑셀 추출', feature.export.note || '이 기능은 Excel 결과를 생성하지 않습니다.');
+      if (feature.excelVisuals !== false) appendExcelVisuals(exportCard, feature);
     } else {
       const exportWrap = el('div', 'table-wrap');
       const table = document.createElement('table');
@@ -3045,7 +3299,7 @@
       const exportCard = addManualCard(main, '엑셀 추출', exportWrap);
       if (feature.export?.note) exportCard.append(el('p', 'manual-note', feature.export.note));
       if (feature.export?.multi) exportCard.append(el('p', 'manual-note', multiExportNote));
-      appendExcelVisuals(exportCard, feature);
+      if (feature.excelVisuals !== false) appendExcelVisuals(exportCard, feature);
     }
 
     if (feature.notes && feature.notes.length) {

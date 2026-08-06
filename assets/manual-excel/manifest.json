@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-08-04T23:29:26.953Z",
+  "generatedAt": "2026-08-06T04:07:34.257Z",
   "viewport": "1440x760",
-  "outputCount": 27,
-  "inputCount": 7,
-  "count": 34,
+  "outputCount": 28,
+  "inputCount": 9,
+  "count": 37,
   "results": [
     {
       "featureId": "connector",
@@ -16,6 +16,12 @@
       "kind": "result",
       "file": "Sever/assets/manual-excel/unconnected-result.png",
       "bytes": 30234
+    },
+    {
+      "featureId": "reducerpoint",
+      "kind": "result",
+      "file": "Sever/assets/manual-excel/reducerpoint-result.png",
+      "bytes": 36620
     },
     {
       "featureId": "floorinfo",
@@ -208,6 +214,18 @@
       "kind": "input",
       "file": "Sever/assets/manual-excel/guid-input.png",
       "bytes": 29301
+    },
+    {
+      "featureId": "centralworkset",
+      "kind": "input",
+      "file": "Sever/assets/manual-excel/centralworkset-input.png",
+      "bytes": 41894
+    },
+    {
+      "featureId": "linksharedcoord",
+      "kind": "input",
+      "file": "Sever/assets/manual-excel/linksharedcoord-input.png",
+      "bytes": 43866
     }
   ]
 }

@@ -31,7 +31,7 @@
         <h1>KKY Tool 업데이트 내역</h1>
         <p>현재 운영하는 3.x 계열과 초기 레이아웃 계열의 마지막 Stable 2.x 변경 기록입니다.</p>
       </div>
-      <div class="updates-current"><span class="badge ok">현재 배포</span><strong>3.0.5</strong><span>2026.08.05</span></div>
+      <div class="updates-current"><span class="badge ok">현재 배포</span><strong>3.0.6</strong><span>2026.08.06</span></div>
     </section>
 
     <nav class="updates-program-tabs" aria-label="업데이트 내역 프로그램 선택">
@@ -44,7 +44,22 @@
       <header class="release-series__header"><div><h2 id="kky-3-series">KKY Tool 3.x</h2><p>새 작업대 UI와 확장 기능을 사용하는 현재 계열입니다.</p></div><a class="button primary" href="/index.html#download">현재 버전 받기</a></header>
       <ol class="release-notes">
         <li class="release-note">
-          <div class="release-note__version"><span class="badge ok">현재 배포</span><strong>3.0.5</strong><span class="release-note__date">2026.08.05</span></div>
+          <div class="release-note__version"><span class="badge ok">현재 배포</span><strong>3.0.6</strong><span class="release-note__date">2026.08.06</span></div>
+          <div class="release-note__content">
+            <h3>Reducer 기준 검토, 새 센트럴 생성과 링크 좌표 검토표 보강</h3>
+            <p class="release-note__summary">반복 확인이 필요했던 배관 Reducer 표기, 센트럴 파일 생성·웍셋 추가, 여러 RVT 링크 좌표 검토 흐름을 각각 독립 기능과 검토표 기준으로 정리한 버전입니다.</p>
+            <ul class="release-note__list">
+              <li><b>Reducer Point 정합성 검토</b>를 추가했습니다. Pipe Fittings 중 패밀리명에 Reducer가 포함된 객체만 대상으로, 타입명과 Point 파라미터의 ECC/CON 표기가 맞지 않는 행을 오류 Excel로 저장합니다.</li>
+              <li><b>센트럴 파일 생성 및 웍셋 추가</b>를 추가했습니다. 활성 문서 또는 여러 RVT를 원본과 분리된 새 센트럴로 만들고, 입력한 사용자 웍셋은 없는 이름만 추가합니다. 원본 RVT에는 저장하지 않습니다.</li>
+              <li><b>Link 파일 Shared Coordination</b>은 활성 문서·여러 RVT의 링크 상태를 Excel 검토표로 내보낸 뒤, 다시 검증된 APPLY 행만 반영하도록 보강했습니다. 최초 링크 배치 방식은 Revit API가 제공하지 않아 확인 불가로 표시하며, 현재 배치 추정·인스턴스 Shared Site·링크 Active Site를 구분해 확인합니다.</li>
+              <li><b>Grid / Level 기준 정합성</b>에서 방향 차이가 20도보다 작은 거의 평행한 Grid 조합의 원거리 허위 교차점을 제외하고, 활성 문서 결과가 중복 표기될 수 있던 흐름과 결과 Excel의 대상 파일명 표기를 정리했습니다.</li>
+              <li><b>미연결 검토의 경사도 범위</b>에 최소 각도 설정을 더했습니다. 기본값은 0.01도 초과~15도 이하이며, 작은 경사도는 판정값이 보이도록 표시 정밀도를 높였습니다.</li>
+              <li><b>속성 기준값 검토</b>는 기준값과 CUSTOM# 조합을 대소문자까지 구분해 비교합니다. 새 기능과 변경 기능의 상세 가이드 버튼도 홈페이지 매뉴얼로 연결했습니다.</li>
+            </ul>
+          </div>
+        </li>
+        <li class="release-note">
+          <div class="release-note__version"><span class="badge blue">정식 버전</span><strong>3.0.5</strong><span class="release-note__date">2026.08.05</span></div>
           <div class="release-note__content">
             <h3>Grid/Level 정합성, Shared Coordination과 여러 RVT 저장 흐름 보강</h3>
             <p class="release-note__summary">Grid/Level 정합성과 Shared Coordination 검토를 추가하고, 여러 RVT 결과 저장과 Excel 출력 안정성, 업데이트 표시를 함께 보강한 정식 버전입니다.</p>

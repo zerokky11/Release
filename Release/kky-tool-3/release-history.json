@@ -1,7 +1,15 @@
 [
   {
+    "version": "3.0.6",
+    "publishedAt": "2026-08-06",
+    "title": "버전 3.0.6",
+    "notes": "프로젝트 포인트 추출, Central + Workset 검토, 링크 Shared Coordination 분석을 추가하고 그리드·레벨, 경사 미연결, 프로젝트 파라미터 표준 검토를 보완했습니다.",
+    "packageUrl": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.6.zip",
+    "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.6.exe"
+  },
+  {
     "version": "3.0.5",
-    "publishedAt": "2026-08-05",
+    "publishedAt": "2026-08-06",
     "title": "버전 3.0.5",
     "notes": "Schedule Export와 BQC·유틸리티의 공용 통합 Excel 스트리밍 저장이 설치 폰트 측정에 의존하지 않도록 수정한 KKY Tool 3.0.5입니다. RVT별 순차 추출·즉시 저장과 기존 Excel AutoFit은 유지하며, No fonts found installed on the machine 오류로 결과가 누락되는 문제를 방지합니다. Revit 2019, 2021, 2023, 2025, 2027을 지원합니다.",
     "packageUrl": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.5.zip",
