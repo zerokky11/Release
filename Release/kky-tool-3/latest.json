@@ -1,11 +1,11 @@
 {
-  "version": "3.0.7",
-  "url": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.7.zip",
-  "publishedAt": "2026-08-06",
-  "notes": "미연결 검토에 Nozzle 허용 규칙을 추가하고, 경사 입력과 긴 설정 화면의 반응을 보완했습니다. 여러 RVT 링크 경로 검토·적용 흐름도 안정화한 KKY Tool 3.0.7입니다. Revit 2019, 2021, 2023, 2025, 2027을 지원합니다.",
-  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.7.exe",
-  "sha256": "D0D7F45A93864BE0021AD6BFCA21E57B86772B04B1FD6A40FA129D5717A8ECA2",
-  "updateZipSha256": "9253C161E86A24829DCF9B96C8FC56F5E4A2BAA17D2F0053642E629FF5996E69",
+  "version": "3.0.8",
+  "url": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.8.zip",
+  "publishedAt": "2026-08-10",
+  "notes": "센트럴 파일 생성과 웍셋 확인/추가를 대량 RVT 전용 독립 작업창으로 개편한 KKY Tool 3.0.8입니다. 파일 검색·상태 필터·APPLY/SKIP·선택 파일 웍셋 상세·공통 웍셋 입력을 지원하며 Revit 2019, 2021, 2023, 2025, 2027에서 동작합니다.",
+  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.8.exe",
+  "sha256": "84F32FA15874BA6F6C8328F8207D9CB2BFB2C7BC5515861DD91E5640AA46FA85",
+  "updateZipSha256": "D9EB3B5CE14BEC2EEBEC68124CE3BFF373E50B8530375D8A3524015251AE662B",
   "supportedRevit": [
     2019,
     2021,
