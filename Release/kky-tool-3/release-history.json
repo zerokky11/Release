@@ -1,5 +1,13 @@
 [
   {
+    "version": "3.0.9",
+    "publishedAt": "2026-08-12",
+    "title": "버전 3.0.9",
+    "notes": "링크 경로 추출에서 Loaded, Unloaded, NotFound 및 오류 상태와 저장 경로를 보존하고, 같은 경로 Reload From, 링크 타입·인스턴스 웍셋 적용, 다중 호스트 백그라운드 문서 정리를 개선한 KKY Tool 3.0.9입니다.",
+    "packageUrl": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.9.zip",
+    "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.9.exe"
+  },
+  {
     "version": "3.0.8",
     "publishedAt": "2026-08-10",
     "title": "버전 3.0.8",

@@ -771,11 +771,11 @@
       group: '유틸리티',
       title: 'Revit 링크 경로 추출/재지정',
       badge: '별도 화면',
-      summary: 'RVT 안의 Revit 링크 경로를 추출하고, 엑셀 기준으로 링크 경로를 다시 지정합니다.',
+      summary: 'RVT 안의 Revit 링크 현재 경로·링크 상태를 추출하고, 엑셀 기준으로 링크 경로를 다시 지정합니다.',
       target: '여러 RVT 등록 후 링크 추출/적용을 수행하는 별도 화면 기능입니다.',
       setup: [
         'RVT 등록 창에서 호스트 파일을 추가합니다.',
-        '링크 추출을 실행해 현재 링크 현황 엑셀을 만듭니다.',
+        '링크 추출을 실행해 현재 경로, 링크 방식, 링크 상태가 담긴 현황 엑셀을 만듭니다.',
         '수정한 엑셀을 선택하고 신규 링크 배치 방식을 지정합니다.'
       ],
       run: [
@@ -783,13 +783,13 @@
         'ReferenceElementId가 비어 있고 신규 생성 조건이면 새 링크를 생성합니다.'
       ],
       logic: [
-        '호스트 파일을 열어 Revit 링크 인스턴스와 타입 경로를 수집합니다.',
+        '호스트 파일을 열어 Revit 링크 인스턴스와 타입 경로, 현재 링크 상태를 수집합니다.',
         '엑셀의 링크명, 기준 ElementId, 대상 경로를 읽어 기존 링크를 교체하거나 새 링크를 생성합니다.',
         '적용 타입/인스턴스 워크셋 정보를 함께 기록합니다.'
       ],
       result: [
         '호스트 수, 링크 수, 대상 지정 수, 삭제/변경/오류 건수가 표시됩니다.',
-        '엑셀에는 호스트 파일, 링크 이름, 현재 경로, 대상 경로, 상태가 저장됩니다.'
+        '엑셀에는 호스트 파일, 링크 이름, 현재 경로, 링크 방식, 링크 상태, 대상 경로, 적용 상태가 저장됩니다.'
       ],
       export: {
         multi: false,
@@ -1647,23 +1647,23 @@
       ]
     },
     linkpath: {
-      userGuide: 'RVT 파일에서 Revit 링크 경로를 추출하고, 엑셀에 작성한 새 경로 기준으로 링크를 재지정하는 기능입니다.',
+      userGuide: 'RVT 파일에서 Revit 링크의 현재 경로·링크 방식·링크 상태를 먼저 추출하고, 검토한 엑셀에 작성한 대상 경로 기준으로 링크를 재지정하는 기능입니다.',
       setup: [
         '1단계에서 RVT 파일을 추가하거나 드래그 앤 드롭으로 등록합니다.',
-        '링크 추출을 실행하면 호스트 파일별 Revit 링크 이름, 현재 경로, 워크셋 정보를 수집합니다.',
+        '링크 추출을 실행하면 호스트 파일별 Revit 링크 이름, 현재 경로, 링크 방식, Loaded/Unloaded/NotFound 등의 링크 상태와 워크셋 정보를 수집합니다.',
         '엑셀 내보내기로 추출 결과를 저장한 뒤 TargetLinkPath 등 대상 경로 열을 수정합니다.',
         '2단계에서 수정한 엑셀을 선택하고 신규 링크 배치 방식을 확인합니다.',
-        '엑셀 기준 적용은 엑셀의 HostFileName, LinkName, TargetLinkPath 정보를 기준으로 처리합니다.'
+        '엑셀 기준 적용은 엑셀의 HostFileName, LinkName, ReferenceElementId, TargetLinkPath 정보를 기준으로 처리합니다.'
       ],
       run: [
         'RVT 등록 후 링크 추출을 먼저 실행합니다.',
         '추출 결과 엑셀을 저장하고 새 링크 경로를 입력합니다.',
         '엑셀 선택으로 수정 엑셀을 불러온 뒤 엑셀 기준 적용을 누릅니다.',
-        '적용 후 링크 현황 결과에서 변경, 삭제 후보, 오류 상태를 확인합니다.'
+        '적용 전에는 링크 상태와 삭제 후보를, 적용 후에는 변경·삭제·오류 상태를 확인합니다.'
       ],
       result: [
         '호스트 수, 링크 수, 대상 지정 수, 변경 수, 오류 수가 표시됩니다.',
-        '결과 표에는 호스트 파일, 링크 이름, 현재 경로, 대상 경로, 상태, 메시지가 저장됩니다.',
+        '결과 표에는 호스트 파일, 링크 이름, 현재 경로, 링크 방식, 링크 상태, 대상 경로, 적용 상태, 메시지가 저장됩니다.',
         '엑셀 기준이 비어 있거나 대상 파일을 찾지 못하면 오류 상태로 표시됩니다.'
       ]
     },
@@ -2490,13 +2490,23 @@
         },
         {
           label: '추출 엑셀',
-          description: '링크 추출 결과의 HostFileName, LinkName, ReferenceElementId, 현재 경로와 웍셋 정보를 변경 기준 파일로 사용합니다.',
+          description: '링크 추출 결과의 HostFileName, LinkName, ReferenceElementId, 현재 경로와 웍셋 정보를 변경 기준 파일로 사용합니다. CurrentLinkPath, CurrentPathType, LinkedFileStatus는 검토용 정보이며 식별 열과 숨김 열은 유지합니다.',
           example: '추출한 엑셀의 TargetLinkPath에 D:\\Links\\A-Link.rvt를 입력합니다.'
         },
         {
+          label: '링크 상태 확인',
+          description: 'LinkedFileStatus는 링크 파일을 찾고 읽을 수 있는 상태를 표시합니다. Loaded는 정상이며 Unloaded/LocallyUnloaded는 미로드·주의, NotFound/Invalid/Error는 경로 또는 링크 상태를 먼저 확인해야 하는 오류로 봅니다. 이 열은 수정 대상이 아닙니다.',
+          example: 'NotFound 행은 대상 경로를 입력하기 전에 서버 폴더와 파일명이 실제로 존재하는지 먼저 확인합니다.'
+        },
+        {
           label: '기존 링크 재지정',
-          description: 'HostFileName과 기존 링크 식별 정보가 있는 행의 TargetLinkPath를 기준으로 링크를 다시 로드합니다.',
-          example: 'A-Main.rvt의 A-Struct 링크 행에 새 서버 경로를 입력합니다.'
+          description: 'HostFileName과 기존 링크 식별 정보가 있는 행의 TargetLinkPath를 기준으로 링크를 다시 로드합니다. 같은 경로를 입력하면 해당 경로로 다시 로드하는 용도로 사용할 수 있습니다.',
+          example: 'A-Main.rvt의 A-Struct 링크 행에 새 서버 경로를 입력하거나, 기존 경로를 다시 입력해 로드를 다시 시도합니다.'
+        },
+        {
+          label: '기존 링크 삭제',
+          description: 'ReferenceElementId가 있는 기존 링크 행의 TargetLinkPath를 비우면 삭제 후보가 됩니다. 적용 전 확인 창에서 대상 건수를 다시 보고 진행해야 하며, LinkName과 ReferenceElementId는 지우지 않습니다.',
+          example: '더 이상 사용하지 않는 A-Old 링크 행은 TargetLinkPath만 비운 뒤 삭제 후보 수를 확인하고 적용합니다.'
         },
         {
           label: '신규 링크 행',
@@ -2510,10 +2520,10 @@
         }
       ],
       run: [
-        'RVT를 등록하고 링크 추출을 실행한 뒤 현재 링크 현황을 엑셀로 내보냅니다.',
+        'RVT를 등록하고 링크 추출을 실행한 뒤 현재 경로와 링크 상태를 먼저 확인하고 엑셀로 내보냅니다.',
         '엑셀에 TargetLinkPath와 필요한 신규 링크 정보를 작성합니다.',
         '수정한 엑셀을 선택하고 신규 링크 배치 방식을 확인한 뒤 엑셀 기준 적용을 실행합니다.',
-        '링크 현황에서 변경, 신규 생성, 삭제 후보, 오류 메시지를 파일별로 확인합니다.'
+        '링크 현황에서 링크 오류·미로드 주의, 변경, 신규 생성, 삭제 후보, 오류 메시지를 파일별로 확인합니다.'
       ]
     },
     lateralnozzle: {
@@ -2973,8 +2983,8 @@
     },
     linkpath: {
       title: '링크 경로 적용 기준표',
-      description: '추출 엑셀에서 TargetLinkPath와 적용 웍셋을 수정합니다. 신규 링크는 링크 식별 열을 비워 둡니다.',
-      points: ['기존 링크는 HostFileName과 ReferenceElementId 유지', 'TargetLinkPath만 새 경로로 수정', '신규 링크 행은 LinkName/ReferenceElementId를 비움']
+      description: '추출 엑셀에서 TargetLinkPath와 적용 웍셋을 수정합니다. 현재 경로·링크 방식·링크 상태를 먼저 검토하고, 신규 링크는 링크 식별 열을 비워 둡니다.',
+      points: ['기존 링크는 HostFileName과 ReferenceElementId 유지', 'TargetLinkPath에 새 경로 입력, 비우면 기존 링크 삭제 후보', 'LinkedFileStatus와 숨김 식별 열은 수정하지 않음', '신규 링크 행은 LinkName/ReferenceElementId를 비움']
     },
     lateralnozzle: {
       title: 'KTA 원본 헤더 블록',

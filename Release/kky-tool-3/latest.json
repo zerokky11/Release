@@ -1,11 +1,11 @@
 {
-  "version": "3.0.8",
-  "url": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.8.zip",
-  "publishedAt": "2026-08-10",
-  "notes": "센트럴 파일 생성과 웍셋 확인/추가를 대량 RVT 전용 독립 작업창으로 개편한 KKY Tool 3.0.8입니다. 파일 검색·상태 필터·APPLY/SKIP·선택 파일 웍셋 상세·공통 웍셋 입력을 지원하며 Revit 2019, 2021, 2023, 2025, 2027에서 동작합니다.",
-  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.8.exe",
-  "sha256": "84F32FA15874BA6F6C8328F8207D9CB2BFB2C7BC5515861DD91E5640AA46FA85",
-  "updateZipSha256": "D9EB3B5CE14BEC2EEBEC68124CE3BFF373E50B8530375D8A3524015251AE662B",
+  "version": "3.0.9",
+  "url": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.9.zip",
+  "publishedAt": "2026-08-12",
+  "notes": "링크 경로 추출에서 Loaded, Unloaded, NotFound 및 오류 상태와 저장 경로를 보존하고, 같은 경로 Reload From, 링크 타입·인스턴스 웍셋 적용, 다중 호스트 백그라운드 문서 정리를 개선한 KKY Tool 3.0.9입니다.",
+  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.9.exe",
+  "sha256": "CBBF822E8464265611E3938173623DD710F16E5F13926EE19D7C2BC7DC9BBD4F",
+  "updateZipSha256": "7CCA9DB24BF6C70E90A50D333483EBE7E2CD8B6ECCC8FC98B60C1ED6DCD43D55",
   "supportedRevit": [
     2019,
     2021,
