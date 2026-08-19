@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-06T04:07:34.257Z",
+  "generatedAt": "2026-08-19T09:42:17.221Z",
   "viewport": "1440x760",
   "outputCount": 28,
   "inputCount": 9,
@@ -153,7 +153,7 @@
       "featureId": "linkpath",
       "kind": "result",
       "file": "Sever/assets/manual-excel/linkpath-result.png",
-      "bytes": 35647
+      "bytes": 36780
     },
     {
       "featureId": "lateralnozzle",
@@ -201,7 +201,7 @@
       "featureId": "linkpath",
       "kind": "input",
       "file": "Sever/assets/manual-excel/linkpath-input.png",
-      "bytes": 34051
+      "bytes": 38694
     },
     {
       "featureId": "lateralnozzle",
@@ -219,7 +219,7 @@
       "featureId": "centralworkset",
       "kind": "input",
       "file": "Sever/assets/manual-excel/centralworkset-input.png",
-      "bytes": 41894
+      "bytes": 45814
     },
     {
       "featureId": "linksharedcoord",
