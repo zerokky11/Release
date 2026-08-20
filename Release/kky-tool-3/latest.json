@@ -1,11 +1,11 @@
 {
-  "version": "3.0.10",
-  "url": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.10.zip",
-  "publishedAt": "2026-08-19",
-  "notes": "센트럴·로컬·일반 RVT의 새 센트럴 생성, 웍셋 유지 Detach와 전체 웍셋 닫기, 무제한 웍셋 추가 및 Excel 배치, 복사·이동되어 기존 센트럴 경로가 끊긴 파일 처리, 새 센트럴 소유권 전체 반납과 선택한 3D 뷰 ViewWorkset만 현재 사용자 소유로 유지하는 기능 및 관련 안정성 수정을 포함하는 KKY Tool 3.0.10입니다.",
-  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.10.exe",
-  "sha256": "E14F576B587985B770A259051AE48F5E47A8BFE6CD0F5AEF7DF18220C9D053F6",
-  "updateZipSha256": "20E745E3123995ECFD6D015F1B5026A0B0253D7E306802674DE12FB4821F3904",
+  "version": "3.0.11",
+  "url": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.11.zip",
+  "publishedAt": "2026-08-20",
+  "notes": "센트럴/웍셋 Excel 양식에서 하나의 기준 RVT를 여러 작업 행으로 설정해 서로 다른 새 센트럴 파일을 만들 수 있도록 개선했습니다. 복사한 행의 빈 값 또는 중복 RowId는 자동으로 새 ID를 받아 행별 상태를 보존하며, 동일한 실파일 또는 대상 경로의 출력 중복과 원본·연결 센트럴 경로 충돌은 가져오기와 실행 직전에 계속 차단합니다. Revit 2019, 2021, 2023, 2025, 2027을 지원합니다.",
+  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.11.exe",
+  "sha256": "D22292A6E5823AF78399831E592C181C3907C3E787B6EE94FA070DA3165F6626",
+  "updateZipSha256": "DD0542C3797785BB1D5D07F478A30FAFFCC5BEDDB36CD54679EC1D6F348CC06D",
   "supportedRevit": [
     2019,
     2021,

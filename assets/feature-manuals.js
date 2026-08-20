@@ -1198,7 +1198,7 @@
         '등록 뒤 파일 종류, 연결 센트럴, 기존 사용자 웍셋, 경고 상태를 확인합니다. 연결 센트럴 경로가 없는 로컬/복사본은 새 센트럴 생성에서는 경고로 처리할 수 있지만 웍셋 단독 작업은 할 수 없습니다.',
         '새 센트럴은 원본과 기존 연결 센트럴과 다른 절대 경로의 .rvt로 지정합니다. 여러 파일은 공통 출력 폴더를 적용한 뒤 파일별 경로를 다시 확인합니다.',
         '추가할 사용자 웍셋은 한 줄에 하나 또는 세미콜론(;)으로 구분해 입력합니다. 개수 제한은 없고, 기존 이름과 대소문자까지 완전히 같은 이름만 건너뜁니다.',
-        '여러 파일의 경로·웍셋·3D 뷰 소유권을 반복 설정할 때는 Excel 양식을 내보내고, Action=APPLY 행만 작성해 다시 불러옵니다.',
+        '여러 파일의 경로·웍셋·3D 뷰 소유권을 반복 설정하거나 하나의 기준 RVT에서 여러 새 센트럴을 만들 때는 Excel 양식을 내보냅니다. 같은 SourceRvtPath를 여러 행에 사용할 수 있으며, Action=APPLY 행만 작성해 다시 불러옵니다.',
         '기존 출력 파일 덮어쓰기는 기본 OFF입니다. 같은 이름의 대상 파일을 교체해야 할 때만 켜고 확인 창에서 경로를 다시 검토합니다.'
       ],
       run: [
@@ -1222,7 +1222,7 @@
       export: {
         available: false,
         title: 'Excel 일괄 설정',
-        note: '이 화면의 Excel은 검토 결과를 내보내는 기능이 아니라, 여러 RVT의 Source Path를 기준으로 Output Central Path와 Add Worksets를 한 번에 작성해 가져오는 설정 양식입니다.'
+        note: '이 화면의 Excel은 검토 결과를 내보내는 기능이 아니라, 여러 RVT 또는 하나의 기준 RVT의 작업 행별로 Output Central Path와 Add Worksets를 작성해 가져오는 설정 양식입니다. 같은 SourceRvtPath를 여러 행에 쓸 때는 출력 경로를 모두 다르게 지정합니다.'
       },
       excelOutputVisuals: false,
       notes: [
@@ -1291,8 +1291,8 @@
         },
         {
           label: 'Excel 일괄 설정',
-          description: '등록한 파일을 내보낸 양식에서 Action=APPLY 또는 SKIP으로 구분한다. RowId와 SourceRvtPath는 식별용으로 유지하고, OutputCentralPath, AddWorkset1~N, Retain3DViewOwnership, Ownership3DViewNames를 파일별로 입력한다. AddWorkset 열은 필요한 수만큼 자동으로 늘어난다.',
-          example: '20개 RVT의 출력 경로와 웍셋을 Excel에서 작성하고, 3D 뷰 권한이 필요한 행만 TRUE와 뷰 이름 줄바꿈 목록을 입력한 뒤 불러온다.'
+          description: '등록한 파일을 내보낸 양식에서 Action=APPLY 또는 SKIP으로 구분한다. 하나의 SourceRvtPath를 여러 행에 복사해도 각 행은 독립 작업으로 유지된다. 첫 RowId는 유지하고, 복사 행의 빈 값 또는 중복 RowId는 가져올 때 자동으로 새 ID가 만들어진다. OutputCentralPath는 행마다 서로 다른 절대 경로로 입력하며, 동일한 실제 파일·대상 경로·원본·연결 센트럴 경로는 가져오기와 실행 전에 차단된다.',
+          example: 'C:\\Models\\A.rvt 행을 복사해 OutputCentralPath를 D:\\Central_Output\\A_건축.rvt와 D:\\Central_Output\\A_설비.rvt로 각각 입력한다. 두 행 모두 SourceRvtPath는 A.rvt로 두고, 3D 뷰 권한이 필요한 행만 TRUE와 뷰 이름 줄바꿈 목록을 입력한 뒤 불러온다.'
         },
         {
           label: '기존 파일 덮어쓰기',
@@ -3026,8 +3026,8 @@
     },
     centralworkset: {
       title: '센트럴/웍셋 일괄 설정표',
-      description: '등록한 RVT별로 새 센트럴 출력 경로, 필요한 수의 AddWorkset 열과 3D 뷰 소유권 옵션을 입력한 뒤 다시 가져오는 양식입니다.',
-      points: ['RowId와 SourceRvtPath는 유지', 'Action은 APPLY 또는 SKIP', 'AddWorkset1~N은 필요한 수만큼 자동 생성', '3D 뷰 권한은 TRUE와 정확한 이름 줄바꿈 목록']
+      description: '등록한 RVT별 또는 하나의 기준 RVT를 복사한 작업 행별로 새 센트럴 출력 경로, 필요한 수의 AddWorkset 열과 3D 뷰 소유권 옵션을 입력한 뒤 다시 가져오는 양식입니다.',
+      points: ['같은 SourceRvtPath는 여러 행 사용 가능', '복사 행의 빈/중복 RowId는 자동으로 새 ID 부여', 'OutputCentralPath는 행마다 서로 다른 절대 경로', 'Action은 APPLY 또는 SKIP', 'AddWorkset1~N은 필요한 수만큼 자동 생성', '3D 뷰 권한은 TRUE와 정확한 이름 줄바꿈 목록']
     },
     linksharedcoord: {
       title: 'Link Shared Coordination 검토표',
