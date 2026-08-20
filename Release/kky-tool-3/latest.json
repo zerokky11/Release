@@ -4,7 +4,7 @@
   "publishedAt": "2026-08-19",
   "notes": "센트럴·로컬·일반 RVT의 새 센트럴 생성, 웍셋 유지 Detach와 전체 웍셋 닫기, 무제한 웍셋 추가 및 Excel 배치, 복사·이동되어 기존 센트럴 경로가 끊긴 파일 처리, 새 센트럴 소유권 전체 반납과 선택한 3D 뷰 ViewWorkset만 현재 사용자 소유로 유지하는 기능 및 관련 안정성 수정을 포함하는 KKY Tool 3.0.10입니다.",
   "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.10.exe",
-  "sha256": "254E2BE7E1CB76EDDF69E72C463C56B3BF8D38F7D6B0F41C185AA5BAC1AB28AA",
+  "sha256": "E14F576B587985B770A259051AE48F5E47A8BFE6CD0F5AEF7DF18220C9D053F6",
   "updateZipSha256": "20E745E3123995ECFD6D015F1B5026A0B0253D7E306802674DE12FB4821F3904",
   "supportedRevit": [
     2019,
