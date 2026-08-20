@@ -26,56 +26,56 @@
   {
     "version": "3.0.7",
     "publishedAt": "2026-08-06",
-    "title": "踰꾩쟾 3.0.7",
-    "notes": "誘몄뿰寃?寃?좎뿉 Nozzle ?덉슜 洹쒖튃??異붽??섍퀬, 寃쎌궗 ?낅젰怨?湲??ㅼ젙 ?붾㈃??諛섏쓳??蹂댁셿?덉뒿?덈떎. ?щ윭 RVT 留곹겕 寃쎈줈 寃?졖룹쟻???먮쫫???덉젙?뷀븳 KKY Tool 3.0.7?낅땲?? Revit 2019, 2021, 2023, 2025, 2027??吏?먰빀?덈떎.",
+    "title": "버전 3.0.7",
+    "notes": "미연결 검토에 선택형 Nozzle 허용 규칙을 추가하고, 경사값 입력과 기능 설정 화면의 반응을 보완했습니다. 여러 RVT의 링크 경로 추출·적용과 진행 상태·열린 문서 정리를 안정화한 KKY Tool 3.0.7입니다. Revit 2019, 2021, 2023, 2025, 2027을 지원합니다.",
     "packageUrl": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.7.zip",
     "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.7.exe"
   },
   {
     "version": "3.0.6",
     "publishedAt": "2026-08-06",
-    "title": "踰꾩쟾 3.0.6",
-    "notes": "?꾨줈?앺듃 ?ъ씤??異붿텧, Central + Workset 寃?? 留곹겕 Shared Coordination 遺꾩꽍??異붽??섍퀬 洹몃━?쑣룸젅踰? 寃쎌궗 誘몄뿰寃? ?꾨줈?앺듃 ?뚮씪誘명꽣 ?쒖? 寃?좊? 蹂댁셿?덉뒿?덈떎.",
+    "title": "버전 3.0.6",
+    "notes": "프로젝트 포인트 추출, Central + Workset 검토, 링크 Shared Coordination 분석을 추가하고 그리드·레벨 검사, 미연결 검토와 프로젝트 파라미터 표시 검사를 보완한 KKY Tool 3.0.6입니다. Revit 2019, 2021, 2023, 2025, 2027을 지원합니다.",
     "packageUrl": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.6.zip",
     "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.6.exe"
   },
   {
     "version": "3.0.5",
     "publishedAt": "2026-08-06",
-    "title": "踰꾩쟾 3.0.5",
-    "notes": "Schedule Export? BQC쨌?좏떥由ы떚??怨듭슜 ?듯빀 Excel ?ㅽ듃由щ컢 ??μ씠 ?ㅼ튂 ?고듃 痢≪젙???섏〈?섏? ?딅룄濡??섏젙??KKY Tool 3.0.5?낅땲?? RVT蹂??쒖감 異붿텧쨌利됱떆 ??κ낵 湲곗〈 Excel AutoFit? ?좎??섎ŉ, No fonts found installed on the machine ?ㅻ쪟濡?寃곌낵媛 ?꾨씫?섎뒗 臾몄젣瑜?諛⑹??⑸땲?? Revit 2019, 2021, 2023, 2025, 2027??吏?먰빀?덈떎.",
+    "title": "버전 3.0.5",
+    "notes": "Schedule Export와 BQC·유틸리티가 공용 통합 Excel 스트리밍 저장을 사용하도록 정리한 KKY Tool 3.0.5입니다. RVT별 순차 추출·즉시 저장과 기존 Excel AutoFit은 유지하며, 설치된 글꼴이 없을 때 발생하는 오류로 결과가 누락되는 문제를 방지합니다. Revit 2019, 2021, 2023, 2025, 2027을 지원합니다.",
     "packageUrl": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.5.zip",
     "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.5.exe"
   },
   {
     "version": "3.0.4",
     "publishedAt": "2026-08-04",
-    "title": "踰꾩쟾 3.0.4",
-    "notes": "Schedule Export ?ㅽ뻾 ?꾩뿉 Excel 援ъ꽦怨?????꾩튂瑜?癒쇱? ?뺤젙?섍퀬, ?щ윭 RVT瑜?臾몄꽌蹂꾨줈 異붿텧쨌湲곕줉쨌?댁젣?섎뒗 ?硫붾え由??쒖감 泥섎━? ?듯빀 Excel ?ㅽ듃由щ컢 ??μ쓣 ?곸슜??KKY Tool 3.0.4?낅땲?? 痍⑥냼쨌?ㅽ뙣 ??誘몄셿???뚯씪???뺣━?섎ŉ Revit 2019, 2021, 2023, 2025, 2027??吏?먰빀?덈떎.",
+    "title": "버전 3.0.4",
+    "notes": "Schedule Export 실행 전에 Excel 구성과 저장 위치를 확정하고, 여러 RVT를 문서별로 추출·기록·해제하는 저메모리 순차 처리와 통합 Excel 스트리밍 저장을 적용한 KKY Tool 3.0.4입니다. 취소·실패 시 미완성 파일을 정리하며 Revit 2019, 2021, 2023, 2025, 2027을 지원합니다.",
     "packageUrl": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.4.zip",
     "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.4.exe"
   },
   {
     "version": "3.0.3",
     "publishedAt": "2026-08-03",
-    "title": "踰꾩쟾 3.0.3",
-    "notes": "Schedule Export???꾩껜 媛앹껜 + ?ㅼ?以??꾨뱶 紐⑤뱶??Shared GUID/?쇰컲 Project ?대쫫 湲곕컲???덉쟾???뚮씪誘명꽣 留ㅽ븨怨?鍮덇컪 ?ъ쑀 吏묎퀎 濡쒓렇瑜?異붽??섍퀬, 湲곗〈 ?꾩떆 Schedule 蹂듭궗 寃쎄퀬 泥섎━瑜?蹂닿컯??KKY Tool 3.0.3?낅땲?? Revit 2019, 2021, 2023, 2025, 2027??吏?먰빀?덈떎.",
+    "title": "버전 3.0.3",
+    "notes": "Schedule Export의 전체 객체 + 스케줄 필드 모드에 Shared Parameter GUID와 일반 Project Parameter의 정확한 이름을 이용한 안전한 매핑, 빈값 사유 집계 로그를 추가하고 임시 Schedule 복사 경고 처리를 보강한 KKY Tool 3.0.3입니다. Revit 2019, 2021, 2023, 2025, 2027을 지원합니다.",
     "packageUrl": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.3.zip",
     "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.3.exe"
   },
   {
     "version": "3.0.2",
     "publishedAt": "2026-07-31",
-    "title": "踰꾩쟾 3.0.2",
-    "notes": "?꾩껜 湲곕뒫 ?ㅼ젙???ъ떎???좎?? Revit 李?媛??ㅼ떆媛?怨듭쑀瑜?異붽??섍퀬, ?좊졊媛앹껜 ?쒓굅, NWC Export View ?대쫫 ?쇨큵 異붿텧, 而ㅻ꽖??吏꾨떒, Schedule Import/Export, 湲곕뒫 ?좏깮 ?붾㈃??媛쒖꽑??KKY Tool 3.0.2?낅땲?? Revit 2019, 2021, 2023, 2025, 2027??吏?먰빀?덈떎.",
+    "title": "버전 3.0.2",
+    "notes": "전체 기능 설정의 실시간 저장과 Revit 창 간 공유를 추가하고, 유령 객체 제거, NWC Export View 이름 일괄 추출, 커넥터 진단, Schedule Import/Export와 기능 선택 화면을 개선한 KKY Tool 3.0.2입니다. Revit 2019, 2021, 2023, 2025, 2027을 지원합니다.",
     "packageUrl": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.2.zip",
     "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.2.exe"
   },
   {
     "version": "3.0.1",
     "publishedAt": "2026-07-21",
-    "title": "踰꾩쟾 3.0.1",
-    "notes": "BIA2 遺꾩꽍 湲곕뒫???뺤떇 ?꾨줈洹몃옩?먯꽌 遺꾨━??KKY Tool 3.0.1?낅땲?? Revit 2019, 2021, 2023, 2025, 2027??吏?먰빀?덈떎.",
+    "title": "버전 3.0.1",
+    "notes": "BIA2 분석 기능을 정식 프로그램에서 분리한 KKY Tool 3.0.1입니다. Revit 2019, 2021, 2023, 2025, 2027을 지원합니다.",
     "packageUrl": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.1.zip",
     "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.1.exe"
   }
