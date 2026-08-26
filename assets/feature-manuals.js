@@ -1,5 +1,5 @@
 (function () {
-  const staticAssetVersion = '3.0-20260819.1';
+  const staticAssetVersion = '3.0-20260826.1';
   const sharedParamNote = '공유파라미터 목록은 Revit 관리 > 공유 매개변수에 연결된 TXT를 기준으로 읽습니다. 홈페이지/Hub에서 TXT 파일을 별도로 선택하는 흐름은 없습니다.';
   const multiExportNote = '여러 RVT는 실행 전에 저장 방식을 정합니다. 실행 후 직접 저장은 결과를 화면에 남겨 사용자가 내보내고, 기능별 통합 Excel 순차 저장은 기능마다 통합 파일 하나를 만들며, RVT별 Excel 즉시 저장은 문서가 끝날 때마다 파일을 저장하고 메모리에서 결과를 해제합니다. 파일별 저장명은 {RVT파일명}_{기능명}_{오류건수00EA}.xlsx 형식이며 같은 이름이 있으면 뒤에 (2), (3)이 붙습니다.';
 
@@ -1189,12 +1189,12 @@
     {
       id: 'centralworkset',
       group: '유틸리티',
-      title: '센트럴 파일 생성 및 웍셋 추가',
+      title: '센트럴 파일생성, 웍셋 추가 Grid/Level, 3D 뷰 권한 적용',
       badge: '별도 화면',
-      summary: '센트럴·로컬·일반 RVT를 원본과 분리된 새 센트럴로 만들거나, 기존 센트럴에 사용자 웍셋만 추가하는 대량 작업 기능입니다.',
+      summary: '센트럴·로컬·일반 RVT를 원본과 분리된 새 센트럴로 만들거나, 기존 센트럴에 사용자 웍셋을 추가하고 Grid/Level 및 지정 3D 뷰 권한을 적용하는 대량 작업 기능입니다.',
       target: '현재 활성 호스트 문서 또는 RVT 등록 창에 추가한 센트럴·로컬·일반 Revit 프로젝트 파일입니다.',
       setup: [
-        '작업창에서 센트럴 파일 만들기 또는 웍셋만 확인·추가 중 목적에 맞는 탭을 선택하고, 활성 문서를 추가하거나 RVT 파일을 등록합니다.',
+        '작업창에서 센트럴 파일 만들기, 웍셋만 확인·추가, Grid/Level 및 지정 3D 뷰 권한 적용 중 목적에 맞는 탭을 선택하고, 활성 문서를 추가하거나 RVT 파일을 등록합니다.',
         '등록 뒤 파일 종류, 연결 센트럴, 기존 사용자 웍셋, 경고 상태를 확인합니다. 연결 센트럴 경로가 없는 로컬/복사본은 새 센트럴 생성에서는 경고로 처리할 수 있지만 웍셋 단독 작업은 할 수 없습니다.',
         '새 센트럴은 원본과 기존 연결 센트럴과 다른 절대 경로의 .rvt로 지정합니다. 여러 파일은 공통 출력 폴더를 적용한 뒤 파일별 경로를 다시 확인합니다.',
         '추가할 사용자 웍셋은 한 줄에 하나 또는 세미콜론(;)으로 구분해 입력합니다. 개수 제한은 없고, 기존 이름과 대소문자까지 완전히 같은 이름만 건너뜁니다.',
@@ -1230,6 +1230,176 @@
         '원본이 열려 있거나 다른 사용자가 작업 중인 워크셰어링 파일은 파일 상태에 따라 처리하지 못할 수 있습니다.',
         '웍셋 이름은 세미콜론으로 구분하며, 빈 이름과 이미 존재하는 이름은 추가하지 않습니다.'
       ]
+    },
+    {
+      id: 'acccloud',
+      group: '유틸리티',
+      title: 'ACC 클라우드 모델 생성 (TEST)',
+      badge: '별도 화면 · TEST',
+      summary: '파일 기반 RVT를 지정한 ACC/Autodesk Docs 테스트 폴더에 별도의 Cloud Workshared 모델로 만드는 테스트 작업입니다. 기존 클라우드 모델을 덮어쓰거나 수정하지 않습니다.',
+      target: '파일 기반 RVT와 테스트 전용 ACC/Autodesk Docs 대상입니다. 실행은 Revit 2023, 2025, 2027에서만 지원합니다.',
+      userGuide: 'ACC 클라우드 모델 생성은 파일 RVT를 새 ACC Cloud Workshared 모델로 만드는 테스트 기능입니다. 한 작업 행은 하나의 원본 RVT와 하나의 ACC 대상 폴더를 뜻합니다. 실제 ACC 프로젝트에 새 모델을 만들 수 있으므로 운영 프로젝트가 아니라 전용 테스트 project/folder에서만 사용해야 합니다. 기존 센트럴/웍셋 생성 흐름과 달리 기존 ACC 모델을 찾아 덮어쓰지 않으며, 원격 생성 결과가 확실하지 않은 대상은 즉시 재실행하지 못하도록 잠급니다.',
+      setupLead: '먼저 테스트용 ACC project와 folder를 정한 뒤 원본 RVT를 추가한다. 각 행에 생성할 모델명과 AccountGuid, ProjectGuid, FolderId/URN, Region을 입력하고, 여러 작업이 필요하면 행 복사 또는 요청 Excel을 사용한다.',
+      setup: [
+        'RVT 파일 추가로 원본 파일을 목록에 넣습니다. 같은 원본을 다른 ACC 대상으로 만들 때는 선택 행 복사 또는 요청 Excel을 사용합니다.',
+        '각 행에서 Action, 생성 모델명, AccountGuid, ProjectGuid, FolderId/URN, Region과 추가할 사용자 웍셋을 확인합니다.',
+        'ACC Excel 불러오기 또는 요청 양식 저장으로 여러 작업 행을 준비할 수 있습니다. 결과 전용 열은 직접 입력해도 실행 결과로 신뢰하지 않습니다.',
+        'Cloud Workshared 생성은 TEST 대상에서만 실행하고, 원격 생성이 불확정인 행은 ACC에서 실제 모델 존재 여부를 먼저 확인합니다.'
+      ],
+      settingDetails: [
+        {
+          label: 'Source RVT와 작업 행',
+          description: 'RVT 파일 추가는 같은 원본 경로를 한 번만 기본 등록합니다. 같은 파일을 건축·설비처럼 서로 다른 ACC 대상에 만들려면 선택 행 복사 또는 RowId를 유지한 요청 Excel 가져오기를 사용해야 합니다.',
+          example: 'C:\\Seed\\Campus.rvt를 Architecture와 MEP 두 폴더에 만들려면 첫 행을 복사한 뒤 각 행의 Model Name과 FolderId를 다르게 입력합니다.'
+        },
+        {
+          label: 'Action과 Model Name',
+          description: 'Action은 APPLY 또는 SKIP만 사용합니다. APPLY 행만 원격 생성 대상으로 읽고, SKIP 행은 요청 양식에 남아 있어도 실행하지 않습니다. Model Name은 새 ACC 모델 이름이므로 원본 파일명과 달라도 됩니다.',
+          example: 'Campus.rvt 한 행에서 Action=APPLY, Model Name=Campus_Architecture_TEST로 지정하면 해당 이름의 새 Cloud Workshared 모델 생성 요청을 만듭니다.'
+        },
+        {
+          label: 'AccountGuid, ProjectGuid, FolderId/URN, Region',
+          description: 'AccountGuid와 ProjectGuid는 GUID 형식으로, FolderId는 대상 Docs folder의 원문 ID/URN 전체로 입력합니다. Region은 원본 파일 위치가 아니라 대상 ACC project 기준으로 US 또는 EMEA를 선택합니다.',
+          example: 'folder 값이 urn:adsk.wipprod:fs.folder:co.…라면 앞부분을 지우거나 GUID로 바꾸지 않고 원문 전체를 붙여 넣습니다.'
+        },
+        {
+          label: 'Autodesk Docs URL 해석',
+          description: '프로젝트 홈 URL과 대상 folder URL을 화면에 차례로 붙여 넣으면 화면 안에서 AccountGuid, ProjectGuid, FolderId를 읽어 현재 행에 채울 수 있습니다. URL은 로컬 화면에서만 해석하며 저장·전송·로그하지 않습니다.',
+          example: '브라우저 주소의 프로젝트 URL을 먼저 붙여 넣고, 이어서 실제 대상 folder를 연 URL을 붙여 넣어 두 ID와 folder URN을 채웁니다.'
+        },
+        {
+          label: '추가 사용자 웍셋',
+          description: '새 Cloud Workshared 모델에 넣을 사용자 웍셋을 한 줄에 하나씩 입력합니다. 기존 이름과 정확히 같은 웍셋은 결과에서 건너뜀으로 기록됩니다.',
+          example: 'Architecture와 Coordination을 두 줄로 입력하면 두 이름을 새 모델에 추가하도록 요청합니다.'
+        },
+        {
+          label: '소유권, Pin 옵션과 TEST 실행 경계',
+          description: '파일 센트럴의 CreateNewLocal 기반 소유권·Pin 규칙은 클라우드에 그대로 적용할 수 없어 1차 TEST 기능에서는 항상 FALSE로 보냅니다. 원격 덮어쓰기는 하지 않고, 같은 ACC target은 이전 생성 성공 또는 생성 불확정 상태가 남아 있으면 다시 실행할 수 없습니다.',
+          example: 'Excel에 3D 뷰 소유권 또는 Level/Grid 권한을 TRUE로 입력해도 가져오기가 차단됩니다. 같은 folder와 model name 조합에서 불확정 메시지가 나면 ACC에서 모델을 먼저 확인합니다.'
+        },
+        {
+          label: '요청 Excel과 신뢰 결과 Excel',
+          description: '요청 양식 저장은 입력한 작업 행을 ACC_Cloud_Jobs 시트로 저장합니다. 신뢰 결과 저장은 실제 실행 뒤 받은 행만 ACC_Cloud_Results 시트로 저장하며, 결과 열을 임의로 편집한 Excel은 실행 근거로 사용하지 않습니다.',
+          example: '여러 project/folder 작업은 요청 Excel을 작성해 불러오고, 실행 뒤에는 신뢰 결과 Excel을 별도 보관해 생성된 Cloud model ID와 상태를 확인합니다.'
+        }
+      ],
+      run: [
+        '화면의 Revit 로그인 이름과 지원 상태를 확인합니다. Revit 2019와 2021에서는 이 기능의 실행이 차단됩니다.',
+        'RVT 파일을 추가하고 각 APPLY 행의 Model Name, AccountGuid, ProjectGuid, FolderId/URN, Region을 채웁니다. 대상 folder가 테스트 전용인지 다시 확인합니다.',
+        '작업이 많으면 요청 양식을 저장하거나 ACC Excel을 불러온 뒤, 실행 전 각 행의 Action과 target 조합을 다시 검토합니다.',
+        'ACC Cloud Workshared 생성 (TEST)을 누르고 확인 창에서 대상 수와 테스트 경고를 확인합니다.',
+        '배치는 전체 행을 검증한 뒤 순서대로 처리합니다. 첫 실행 실패가 나면 이후 행을 계속 밀어 넣지 않고 중단하므로, 결과 메시지를 확인한 뒤 수정합니다.',
+        '완료 뒤 원격 모델 생성됨 또는 원격 생성 미확정 상태를 확인합니다. 미확정 행은 재시도 전에 ACC에서 실제 모델 존재 여부를 먼저 확인합니다.'
+      ],
+      logic: [
+        '지원 Revit 버전, APPLY/SKIP 값, 원본 RVT, 모델명, GUID, folder URN과 Region을 먼저 검증합니다.',
+        '같은 원본으로 여러 작업을 만들 수 있지만, 같은 AccountGuid·ProjectGuid·FolderId·Model Name 조합은 하나의 ACC target으로 보고 중복 실행을 차단합니다.',
+        '각 APPLY 행은 새 Cloud Workshared 모델 생성 요청으로 처리합니다. 기존 원격 모델을 찾아 덮어쓰는 동작은 하지 않습니다.',
+        '원격 생성 성공 행은 생성된 cloud 식별값과 새로 만든/건너뛴 웍셋을 결과로 남깁니다.',
+        '통신 또는 원격 상태 때문에 생성 여부를 확정하지 못하면 MANUAL CLEANUP REQUIRED 상태로 남기고 해당 target을 잠급니다. 같은 행을 바로 재실행해 중복 모델을 만들지 않도록 하는 안전장치입니다.',
+        '소유권·Pin·Level/Grid 권한 값은 이 TEST 기능에서 실행하지 않으며, 파일 센트럴 기능의 설정과 섞이지 않게 별도 계약으로 처리합니다.'
+      ],
+      result: [
+        '행마다 상태, 메시지, 원격 생성 확정 여부, 생성된 cloud 식별값과 웍셋 처리 결과를 확인합니다.',
+        '원격 생성됨으로 표시된 행만 신뢰 결과 Excel에 저장합니다. 결과 파일은 생성 요청 양식과 구분해 보관합니다.',
+        '원격 생성 미확정 또는 MANUAL CLEANUP REQUIRED 행은 재실행하지 말고 ACC Docs에서 모델 존재 여부를 수동으로 확인합니다.'
+      ],
+      export: {
+        workflow: true,
+        title: 'ACC 요청 및 결과 Excel',
+        steps: [
+          '요청 양식 저장은 현재 작업 행을 ACC_Cloud_Jobs 시트로 저장합니다. 노란 입력 열의 Action, source, target ID, Region, Model Name과 AddWorksets만 수정합니다.',
+          'ACC Excel 불러오기는 RowId와 요청 필드를 검증하고, 허용하지 않는 소유권/Pin 값과 불완전한 target을 차단합니다.',
+          '신뢰 결과 저장은 실제 실행 뒤 확정된 결과 행을 ACC_Cloud_Results 시트로 저장합니다. 원격 생성이 미확정인 행은 결과 파일만으로 성공으로 간주하지 않습니다.'
+        ],
+        note: '이 기능의 Excel은 공통 검토 결과의 한글/영문·한 파일/파일별 4가지 저장 방식이 아닙니다. 요청 양식과 실행 결과를 분리해 저장하는 전용 ACC 작업표입니다.'
+      },
+      excelVisuals: false,
+      notes: [
+        '운영 ACC project 또는 운영 folder에는 사용하지 않습니다. 이 기능은 화면과 결과에 TEST로 표시되는 실험 단계의 생성 작업입니다.',
+        'FolderId는 Docs folder의 원문 URN을 사용하고, ACC 백업 화면의 Hub/Project/Item ID와 서로 바꿔 넣지 않습니다.',
+        '생성 여부가 불확정인 경우 원격 상태를 먼저 확인해야 합니다. 같은 target을 즉시 재실행하면 중복 모델이 생길 위험이 있습니다.'
+      ]
+    },
+    {
+      id: 'accbackup',
+      group: '유틸리티',
+      title: 'ACC 백업 (TEST)',
+      badge: '별도 화면 · TEST',
+      summary: 'LAN file-based central의 성공 SWC를 신호로 닫힌 local snapshot을 만들고, 별도 ACC 일반 RVT Item의 Version으로 보관하는 TEST 백업 작업입니다. RCW/C4R 모델 병합은 하지 않습니다.',
+      target: 'LAN file-based central과 테스트 전용 ACC/Autodesk Docs의 ordinary RVT Item입니다. RCW/C4R Item은 대상에서 제외됩니다.',
+      userGuide: 'ACC 백업은 열린 센트럴 파일을 직접 복사하거나 업로드하는 방식이 아니다. 성공한 Synchronize with Central 신호를 durable queue에 기록한 뒤, Revit API로 닫힌 staging snapshot을 만들고 검증된 일반 ACC RVT Item에 Version으로 보관하는 TEST 기능이다. 기본값은 dry-run이며, 실제 외부 write는 이 PC의 TEST write gate, profile의 dry-run 해제, 전용 테스트 folder 확인이 모두 충족될 때만 가능하다.',
+      setupLead: '먼저 LAN file-based central을 하나 고르고 Autodesk 연결을 만든다. Hub → Project → Folder → ordinary RVT Item 순서로 대상 항목을 선택하고, dry-run 상태에서 profile과 queue 흐름을 먼저 확인한다.',
+      setup: [
+        '중앙 RVT 선택으로 LAN file-based central을 등록합니다. local, RCW/C4R, Desktop Connector 파일을 직접 백업 대상으로 쓰지 않습니다.',
+        'Autodesk 연결로 시스템 브라우저 로그인을 완료하고, Hub·Project·Folder·ordinary RVT Item을 목록에서 순서대로 선택합니다.',
+        '성공 SWC 기준의 debounce 시간과 최대 백업 간격을 확인하고, TEST Profile 저장 후 dry-run queue를 먼저 검토합니다.',
+        '실제 ACC write는 전용 테스트 folder 확인, dry-run 해제, 이 PC의 TEST write gate가 모두 맞을 때만 허용합니다.'
+      ],
+      settingDetails: [
+        {
+          label: '중앙 RVT 선택',
+          description: '백업 신호를 받을 LAN file-based central을 선택합니다. 이 기능은 열린 live central을 Save/SaveAs/Close하거나 직접 복사하지 않고, 성공 SWC 뒤에 생성한 닫힌 staging snapshot만 처리합니다.',
+          example: 'C:\\Central\\Plant_A.rvt가 실제 file-based central이면 선택할 수 있습니다. 사용자가 열어 둔 Plant_A_local.rvt나 ACC RCW 모델은 source로 사용하지 않습니다.'
+        },
+        {
+          label: 'Autodesk 연결',
+          description: 'Autodesk 연결을 누르면 시스템 브라우저에서 로그인을 진행합니다. 연결 token은 Windows Credential Manager에만 저장하며, profile·queue·manifest에는 token 또는 signed URL을 기록하지 않습니다.',
+          example: '테스트용 Autodesk 계정으로 로그인한 뒤 상태 새로고침을 눌러 현재 profile의 연결 상태가 표시되는지 확인합니다.'
+        },
+        {
+          label: 'Hub, Project, Folder, Target Item 선택',
+          description: 'Hub → Project → Top folder → Folder contents 순서로 목록을 조회해 고정할 ordinary RVT Item을 선택합니다. APS가 돌려준 원문 ID를 그대로 사용하고, RCW/C4R Item은 목록과 업로드 단계 모두에서 차단합니다.',
+          example: '하위 folder를 선택했다면 Folder contents를 다시 눌러 해당 폴더의 ordinary RVT Item을 고릅니다. folder URN을 GUID처럼 잘라 입력하지 않습니다.'
+        },
+        {
+          label: '성공 SWC 기준과 백업 간격',
+          description: '기본 trigger는 successful-swc-debounced입니다. 짧은 시간에 여러 번 SWC가 발생해도 debounce 시간 안에서는 queue를 중복으로 쌓지 않고, 최대 백업 간격으로 너무 오래 백업이 밀리지 않게 합니다.',
+          example: 'Debounce 10분, 최대 간격 30분이면 10분 안에 이어진 SWC는 한 작업으로 정리하고 마지막 확정 backup이 너무 오래 없으면 다음 eligible SWC에서 다시 처리합니다.'
+        },
+        {
+          label: 'dry-run과 전용 테스트 folder 확인',
+          description: '기본 dry-run은 snapshot, hash, queue와 계약 검증까지만 수행하고 외부 ACC Version을 만들지 않습니다. 실제 write는 profile에서 dry-run을 끄고 전용 테스트 folder 확인을 켠 뒤, 이 PC의 TEST write gate도 활성인 경우에만 허용합니다.',
+          example: '운영 Docs folder를 고른 상태에서는 dry-run을 해제하지 않습니다. 전용 sandbox folder를 선택하고 테스트용 Item을 확인한 뒤에만 필요한 승인 절차를 진행합니다.'
+        },
+        {
+          label: 'TEST Profile 저장과 상태 새로고침',
+          description: 'Profile에는 source central, 대상 ACC Item, 간격과 TEST 옵션만 durable queue 설정으로 저장합니다. 저장 뒤 상태 새로고침으로 연결, profile, job과 write gate 상태를 다시 읽습니다.',
+          example: 'source와 target을 바꾼 뒤에는 TEST Profile 저장을 다시 누르고, 저장된 profileId가 생긴 다음 TEST 백업 지금 실행을 사용합니다.'
+        }
+      ],
+      run: [
+        '중앙 RVT, Autodesk 연결, target ordinary RVT Item과 TEST 실행 모드를 모두 확인한 뒤 TEST Profile 저장을 누릅니다.',
+        '처음에는 dry-run 상태로 TEST 백업 지금 실행을 눌러 queue, snapshot 준비와 receipt 화면의 흐름을 확인합니다.',
+        '성공 SWC가 발생하면 callback은 작업을 durable queue에만 기록합니다. Revit API가 닫힌 staging snapshot을 준비한 뒤 별도 처리 단계에서 hash와 문서 식별값을 검사합니다.',
+        '실제 write 조건이 모두 충족되지 않으면 job은 dry-run 검증으로 끝나며 ACC Version을 만들지 않습니다.',
+        '실제 write가 허용된 TEST 환경에서는 ordinary RVT Item의 Version 생성 receipt가 확인된 뒤에만 백업 성공으로 봅니다.',
+        'FAILED_MANUAL_ACTION 또는 AMBIGUOUS 상태는 화면의 재시도 버튼을 누르기 전에 target Item과 기존 Version을 먼저 확인합니다.'
+      ],
+      logic: [
+        '성공 SWC callback은 queue에 후보만 추가합니다. live central을 직접 감시·복사하거나 현재 Revit 문서에 Save, SaveAs, Close를 호출하지 않습니다.',
+        '처리 시 CreateNewLocal 결과의 닫힌 staging snapshot만 사용하고, snapshot의 central path, Revit format, DocumentVersion과 SHA-256을 원본과 대조합니다.',
+        '같은 profile, source central, 문서 식별값과 hash 조합은 중복으로 보고 새 upload 없이 건너뜁니다.',
+        'dry-run이거나 TEST write 승인 조건이 하나라도 부족하면 upload 단계로 가지 않고 dry-run 검증 상태로 남깁니다.',
+        'upload 전에 target Item을 다시 확인하고 RCW/C4R이면 fail-closed로 중단합니다. 일반 RVT Item에서만 새 Version을 만들 수 있습니다.',
+        'Version receipt를 확인한 job만 verified로 마감하고 성공한 staging snapshot은 정리합니다. 원격 상태가 애매하면 자동 성공으로 바꾸지 않고 수동 조치 상태로 남깁니다.'
+      ],
+      result: [
+        '오른쪽 queue와 receipt에서 profile, source central, snapshot 준비, dry-run, upload, Version 확인 상태를 순서대로 확인합니다.',
+        'dry-run은 외부 ACC Version이 만들어지지 않은 검증 결과입니다. Version receipt가 있어야 실제 백업 완료로 판단합니다.',
+        '실패·수동 조치·애매한 상태는 메시지와 함께 남으며, 재시도 전 대상 Item과 기존 ACC Version을 먼저 확인해야 합니다.'
+      ],
+      export: {
+        available: false,
+        title: '백업 queue와 receipt',
+        note: '이 기능은 공통 검토 결과 Excel을 만들지 않습니다. profile과 job receipt는 화면의 queue에서 확인하며, 성공 snapshot의 manifest는 token과 signed URL을 기록하지 않습니다.'
+      },
+      excelVisuals: false,
+      notes: [
+        '이 기능은 TEST 단계다. 운영 project/folder와 RCW/C4R 모델에는 사용하지 않습니다.',
+        'staging snapshot은 host only일 수 있어 외부 Revit 링크, CAD, 이미지, keynote가 포함되지 않을 수 있습니다. 복구는 Detach and Preserve Worksets 후 새 LAN central 경로로 저장하는 방식으로 별도 확인합니다.',
+        '백업 성공은 ACC Version receipt 확인을 뜻합니다. dry-run, queue 등록, snapshot 생성만으로는 원격 백업 완료가 아닙니다.'
+      ]
     }
   ];
 
@@ -1261,7 +1431,7 @@
       ]
     },
     centralworkset: {
-      userGuide: '센트럴 파일 생성 및 웍셋 추가는 기존 센트럴, 로컬, 일반 RVT를 대상으로 새 센트럴을 만들거나 이미 연결된 센트럴에 웍셋만 넣는 작업창입니다. 모델 원본을 결과 파일로 덮어쓰지 않으며, 센트럴 생성 후에는 기본적으로 모든 소유권을 반납합니다. 여러 파일은 화면 목록 또는 Excel 양식으로 파일별 설정을 준비할 수 있습니다.',
+      userGuide: '센트럴 파일생성, 웍셋 추가 Grid/Level, 3D 뷰 권한 적용은 기존 센트럴, 로컬, 일반 RVT를 대상으로 새 센트럴을 만들거나 이미 연결된 센트럴에 웍셋을 넣고 지정 권한을 적용하는 통합 작업창입니다. 모델 원본을 결과 파일로 덮어쓰지 않으며, 센트럴 생성 후에는 기본적으로 모든 소유권을 반납합니다. 여러 파일은 화면 목록 또는 Excel 양식으로 파일별 설정을 준비할 수 있습니다.',
       setupLead: '먼저 새 센트럴 생성인지 기존 센트럴의 웍셋 추가인지 구분하고, 대상의 파일 상태와 출력 경로를 확인한다. 웍셋과 3D 뷰 소유권은 파일별로 설정할 수 있다.',
       settingDetails: [
         {
@@ -1298,6 +1468,36 @@
           label: '기존 파일 덮어쓰기',
           description: '동일한 출력 파일을 교체할지 정한다. 기본은 OFF이며, 켜면 실행 직전에 다시 확인한다. 입력 Excel을 다시 불러오면 안전을 위해 덮어쓰기 허용은 OFF로 초기화된다.',
           example: '테스트로 생성한 D:\\Central_Output\\A.rvt를 다시 만들 때만 덮어쓰기를 켜고, 운영 원본이나 연결 센트럴을 출력 경로로 쓰지 않는다.'
+        }
+      ]
+    },
+    acccloud: {
+      base: {
+        title: 'ACC Cloud Workshared 요청 행',
+        description: '원본 RVT, 현재 Revit 지원 상태와 TEST 실행 경계를 먼저 확인하고, 각 행의 생성 대상과 요청 상태를 관리합니다.',
+        points: ['Revit 지원 상태와 로그인 이름', 'RVT 추가·행 복사·행 제거', '요청/신뢰 결과 Excel', '원격 덮어쓰기 없는 TEST 실행']
+      },
+      extra: [
+        {
+          file: 'acccloud-target.png',
+          title: '행별 ACC 대상과 웍셋 설정',
+          description: '선택한 작업 행에 AccountGuid, ProjectGuid, FolderId/URN, Region, 모델명과 새 사용자 웍셋을 입력하는 화면입니다.',
+          points: ['APPLY/SKIP Action', 'Docs URL 해석', 'US/EMEA Region', 'ACC 1차 버전 미지원 권한 옵션']
+        }
+      ]
+    },
+    accbackup: {
+      base: {
+        title: 'ACC 백업 TEST profile',
+        description: 'LAN central, Autodesk 연결과 dry-run 상태를 확인하고 TEST Profile을 저장하는 시작 화면입니다.',
+        points: ['LAN file-based central 선택', 'Autodesk 연결', '기본 dry-run과 write gate', 'queue/receipt 실행 영역']
+      },
+      extra: [
+        {
+          file: 'accbackup-target.png',
+          title: 'ACC ordinary RVT 대상과 TEST 승인',
+          description: 'Hub, Project, Folder, ordinary RVT Item을 순서대로 고르고 실제 외부 write 조건을 확인하는 영역입니다.',
+          points: ['Hub → Project → Folder → Item', 'RCW/C4R Item 차단', '전용 테스트 folder 확인', 'Profile 저장 후 상태 새로고침']
         }
       ]
     },

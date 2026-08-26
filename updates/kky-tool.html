@@ -31,7 +31,7 @@
         <h1>KKY Tool 업데이트 내역</h1>
         <p>현재 운영하는 3.x 계열과 초기 레이아웃 계열의 마지막 Stable 2.x 변경 기록입니다.</p>
       </div>
-      <div class="updates-current"><span class="badge ok">현재 배포</span><strong>3.0.11</strong><span>2026.08.20</span></div>
+      <div class="updates-current"><span class="badge ok">현재 배포</span><strong>3.0.12</strong><span>2026.08.26</span></div>
     </section>
 
     <nav class="updates-program-tabs" aria-label="업데이트 내역 프로그램 선택">
@@ -44,7 +44,21 @@
       <header class="release-series__header"><div><h2 id="kky-3-series">KKY Tool 3.x</h2><p>새 작업대 UI와 확장 기능을 사용하는 현재 계열입니다.</p></div><a class="button primary" href="/index.html#download">현재 버전 받기</a></header>
       <ol class="release-notes">
         <li class="release-note">
-          <div class="release-note__version"><span class="badge ok">현재 배포</span><strong>3.0.11</strong><span class="release-note__date">2026.08.20</span></div>
+          <div class="release-note__version"><span class="badge ok">현재 배포</span><strong>3.0.12</strong><span class="release-note__date">2026.08.26</span></div>
+          <div class="release-note__content">
+            <h3>ACC TEST 작업 추가와 센트럴·재질 검토 흐름 보완</h3>
+            <p class="release-note__summary">ACC/Autodesk Docs의 새 Cloud Workshared 모델 생성과 LAN 센트럴 snapshot 백업을 전용 TEST 흐름으로 추가하고, 센트럴/웍셋 Excel 입력 안정화와 UTILITY 재질 검토의 파일명 분야 판정을 보완한 버전입니다.</p>
+            <ul class="release-note__list">
+              <li><b>ACC 클라우드 모델 생성 (TEST)</b>은 파일 RVT를 새 ACC/Autodesk Docs Cloud Workshared 모델로 만드는 별도 작업창입니다. Revit <code>2023</code>, <code>2025</code>, <code>2027</code>에서만 실행하며, AccountGuid·ProjectGuid·FolderId/URN·Region과 모델명을 행별로 지정합니다. 기존 원격 모델 덮어쓰기는 하지 않고, 생성 여부가 불확정인 target은 수동 확인 전 재실행을 차단합니다.</li>
+              <li><b>ACC 백업 (TEST)</b>은 LAN file-based central의 성공 SWC를 queue에 기록한 뒤 닫힌 staging snapshot을 만들고, 별도 ACC ordinary RVT Item의 새 Version으로 보관합니다. 기본값은 dry-run이며 RCW/C4R Item, live central 직접 복사·업로드, 운영 folder write를 막는 안전 조건을 둡니다.</li>
+              <li><b>센트럴 / 웍셋 작업</b>은 여러 창 사이의 설정 동기화가 입력·한글 조합·caret·스크롤을 끊지 않게 정리했고, RVT 등록만 끝난 상태에서도 Excel 일괄 설정 양식을 먼저 내보낼 수 있게 보완했습니다. 기존 <code>worksetmanager</code> 항목은 통합 기능과 권한 탭으로 정리했습니다.</li>
+              <li><b>UTILITY 재질 오류 검토</b>는 파일명 구간의 분야 판정을 보완했습니다. 대문자 R로 끝나는 두 번째 구간, H/P/E/I/GTG/GCH 코드와 ETL 우선 규칙을 기준으로 EX·HVAC·PIPE·ELEC·INST·TOXIC GAS·CHEMICAL·TELECOM 분류를 더 안정적으로 적용합니다.</li>
+              <li>KKY Tool 전체는 Revit <code>2019</code>, <code>2021</code>, <code>2023</code>, <code>2025</code>, <code>2027</code> 지원을 유지합니다. ACC 테스트 기능은 화면의 제한과 전용 매뉴얼을 먼저 확인한 뒤 사용해야 합니다.</li>
+            </ul>
+          </div>
+        </li>
+        <li class="release-note">
+          <div class="release-note__version"><span class="badge blue">정식 버전</span><strong>3.0.11</strong><span class="release-note__date">2026.08.20</span></div>
           <div class="release-note__content">
             <h3>기준 RVT 하나로 여러 새 센트럴을 만드는 Excel 작업 행 지원</h3>
             <p class="release-note__summary">센트럴/웍셋 Excel 양식에서 하나의 기준 RVT를 여러 작업 행으로 복사해 각각 다른 새 센트럴 파일을 만들 수 있도록 정리하고, 행별 상태와 출력 경로 충돌 검증을 보강한 버전입니다.</p>
