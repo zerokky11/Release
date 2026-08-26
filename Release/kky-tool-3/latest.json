@@ -4,8 +4,8 @@
   "publishedAt": "2026-08-26",
   "notes": "ACC/Autodesk Docs TEST 기능을 추가했습니다. 파일 RVT를 새 Cloud Workshared 모델로 생성하는 ACC 클라우드 모델 생성과 LAN file-based central의 닫힌 snapshot을 ACC 일반 RVT Item Version으로 보관하는 ACC 백업을 제공합니다. 두 기능은 전용 테스트 대상에서만 사용해야 하며, ACC 클라우드 모델 생성은 Revit 2023, 2025, 2027을 지원합니다. 센트럴/웍셋 Excel 입력 안정화와 UTILITY 재질 검토의 파일명 분야 판정도 보완했습니다. KKY Tool은 Revit 2019, 2021, 2023, 2025, 2027을 지원합니다.",
   "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.12.exe",
-  "sha256": "8C08A2CD5A09185DB93BC116F76A50F01D79386646D7681926E026F2A1603678",
-  "updateZipSha256": "2129480F0424BF958A97BC31DB643351D6E767802B3F48EC581C9C2CE50C216B",
+  "sha256": "9E38050428D6C79D26620703D0F031DADEC4259FFD148EA41996F57C6F293F4D",
+  "updateZipSha256": "556040322A777109BC20F35C38A25C557EFAF24C6B89DD4A38EEA26C6EF63968",
   "supportedRevit": [
     2019,
     2021,
