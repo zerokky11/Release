@@ -1,5 +1,13 @@
 [
   {
+    "version": "3.0.13",
+    "publishedAt": "2026-08-27",
+    "title": "버전 3.0.13",
+    "notes": "ACC/Autodesk Docs 동기화, Reload, 문서 전환 중 문서 탭 색상과 Document Navigator가 Revit UI를 건드리는 시점을 안정된 Idling 구간으로 제한했습니다. Navigator 문서 전환은 ExternalEvent로 직렬화하고, 반복해서 불안정한 상태가 감지되면 해당 Revit 세션의 탭 색상을 중지합니다. 센트럴/웍셋 작업은 매핑 드라이브와 UNC처럼 경로 표기가 달라도 실제 파일 ID를 다시 확인해 같은 센트럴만 허용합니다. 사전 검증 뒤 연결 대상이 바뀌거나 파일 ID를 확인할 수 없으면 소유권·로컬 생성·저장 변경 전에 작업을 차단합니다. Revit 2019, 2021, 2023, 2025, 2027을 지원합니다.",
+    "packageUrl": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.13.zip",
+    "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.13.exe"
+  },
+  {
     "version": "3.0.12",
     "publishedAt": "2026-08-26",
     "title": "버전 3.0.12",

@@ -31,7 +31,7 @@
         <h1>KKY Tool 업데이트 내역</h1>
         <p>현재 운영하는 3.x 계열과 초기 레이아웃 계열의 마지막 Stable 2.x 변경 기록입니다.</p>
       </div>
-      <div class="updates-current"><span class="badge ok">현재 배포</span><strong>3.0.12</strong><span>2026.08.26</span></div>
+      <div class="updates-current"><span class="badge ok">현재 배포</span><strong>3.0.13</strong><span>2026.08.27</span></div>
     </section>
 
     <nav class="updates-program-tabs" aria-label="업데이트 내역 프로그램 선택">
@@ -44,7 +44,21 @@
       <header class="release-series__header"><div><h2 id="kky-3-series">KKY Tool 3.x</h2><p>새 작업대 UI와 확장 기능을 사용하는 현재 계열입니다.</p></div><a class="button primary" href="/index.html#download">현재 버전 받기</a></header>
       <ol class="release-notes">
         <li class="release-note">
-          <div class="release-note__version"><span class="badge ok">현재 배포</span><strong>3.0.12</strong><span class="release-note__date">2026.08.26</span></div>
+          <div class="release-note__version"><span class="badge ok">현재 배포</span><strong>3.0.13</strong><span class="release-note__date">2026.08.27</span></div>
+          <div class="release-note__content">
+            <h3>ACC 작업 중 문서 UI 안정화와 센트럴 실파일 재검증</h3>
+            <p class="release-note__summary">ACC/Autodesk Docs 동기화나 문서 전환과 겹칠 때 문서 탭 색상과 Navigator가 Revit 화면을 건드리는 시점을 조정하고, 센트럴·웍셋 작업은 경로 문자열이 아니라 실제 연결 파일을 다시 확인하도록 보완한 버전입니다.</p>
+            <ul class="release-note__list">
+              <li><b>문서 탭 색상과 Document Navigator</b>는 문서 열기·닫기, Reload, Synchronize with Central이 진행되는 동안 바로 화면을 탐색하지 않고 Revit이 안정된 Idling 상태로 돌아온 뒤 갱신합니다.</li>
+              <li>Navigator에서 문서를 여는 요청은 Revit <code>ExternalEvent</code>로 순서대로 처리합니다. 작업 중 상태가 반복해서 불안정하면 해당 Revit 세션의 탭 색상 처리를 중지해 ACC 작업과의 충돌을 피합니다.</li>
+              <li><b>센트럴 / 웍셋 작업</b>은 매핑 드라이브와 UNC처럼 같은 파일을 서로 다른 경로로 표시하는 경우에도 Windows 파일 ID로 실제 파일이 같은지 확인합니다. 문자열만 달라졌다는 이유로 정상 작업을 막지 않습니다.</li>
+              <li>사전 검증 뒤 원본 RVT의 센트럴 연결이 다른 실제 파일로 바뀌었거나 파일 ID를 확인할 수 없으면 소유권 변경, 임시 로컬 생성, 저장을 시작하기 전에 작업을 차단합니다.</li>
+              <li>Revit <code>2019</code>, <code>2021</code>, <code>2023</code>, <code>2025</code>, <code>2027</code> 지원을 유지합니다.</li>
+            </ul>
+          </div>
+        </li>
+        <li class="release-note">
+          <div class="release-note__version"><span class="badge blue">정식 버전</span><strong>3.0.12</strong><span class="release-note__date">2026.08.26</span></div>
           <div class="release-note__content">
             <h3>ACC TEST 작업 추가와 센트럴·재질 검토 흐름 보완</h3>
             <p class="release-note__summary">ACC/Autodesk Docs의 새 Cloud Workshared 모델 생성과 LAN 센트럴 snapshot 백업을 전용 TEST 흐름으로 추가하고, 센트럴/웍셋 Excel 입력 안정화와 UTILITY 재질 검토의 파일명 분야 판정을 보완한 버전입니다.</p>
