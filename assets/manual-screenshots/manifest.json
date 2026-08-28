@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-08-26T00:01:41.971Z",
-  "productVersion": "3.0.12",
-  "displayedVersion": "v3.0.12",
+  "generatedAt": "2026-08-28T07:31:17.467Z",
+  "productVersion": "3.0.14",
+  "displayedVersion": "v3.0.14",
   "homeScreenshot": "Sever/assets/kky-tool/home.png",
   "sourceRoot": "KKY_Tool_Revit_2019-2023/Resources/HubUI",
-  "baseUrl": "http://127.0.0.1:56741",
+  "baseUrl": "http://127.0.0.1:64952",
   "viewport": "1600x1000",
   "baseScreenCount": 32,
   "extraScreenCount": 36,
-  "count": 68,
+  "count": 69,
   "consoleErrors": [],
   "results": [
     {
@@ -480,7 +480,7 @@
       "kind": "major-module",
       "note": "활성 문서와 문서별 Revit 링크 Reload 계획",
       "file": "Sever/assets/manual-screenshots/nwc-target-links.png",
-      "bytes": 140398,
+      "bytes": 134520,
       "title": "KKY Tool Hub"
     },
     {
@@ -488,7 +488,7 @@
       "kind": "major-module",
       "note": "문서별 비템플릿 3D View 검색과 선택",
       "file": "Sever/assets/manual-screenshots/nwc-view-selection.png",
-      "bytes": 121941,
+      "bytes": 119337,
       "title": "KKY Tool Hub"
     },
     {
@@ -496,7 +496,7 @@
       "kind": "major-module",
       "note": "여러 문서의 3D View 이름을 한 번에 검색하고 선택하는 간편 설정",
       "file": "Sever/assets/manual-screenshots/nwc-quick-view.png",
-      "bytes": 108396,
+      "bytes": 109957,
       "title": "KKY Tool Hub"
     },
     {
@@ -504,15 +504,15 @@
       "kind": "major-module",
       "note": "저장 폴더, 파일명 규칙과 Navisworks Export 옵션",
       "file": "Sever/assets/manual-screenshots/nwc-export-options.png",
-      "bytes": 128649,
+      "bytes": 133920,
       "title": "KKY Tool Hub"
     },
     {
       "id": "nwc-export-options-lower",
       "kind": "major-module",
-      "note": "좌표, 레벨, Room, Faceting Factor와 덮어쓰기 옵션",
+      "note": "좌표, 레벨, Room, Faceting Factor, 덮어쓰기와 객체 없음 TXT 옵션",
       "file": "Sever/assets/manual-screenshots/nwc-export-options-lower.png",
-      "bytes": 121353,
+      "bytes": 125842,
       "title": "KKY Tool Hub"
     },
     {
@@ -520,7 +520,7 @@
       "kind": "major-module-result",
       "note": "NWC 결과 건수, 링크 처리와 결과 Excel 진입",
       "file": "Sever/assets/manual-screenshots/nwc-export-result.png",
-      "bytes": 173398,
+      "bytes": 182953,
       "title": "KKY Tool Hub"
     },
     {
@@ -528,7 +528,7 @@
       "kind": "major-module",
       "note": "RVT를 미리 열지 않고 정확한 3D View 이름으로 일괄 추출하는 빠른 방식",
       "file": "Sever/assets/manual-screenshots/nwc-fast-view-names.png",
-      "bytes": 153754,
+      "bytes": 155373,
       "title": "KKY Tool Hub"
     },
     {

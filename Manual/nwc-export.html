@@ -96,7 +96,7 @@
             </table>
           </div>
           <figure class="module-shot">
-            <a href="/assets/manual-screenshots/nwc-target-links.png?v=3.0-20260731.1" target="_blank" rel="noopener"><img src="/assets/manual-screenshots/nwc-target-links.png?v=3.0-20260731.1" alt="NWC Export 대상과 Revit 링크 설정 화면"></a>
+            <a href="/assets/manual-screenshots/nwc-target-links.png?v=3.0-20260828.1" target="_blank" rel="noopener"><img src="/assets/manual-screenshots/nwc-target-links.png?v=3.0-20260828.1" alt="NWC Export 대상과 Revit 링크 설정 화면"></a>
             <figcaption>문서 목록에서 RVT를 고른 뒤 오른쪽 상세 영역에서 링크 포함 여부와 Reload 대상을 정합니다. 현재 Loaded 표시는 조회 시점의 실제 상태입니다.</figcaption>
           </figure>
           <div class="module-callout warn">
@@ -123,11 +123,11 @@
             <li><div><strong>간편 뷰 설정</strong><p>모든 조회 문서의 View 이름을 한 창에서 검색합니다. 정확히 같은 이름을 먼저 보여주고 비슷한 이름은 접힌 목록으로 구분합니다. 선택 적용은 현재 단계에 머물고, 적용 후 다음 설정은 선택을 반영한 뒤 3단계로 이동합니다.</p></div></li>
           </ol>
           <figure class="module-shot">
-            <a href="/assets/manual-screenshots/nwc-view-selection.png?v=3.0-20260731.1" target="_blank" rel="noopener"><img src="/assets/manual-screenshots/nwc-view-selection.png?v=3.0-20260731.1" alt="NWC Export 문서별 3D View 선택 화면"></a>
+            <a href="/assets/manual-screenshots/nwc-view-selection.png?v=3.0-20260828.1" target="_blank" rel="noopener"><img src="/assets/manual-screenshots/nwc-view-selection.png?v=3.0-20260828.1" alt="NWC Export 문서별 3D View 선택 화면"></a>
             <figcaption>예시처럼 문서별 View 수와 선택 수를 함께 확인합니다. 3단계는 View를 하나 이상 선택해야 열립니다.</figcaption>
           </figure>
           <figure class="module-shot">
-            <a href="/assets/manual-screenshots/nwc-quick-view.png?v=3.0-20260731.1" target="_blank" rel="noopener"><img src="/assets/manual-screenshots/nwc-quick-view.png?v=3.0-20260731.1" alt="NWC Export 간편 3D View 설정 화면"></a>
+            <a href="/assets/manual-screenshots/nwc-quick-view.png?v=3.0-20260828.1" target="_blank" rel="noopener"><img src="/assets/manual-screenshots/nwc-quick-view.png?v=3.0-20260828.1" alt="NWC Export 간편 3D View 설정 화면"></a>
             <figcaption>간편 뷰 설정은 이미 조회한 목록을 다시 스캔하지 않고 한 창에 모읍니다. 같은 View 이름 아래에 RVT 파일명과 상위 폴더를 함께 표시하므로 같은 파일명을 가진 다른 폴더도 구분할 수 있습니다.</figcaption>
           </figure>
           <div class="module-subsection">
@@ -146,7 +146,7 @@
             </div>
           </div>
           <figure class="module-shot">
-            <a href="/assets/manual-screenshots/nwc-fast-view-names.png?v=3.0-20260731.1" target="_blank" rel="noopener"><img src="/assets/manual-screenshots/nwc-fast-view-names.png?v=3.0-20260731.1" alt="NWC Export View 이름 일괄 추출 빠른 방식 설정 화면"></a>
+            <a href="/assets/manual-screenshots/nwc-fast-view-names.png?v=3.0-20260828.1" target="_blank" rel="noopener"><img src="/assets/manual-screenshots/nwc-fast-view-names.png?v=3.0-20260828.1" alt="NWC Export View 이름 일괄 추출 빠른 방식 설정 화면"></a>
             <figcaption>RVT 목록과 View 이름만 준비하고 확인합니다. 문서를 미리 열지 않으므로 대량 등록이 빠르지만, View와 링크를 파일별로 눈으로 확인해야 하는 작업에는 직접 선택 방식을 사용합니다.</figcaption>
           </figure>
         </section>
@@ -168,10 +168,27 @@
                   <tr><td>View 이름</td><td><code>{View}</code>. 여러 RVT에 같은 View 이름이 있으면 뒤에 번호가 붙습니다.</td><td><code>Coordination 3D_2.nwc</code></td></tr>
                   <tr><td>파일 이름</td><td><code>{RVT}</code>. 한 RVT에서 View를 여러 개 선택하면 중복 번호가 붙습니다.</td><td><code>Plant_A_2.nwc</code></td></tr>
                   <tr><td>기존 NWC 덮어쓰기</td><td>끄면 같은 경로의 기존 파일을 건너뜁니다. 켜면 기존 파일을 삭제한 뒤 새로 생성합니다.</td><td>정기 재배포 때만 의도적으로 켬</td></tr>
+                  <tr><td>객체 없는 View 표시 TXT 생성</td><td>Geometry가 없는 View에서 NWC 대신 같은 기본 이름의 <code>_객체없음.txt</code>를 남깁니다. 끄면 건너뜀 결과만 기록합니다.</td><td><code>Plant_A_Coordination 3D_객체없음.txt</code></td></tr>
                 </tbody>
               </table>
             </div>
             <p class="manual-note">Windows에서 사용할 수 없는 파일명 문자는 <code>_</code>로 바뀌고, 이름은 최대 180자로 정리됩니다. 같은 실행 안에서 중복되면 <code>_2</code>, <code>_3</code>이 붙습니다.</p>
+          </div>
+
+          <div class="module-subsection">
+            <h3>추출 설정 파일 저장·불러오기</h3>
+            <p>반복해서 쓰는 NWC 옵션은 JSON 설정 파일로 보관할 수 있습니다. 화면에서 값을 정리한 뒤 <b>설정 파일 저장</b>을 누르고, 다른 작업에서는 <b>설정 파일 불러오기</b>로 같은 옵션 묶음을 적용합니다.</p>
+            <div class="module-table-wrap">
+              <table>
+                <thead><tr><th>구분</th><th>저장되는 내용</th><th>저장되지 않는 내용</th></tr></thead>
+                <tbody>
+                  <tr><td>파일·좌표 규칙</td><td>파일 이름 구성, Coordinates, Convert element parameters, Faceting Factor</td><td>NWC 저장 폴더</td></tr>
+                  <tr><td>출력 옵션</td><td>요소 속성·ID, 누락 재질, 레벨 분할, Room 형상·속성, Parts, URL, 덮어쓰기, 객체 없음 TXT</td><td>현재 RVT, 3D View, Revit Link 선택</td></tr>
+                  <tr><td>작업 상태</td><td>불러온 옵션은 다음 실행에 자동 기억되고 열려 있는 다른 Revit의 KKY Tool에도 공유됩니다.</td><td>현재 단계, 진행률, 실행 결과</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="manual-note">설정 파일은 NWC 추출 옵션만 바꿉니다. 프로젝트가 달라져도 현재 등록한 RVT, View, Link와 출력 폴더는 유지되므로 대상까지 실수로 교체되지 않습니다.</p>
           </div>
 
           <div class="module-subsection">
@@ -200,12 +217,12 @@
             </div>
           </div>
           <figure class="module-shot">
-            <a href="/assets/manual-screenshots/nwc-export-options.png?v=3.0-20260731.1" target="_blank" rel="noopener"><img src="/assets/manual-screenshots/nwc-export-options.png?v=3.0-20260731.1" alt="NWC Export 저장 폴더와 Navisworks 옵션 화면"></a>
+            <a href="/assets/manual-screenshots/nwc-export-options.png?v=3.0-20260828.1" target="_blank" rel="noopener"><img src="/assets/manual-screenshots/nwc-export-options.png?v=3.0-20260828.1" alt="NWC Export 저장 폴더와 Navisworks 옵션 화면"></a>
             <figcaption>상단에서 저장 폴더와 파일명 규칙을 정하고, 아래에서 Navisworks 옵션을 설정합니다. 오른쪽 저장 폴더와 Exporter 준비 상태가 모두 완료인지 확인합니다.</figcaption>
           </figure>
           <figure class="module-shot">
-            <a href="/assets/manual-screenshots/nwc-export-options-lower.png?v=3.0-20260731.1" target="_blank" rel="noopener"><img src="/assets/manual-screenshots/nwc-export-options-lower.png?v=3.0-20260731.1" alt="NWC Export 좌표와 형상 세부 옵션 화면"></a>
-            <figcaption>옵션 아래쪽에는 좌표, 레벨 분할, Room 형상, Faceting Factor, 누락 재질과 기존 NWC 덮어쓰기 설정이 있습니다.</figcaption>
+            <a href="/assets/manual-screenshots/nwc-export-options-lower.png?v=3.0-20260828.1" target="_blank" rel="noopener"><img src="/assets/manual-screenshots/nwc-export-options-lower.png?v=3.0-20260828.1" alt="NWC Export 좌표와 형상 세부 옵션 화면"></a>
+            <figcaption>옵션 아래쪽에는 좌표, 레벨 분할, Room 형상, Faceting Factor, 누락 재질, 덮어쓰기, 객체 없음 TXT와 추출 설정 파일 저장·불러오기가 있습니다.</figcaption>
           </figure>
         </section>
 
@@ -221,6 +238,7 @@
             <li><div><strong>링크 상태 기록</strong><p>직접 선택은 문서별 선택 계획에 따라 Reload 또는 Unload합니다. 빠른 방식은 모든 링크 포함 전역 설정을 적용합니다.</p></div></li>
             <li><div><strong>View 해석</strong><p>직접 선택은 조회 때 저장한 View ID를 찾습니다. 빠른 방식은 입력한 이름과 정확히 일치하는 비템플릿 3D View를 현재 문서에서 찾고, 없는 이름은 건너뜀으로 기록합니다.</p></div></li>
             <li><div><strong>View별 Export</strong><p>찾은 View마다 파일명 규칙과 옵션을 적용해 NWC를 생성합니다. 한 View가 실패하거나 없어도 다음 View와 다음 RVT를 계속 처리합니다.</p></div></li>
+            <li><div><strong>객체 없음·호환 경고 처리</strong><p>Revit 2019, 2021, 2023, 2025, 2027에서 Exporter가 정확한 객체 없음 문구를 반환하면 해당 View를 건너뜀으로 기록하고 다음 View를 계속합니다. 호환되지 않는 프린터 또는 Print Setup 경고는 자동 처리 경고로 남기고 Export를 이어갑니다.</p></div></li>
             <li><div><strong>파일 유효성 확인</strong><p>NWC가 실제로 존재하고, 크기가 0보다 크며, 실행 시작 뒤 갱신됐는지 확인합니다. 파일 크기가 연속 두 번 안정될 때 완료로 판단합니다.</p></div></li>
             <li><div><strong>링크 복원·문서 닫기</strong><p>링크를 원래 상태로 돌리고 배치 문서를 닫은 뒤 다음 RVT로 넘어갑니다.</p></div></li>
           </ol>
@@ -241,7 +259,7 @@
               <thead><tr><th>결과</th><th>의미</th><th>확인할 내용</th></tr></thead>
               <tbody>
                 <tr><td>Export 성공</td><td>NWC 생성과 파일 유효성 검증까지 통과한 View 수</td><td>출력 경로와 View 이름</td></tr>
-                <tr><td>건너뜀</td><td>덮어쓰기 끔 상태에서 기존 파일이 있거나, View에 Geometry가 없거나, 빠른 방식의 입력 이름과 정확히 같은 View가 없어 생성을 생략한 수</td><td>기존 파일, View 이름, 표시 상태와 Geometry</td></tr>
+                <tr><td>건너뜀</td><td>덮어쓰기 끔 상태에서 기존 파일이 있거나, View에 Geometry가 없거나, 빠른 방식의 입력 이름과 정확히 같은 View가 없어 생성을 생략한 수</td><td>객체 없음 TXT 옵션, 기존 파일, View 이름과 표시 상태</td></tr>
                 <tr><td>자동 처리 경고</td><td>호환되지 않는 프린터 또는 Print Setup 경고를 자동으로 닫고 Export를 계속한 기록</td><td>NWC가 정상 생성됐는지와 Message</td></tr>
                 <tr><td>오류</td><td>문서 열기, View 찾기, Export, 파일 검증 실패 수</td><td>행별 Message</td></tr>
                 <tr><td>링크 Reload / Unload</td><td>Export 전에 실제 상태를 바꾼 링크 수</td><td>의도한 링크 계획과 같은지</td></tr>
@@ -267,7 +285,7 @@
             <p class="manual-note">NWC 결과 Excel은 한 파일로 저장되며 한글/영문과 일반/빠른 저장을 선택합니다. RVT별 Excel 분리는 제공하지 않습니다.</p>
           </div>
           <figure class="module-shot">
-            <a href="/assets/manual-screenshots/nwc-export-result.png?v=3.0-20260731.1" target="_blank" rel="noopener"><img src="/assets/manual-screenshots/nwc-export-result.png?v=3.0-20260731.1" alt="NWC Export 완료 결과창"></a>
+            <a href="/assets/manual-screenshots/nwc-export-result.png?v=3.0-20260828.1" target="_blank" rel="noopener"><img src="/assets/manual-screenshots/nwc-export-result.png?v=3.0-20260828.1" alt="NWC Export 완료 결과창"></a>
             <figcaption>결과 Excel을 저장해도 전체 결과창은 유지됩니다. 필요한 언어·속도 조합으로 다시 내보내거나 결과 폴더를 열 수 있습니다.</figcaption>
           </figure>
           <div class="module-callout">
@@ -289,6 +307,8 @@
             <li>빠른 방식에서 View가 없는 파일은 건너뜀으로 남는 것을 작업 기준에 포함</li>
             <li>저장 폴더의 쓰기 권한과 여유 공간 확인</li>
             <li>기존 파일 덮어쓰기 여부를 의도대로 선택</li>
+            <li>객체 없는 View를 폴더에서도 식별해야 하면 <code>_객체없음.txt</code> 생성을 켬</li>
+            <li>반복 작업이면 추출 옵션을 JSON 설정 파일로 저장하고, 불러온 뒤 현재 RVT·View·Link·저장 폴더를 다시 확인</li>
             <li>Faceting Factor를 높이기 전 샘플 한 개로 용량 확인</li>
             <li>오류가 있어도 다음 문서는 계속되므로 결과 Excel 확인</li>
           </ul>

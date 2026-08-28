@@ -1,5 +1,13 @@
 [
   {
+    "version": "3.0.14",
+    "publishedAt": "2026-08-28",
+    "title": "버전 3.0.14",
+    "notes": "NWC 추출에서 객체가 없는 View와 호환되지 않는 프린터 경고를 다섯 Revit 버전에서 자동 판별해 다음 View를 계속 처리합니다. 객체가 없는 View는 건너뜀으로 기록하고 선택 시 _객체없음.txt를 만듭니다. 파일 이름, 좌표, 파라미터, Faceting Factor와 출력 옵션을 JSON 설정 파일로 저장·불러올 수 있으며, 불러온 값은 자동 기억과 다른 Revit 창 공유에도 반영됩니다. NWC 저장 폴더 선택창은 Hub를 owner로 사용해 뒤에 숨지 않도록 수정했습니다. Revit 2019, 2021, 2023, 2025, 2027을 지원합니다.",
+    "packageUrl": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.14.zip",
+    "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.14.exe"
+  },
+  {
     "version": "3.0.13",
     "publishedAt": "2026-08-27",
     "title": "버전 3.0.13",
