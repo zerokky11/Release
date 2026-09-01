@@ -27,12 +27,17 @@ class FakeD1Statement {
   async run() {
     return this.db.run(this.sql, this.bindings);
   }
+
+  async all() {
+    return this.db.all(this.sql, this.bindings);
+  }
 }
 
 class FakeD1Database {
   constructor() {
     this.configs = new Map();
     this.history = [];
+    this.usageEvents = [];
   }
 
   withSession() {
@@ -46,6 +51,7 @@ class FakeD1Database {
   async batch(statements) {
     const configsSnapshot = new Map([...this.configs].map(([key, value]) => [key, { ...value }]));
     const historySnapshot = this.history.map((value) => ({ ...value }));
+    const usageSnapshot = this.usageEvents.map((value) => ({ ...value }));
     try {
       const results = [];
       for (const statement of statements) results.push(await statement.run());
@@ -53,6 +59,7 @@ class FakeD1Database {
     } catch (error) {
       this.configs = configsSnapshot;
       this.history = historySnapshot;
+      this.usageEvents = usageSnapshot;
       throw error;
     }
   }
@@ -71,6 +78,17 @@ class FakeD1Database {
 
   historyFor(path) {
     return this.history.filter((item) => item.path === path);
+  }
+
+  all(sql, bindings) {
+    if (sql.startsWith("SELECT id, received_at_utc") && sql.includes("FROM usage_events")) {
+      const limit = Number(bindings[0]) || 200;
+      return {
+        success: true,
+        results: [...this.usageEvents].sort((left, right) => right.id - left.id).slice(0, limit)
+      };
+    }
+    throw new Error("Unsupported fake D1 all query: " + sql);
   }
 
   first(sql, bindings) {
@@ -110,6 +128,53 @@ class FakeD1Database {
       return d1Result(1);
     }
 
+    if (sql.startsWith("INSERT OR IGNORE INTO usage_events")) {
+      const [
+        receivedAtUtc,
+        clientEventId,
+        sessionId,
+        product,
+        eventName,
+        profileName,
+        profileSource,
+        machineHash,
+        addinVersion,
+        revitVersion,
+        accessAllowed,
+        clientTimeUtc,
+        ipHash,
+        country,
+        userAgent
+      ] = bindings;
+      if (this.usageEvents.some((item) => item.client_event_id === clientEventId)) return d1Result(0);
+      this.usageEvents.push({
+        id: this.usageEvents.length + 1,
+        received_at_utc: receivedAtUtc,
+        client_event_id: clientEventId,
+        session_id: sessionId,
+        product,
+        event_name: eventName,
+        profile_name: profileName,
+        profile_source: profileSource,
+        machine_hash: machineHash,
+        addin_version: addinVersion,
+        revit_version: revitVersion,
+        access_allowed: accessAllowed,
+        client_time_utc: clientTimeUtc,
+        ip_hash: ipHash,
+        country,
+        user_agent: userAgent
+      });
+      return d1Result(1);
+    }
+
+    if (sql.startsWith("DELETE FROM usage_events")) {
+      const cutoff = bindings[0];
+      const before = this.usageEvents.length;
+      this.usageEvents = this.usageEvents.filter((item) => item.received_at_utc >= cutoff);
+      return d1Result(before - this.usageEvents.length);
+    }
+
     throw new Error("Unsupported fake D1 run query: " + sql);
   }
 }
@@ -146,6 +211,23 @@ function bootstrap(overrides = {}) {
       pathCandidates: ["D:\\FamilyBrowser\\Requests"],
       endpoint: ""
     },
+    ...overrides
+  };
+}
+
+function usageEvent(overrides = {}) {
+  return {
+    product: "kky-tool",
+    eventName: "tool_open",
+    profileName: "KCIM 김경연",
+    profileSource: "autodesk-revit",
+    machineHash: "a".repeat(64),
+    sessionId: "b".repeat(32),
+    clientEventId: "c".repeat(32),
+    addinVersion: "3.0.14",
+    revitVersion: "2025",
+    accessAllowed: true,
+    clientTimeUtc: "2026-09-02T00:00:00.000Z",
     ...overrides
   };
 }
@@ -286,4 +368,77 @@ test("legacy Family Browser API writes to the same D1 config", async () => {
 
   assert.equal(response.status, 200);
   assert.equal(JSON.parse(env.CONFIG_DB.getConfig(BOOTSTRAP_PATH).content).refreshMinutes, 15);
+});
+
+test("usage event records the Autodesk/Revit profile without exposing the raw IP", async () => {
+  const env = await testEnv();
+  const response = await request(env, "/api/usage/events", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "User-Agent": "KKY_Tool_Revit/UsageAudit",
+      "CF-Connecting-IP": "203.0.113.10",
+      "CF-IPCountry": "KR"
+    },
+    body: JSON.stringify(usageEvent())
+  });
+
+  assert.equal(response.status, 202);
+  assert.equal((await response.json()).accepted, true);
+  assert.equal(env.CONFIG_DB.usageEvents.length, 1);
+  assert.equal(env.CONFIG_DB.usageEvents[0].profile_name, "KCIM 김경연");
+  assert.equal(env.CONFIG_DB.usageEvents[0].ip_hash.length, 64);
+  assert.notEqual(env.CONFIG_DB.usageEvents[0].ip_hash, "203.0.113.10");
+});
+
+test("duplicate usage event ids are accepted once", async () => {
+  const env = await testEnv();
+  const first = await request(env, "/api/usage/events", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(usageEvent())
+  });
+  const duplicate = await request(env, "/api/usage/events", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(usageEvent())
+  });
+
+  assert.equal((await first.json()).accepted, true);
+  assert.equal((await duplicate.json()).accepted, false);
+  assert.equal(env.CONFIG_DB.usageEvents.length, 1);
+});
+
+test("usage event validation rejects an unknown product", async () => {
+  const env = await testEnv();
+  const response = await request(env, "/api/usage/events", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(usageEvent({ product: "unknown" }))
+  });
+
+  assert.equal(response.status, 400);
+  assert.equal((await response.json()).message, "usage_product_not_allowed");
+});
+
+test("usage list is available only to an authenticated administrator", async () => {
+  const env = await testEnv();
+  await request(env, "/api/usage/events", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(usageEvent())
+  });
+
+  const denied = await request(env, "/api/usage/events?limit=10");
+  assert.equal(denied.status, 401);
+
+  const allowed = await request(env, "/api/usage/events?limit=10", {
+    headers: { "X-KKY-Admin-Password": ADMIN_PASSWORD }
+  });
+  assert.equal(allowed.status, 200);
+  const body = await allowed.json();
+  assert.equal(body.items.length, 1);
+  assert.equal(body.items[0].profileName, "KCIM 김경연");
+  assert.equal(body.items[0].accessAllowed, true);
+  assert.equal(body.items[0].ipHash, undefined);
 });

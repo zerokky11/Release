@@ -9,6 +9,7 @@
   - `family-browser/bootstrap.json`
   - `family-browser/bootstrap-index.json`
   - 변경 전 JSON은 `policy_history` 테이블에 자동 보관
+  - KKY Tool 실행 기록은 `usage_events` 테이블에 90일간 보관
 - GitHub Pages / GitHub repository
   - 홈페이지 HTML, CSS, JavaScript, 이미지와 설치파일
   - D1에 아직 시드되지 않은 설정의 최초 마이그레이션 원본
@@ -26,9 +27,13 @@
 - `GET|HEAD|PUT /family-browser/bootstrap-index.json`
 - `GET|PUT /api/policy/file?path=...`
 - `GET|PUT /api/family-browser/file?path=...`
+- `POST /api/usage/events`
+- `GET /api/usage/events?limit=500` (admin only)
 - `GET /family-browser/*` for the existing static Family Browser pages
 
 Public reads do not require authentication. Writes require `X-KKY-Admin-Password` or an admin token. The password itself is never stored in Worker variables; the Worker compares its SHA-256 value with the `POLICY_ADMIN_PASSWORD_SHA256` secret.
+
+Usage event POSTs are accepted without admin authentication so the installed add-in can report an open event. The payload is schema-validated and deduplicated by `client_event_id`. The add-in sends the Revit `Application.Username` value, add-in/Revit versions, access result, a random session id, and a locally hashed machine identifier. Raw computer names are not sent. The Worker hashes the connecting IP before storage, removes records older than `USAGE_RETENTION_DAYS`, and exposes the list only through the authenticated admin GET route. The admin response omits the stored IP hash and user agent.
 
 ## Write safeguards
 

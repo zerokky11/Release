@@ -192,6 +192,71 @@
           </article>
         </div>
       </section>
+
+      <section class="section admin-usage-section">
+        <article class="panel">
+          <div class="section-header admin-usage-heading">
+            <div>
+              <span class="eyebrow">Usage audit</span>
+              <h2>프로그램 실행 기록</h2>
+              <p>KKY Tool을 연 시각과 Autodesk/Revit 프로필, 애드인·Revit 버전을 확인합니다.</p>
+            </div>
+            <div class="actions">
+              <button class="button primary" id="reloadUsage" type="button">기록 새로고침</button>
+              <button class="button" id="exportUsage" type="button">CSV 내보내기</button>
+            </div>
+          </div>
+
+          <div class="admin-usage-summary" aria-label="실행 기록 요약">
+            <div><span>표시 기록</span><strong id="usageSummaryTotal">0건</strong></div>
+            <div><span>사용자</span><strong id="usageSummaryUsers">0명</strong></div>
+            <div><span>최근 실행</span><strong id="usageSummaryLatest">-</strong></div>
+          </div>
+
+          <div class="form-grid admin-usage-filters">
+            <div class="field">
+              <label for="usageSearch">사용자 또는 버전 검색</label>
+              <input id="usageSearch" type="search" placeholder="Autodesk/Revit 프로필, 애드인 버전, Revit 버전">
+            </div>
+            <div class="field">
+              <label for="usageProduct">프로그램</label>
+              <select id="usageProduct">
+                <option value="">전체</option>
+                <option value="kky-tool">KKY Tool</option>
+                <option value="family-browser">Family Browser</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="usageAccess">접근 결과</label>
+              <select id="usageAccess">
+                <option value="">전체</option>
+                <option value="allowed">허용</option>
+                <option value="blocked">차단</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="table-wrap admin-usage-table-wrap">
+            <table class="admin-usage-table">
+              <thead>
+                <tr>
+                  <th>실행 시각</th>
+                  <th>프로그램</th>
+                  <th>Autodesk/Revit 프로필</th>
+                  <th>애드인</th>
+                  <th>Revit</th>
+                  <th>결과</th>
+                </tr>
+              </thead>
+              <tbody id="usageRows">
+                <tr><td colspan="6" class="admin-usage-empty">실행 기록을 불러오면 여기에 표시됩니다.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div id="usageStatus" class="status" aria-live="polite"></div>
+          <p class="field-help">실행 기록은 90일간 보관합니다. 컴퓨터와 접속 IP는 원문을 저장하지 않고 식별용 해시만 서버에 보관합니다.</p>
+        </article>
+      </section>
     </section>
   </main>
 
@@ -214,6 +279,7 @@
     const $ = (id) => document.getElementById(id);
     let preservedFamilyBootstrap = {};
     let currentAdminPassword = "";
+    let usageEvents = [];
     const configEtags = new Map();
 
     function setStatus(id, text, cls = "") {
@@ -695,6 +761,142 @@
       }
     }
 
+    function formatUsageTime(value) {
+      const date = new Date(value || "");
+      if (Number.isNaN(date.getTime())) return "-";
+      return new Intl.DateTimeFormat("ko-KR", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false
+      }).format(date);
+    }
+
+    function usageProductLabel(value) {
+      if (value === "family-browser") return "Family Browser";
+      if (value === "kky-tool") return "KKY Tool";
+      return value || "-";
+    }
+
+    function filteredUsageEvents() {
+      const query = $("usageSearch").value.trim().toLowerCase();
+      const product = $("usageProduct").value;
+      const access = $("usageAccess").value;
+      return usageEvents.filter((item) => {
+        if (product && item.product !== product) return false;
+        if (access === "allowed" && item.accessAllowed !== true) return false;
+        if (access === "blocked" && item.accessAllowed !== false) return false;
+        if (!query) return true;
+        const haystack = [item.profileName, item.addinVersion, item.revitVersion, item.product]
+          .map((value) => String(value || "").toLowerCase())
+          .join(" ");
+        return haystack.includes(query);
+      });
+    }
+
+    function renderUsageEvents() {
+      const items = filteredUsageEvents();
+      const body = $("usageRows");
+      body.innerHTML = "";
+
+      if (!items.length) {
+        const row = document.createElement("tr");
+        const cell = document.createElement("td");
+        cell.colSpan = 6;
+        cell.className = "admin-usage-empty";
+        cell.textContent = usageEvents.length ? "현재 검색 조건에 맞는 실행 기록이 없습니다." : "아직 저장된 실행 기록이 없습니다.";
+        row.appendChild(cell);
+        body.appendChild(row);
+      } else {
+        items.forEach((item) => {
+          const row = document.createElement("tr");
+          const values = [
+            formatUsageTime(item.receivedAtUtc),
+            usageProductLabel(item.product),
+            item.profileName || "확인되지 않음",
+            item.addinVersion ? "v" + item.addinVersion : "-",
+            item.revitVersion || "-"
+          ];
+          values.forEach((value) => {
+            const cell = document.createElement("td");
+            cell.textContent = value;
+            row.appendChild(cell);
+          });
+
+          const resultCell = document.createElement("td");
+          const state = document.createElement("span");
+          state.className = "admin-usage-state " + (item.accessAllowed ? "is-allowed" : "is-blocked");
+          state.textContent = item.accessAllowed ? "허용" : "차단";
+          resultCell.appendChild(state);
+          row.appendChild(resultCell);
+          body.appendChild(row);
+        });
+      }
+
+      const uniqueUsers = new Set(items.map((item) => String(item.profileName || "").trim().toLowerCase()).filter(Boolean));
+      $("usageSummaryTotal").textContent = items.length + "건";
+      $("usageSummaryUsers").textContent = uniqueUsers.size + "명";
+      $("usageSummaryLatest").textContent = items.length ? formatUsageTime(items[0].receivedAtUtc) : "-";
+      $("exportUsage").disabled = items.length === 0;
+    }
+
+    async function loadUsageEvents() {
+      if (!currentAdminPassword) return;
+      setStatus("usageStatus", "실행 기록을 불러오는 중...", "");
+      try {
+        const response = await fetch("/api/usage/events?limit=500", {
+          headers: { "X-KKY-Admin-Password": currentAdminPassword },
+          cache: "no-store"
+        });
+        if (response.status === 401) throw new Error("관리자 인증에 실패했습니다.");
+        if (!response.ok) throw new Error("HTTP " + response.status);
+        const payload = await response.json();
+        usageEvents = Array.isArray(payload.items) ? payload.items : [];
+        renderUsageEvents();
+        setStatus("usageStatus", "최근 실행 기록 " + usageEvents.length + "건을 불러왔습니다.", "good");
+      } catch (err) {
+        usageEvents = [];
+        renderUsageEvents();
+        setStatus("usageStatus", "실행 기록을 불러오지 못했습니다: " + (err.message || String(err)), "bad");
+      }
+    }
+
+    function csvValue(value) {
+      return '"' + String(value ?? "").replace(/"/g, '""') + '"';
+    }
+
+    function exportUsageCsv() {
+      const items = filteredUsageEvents();
+      if (!items.length) {
+        setStatus("usageStatus", "내보낼 실행 기록이 없습니다.", "warn");
+        return;
+      }
+
+      const rows = [["실행 시각", "프로그램", "Autodesk/Revit 프로필", "애드인 버전", "Revit 버전", "접근 결과"]];
+      items.forEach((item) => rows.push([
+        formatUsageTime(item.receivedAtUtc),
+        usageProductLabel(item.product),
+        item.profileName || "",
+        item.addinVersion || "",
+        item.revitVersion || "",
+        item.accessAllowed ? "허용" : "차단"
+      ]));
+
+      const csv = "\ufeff" + rows.map((row) => row.map(csvValue).join(",")).join("\r\n") + "\r\n";
+      const stamp = new Date().toISOString().replace(/[-:T]/g, "").slice(0, 14);
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement("a");
+      anchor.href = url;
+      anchor.download = "kky-tool-usage-" + stamp + ".csv";
+      anchor.click();
+      URL.revokeObjectURL(url);
+      setStatus("usageStatus", "현재 표시된 실행 기록 " + items.length + "건을 CSV로 만들었습니다.", "good");
+    }
+
     $("unlock").addEventListener("click", async () => {
       try {
         const password = $("password").value || "";
@@ -706,7 +908,7 @@
         $("password").value = "";
         $("lock").classList.add("hidden");
         $("editor").classList.remove("hidden");
-        await Promise.all([reloadPolicy(), reloadFamily()]);
+        await Promise.all([reloadPolicy(), reloadFamily(), loadUsageEvents()]);
       } catch (err) {
         setStatus("lockStatus", err.message || String(err), "bad");
       }
@@ -743,6 +945,12 @@
     $("copyFamily").addEventListener("click", () => copyJson(buildFamily, "familyStatus"));
     $("downloadPolicy").addEventListener("click", () => downloadJson(buildPolicy, "user-access.json", "policyStatus"));
     $("downloadFamily").addEventListener("click", () => downloadJson(buildFamily, "bootstrap.json", "familyStatus"));
+    $("reloadUsage").addEventListener("click", loadUsageEvents);
+    $("exportUsage").addEventListener("click", exportUsageCsv);
+    ["usageSearch", "usageProduct", "usageAccess"].forEach((id) => {
+      $(id).addEventListener("input", renderUsageEvents);
+      $(id).addEventListener("change", renderUsageEvents);
+    });
 
     ["enabled", "keywords", "users", "message"].forEach((id) => {
       $(id).addEventListener("input", buildPolicy);
@@ -755,6 +963,7 @@
 
     fillPolicy({ enabled: true, allowedProfileKeywords: ["KCIM"], allowedUsers: [], blockMessage: "외부 사용자는 사용할 수 없습니다." });
     fillFamilyBootstrap(defaultFamilyBootstrap());
+    renderUsageEvents();
   </script>
 </body>
 </html>

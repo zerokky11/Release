@@ -3,6 +3,8 @@ const KKY_TOOL_POLICY_PATH = "kky-tool/user-access.json";
 const FAMILY_BROWSER_INDEX_PATH = "family-browser/bootstrap-index.json";
 const FAMILY_BROWSER_BOOTSTRAP_PATH = "family-browser/bootstrap.json";
 const MAX_CONFIG_BYTES = 128 * 1024;
+const MAX_USAGE_BYTES = 16 * 1024;
+const DEFAULT_USAGE_RETENTION_DAYS = 90;
 const MANAGED_CONFIG_PATHS = new Set([
   KKY_TOOL_POLICY_PATH,
   FAMILY_BROWSER_INDEX_PATH,
@@ -38,6 +40,10 @@ export default {
 
       if (pathname === "/api/requests") {
         return await proxyRequests(request, env, cors);
+      }
+
+      if (pathname === "/api/usage/events") {
+        return await handleUsageEvents(request, env, cors, url);
       }
 
       const publicConfigPath = managedPathFromPublicRoute(pathname);
@@ -150,6 +156,175 @@ async function proxyRequests(request, env, cors) {
     status: response.status,
     headers: noStoreHeaders(cors, contentType)
   });
+}
+
+async function handleUsageEvents(request, env, cors, url) {
+  if (request.method === "POST") {
+    const payload = await parseUsageBody(request);
+    const event = normalizeUsageEvent(payload);
+    const accepted = await writeUsageEvent(request, env, event);
+    return jsonResponse({ ok: true, accepted }, 202, cors);
+  }
+
+  if (request.method === "GET") {
+    await requireAdmin(request, env);
+    const limit = normalizeUsageLimit(url.searchParams.get("limit"));
+    const items = await readUsageEvents(env, limit);
+    return jsonResponse({ ok: true, items, limit }, 200, cors);
+  }
+
+  throw new HttpError(405, "method_not_allowed");
+}
+
+async function parseUsageBody(request) {
+  const text = await request.text();
+  if (!text.trim()) throw new HttpError(400, "usage_event_required");
+  if (new TextEncoder().encode(text).length > MAX_USAGE_BYTES) {
+    throw new HttpError(413, "usage_event_too_large");
+  }
+
+  try {
+    return JSON.parse(text);
+  } catch (error) {
+    throw new HttpError(400, "invalid_json_body");
+  }
+}
+
+function normalizeUsageEvent(payload) {
+  requirePlainObject(payload, "usage_event_must_be_an_object");
+
+  const product = usageString(payload.product, "product", 100, true).toLowerCase();
+  if (product !== "kky-tool" && product !== "family-browser") {
+    throw new HttpError(400, "usage_product_not_allowed");
+  }
+
+  const eventName = usageString(payload.eventName, "eventName", 100, true).toLowerCase();
+  if (!/^[a-z0-9._-]+$/.test(eventName)) {
+    throw new HttpError(400, "usage_event_name_invalid");
+  }
+
+  const clientEventId = usageString(payload.clientEventId, "clientEventId", 100, true);
+  const sessionId = usageString(payload.sessionId, "sessionId", 100, true);
+  if (!/^[a-zA-Z0-9-]+$/.test(clientEventId) || !/^[a-zA-Z0-9-]+$/.test(sessionId)) {
+    throw new HttpError(400, "usage_event_id_invalid");
+  }
+
+  const machineHash = usageString(payload.machineHash, "machineHash", 128, false).toLowerCase();
+  if (machineHash && !/^[a-f0-9]{64}$/.test(machineHash)) {
+    throw new HttpError(400, "usage_machine_hash_invalid");
+  }
+  if (typeof payload.accessAllowed !== "boolean") {
+    throw new HttpError(400, "usage_access_allowed_must_be_boolean");
+  }
+
+  return {
+    clientEventId,
+    sessionId,
+    product,
+    eventName,
+    profileName: usageString(payload.profileName, "profileName", 500, false),
+    profileSource: usageString(payload.profileSource, "profileSource", 100, false),
+    machineHash,
+    addinVersion: usageString(payload.addinVersion, "addinVersion", 100, false),
+    revitVersion: usageString(payload.revitVersion, "revitVersion", 100, false),
+    accessAllowed: payload.accessAllowed,
+    clientTimeUtc: usageString(payload.clientTimeUtc, "clientTimeUtc", 100, false)
+  };
+}
+
+function usageString(value, name, maxLength, required) {
+  if (value === undefined || value === null) {
+    if (required) throw new HttpError(400, `usage_${name}_required`);
+    return "";
+  }
+  if (typeof value !== "string") throw new HttpError(400, `usage_${name}_must_be_a_string`);
+  const normalized = value.trim();
+  if (required && !normalized) throw new HttpError(400, `usage_${name}_required`);
+  if (normalized.length > maxLength) throw new HttpError(400, `usage_${name}_too_long`);
+  return normalized;
+}
+
+function normalizeUsageLimit(value) {
+  const parsed = Number.parseInt(String(value || "200"), 10);
+  if (!Number.isFinite(parsed)) return 200;
+  return Math.max(1, Math.min(parsed, 500));
+}
+
+async function writeUsageEvent(request, env, event) {
+  const session = primaryConfigSession(env);
+  const receivedAtUtc = new Date().toISOString();
+  const ipHash = await usageIpHash(request, env);
+  const country = usageHeader(request.headers.get("CF-IPCountry"), 16);
+  const userAgent = usageHeader(request.headers.get("User-Agent"), 500);
+
+  const result = await session.prepare(
+    "INSERT OR IGNORE INTO usage_events " +
+    "(received_at_utc, client_event_id, session_id, product, event_name, profile_name, profile_source, " +
+    "machine_hash, addin_version, revit_version, access_allowed, client_time_utc, ip_hash, country, user_agent) " +
+    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+  ).bind(
+    receivedAtUtc,
+    event.clientEventId,
+    event.sessionId,
+    event.product,
+    event.eventName,
+    event.profileName,
+    event.profileSource,
+    event.machineHash,
+    event.addinVersion,
+    event.revitVersion,
+    event.accessAllowed ? 1 : 0,
+    event.clientTimeUtc,
+    ipHash,
+    country,
+    userAgent
+  ).run();
+
+  await pruneUsageEvents(session, env, receivedAtUtc);
+  return d1Changes(result) === 1;
+}
+
+async function readUsageEvents(env, limit) {
+  const result = await primaryConfigSession(env).prepare(
+    "SELECT id, received_at_utc, client_event_id, session_id, product, event_name, profile_name, " +
+    "profile_source, machine_hash, addin_version, revit_version, access_allowed, client_time_utc, country " +
+    "FROM usage_events ORDER BY id DESC LIMIT ?"
+  ).bind(limit).all();
+
+  return (result?.results || []).map((row) => ({
+    id: Number(row.id),
+    receivedAtUtc: String(row.received_at_utc || ""),
+    clientEventId: String(row.client_event_id || ""),
+    sessionId: String(row.session_id || ""),
+    product: String(row.product || ""),
+    eventName: String(row.event_name || ""),
+    profileName: String(row.profile_name || ""),
+    profileSource: String(row.profile_source || ""),
+    machineHash: String(row.machine_hash || ""),
+    addinVersion: String(row.addin_version || ""),
+    revitVersion: String(row.revit_version || ""),
+    accessAllowed: Number(row.access_allowed) === 1,
+    clientTimeUtc: String(row.client_time_utc || ""),
+    country: String(row.country || "")
+  }));
+}
+
+async function pruneUsageEvents(session, env, nowUtc) {
+  const configured = Number.parseInt(String(env.USAGE_RETENTION_DAYS || DEFAULT_USAGE_RETENTION_DAYS), 10);
+  const days = Number.isFinite(configured) ? Math.max(1, Math.min(configured, 3650)) : DEFAULT_USAGE_RETENTION_DAYS;
+  const cutoff = new Date(Date.parse(nowUtc) - days * 24 * 60 * 60 * 1000).toISOString();
+  await session.prepare("DELETE FROM usage_events WHERE received_at_utc < ?").bind(cutoff).run();
+}
+
+async function usageIpHash(request, env) {
+  const ip = String(request.headers.get("CF-Connecting-IP") || "").trim();
+  const salt = String(env.POLICY_ADMIN_PASSWORD_SHA256 || env.FAMILY_BROWSER_ADMIN_PASSWORD_SHA256 || "").trim();
+  if (!ip || !salt) return "";
+  return sha256Hex(`usage:${salt}:${ip}`);
+}
+
+function usageHeader(value, maxLength) {
+  return String(value || "").trim().slice(0, maxLength);
 }
 
 async function handleManagedConfig(request, env, cors, path) {
