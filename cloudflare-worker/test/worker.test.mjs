@@ -9,39 +9,113 @@ const ADMIN_PASSWORD_SHA256 = createHash("sha256").update(ADMIN_PASSWORD).digest
 const POLICY_PATH = "kky-tool/user-access.json";
 const BOOTSTRAP_PATH = "family-browser/bootstrap.json";
 
-class FakeR2Object {
-  constructor(key, content, options = {}) {
-    this.key = key;
-    this.content = String(content);
-    this.etag = createHash("md5").update(this.content).digest("hex");
-    this.httpEtag = `"${this.etag}"`;
-    this.customMetadata = options.customMetadata || {};
-    this.httpMetadata = options.httpMetadata || {};
+class FakeD1Statement {
+  constructor(db, sql, bindings = []) {
+    this.db = db;
+    this.sql = String(sql).replace(/\s+/g, " ").trim();
+    this.bindings = bindings;
   }
 
-  async text() {
-    return this.content;
+  bind(...bindings) {
+    return new FakeD1Statement(this.db, this.sql, bindings);
+  }
+
+  async first() {
+    return this.db.first(this.sql, this.bindings);
+  }
+
+  async run() {
+    return this.db.run(this.sql, this.bindings);
   }
 }
 
-class FakeR2Bucket {
+class FakeD1Database {
   constructor() {
-    this.objects = new Map();
+    this.configs = new Map();
+    this.history = [];
   }
 
-  async get(key) {
-    return this.objects.get(key) || null;
+  withSession() {
+    return this;
   }
 
-  async put(key, content, options = {}) {
-    const current = this.objects.get(key);
-    const expected = options.onlyIf?.etagMatches;
-    if (expected && (!current || current.etag !== expected)) return null;
-
-    const object = new FakeR2Object(key, content, options);
-    this.objects.set(key, object);
-    return object;
+  prepare(sql) {
+    return new FakeD1Statement(this, sql);
   }
+
+  async batch(statements) {
+    const configsSnapshot = new Map([...this.configs].map(([key, value]) => [key, { ...value }]));
+    const historySnapshot = this.history.map((value) => ({ ...value }));
+    try {
+      const results = [];
+      for (const statement of statements) results.push(await statement.run());
+      return results;
+    } catch (error) {
+      this.configs = configsSnapshot;
+      this.history = historySnapshot;
+      throw error;
+    }
+  }
+
+  seed(path, content, updatedAtUtc = "2026-01-01T00:00:00.000Z") {
+    this.configs.set(path, {
+      content,
+      etag: createHash("sha256").update(content).digest("hex"),
+      updated_at_utc: updatedAtUtc
+    });
+  }
+
+  getConfig(path) {
+    return this.configs.get(path) || null;
+  }
+
+  historyFor(path) {
+    return this.history.filter((item) => item.path === path);
+  }
+
+  first(sql, bindings) {
+    if (sql === "SELECT content, etag, updated_at_utc FROM policy_config WHERE path = ?") {
+      const row = this.configs.get(bindings[0]);
+      return row ? { ...row } : null;
+    }
+    throw new Error("Unsupported fake D1 first query: " + sql);
+  }
+
+  run(sql, bindings) {
+    if (sql.startsWith("INSERT OR IGNORE INTO policy_config")) {
+      const [path, content, etag, updatedAtUtc] = bindings;
+      if (this.configs.has(path)) return d1Result(0);
+      this.configs.set(path, { content, etag, updated_at_utc: updatedAtUtc });
+      return d1Result(1);
+    }
+
+    if (sql.startsWith("INSERT INTO policy_history")) {
+      const [archivedAtUtc, path, expectedEtag] = bindings;
+      const current = this.configs.get(path);
+      if (!current || current.etag !== expectedEtag) return d1Result(0);
+      this.history.push({
+        path,
+        content: current.content,
+        etag: current.etag,
+        archived_at_utc: archivedAtUtc
+      });
+      return d1Result(1);
+    }
+
+    if (sql.startsWith("UPDATE policy_config SET")) {
+      const [content, etag, updatedAtUtc, path, expectedEtag] = bindings;
+      const current = this.configs.get(path);
+      if (!current || current.etag !== expectedEtag) return d1Result(0);
+      this.configs.set(path, { content, etag, updated_at_utc: updatedAtUtc });
+      return d1Result(1);
+    }
+
+    throw new Error("Unsupported fake D1 run query: " + sql);
+  }
+}
+
+function d1Result(changes) {
+  return { success: true, meta: { changes } };
 }
 
 function normalized(value) {
@@ -77,11 +151,11 @@ function bootstrap(overrides = {}) {
 }
 
 async function testEnv() {
-  const bucket = new FakeR2Bucket();
-  await bucket.put(POLICY_PATH, normalized(policy()));
-  await bucket.put(BOOTSTRAP_PATH, normalized(bootstrap()));
+  const db = new FakeD1Database();
+  db.seed(POLICY_PATH, normalized(policy()));
+  db.seed(BOOTSTRAP_PATH, normalized(bootstrap()));
   return {
-    CONFIG_BUCKET: bucket,
+    CONFIG_DB: db,
     POLICY_ADMIN_PASSWORD_SHA256: ADMIN_PASSWORD_SHA256,
     ALLOWED_ORIGINS: "https://update.zerokky.com"
   };
@@ -91,20 +165,20 @@ async function request(env, path, init = {}) {
   return worker.fetch(new Request("https://update.zerokky.com" + path, init), env);
 }
 
-test("public policy GET is served from R2 without caching", async () => {
+test("public policy GET is served from D1 without caching", async () => {
   const env = await testEnv();
   const response = await request(env, "/" + POLICY_PATH);
 
   assert.equal(response.status, 200);
-  assert.equal(response.headers.get("X-KKY-Config-Source"), "r2");
+  assert.equal(response.headers.get("X-KKY-Config-Source"), "d1");
   assert.match(response.headers.get("Cache-Control"), /no-store/);
   assert.ok(response.headers.get("ETag"));
   assert.deepEqual(await response.json(), policy());
 });
 
-test("a missing R2 policy is migrated once from the existing GitHub file", async () => {
+test("a missing D1 policy is migrated once from the existing GitHub file", async () => {
   const env = {
-    CONFIG_BUCKET: new FakeR2Bucket(),
+    CONFIG_DB: new FakeD1Database(),
     POLICY_ADMIN_PASSWORD_SHA256: ADMIN_PASSWORD_SHA256,
     CONFIG_FALLBACK_TO_GITHUB: "true",
     GITHUB_OWNER: "zerokky11",
@@ -125,7 +199,7 @@ test("a missing R2 policy is migrated once from the existing GitHub file", async
     assert.deepEqual(await migrated.json(), policy());
 
     const stored = await request(env, "/" + POLICY_PATH);
-    assert.equal(stored.headers.get("X-KKY-Config-Source"), "r2");
+    assert.equal(stored.headers.get("X-KKY-Config-Source"), "d1");
     assert.equal(githubReads, 1);
   } finally {
     globalThis.fetch = originalFetch;
@@ -162,8 +236,8 @@ test("authenticated write updates current config and archives previous value", a
 
   assert.equal(response.status, 200);
   assert.equal((await response.json()).changed, true);
-  assert.deepEqual(JSON.parse((await env.CONFIG_BUCKET.get(POLICY_PATH)).content), updated);
-  assert.equal([...env.CONFIG_BUCKET.objects.keys()].filter((key) => key.startsWith("history/" + POLICY_PATH + "/")).length, 1);
+  assert.deepEqual(JSON.parse(env.CONFIG_DB.getConfig(POLICY_PATH).content), updated);
+  assert.equal(env.CONFIG_DB.historyFor(POLICY_PATH).length, 1);
 });
 
 test("stale ETag cannot overwrite a newer policy", async () => {
@@ -180,7 +254,7 @@ test("stale ETag cannot overwrite a newer policy", async () => {
 
   assert.equal(response.status, 412);
   assert.equal((await response.json()).message, "config_changed_reload_required");
-  assert.equal(JSON.parse((await env.CONFIG_BUCKET.get(POLICY_PATH)).content).enabled, true);
+  assert.equal(JSON.parse(env.CONFIG_DB.getConfig(POLICY_PATH).content).enabled, true);
 });
 
 test("Family Browser bootstrap validation rejects an invalid refresh interval", async () => {
@@ -198,7 +272,7 @@ test("Family Browser bootstrap validation rejects an invalid refresh interval", 
   assert.equal((await response.json()).message, "refreshMinutes_out_of_range");
 });
 
-test("legacy Family Browser API writes to the same R2 config", async () => {
+test("legacy Family Browser API writes to the same D1 config", async () => {
   const env = await testEnv();
   const updated = bootstrap({ refreshMinutes: 15 });
   const response = await request(env, "/api/family-browser/file", {
@@ -211,5 +285,5 @@ test("legacy Family Browser API writes to the same R2 config", async () => {
   });
 
   assert.equal(response.status, 200);
-  assert.equal(JSON.parse((await env.CONFIG_BUCKET.get(BOOTSTRAP_PATH)).content).refreshMinutes, 15);
+  assert.equal(JSON.parse(env.CONFIG_DB.getConfig(BOOTSTRAP_PATH).content).refreshMinutes, 15);
 });

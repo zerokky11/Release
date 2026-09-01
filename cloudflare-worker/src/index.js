@@ -32,7 +32,7 @@ export default {
         return jsonResponse({
           ok: true,
           service: "kky-update-api",
-          policyStorage: env.CONFIG_BUCKET ? "r2" : "not_configured"
+          policyStorage: env.CONFIG_DB ? "d1" : "not_configured"
         }, 200, cors);
       }
 
@@ -176,7 +176,7 @@ async function handleManagedConfig(request, env, cors, path) {
       updatedAtUtc: result.updatedAtUtc
     }, 200, cors, {
       "ETag": result.etag,
-      "X-KKY-Config-Source": "r2"
+      "X-KKY-Config-Source": "d1"
     });
   }
 
@@ -202,7 +202,7 @@ async function handlePolicyApi(request, env, cors, url) {
       updatedAtUtc: result.updatedAtUtc
     }, 200, cors, {
       "ETag": result.etag,
-      "X-KKY-Config-Source": "r2"
+      "X-KKY-Config-Source": "d1"
     });
   }
 
@@ -228,7 +228,7 @@ async function handleFamilyBrowserApi(request, env, cors, pathname, url) {
       updatedAtUtc: result.updatedAtUtc
     }, 200, cors, {
       "ETag": result.etag,
-      "X-KKY-Config-Source": "r2"
+      "X-KKY-Config-Source": "d1"
     });
   }
 
@@ -255,26 +255,30 @@ async function readDirectConfigBody(request) {
 }
 
 async function readManagedConfig(env, path) {
-  const bucket = requireConfigBucket(env);
-  let object = await bucket.get(path);
-  let source = "r2";
+  const session = primaryConfigSession(env);
+  let row = await selectConfigRow(session, path);
+  let source = "d1";
 
-  if (!object) {
+  if (!row) {
     if (String(env.CONFIG_FALLBACK_TO_GITHUB || "true").toLowerCase() === "false") {
       throw new HttpError(404, "config_not_found");
     }
 
     const migratedContent = normalizeJsonContent(await readGitHubFile(env, path));
     validateManagedConfig(path, migratedContent);
-    await bucket.put(path, migratedContent, configPutOptions(new Date().toISOString()));
-    object = await bucket.get(path);
-    source = "github-migration";
+    const migratedAtUtc = new Date().toISOString();
+    const migratedEtag = await sha256Hex(migratedContent);
+    const inserted = await session.prepare(
+      "INSERT OR IGNORE INTO policy_config (path, content, etag, updated_at_utc) VALUES (?, ?, ?, ?)"
+    ).bind(path, migratedContent, migratedEtag, migratedAtUtc).run();
+    row = await selectConfigRow(session, path);
+    source = d1Changes(inserted) === 1 ? "github-migration" : "d1";
   }
 
-  if (!object) throw new HttpError(500, "config_storage_read_failed");
+  if (!row) throw new HttpError(500, "config_storage_read_failed");
   return {
-    content: await object.text(),
-    etag: objectHttpEtag(object),
+    content: String(row.content),
+    etag: httpEtag(row.etag),
     source
   };
 }
@@ -284,61 +288,71 @@ async function writeManagedConfig(env, rawPath, rawContent, ifMatch) {
   const content = normalizeJsonContent(rawContent);
   validateManagedConfig(path, content);
 
-  const bucket = requireConfigBucket(env);
-  const current = await bucket.get(path);
-  const currentEtag = current ? objectHttpEtag(current) : "";
+  const session = primaryConfigSession(env);
+  const current = await selectConfigRow(session, path);
+  const currentEtag = current ? httpEtag(current.etag) : "";
   assertIfMatch(ifMatch, currentEtag);
 
   if (current) {
-    const previousContent = await current.text();
-    if (previousContent === content) {
+    if (String(current.content) === content) {
       return {
         changed: false,
         etag: currentEtag,
-        updatedAtUtc: current.customMetadata?.updatedAtUtc || ""
+        updatedAtUtc: String(current.updated_at_utc || "")
       };
     }
-
-    await bucket.put(historyObjectKey(path, current), previousContent, {
-      httpMetadata: { contentType: "application/json; charset=utf-8" },
-      customMetadata: {
-        sourcePath: path,
-        archivedAtUtc: new Date().toISOString(),
-        sourceEtag: String(current.etag || "")
-      }
-    });
   }
 
   const updatedAtUtc = new Date().toISOString();
-  const options = configPutOptions(updatedAtUtc);
-  if (ifMatch && current) options.onlyIf = { etagMatches: String(current.etag || "") };
+  const nextEtag = await sha256Hex(content);
 
-  const stored = await bucket.put(path, content, options);
-  if (!stored) throw new HttpError(412, "config_changed_reload_required");
+  if (current) {
+    const results = await session.batch([
+      session.prepare(
+        "INSERT INTO policy_history (path, content, etag, archived_at_utc) " +
+        "SELECT path, content, etag, ? FROM policy_config WHERE path = ? AND etag = ?"
+      ).bind(updatedAtUtc, path, String(current.etag)),
+      session.prepare(
+        "UPDATE policy_config SET content = ?, etag = ?, updated_at_utc = ? WHERE path = ? AND etag = ?"
+      ).bind(content, nextEtag, updatedAtUtc, path, String(current.etag))
+    ]);
+    if (d1Changes(results[1]) !== 1) throw new HttpError(412, "config_changed_reload_required");
+  } else {
+    const inserted = await session.prepare(
+      "INSERT OR IGNORE INTO policy_config (path, content, etag, updated_at_utc) VALUES (?, ?, ?, ?)"
+    ).bind(path, content, nextEtag, updatedAtUtc).run();
+    if (d1Changes(inserted) !== 1) throw new HttpError(412, "config_changed_reload_required");
+  }
 
   return {
     changed: true,
-    etag: objectHttpEtag(stored),
+    etag: httpEtag(nextEtag),
     updatedAtUtc
   };
 }
 
-function requireConfigBucket(env) {
-  if (!env.CONFIG_BUCKET) throw new HttpError(500, "CONFIG_BUCKET is not configured.");
-  return env.CONFIG_BUCKET;
+function primaryConfigSession(env) {
+  const db = requireConfigDb(env);
+  return typeof db.withSession === "function" ? db.withSession("first-primary") : db;
 }
 
-function configPutOptions(updatedAtUtc) {
-  return {
-    httpMetadata: { contentType: "application/json; charset=utf-8" },
-    customMetadata: { updatedAtUtc }
-  };
+function requireConfigDb(env) {
+  if (!env.CONFIG_DB) throw new HttpError(500, "CONFIG_DB is not configured.");
+  return env.CONFIG_DB;
 }
 
-function objectHttpEtag(object) {
-  if (object.httpEtag) return object.httpEtag;
-  const etag = String(object.etag || "").replace(/^\"|\"$/g, "");
-  return `"${etag}"`;
+async function selectConfigRow(db, path) {
+  return db.prepare(
+    "SELECT content, etag, updated_at_utc FROM policy_config WHERE path = ?"
+  ).bind(path).first();
+}
+
+function d1Changes(result) {
+  return Number(result?.meta?.changes ?? result?.changes ?? 0);
+}
+
+function httpEtag(value) {
+  return `"${normalizeEtag(value)}"`;
 }
 
 function assertIfMatch(ifMatch, currentEtag) {
@@ -357,12 +371,6 @@ function assertIfMatch(ifMatch, currentEtag) {
 
 function normalizeEtag(value) {
   return String(value || "").trim().replace(/^W\//i, "").replace(/^\"|\"$/g, "");
-}
-
-function historyObjectKey(path, object) {
-  const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
-  const etag = normalizeEtag(objectHttpEtag(object)).slice(0, 24) || "unknown";
-  return `history/${path}/${timestamp}-${etag}.json`;
 }
 
 function normalizeManagedConfigPath(rawPath) {

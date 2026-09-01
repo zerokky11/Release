@@ -4,17 +4,18 @@
 
 ## Storage split
 
-- Cloudflare R2 `kky-policy-config`
+- Cloudflare D1 `kky-policy-config`
   - `kky-tool/user-access.json`
   - `family-browser/bootstrap.json`
   - `family-browser/bootstrap-index.json`
+  - 변경 전 JSON은 `policy_history` 테이블에 자동 보관
 - GitHub Pages / GitHub repository
   - 홈페이지 HTML, CSS, JavaScript, 이미지와 설치파일
-  - R2에 아직 시드되지 않은 설정의 최초 마이그레이션 원본
+  - D1에 아직 시드되지 않은 설정의 최초 마이그레이션 원본
 - Existing request upstream
   - `/api/requests`가 기존 요청 API를 프록시한다.
 
-애드인이 읽는 공개 URL은 바뀌지 않는다. 세 설정 파일의 정상 응답에는 `Cache-Control: no-store`, `ETag`, `X-KKY-Config-Source: r2`가 포함된다.
+애드인이 읽는 공개 URL은 바뀌지 않는다. 세 설정 파일의 정상 응답에는 `Cache-Control: no-store`, `ETag`, `X-KKY-Config-Source: d1`이 포함된다.
 
 ## Routes
 
@@ -34,7 +35,7 @@ Public reads do not require authentication. Writes require `X-KKY-Admin-Password
 - Only the three allow-listed JSON paths can be written.
 - Payload size is limited to 128 KiB.
 - KKY Tool policy, Family Browser bootstrap, and bootstrap index have separate schema checks.
-- The current R2 object is copied to `history/<path>/...json` before a changed value is written.
+- 현재 JSON은 변경 전에 `policy_history`에 경로, 내용, ETag, 보관 시각과 함께 기록된다.
 - The admin page sends the last `ETag` through `If-Match`. A stale page receives HTTP `412` instead of overwriting a newer change.
 - The admin page immediately reads the public URL again and compares the saved JSON.
 
@@ -44,6 +45,7 @@ Public reads do not require authentication. Writes require `X-KKY-Admin-Password
 pnpm install
 pnpm run check
 pnpm test
+pnpm exec wrangler d1 migrations apply kky-policy-config --local
 pnpm exec wrangler deploy --dry-run
 ```
 
@@ -53,26 +55,20 @@ The browser save flow is covered by `tools/homepage/test-admin-mobile.js` in the
 
 ```powershell
 pnpm exec wrangler login
-pnpm exec wrangler r2 bucket create kky-policy-config
-
-pnpm exec wrangler r2 object put kky-policy-config/kky-tool/user-access.json `
-  --file=../kky-tool/user-access.json --content-type=application/json --remote
-pnpm exec wrangler r2 object put kky-policy-config/family-browser/bootstrap.json `
-  --file=../family-browser/bootstrap.json --content-type=application/json --remote
-pnpm exec wrangler r2 object put kky-policy-config/family-browser/bootstrap-index.json `
-  --file=../family-browser/bootstrap-index.json --content-type=application/json --remote
+pnpm exec wrangler d1 create kky-policy-config --location apac
+pnpm exec wrangler d1 migrations apply kky-policy-config --remote
 
 pnpm exec wrangler secret put POLICY_ADMIN_PASSWORD_SHA256
 pnpm exec wrangler deploy
 ```
 
-Set `POLICY_ADMIN_PASSWORD_SHA256` to the SHA-256 constant used by the unified homepage admin screen. Keep `REQUESTS_UPSTREAM_URL`, `GITHUB_TOKEN`, and existing secrets when updating the same Worker.
+Set `POLICY_ADMIN_PASSWORD_SHA256` to the SHA-256 constant used by the unified homepage admin screen. Keep `REQUESTS_UPSTREAM_URL`, `GITHUB_TOKEN`, and existing secrets when updating the same Worker. After deployment, request each managed public URL once to validate the existing GitHub JSON and seed the missing D1 row.
 
 ## Recovery
 
-1. List history objects under `history/<public-path>/` in the R2 bucket.
-2. Download the required JSON and validate it locally.
-3. Upload it back to its original public-path key.
-4. Open the public URL with cache disabled and confirm `X-KKY-Config-Source: r2`.
+1. Query `policy_history` by `path` and `archived_at_utc` to find the required version.
+2. Validate the selected `content` JSON locally.
+3. Save it through the admin page so schema, authentication, ETag, and history safeguards remain active.
+4. Open the public URL with cache disabled and confirm `X-KKY-Config-Source: d1`.
 
-If a current object is missing and `CONFIG_FALLBACK_TO_GITHUB=true`, the next read validates the corresponding repository JSON, seeds R2, and identifies that one response as `github-migration`. Normal reads after that use R2.
+If a current row is missing and `CONFIG_FALLBACK_TO_GITHUB=true`, the next read validates the corresponding repository JSON, seeds D1, and identifies that one response as `github-migration`. Normal reads after that use D1.

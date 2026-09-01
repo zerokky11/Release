@@ -6,12 +6,13 @@ workers_dev = false
 routes = [
   { pattern = "update.zerokky.com/api/*", zone_name = "zerokky.com" },
   { pattern = "update.zerokky.com/family-browser*", zone_name = "zerokky.com" },
-  { pattern = "update.zerokky.com/kky-tool/user-access.json", zone_name = "zerokky.com" }
+  { pattern = "update.zerokky.com/kky-tool/user-access.json*", zone_name = "zerokky.com" }
 ]
 
-[[r2_buckets]]
-binding = "CONFIG_BUCKET"
-bucket_name = "kky-policy-config"
+[[d1_databases]]
+binding = "CONFIG_DB"
+database_name = "kky-policy-config"
+database_id = "c741173b-5844-4b32-ade9-f41642427da4"
 
 [vars]
 GITHUB_OWNER = "zerokky11"
