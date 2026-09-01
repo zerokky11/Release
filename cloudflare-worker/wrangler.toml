@@ -5,11 +5,17 @@ workers_dev = false
 
 routes = [
   { pattern = "update.zerokky.com/api/*", zone_name = "zerokky.com" },
-  { pattern = "update.zerokky.com/family-browser*", zone_name = "zerokky.com" }
+  { pattern = "update.zerokky.com/family-browser*", zone_name = "zerokky.com" },
+  { pattern = "update.zerokky.com/kky-tool/user-access.json", zone_name = "zerokky.com" }
 ]
+
+[[r2_buckets]]
+binding = "CONFIG_BUCKET"
+bucket_name = "kky-policy-config"
 
 [vars]
 GITHUB_OWNER = "zerokky11"
 GITHUB_REPO = "Release"
 GITHUB_BRANCH = "main"
 ALLOWED_ORIGINS = "https://update.zerokky.com,http://localhost:8787"
+CONFIG_FALLBACK_TO_GITHUB = "true"

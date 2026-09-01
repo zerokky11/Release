@@ -1,6 +1,13 @@
 const DEFAULT_ALLOWED_ORIGIN = "https://update.zerokky.com";
+const KKY_TOOL_POLICY_PATH = "kky-tool/user-access.json";
 const FAMILY_BROWSER_INDEX_PATH = "family-browser/bootstrap-index.json";
 const FAMILY_BROWSER_BOOTSTRAP_PATH = "family-browser/bootstrap.json";
+const MAX_CONFIG_BYTES = 128 * 1024;
+const MANAGED_CONFIG_PATHS = new Set([
+  KKY_TOOL_POLICY_PATH,
+  FAMILY_BROWSER_INDEX_PATH,
+  FAMILY_BROWSER_BOOTSTRAP_PATH
+]);
 
 class HttpError extends Error {
   constructor(status, message) {
@@ -22,15 +29,28 @@ export default {
       const pathname = normalizePathname(url.pathname);
 
       if (pathname === "/api/health") {
-        return jsonResponse({ ok: true, service: "kky-update-api" }, 200, cors);
+        return jsonResponse({
+          ok: true,
+          service: "kky-update-api",
+          policyStorage: env.CONFIG_BUCKET ? "r2" : "not_configured"
+        }, 200, cors);
       }
 
       if (pathname === "/api/requests") {
         return await proxyRequests(request, env, cors);
       }
 
+      const publicConfigPath = managedPathFromPublicRoute(pathname);
+      if (publicConfigPath) {
+        return await handleManagedConfig(request, env, cors, publicConfigPath);
+      }
+
       if (pathname.startsWith("/api/family-browser")) {
-        return await handleFamilyBrowser(request, env, cors, pathname, url);
+        return await handleFamilyBrowserApi(request, env, cors, pathname, url);
+      }
+
+      if (pathname === "/api/policy/file") {
+        return await handlePolicyApi(request, env, cors, url);
       }
 
       if (pathname === "/family-browser" || pathname.startsWith("/family-browser/")) {
@@ -51,6 +71,11 @@ function normalizePathname(pathname) {
   return value || "/";
 }
 
+function managedPathFromPublicRoute(pathname) {
+  const path = String(pathname || "").replace(/^\/+/, "");
+  return MANAGED_CONFIG_PATHS.has(path) ? path : "";
+}
+
 function corsHeaders(request, env) {
   const origin = request.headers.get("Origin") || DEFAULT_ALLOWED_ORIGIN;
   const configured = String(env.ALLOWED_ORIGINS || DEFAULT_ALLOWED_ORIGIN)
@@ -64,8 +89,9 @@ function corsHeaders(request, env) {
 
   return {
     "Access-Control-Allow-Origin": allowOrigin,
-    "Access-Control-Allow-Methods": "GET,POST,PUT,OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type,Authorization,X-KKY-Admin-Token,X-KKY-Admin-Password",
+    "Access-Control-Allow-Methods": "GET,HEAD,POST,PUT,OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type,Authorization,If-Match,X-KKY-Admin-Token,X-KKY-Admin-Password",
+    "Access-Control-Expose-Headers": "ETag,X-KKY-Config-Source",
     "Access-Control-Max-Age": "86400",
     "Vary": "Origin"
   };
@@ -75,14 +101,19 @@ function noStoreHeaders(cors, contentType = "application/json; charset=utf-8") {
   return {
     ...cors,
     "Content-Type": contentType,
-    "Cache-Control": "no-store"
+    "Cache-Control": "no-store, no-cache, must-revalidate",
+    "Pragma": "no-cache",
+    "X-Content-Type-Options": "nosniff"
   };
 }
 
-function jsonResponse(data, status, cors) {
+function jsonResponse(data, status, cors, extraHeaders = {}) {
   return new Response(JSON.stringify(data), {
     status,
-    headers: noStoreHeaders(cors)
+    headers: {
+      ...noStoreHeaders(cors),
+      ...extraHeaders
+    }
   });
 }
 
@@ -104,12 +135,7 @@ async function proxyRequests(request, env, cors) {
 
   const headers = new Headers();
   headers.set("Accept", "application/json");
-
-  const init = {
-    method: request.method,
-    headers,
-    redirect: "follow"
-  };
+  const init = { method: request.method, headers, redirect: "follow" };
 
   if (request.method === "POST") {
     headers.set("Content-Type", request.headers.get("Content-Type") || "text/plain;charset=utf-8");
@@ -126,11 +152,390 @@ async function proxyRequests(request, env, cors) {
   });
 }
 
-async function handleFamilyBrowserStatic(request, env, cors, pathname) {
-  if (request.method !== "GET" && request.method !== "HEAD") {
-    throw new HttpError(405, "method_not_allowed");
+async function handleManagedConfig(request, env, cors, path) {
+  if (request.method === "GET" || request.method === "HEAD") {
+    const stored = await readManagedConfig(env, path);
+    return new Response(request.method === "HEAD" ? null : stored.content, {
+      status: 200,
+      headers: {
+        ...noStoreHeaders(cors),
+        "ETag": stored.etag,
+        "X-KKY-Config-Source": stored.source
+      }
+    });
   }
 
+  if (request.method === "POST" || request.method === "PUT") {
+    await requireAdmin(request, env);
+    const content = await readDirectConfigBody(request);
+    const result = await writeManagedConfig(env, path, content, request.headers.get("If-Match"));
+    return jsonResponse({
+      ok: true,
+      path,
+      changed: result.changed,
+      updatedAtUtc: result.updatedAtUtc
+    }, 200, cors, {
+      "ETag": result.etag,
+      "X-KKY-Config-Source": "r2"
+    });
+  }
+
+  throw new HttpError(405, "method_not_allowed");
+}
+
+async function handlePolicyApi(request, env, cors, url) {
+  if (request.method === "GET" || request.method === "HEAD") {
+    const path = normalizeManagedConfigPath(url.searchParams.get("path") || KKY_TOOL_POLICY_PATH);
+    return await handleManagedConfig(request, env, cors, path);
+  }
+
+  if (request.method === "POST" || request.method === "PUT") {
+    await requireAdmin(request, env);
+    const payload = await parseJsonBody(request);
+    const path = normalizeManagedConfigPath(payload.path || KKY_TOOL_POLICY_PATH);
+    const content = normalizeJsonContent(payload.content ?? payload.data ?? payload.json);
+    const result = await writeManagedConfig(env, path, content, request.headers.get("If-Match"));
+    return jsonResponse({
+      ok: true,
+      path,
+      changed: result.changed,
+      updatedAtUtc: result.updatedAtUtc
+    }, 200, cors, {
+      "ETag": result.etag,
+      "X-KKY-Config-Source": "r2"
+    });
+  }
+
+  throw new HttpError(405, "method_not_allowed");
+}
+
+async function handleFamilyBrowserApi(request, env, cors, pathname, url) {
+  if (request.method === "GET" || request.method === "HEAD") {
+    const path = resolveFamilyBrowserReadPath(pathname, url);
+    return await handleManagedConfig(request, env, cors, path);
+  }
+
+  if (request.method === "POST" || request.method === "PUT") {
+    await requireAdmin(request, env);
+    const payload = await parseJsonBody(request);
+    const path = normalizeFamilyBrowserConfigPath(payload.path || FAMILY_BROWSER_BOOTSTRAP_PATH);
+    const content = normalizeJsonContent(payload.content ?? payload.data ?? payload.json);
+    const result = await writeManagedConfig(env, path, content, request.headers.get("If-Match"));
+    return jsonResponse({
+      ok: true,
+      path,
+      changed: result.changed,
+      updatedAtUtc: result.updatedAtUtc
+    }, 200, cors, {
+      "ETag": result.etag,
+      "X-KKY-Config-Source": "r2"
+    });
+  }
+
+  throw new HttpError(405, "method_not_allowed");
+}
+
+function resolveFamilyBrowserReadPath(pathname, url) {
+  if (pathname === "/api/family-browser" || pathname === "/api/family-browser/bootstrap" || pathname === "/api/family-browser/bootstrap.json") {
+    return FAMILY_BROWSER_BOOTSTRAP_PATH;
+  }
+  if (pathname === "/api/family-browser/bootstrap-index" || pathname === "/api/family-browser/bootstrap-index.json") {
+    return FAMILY_BROWSER_INDEX_PATH;
+  }
+  if (pathname === "/api/family-browser/file") {
+    return normalizeFamilyBrowserConfigPath(url.searchParams.get("path") || FAMILY_BROWSER_BOOTSTRAP_PATH);
+  }
+  throw new HttpError(404, "family_browser_route_not_found");
+}
+
+async function readDirectConfigBody(request) {
+  const text = await request.text();
+  if (!text.trim()) throw new HttpError(400, "content_required");
+  return normalizeJsonContent(text);
+}
+
+async function readManagedConfig(env, path) {
+  const bucket = requireConfigBucket(env);
+  let object = await bucket.get(path);
+  let source = "r2";
+
+  if (!object) {
+    if (String(env.CONFIG_FALLBACK_TO_GITHUB || "true").toLowerCase() === "false") {
+      throw new HttpError(404, "config_not_found");
+    }
+
+    const migratedContent = normalizeJsonContent(await readGitHubFile(env, path));
+    validateManagedConfig(path, migratedContent);
+    await bucket.put(path, migratedContent, configPutOptions(new Date().toISOString()));
+    object = await bucket.get(path);
+    source = "github-migration";
+  }
+
+  if (!object) throw new HttpError(500, "config_storage_read_failed");
+  return {
+    content: await object.text(),
+    etag: objectHttpEtag(object),
+    source
+  };
+}
+
+async function writeManagedConfig(env, rawPath, rawContent, ifMatch) {
+  const path = normalizeManagedConfigPath(rawPath);
+  const content = normalizeJsonContent(rawContent);
+  validateManagedConfig(path, content);
+
+  const bucket = requireConfigBucket(env);
+  const current = await bucket.get(path);
+  const currentEtag = current ? objectHttpEtag(current) : "";
+  assertIfMatch(ifMatch, currentEtag);
+
+  if (current) {
+    const previousContent = await current.text();
+    if (previousContent === content) {
+      return {
+        changed: false,
+        etag: currentEtag,
+        updatedAtUtc: current.customMetadata?.updatedAtUtc || ""
+      };
+    }
+
+    await bucket.put(historyObjectKey(path, current), previousContent, {
+      httpMetadata: { contentType: "application/json; charset=utf-8" },
+      customMetadata: {
+        sourcePath: path,
+        archivedAtUtc: new Date().toISOString(),
+        sourceEtag: String(current.etag || "")
+      }
+    });
+  }
+
+  const updatedAtUtc = new Date().toISOString();
+  const options = configPutOptions(updatedAtUtc);
+  if (ifMatch && current) options.onlyIf = { etagMatches: String(current.etag || "") };
+
+  const stored = await bucket.put(path, content, options);
+  if (!stored) throw new HttpError(412, "config_changed_reload_required");
+
+  return {
+    changed: true,
+    etag: objectHttpEtag(stored),
+    updatedAtUtc
+  };
+}
+
+function requireConfigBucket(env) {
+  if (!env.CONFIG_BUCKET) throw new HttpError(500, "CONFIG_BUCKET is not configured.");
+  return env.CONFIG_BUCKET;
+}
+
+function configPutOptions(updatedAtUtc) {
+  return {
+    httpMetadata: { contentType: "application/json; charset=utf-8" },
+    customMetadata: { updatedAtUtc }
+  };
+}
+
+function objectHttpEtag(object) {
+  if (object.httpEtag) return object.httpEtag;
+  const etag = String(object.etag || "").replace(/^\"|\"$/g, "");
+  return `"${etag}"`;
+}
+
+function assertIfMatch(ifMatch, currentEtag) {
+  const value = String(ifMatch || "").trim();
+  if (!value) return;
+  if (value === "*" && currentEtag) return;
+
+  const current = normalizeEtag(currentEtag);
+  const matches = value
+    .split(",")
+    .map(normalizeEtag)
+    .some((candidate) => candidate && candidate === current);
+
+  if (!current || !matches) throw new HttpError(412, "config_changed_reload_required");
+}
+
+function normalizeEtag(value) {
+  return String(value || "").trim().replace(/^W\//i, "").replace(/^\"|\"$/g, "");
+}
+
+function historyObjectKey(path, object) {
+  const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
+  const etag = normalizeEtag(objectHttpEtag(object)).slice(0, 24) || "unknown";
+  return `history/${path}/${timestamp}-${etag}.json`;
+}
+
+function normalizeManagedConfigPath(rawPath) {
+  const value = String(rawPath || "").trim().replace(/\\/g, "/").replace(/^\/+/, "");
+  if (!MANAGED_CONFIG_PATHS.has(value)) throw new HttpError(400, "managed_config_path_not_allowed");
+  return value;
+}
+
+function normalizeFamilyBrowserConfigPath(rawPath) {
+  let value = String(rawPath || "").trim().replace(/\\/g, "/").replace(/^\/+/, "");
+  if (!value) value = FAMILY_BROWSER_BOOTSTRAP_PATH;
+  if (!value.startsWith("family-browser/")) value = "family-browser/" + value;
+  return normalizeManagedConfigPath(value);
+}
+
+function normalizeJsonContent(value) {
+  if (value === undefined || value === null) throw new HttpError(400, "content_required");
+
+  let parsed;
+  if (typeof value === "string") {
+    if (new TextEncoder().encode(value).length > MAX_CONFIG_BYTES) throw new HttpError(413, "config_too_large");
+    try {
+      parsed = JSON.parse(value);
+    } catch (error) {
+      throw new HttpError(400, "invalid_json_body");
+    }
+  } else {
+    parsed = value;
+  }
+
+  const normalized = JSON.stringify(parsed, null, 2) + "\n";
+  if (new TextEncoder().encode(normalized).length > MAX_CONFIG_BYTES) throw new HttpError(413, "config_too_large");
+  return normalized;
+}
+
+function validateManagedConfig(path, content) {
+  let value;
+  try {
+    value = JSON.parse(content);
+  } catch (error) {
+    throw new HttpError(400, "invalid_json_body");
+  }
+
+  requirePlainObject(value, "config_must_be_an_object");
+  if (path === KKY_TOOL_POLICY_PATH) return validateKkyPolicy(value);
+  if (path === FAMILY_BROWSER_BOOTSTRAP_PATH) return validateFamilyBootstrap(value);
+  if (path === FAMILY_BROWSER_INDEX_PATH) return validateFamilyIndex(value);
+  throw new HttpError(400, "managed_config_path_not_allowed");
+}
+
+function validateKkyPolicy(value) {
+  if (typeof value.enabled !== "boolean") throw new HttpError(400, "enabled_must_be_boolean");
+  validateStringArray(value.allowedProfileKeywords, "allowedProfileKeywords", 500);
+  validateStringArray(value.allowedUsers, "allowedUsers", 5000);
+  validateOptionalString(value.blockMessage, "blockMessage", 4000);
+  validateOptionalString(value.updatedAtUtc, "updatedAtUtc", 100);
+}
+
+function validateFamilyBootstrap(value) {
+  validateOptionalString(value.version, "version", 200);
+  validateOptionalString(value.message, "message", 4000);
+  validateOptionalString(value.standardMode, "standardMode", 200);
+  validateOptionalString(value.managedRootPath, "managedRootPath", 4000);
+  validateOptionalString(value.managedPolicyPath, "managedPolicyPath", 4000);
+  validateStringArray(value.managedRootPathCandidates, "managedRootPathCandidates", 200);
+  validateStringArray(value.managedPolicyPathCandidates, "managedPolicyPathCandidates", 200);
+
+  if (value.refreshMinutes !== undefined) {
+    const minutes = Number(value.refreshMinutes);
+    if (!Number.isFinite(minutes) || minutes < 1 || minutes > 1440) {
+      throw new HttpError(400, "refreshMinutes_out_of_range");
+    }
+  }
+  if (value.standardLibraries !== undefined && !Array.isArray(value.standardLibraries)) {
+    throw new HttpError(400, "standardLibraries_must_be_array");
+  }
+  if (value.security !== undefined) requirePlainObject(value.security, "security_must_be_an_object");
+  if (value.requestStore !== undefined) {
+    requirePlainObject(value.requestStore, "requestStore_must_be_an_object");
+    validateOptionalString(value.requestStore.mode, "requestStore.mode", 200);
+    validateOptionalString(value.requestStore.path, "requestStore.path", 4000);
+    validateOptionalString(value.requestStore.endpoint, "requestStore.endpoint", 4000);
+    validateStringArray(value.requestStore.pathCandidates, "requestStore.pathCandidates", 200);
+  }
+}
+
+function validateFamilyIndex(value) {
+  validateOptionalString(value.version, "version", 200);
+  validateOptionalString(value.defaultProfileId, "defaultProfileId", 500);
+  if (!Array.isArray(value.profiles)) throw new HttpError(400, "profiles_must_be_array");
+  if (value.profiles.length > 500) throw new HttpError(400, "profiles_too_many_items");
+  for (const profile of value.profiles) {
+    requirePlainObject(profile, "profile_must_be_an_object");
+    validateOptionalString(profile.id, "profile.id", 500);
+    validateOptionalString(profile.name, "profile.name", 1000);
+    validateOptionalString(profile.description, "profile.description", 4000);
+    validateOptionalString(profile.url, "profile.url", 2000);
+    if (profile.url && (profile.url.includes("..") || !profile.url.toLowerCase().endsWith(".json"))) {
+      throw new HttpError(400, "profile_url_must_point_to_json");
+    }
+  }
+  if (value.projectRules !== undefined && !Array.isArray(value.projectRules)) {
+    throw new HttpError(400, "projectRules_must_be_array");
+  }
+}
+
+function requirePlainObject(value, message) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) throw new HttpError(400, message);
+}
+
+function validateStringArray(value, name, maxItems) {
+  if (value === undefined) return;
+  if (!Array.isArray(value) || value.length > maxItems || value.some((item) => typeof item !== "string" || item.length > 4000)) {
+    throw new HttpError(400, `${name}_must_be_a_string_array`);
+  }
+}
+
+function validateOptionalString(value, name, maxLength) {
+  if (value !== undefined && (typeof value !== "string" || value.length > maxLength)) {
+    throw new HttpError(400, `${name}_must_be_a_string`);
+  }
+}
+
+async function parseJsonBody(request) {
+  try {
+    return await request.json();
+  } catch (error) {
+    throw new HttpError(400, "invalid_json_body");
+  }
+}
+
+async function requireAdmin(request, env) {
+  const expectedPasswordHashes = [env.POLICY_ADMIN_PASSWORD_SHA256, env.FAMILY_BROWSER_ADMIN_PASSWORD_SHA256]
+    .map((value) => String(value || "").trim().toLowerCase())
+    .filter(Boolean);
+  const expectedTokens = [env.POLICY_ADMIN_TOKEN, env.FAMILY_BROWSER_ADMIN_TOKEN]
+    .map((value) => String(value || "").trim())
+    .filter(Boolean);
+
+  if (!expectedPasswordHashes.length && !expectedTokens.length) {
+    throw new HttpError(500, "admin authentication is not configured.");
+  }
+
+  const providedPassword = request.headers.get("X-KKY-Admin-Password") || "";
+  if (providedPassword && expectedPasswordHashes.length) {
+    const providedPasswordHash = await sha256Hex(providedPassword);
+    if (expectedPasswordHashes.some((expected) => constantTimeEqual(providedPasswordHash, expected))) return;
+  }
+
+  const auth = request.headers.get("Authorization") || "";
+  const bearer = auth.toLowerCase().startsWith("bearer ") ? auth.slice(7).trim() : "";
+  const providedToken = request.headers.get("X-KKY-Admin-Token") || bearer;
+  if (providedToken && expectedTokens.some((expected) => constantTimeEqual(providedToken, expected))) return;
+  throw new HttpError(401, "unauthorized");
+}
+
+async function sha256Hex(text) {
+  const bytes = new TextEncoder().encode(String(text || ""));
+  const hash = await crypto.subtle.digest("SHA-256", bytes);
+  return Array.from(new Uint8Array(hash)).map((value) => value.toString(16).padStart(2, "0")).join("");
+}
+
+function constantTimeEqual(a, b) {
+  const left = String(a || "");
+  const right = String(b || "");
+  if (left.length !== right.length) return false;
+  let diff = 0;
+  for (let i = 0; i < left.length; i += 1) diff |= left.charCodeAt(i) ^ right.charCodeAt(i);
+  return diff === 0;
+}
+
+async function handleFamilyBrowserStatic(request, env, cors, pathname) {
+  if (request.method !== "GET" && request.method !== "HEAD") throw new HttpError(405, "method_not_allowed");
   const repoPath = resolveFamilyBrowserStaticPath(pathname);
   const content = request.method === "HEAD" ? "" : await readGitHubFile(env, repoPath);
   return new Response(content, {
@@ -140,18 +545,11 @@ async function handleFamilyBrowserStatic(request, env, cors, pathname) {
 }
 
 function resolveFamilyBrowserStaticPath(pathname) {
-  let value = String(pathname || "/family-browser")
-    .replace(/^\/+/, "")
-    .replace(/\/+$/, "");
-
-  if (value === "family-browser") {
-    value = "family-browser/index.html";
-  }
-
+  let value = String(pathname || "/family-browser").replace(/^\/+/, "").replace(/\/+$/, "");
+  if (value === "family-browser") value = "family-browser/index.html";
   if (!value.startsWith("family-browser/") || value.includes("..") || value.includes("//")) {
     throw new HttpError(400, "invalid_static_path");
   }
-
   return value;
 }
 
@@ -167,169 +565,28 @@ function contentTypeForPath(path) {
   return "application/octet-stream";
 }
 
-async function handleFamilyBrowser(request, env, cors, pathname, url) {
-  if (request.method === "GET") {
-    const path = resolveFamilyBrowserReadPath(pathname, url);
-    const content = await readGitHubFile(env, path);
-    return new Response(content, {
-      status: 200,
-      headers: noStoreHeaders(cors)
-    });
-  }
-
-  if (request.method === "POST" || request.method === "PUT") {
-    await requireAdminToken(request, env);
-    const payload = await parseJsonBody(request);
-    const path = normalizeFamilyBrowserRepoPath(payload.path || FAMILY_BROWSER_BOOTSTRAP_PATH);
-    const content = normalizeJsonContent(payload.content ?? payload.data ?? payload.json);
-    const result = await writeGitHubFile(env, path, content, payload.message);
-    return jsonResponse({ ok: true, path, commit: result.commit }, 200, cors);
-  }
-
-  throw new HttpError(405, "method_not_allowed");
-}
-
-function resolveFamilyBrowserReadPath(pathname, url) {
-  if (pathname === "/api/family-browser/bootstrap" || pathname === "/api/family-browser/bootstrap.json") {
-    return FAMILY_BROWSER_BOOTSTRAP_PATH;
-  }
-
-  if (pathname === "/api/family-browser/bootstrap-index" || pathname === "/api/family-browser/bootstrap-index.json") {
-    return FAMILY_BROWSER_INDEX_PATH;
-  }
-
-  if (pathname === "/api/family-browser/file") {
-    return normalizeFamilyBrowserRepoPath(url.searchParams.get("path") || FAMILY_BROWSER_BOOTSTRAP_PATH);
-  }
-
-  throw new HttpError(404, "family_browser_route_not_found");
-}
-
-async function parseJsonBody(request) {
-  try {
-    return await request.json();
-  } catch (error) {
-    throw new HttpError(400, "invalid_json_body");
-  }
-}
-
-function normalizeJsonContent(value) {
-  if (value === undefined || value === null) {
-    throw new HttpError(400, "content_required");
-  }
-
-  if (typeof value === "string") {
-    JSON.parse(value);
-    return value.replace(/\s*$/, "") + "\n";
-  }
-
-  return JSON.stringify(value, null, 2) + "\n";
-}
-
-function normalizeFamilyBrowserRepoPath(rawPath) {
-  let value = String(rawPath || "").trim().replace(/\\/g, "/").replace(/^\/+/, "");
-  if (!value) value = FAMILY_BROWSER_BOOTSTRAP_PATH;
-  if (!value.startsWith("family-browser/")) value = "family-browser/" + value;
-
-  if (!value.endsWith(".json")) {
-    throw new HttpError(400, "only_json_files_are_allowed");
-  }
-
-  if (value.includes("..") || value.includes("//")) {
-    throw new HttpError(400, "invalid_path");
-  }
-
-  return value;
-}
-
-async function requireAdminToken(request, env) {
-  const expectedToken = String(env.FAMILY_BROWSER_ADMIN_TOKEN || "").trim();
-  const expectedPasswordHash = String(env.FAMILY_BROWSER_ADMIN_PASSWORD_SHA256 || "").trim().toLowerCase();
-  if (!expectedToken && !expectedPasswordHash) {
-    throw new HttpError(500, "admin authentication is not configured.");
-  }
-
-  if (expectedPasswordHash) {
-    const providedPassword = request.headers.get("X-KKY-Admin-Password") || "";
-    if (providedPassword) {
-      const providedPasswordHash = await sha256Hex(providedPassword);
-      if (constantTimeEqual(providedPasswordHash, expectedPasswordHash)) {
-        return;
-      }
-    }
-
-    throw new HttpError(401, "unauthorized");
-  }
-
-  const auth = request.headers.get("Authorization") || "";
-  const bearer = auth.toLowerCase().startsWith("bearer ") ? auth.slice(7).trim() : "";
-  const providedToken = request.headers.get("X-KKY-Admin-Token") || bearer;
-
-  if (expectedToken && providedToken && constantTimeEqual(providedToken, expectedToken)) {
-    return;
-  }
-
-  throw new HttpError(401, "unauthorized");
-}
-
-async function sha256Hex(text) {
-  const bytes = new TextEncoder().encode(String(text || ""));
-  const hash = await crypto.subtle.digest("SHA-256", bytes);
-  return Array.from(new Uint8Array(hash))
-    .map((value) => value.toString(16).padStart(2, "0"))
-    .join("");
-}
-
-function constantTimeEqual(a, b) {
-  const left = String(a || "");
-  const right = String(b || "");
-  if (left.length !== right.length) return false;
-
-  let diff = 0;
-  for (let i = 0; i < left.length; i += 1) {
-    diff |= left.charCodeAt(i) ^ right.charCodeAt(i);
-  }
-
-  return diff === 0;
-}
-
 function githubConfig(env) {
   const owner = String(env.GITHUB_OWNER || "zerokky11").trim();
   const repo = String(env.GITHUB_REPO || "Release").trim();
   const branch = String(env.GITHUB_BRANCH || "main").trim();
   const token = String(env.GITHUB_TOKEN || "").trim();
-  if (!owner || !repo || !branch) {
-    throw new HttpError(500, "github_config_missing");
-  }
-
+  if (!owner || !repo || !branch) throw new HttpError(500, "github_config_missing");
   return { owner, repo, branch, token };
 }
 
 function githubHeaders(config, accept = "application/vnd.github+json") {
-  const headers = {
-    "Accept": accept,
-    "User-Agent": "kky-update-api"
-  };
-
-  if (config.token) {
-    headers.Authorization = "Bearer " + config.token;
-  }
-
+  const headers = { "Accept": accept, "User-Agent": "kky-update-api" };
+  if (config.token) headers.Authorization = "Bearer " + config.token;
   return headers;
 }
 
 function githubContentsUrl(config, path) {
-  return "https://api.github.com/repos/" +
-    encodeURIComponent(config.owner) + "/" +
-    encodeURIComponent(config.repo) + "/contents/" +
-    encodePath(path);
+  return "https://api.github.com/repos/" + encodeURIComponent(config.owner) + "/" +
+    encodeURIComponent(config.repo) + "/contents/" + encodePath(path);
 }
 
 function encodePath(path) {
-  return String(path || "")
-    .split("/")
-    .map((part) => encodeURIComponent(part))
-    .join("/");
+  return String(path || "").split("/").map((part) => encodeURIComponent(part)).join("/");
 }
 
 async function readGitHubFile(env, path) {
@@ -339,68 +596,7 @@ async function readGitHubFile(env, path) {
     headers: githubHeaders(config, "application/vnd.github.raw"),
     redirect: "follow"
   });
-
-  if (response.status === 404) {
-    throw new HttpError(404, "github_file_not_found");
-  }
-
-  if (!response.ok) {
-    throw new HttpError(response.status, "github_read_failed");
-  }
-
+  if (response.status === 404) throw new HttpError(404, "github_file_not_found");
+  if (!response.ok) throw new HttpError(response.status, "github_read_failed");
   return response.text();
-}
-
-async function writeGitHubFile(env, path, content, message) {
-  const config = githubConfig(env);
-  if (!config.token) {
-    throw new HttpError(500, "GITHUB_TOKEN is not configured.");
-  }
-
-  const target = githubContentsUrl(config, path);
-  const currentResponse = await fetch(target + "?ref=" + encodeURIComponent(config.branch), {
-    headers: githubHeaders(config)
-  });
-
-  let sha = "";
-  if (currentResponse.ok) {
-    const current = await currentResponse.json();
-    sha = current.sha || "";
-  } else if (currentResponse.status !== 404) {
-    throw new HttpError(currentResponse.status, "github_read_failed");
-  }
-
-  const body = {
-    message: String(message || "Update Family Browser config"),
-    content: base64EncodeUtf8(content),
-    branch: config.branch
-  };
-  if (sha) body.sha = sha;
-
-  const updateResponse = await fetch(target, {
-    method: "PUT",
-    headers: {
-      ...githubHeaders(config),
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(body)
-  });
-
-  if (!updateResponse.ok) {
-    throw new HttpError(updateResponse.status, "github_write_failed");
-  }
-
-  return updateResponse.json();
-}
-
-function base64EncodeUtf8(text) {
-  const bytes = new TextEncoder().encode(text);
-  let binary = "";
-  const chunkSize = 0x8000;
-  for (let i = 0; i < bytes.length; i += chunkSize) {
-    const chunk = bytes.subarray(i, i + chunkSize);
-    binary += String.fromCharCode(...chunk);
-  }
-
-  return btoa(binary);
 }

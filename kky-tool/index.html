@@ -130,28 +130,9 @@
         </div>
 
         <aside class="panel admin-publish-panel">
-          <span class="eyebrow">Publish</span>
-          <h2>GitHub Pages 저장</h2>
-          <p>두 설정은 정해진 공개 경로에 따로 저장됩니다. 토큰은 이 브라우저 화면에서만 사용합니다.</p>
-
-          <div class="form-grid admin-publish-fields">
-            <div class="field">
-              <label for="owner">GitHub Owner</label>
-              <input id="owner" value="zerokky11">
-            </div>
-            <div class="field">
-              <label for="repo">Repository</label>
-              <input id="repo" value="Release">
-            </div>
-            <div class="field">
-              <label for="branch">Branch</label>
-              <input id="branch" value="main">
-            </div>
-          </div>
-          <div class="field">
-            <label for="token">GitHub token</label>
-            <input id="token" type="password" autocomplete="off" placeholder="Contents read/write token">
-          </div>
+          <span class="eyebrow">Live settings</span>
+          <h2>실시간 정책 저장</h2>
+          <p>관리자 비밀번호로 연 이 화면에서 바로 저장합니다. GitHub 저장소나 토큰을 입력할 필요가 없으며, 저장 후 공개 주소를 다시 읽어 반영 여부를 확인합니다.</p>
 
           <div class="admin-target-list" aria-label="고정 저장 경로">
             <div><span>사용자 정책</span><code>kky-tool/user-access.json</code></div>
@@ -232,6 +213,8 @@
     const FAMILY_BOOTSTRAP_PATH = "family-browser/bootstrap.json";
     const $ = (id) => document.getElementById(id);
     let preservedFamilyBootstrap = {};
+    let currentAdminPassword = "";
+    const configEtags = new Map();
 
     function setStatus(id, text, cls = "") {
       const el = $(id);
@@ -599,6 +582,7 @@
       try {
         const response = await fetch("/kky-tool/user-access.json", { cache: "no-store" });
         if (!response.ok) throw new Error("HTTP " + response.status);
+        rememberEtag(POLICY_PATH, response);
         fillPolicy(await response.json());
         setStatus("policyStatus", "현재 사용자 정책을 불러왔습니다.", "good");
       } catch (err) {
@@ -612,6 +596,7 @@
       try {
         const response = await fetch("/family-browser/bootstrap.json", { cache: "no-store" });
         if (!response.ok) throw new Error("HTTP " + response.status);
+        rememberEtag(FAMILY_BOOTSTRAP_PATH, response);
         fillFamilyBootstrap(await response.json());
         setStatus("familyStatus", "현재 Family Browser 설정을 불러왔습니다.", "good");
       } catch (err) {
@@ -620,69 +605,70 @@
       }
     }
 
-    function encodePath(path) {
-      return String(path || "").split("/").map(encodeURIComponent).join("/");
+    function rememberEtag(path, response) {
+      const etag = response.headers.get("ETag");
+      if (etag) configEtags.set(path, etag);
+      else configEtags.delete(path);
     }
 
-    function base64Utf8(text) {
-      return btoa(unescape(encodeURIComponent(text)));
-    }
-
-    function githubSettings() {
-      const settings = {
-        owner: $("owner").value.trim(),
-        repo: $("repo").value.trim(),
-        branch: $("branch").value.trim() || "main",
-        token: $("token").value.trim()
-      };
-      if (!settings.owner || !settings.repo || !settings.token) {
-        throw new Error("Owner, repository, GitHub token을 모두 입력해 주세요.");
+    async function saveHostedJson(path, json) {
+      if (!currentAdminPassword) {
+        throw new Error("관리자 인증 정보가 없습니다. 페이지를 다시 열어 비밀번호를 입력해 주세요.");
       }
-      return settings;
-    }
 
-    async function saveGitHubFile(path, json, message) {
-      const settings = githubSettings();
-      const apiPath = `https://api.github.com/repos/${encodeURIComponent(settings.owner)}/${encodeURIComponent(settings.repo)}/contents/${encodePath(path)}`;
       const headers = {
-        "Accept": "application/vnd.github+json",
-        "Authorization": "Bearer " + settings.token,
-        "X-GitHub-Api-Version": "2022-11-28"
+        "Content-Type": "application/json; charset=utf-8",
+        "X-KKY-Admin-Password": currentAdminPassword
       };
+      const etag = configEtags.get(path);
+      if (etag) headers["If-Match"] = etag;
 
-      const currentResponse = await fetch(apiPath + "?ref=" + encodeURIComponent(settings.branch), { headers });
-      let current = null;
-      if (currentResponse.ok) current = await currentResponse.json();
-      else if (currentResponse.status !== 404) throw new Error("GitHub read failed: " + currentResponse.status);
-
-      const body = {
-        message,
-        content: base64Utf8(json + "\n"),
-        branch: settings.branch
-      };
-      if (current && current.sha) body.sha = current.sha;
-
-      const saveResponse = await fetch(apiPath, {
+      const saveResponse = await fetch("/" + path, {
         method: "PUT",
-        headers: Object.assign({ "Content-Type": "application/json" }, headers),
-        body: JSON.stringify(body)
+        headers,
+        cache: "no-store",
+        body: json + "\n"
       });
-      if (!saveResponse.ok) throw new Error("GitHub save failed: " + saveResponse.status + " " + await saveResponse.text());
+      if (saveResponse.status === 401) {
+        currentAdminPassword = "";
+        throw new Error("관리자 인증에 실패했습니다. 페이지를 다시 열어 비밀번호를 확인해 주세요.");
+      }
+      if (saveResponse.status === 412) {
+        throw new Error("다른 화면에서 설정이 먼저 변경되었습니다. 현재 값 불러오기를 누른 뒤 다시 저장해 주세요.");
+      }
+      if (!saveResponse.ok) {
+        let detail = "HTTP " + saveResponse.status;
+        try {
+          const errorBody = await saveResponse.json();
+          if (errorBody.message) detail += " " + errorBody.message;
+        } catch (err) {
+          // Keep the HTTP status when the server did not return JSON.
+        }
+        throw new Error("실시간 저장 실패: " + detail);
+      }
+      rememberEtag(path, saveResponse);
+
+      const verifyResponse = await fetch("/" + path, { cache: "no-store" });
+      if (!verifyResponse.ok) throw new Error("저장 후 확인 실패: HTTP " + verifyResponse.status);
+      rememberEtag(path, verifyResponse);
+      const expected = JSON.stringify(JSON.parse(json));
+      const actual = JSON.stringify(await verifyResponse.json());
+      if (actual !== expected) throw new Error("저장된 값이 입력한 내용과 다릅니다. 현재 값을 다시 불러와 확인해 주세요.");
     }
 
     async function savePolicy() {
       setStatus("policyStatus", "사용자 정책을 저장하는 중...", "");
       const json = buildPolicy();
-      await saveGitHubFile(POLICY_PATH, json, "Update KKY Tool user access policy");
-      setStatus("policyStatus", "사용자 정책을 저장했습니다.", "good");
+      await saveHostedJson(POLICY_PATH, json);
+      setStatus("policyStatus", "사용자 정책을 저장하고 공개 주소 반영까지 확인했습니다.", "good");
     }
 
     async function saveFamily() {
       setStatus("familyStatus", "Family Browser 경로를 저장하는 중...", "");
       const json = buildFamily();
-      await saveGitHubFile(FAMILY_BOOTSTRAP_PATH, json, "Update Family Browser management folder settings");
+      await saveHostedJson(FAMILY_BOOTSTRAP_PATH, json);
       preservedFamilyBootstrap = JSON.parse(json);
-      setStatus("familyStatus", "Family Browser 경로를 저장했습니다.", "good");
+      setStatus("familyStatus", "Family Browser 경로를 저장하고 공개 주소 반영까지 확인했습니다.", "good");
     }
 
     async function copyJson(builder, statusId) {
@@ -711,10 +697,13 @@
 
     $("unlock").addEventListener("click", async () => {
       try {
-        if (await sha256($("password").value || "") !== PASSWORD_SHA256) {
+        const password = $("password").value || "";
+        if (await sha256(password) !== PASSWORD_SHA256) {
           setStatus("lockStatus", "비밀번호가 맞지 않습니다.", "bad");
           return;
         }
+        currentAdminPassword = password;
+        $("password").value = "";
         $("lock").classList.add("hidden");
         $("editor").classList.remove("hidden");
         await Promise.all([reloadPolicy(), reloadFamily()]);
@@ -725,6 +714,9 @@
 
     $("password").addEventListener("keydown", (event) => {
       if (event.key === "Enter") $("unlock").click();
+    });
+    window.addEventListener("pagehide", () => {
+      currentAdminPassword = "";
     });
     $("addFamilyPath").addEventListener("click", () => {
       createFamilyPathRow();
