@@ -191,6 +191,7 @@ function policy(overrides = {}) {
   return {
     enabled: true,
     allowedProfileKeywords: ["KCIM"],
+    blockedProfileKeywords: [],
     allowedUsers: [],
     blockMessage: "외부 사용자는 사용할 수 없습니다.",
     ...overrides
@@ -304,7 +305,10 @@ test("authenticated write updates current config and archives previous value", a
   const env = await testEnv();
   const current = await request(env, "/" + POLICY_PATH);
   const etag = current.headers.get("ETag");
-  const updated = policy({ allowedUsers: ["TEST\\user"] });
+  const updated = policy({
+    blockedProfileKeywords: ["외부업체", "TEST PROFILE"],
+    allowedUsers: ["TEST\\user"]
+  });
 
   const response = await request(env, "/" + POLICY_PATH, {
     method: "PUT",
@@ -320,6 +324,21 @@ test("authenticated write updates current config and archives previous value", a
   assert.equal((await response.json()).changed, true);
   assert.deepEqual(JSON.parse(env.CONFIG_DB.getConfig(POLICY_PATH).content), updated);
   assert.equal(env.CONFIG_DB.historyFor(POLICY_PATH).length, 1);
+});
+
+test("policy rejects a malformed blocked profile keyword list", async () => {
+  const env = await testEnv();
+  const response = await request(env, "/" + POLICY_PATH, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      "X-KKY-Admin-Password": ADMIN_PASSWORD
+    },
+    body: normalized(policy({ blockedProfileKeywords: "외부업체" }))
+  });
+
+  assert.equal(response.status, 400);
+  assert.equal((await response.json()).message, "blockedProfileKeywords_must_be_a_string_array");
 });
 
 test("stale ETag cannot overwrite a newer policy", async () => {

@@ -599,6 +599,7 @@ function validateManagedConfig(path, content) {
 function validateKkyPolicy(value) {
   if (typeof value.enabled !== "boolean") throw new HttpError(400, "enabled_must_be_boolean");
   validateStringArray(value.allowedProfileKeywords, "allowedProfileKeywords", 500);
+  validateStringArray(value.blockedProfileKeywords, "blockedProfileKeywords", 500);
   validateStringArray(value.allowedUsers, "allowedUsers", 5000);
   validateOptionalString(value.blockMessage, "blockMessage", 4000);
   validateOptionalString(value.updatedAtUtc, "updatedAtUtc", 100);
