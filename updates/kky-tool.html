@@ -47,7 +47,7 @@
           <div class="release-note__version"><span class="badge ok">현재 배포</span><strong>3.0.15</strong><span class="release-note__date">2026.09.02</span></div>
           <div class="release-note__content">
             <h3>Foreline 모델링·Level 변경과 Nozzle 비교 보강</h3>
-            <p class="release-note__summary">링크 CAD 원형을 Revit 패밀리로 배치하는 모델링 기능과 Excel 지시로 여러 RVT의 Level을 변경하는 대량 작업 기능을 추가하고, KTA/RVT Nozzle 비교와 여러 파일 작업 진행 표시, 관리자 실행 현황을 보완한 버전입니다.</p>
+            <p class="release-note__summary">링크 CAD 원형을 Revit 패밀리로 배치하는 모델링 기능과 Excel 지시로 여러 RVT의 Level을 변경하는 대량 작업 기능을 추가하고, KTA/RVT Nozzle 비교와 여러 파일 작업 진행 표시를 보완한 버전입니다.</p>
             <ul class="release-note__list">
               <li><b>CAD link 기반 Foreline 모델링</b>을 추가했습니다. 활성 프로젝트의 링크 CAD에서 레이어별 수평 원형을 스캔하고, 중심 좌표·직경·검출 품질을 확인한 후보만 선택한 Level에 OneLevelBased 비호스트 패밀리로 배치합니다.</li>
               <li>Foreline 배치 시 링크별 Base Level·Height, 패밀리 타입과 Diameter·Height·원본 CAD 레이어 파라미터를 매핑할 수 있습니다. 원 검출 허용오차와 직경 범위를 조정하며, 동일 출처 인스턴스는 기본적으로 건너뜁니다.</li>
@@ -55,7 +55,6 @@
               <li>Level 변경 결과는 RVT마다 별도 Excel로 저장합니다. 변경 전·후 표고와 Pin, 수정·삭제·추가·연결 변화, 영향 객체의 위치·Level·Host·연결, Revit 경고·오류와 저장·중앙 동기화 상태를 함께 기록합니다.</li>
               <li><b>Nozzle Code, KTA, 모델링 검토</b>는 KTA와 RVT 결과를 단순 존재 여부가 아니라 발생 행 수를 세는 다중집합으로 비교합니다. 수량 불일치, 한쪽 누락, 양쪽에서 유일한 Nozzle Code의 속성 차이, 동일 객체·객체 간·파일 간 중복과 원본 위치를 구분해 남깁니다.</li>
               <li>조건별 추출, 파라미터 수정, 프로젝트 파라미터 일괄 추가, Level 변경과 Nozzle 추출 등 여러 RVT 작업은 전체 파일 수와 현재 파일·처리 단계를 실행 중 바로 갱신합니다.</li>
-              <li>관리자 실행 현황에는 Autodesk/Revit 프로필, Revit·KKY Tool 버전과 허용/차단 상태를 기록합니다. 실행 기능을 막지 않도록 비동기로 전송하며 장치 정보는 해시로 저장합니다.</li>
               <li>Revit <code>2019</code>, <code>2021</code>, <code>2023</code>, <code>2025</code>, <code>2027</code> 지원을 유지합니다.</li>
             </ul>
           </div>
