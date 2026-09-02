@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-08-19T09:42:17.221Z",
+  "generatedAt": "2026-09-02T00:51:18.583Z",
   "viewport": "1440x760",
-  "outputCount": 28,
-  "inputCount": 9,
-  "count": 37,
+  "outputCount": 29,
+  "inputCount": 10,
+  "count": 39,
   "results": [
     {
       "featureId": "connector",
@@ -156,6 +156,12 @@
       "bytes": 36780
     },
     {
+      "featureId": "levelchange",
+      "kind": "result",
+      "file": "Sever/assets/manual-excel/levelchange-result.png",
+      "bytes": 36934
+    },
+    {
       "featureId": "lateralnozzle",
       "kind": "result",
       "file": "Sever/assets/manual-excel/lateralnozzle-result.png",
@@ -204,10 +210,16 @@
       "bytes": 38694
     },
     {
+      "featureId": "levelchange",
+      "kind": "input",
+      "file": "Sever/assets/manual-excel/levelchange-input.png",
+      "bytes": 35868
+    },
+    {
       "featureId": "lateralnozzle",
       "kind": "input",
       "file": "Sever/assets/manual-excel/lateralnozzle-input.png",
-      "bytes": 27873
+      "bytes": 28349
     },
     {
       "featureId": "guid",

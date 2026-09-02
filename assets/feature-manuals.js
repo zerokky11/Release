@@ -1,5 +1,5 @@
 (function () {
-  const staticAssetVersion = '3.0-20260826.1';
+  const staticAssetVersion = '3.0-20260902.1';
   const sharedParamNote = '공유파라미터 목록은 Revit 관리 > 공유 매개변수에 연결된 TXT를 기준으로 읽습니다. 홈페이지/Hub에서 TXT 파일을 별도로 선택하는 흐름은 없습니다.';
   const multiExportNote = '여러 RVT는 실행 전에 저장 방식을 정합니다. 실행 후 직접 저장은 결과를 화면에 남겨 사용자가 내보내고, 기능별 통합 Excel 순차 저장은 기능마다 통합 파일 하나를 만들며, RVT별 Excel 즉시 저장은 문서가 끝날 때마다 파일을 저장하고 메모리에서 결과를 해제합니다. 파일별 저장명은 {RVT파일명}_{기능명}_{오류건수00EA}.xlsx 형식이며 같은 이름이 있으면 뒤에 (2), (3)이 붙습니다.';
 
@@ -917,37 +917,165 @@
       ]
     },
     {
-      id: 'lateralnozzle',
-      group: '유틸리티',
-      title: '노즐코드 KTA 단일화',
+      id: 'cadcircle',
+      group: '모델링',
+      title: 'CAD link 기반 Foreline 모델링',
       badge: '별도 화면',
-      summary: '여러 KTA 엑셀에서 UT명, 배관No, Nozzle Code, No 정보를 찾아 하나의 양식으로 정리합니다.',
-      target: '엑셀 파일 등록 후 실행하는 별도 화면 기능입니다.',
+      summary: '활성 프로젝트에 연결된 CAD 링크의 수평 원형 geometry를 레이어별로 찾고, 검토한 후보만 선택한 레벨에 Foreline 패밀리로 배치합니다.',
+      target: '현재 활성 호스트 프로젝트의 링크 CAD와 로드된 OneLevelBased 비호스트 패밀리 타입입니다. 가져오기 CAD와 Revit 링크는 대상이 아닙니다.',
+      userGuide: 'CAD link 기반 Foreline 모델링은 CAD 링크에 그려진 원을 Revit 패밀리 인스턴스로 바꾸는 기능입니다. CAD 링크와 레이어, 배치 레벨·높이, 사용할 패밀리와 파라미터를 먼저 정한 뒤 원형 스캔 결과를 확인하고 필요한 후보만 선택해 배치합니다. 스캔과 실제 배치는 분리되어 있으므로 후보의 중심 좌표·직경·검출 품질을 검토하기 전에는 프로젝트가 변경되지 않습니다.',
+      setupLead: '기능을 열면 현재 활성 프로젝트의 링크 CAD, Level과 배치 가능한 패밀리 타입을 자동으로 읽는다. 링크별 배치 기준과 패밀리 파라미터 매핑을 먼저 끝낸 뒤 허용오차를 조정한다.',
       setup: [
-        '검토할 xlsx 또는 xls 파일을 등록합니다.',
-        '파일 목록에서 실행 대상 파일을 선택합니다.'
+        '사용할 링크 CAD와 레이어를 선택하고 링크별 Base Level과 Height를 입력합니다.',
+        '배치할 OneLevelBased 비호스트 패밀리와 타입을 선택합니다.',
+        'Diameter, Height와 CAD 레이어명을 기록할 쓰기 가능한 인스턴스 파라미터를 각각 매핑합니다.',
+        '필요한 경우 원 검출 허용오차와 직경 범위를 조정합니다.'
+      ],
+      settingDetails: [
+        {
+          label: 'CAD 링크 선택',
+          description: '현재 활성 호스트 프로젝트에 연결된 CAD 링크 인스턴스만 표시합니다. 같은 CAD 파일이 여러 번 배치되었으면 인스턴스별로 따로 선택하고 설정합니다.',
+          example: '설비 평면 CAD가 1층과 2층에 각각 링크되어 있으면 두 링크를 모두 켜고 각 링크의 Base Level을 다르게 지정합니다.'
+        },
+        {
+          label: '검출 레이어',
+          description: '선택한 CAD 링크에서 원형을 찾을 레이어만 체크합니다. 레이어를 좁히면 문자, 치수나 다른 분야 선이 후보로 섞이는 것을 줄일 수 있습니다.',
+          example: 'Foreline 원이 FP_FORELINE 레이어에 있다면 해당 레이어만 선택하고 나머지는 해제합니다.'
+        },
+        {
+          label: 'Base Level과 Height',
+          description: 'Base Level은 새 패밀리가 속할 Revit Level이고 Height는 그 Level 위의 배치 높이(mm)입니다. CAD의 원본 Z값을 그대로 쓰지 않고 선택한 Level의 ProjectElevation과 Height를 기준으로 배치합니다.',
+          example: 'Level 2의 2,700 mm 높이에 배치하려면 Base Level=Level 2, Height=2700으로 입력합니다.'
+        },
+        {
+          label: '대상 패밀리와 타입',
+          description: '현재 프로젝트에 로드된 OneLevelBased 비호스트 패밀리만 사용할 수 있습니다. 면·벽·천장 호스트가 필요한 패밀리나 다른 배치 형식은 목록에서 제외됩니다.',
+          example: 'Foreline 패밀리의 FL-ROUND 타입을 선택하면 선택한 모든 후보가 이 타입의 인스턴스로 생성됩니다.'
+        },
+        {
+          label: 'Diameter와 Height 파라미터',
+          description: '검출한 원의 직경과 링크별 Height를 기록할 서로 다른 쓰기 가능한 인스턴스 Length 파라미터를 선택합니다. 읽기 전용, 타입 또는 수식 파라미터는 사용할 수 없습니다.',
+          example: 'Diameter에는 KKY_Diameter, Height에는 KKY_Height를 연결합니다.'
+        },
+        {
+          label: 'CAD 레이어 파라미터',
+          description: '원형이 발견된 CAD 레이어명을 기록할 쓰기 가능한 인스턴스 Text 파라미터를 선택합니다.',
+          example: 'KKY_SourceLayer를 선택하면 새 인스턴스에 FP_FORELINE 같은 원본 레이어명이 저장됩니다.'
+        },
+        {
+          label: '연결·평면·원형도 허용오차',
+          description: '끝점 연결은 분리된 선·호의 폐합 판정, 평면 이탈은 같은 수평면 판정, 절대·상대 원형도는 점들이 하나의 원에 맞는 정도를 결정합니다. 값을 크게 하면 후보는 늘지만 잘못된 도형이 포함될 수 있습니다.',
+          example: '기본 1 mm로 먼저 스캔하고 CAD 선 끝이 조금 벌어진 경우에만 끝점 연결 허용오차를 2 mm로 높입니다.'
+        },
+        {
+          label: '각도·직경·세그먼트 범위',
+          description: '수평 각도, 최소·최대 직경, 최소 직선 세그먼트, 최소 원주 범위와 최대 각도 공백으로 원 후보의 방향·크기·폐합 품질을 제한합니다. 최대 직경을 비우면 상한을 적용하지 않습니다.',
+          example: '직경 100~600 mm의 16각형 이상 원만 찾으려면 최소 100, 최대 600, 최소 직선 세그먼트 16을 입력합니다.'
+        },
+        {
+          label: '중복 중심·직경 허용오차',
+          description: '같은 링크·레이어에서 중심과 직경이 허용 범위 안에 겹치는 후보를 하나로 판정하는 기준입니다. 서로 다른 크기의 동심원은 직경 차이가 기준보다 크면 별도 후보로 남습니다.',
+          example: '중심 1 mm, 직경 1 mm이면 CAD 중복선 때문에 거의 같은 원이 두 번 검출된 경우 한 후보로 정리합니다.'
+        },
+        {
+          label: '기존 배치 인스턴스 처리',
+          description: '동일 출처는 건너뛰기를 선택하면 이전 실행에서 기록한 CAD 링크·레이어·중심·직경이 같은 인스턴스를 다시 만들지 않습니다. 항상 새로 생성은 확인 없이 새 인스턴스를 추가하므로 재실행 시 중복될 수 있습니다.',
+          example: '일반 재실행은 동일 출처는 건너뛰기를 사용하고, 같은 위치에 의도적으로 다른 인스턴스를 겹쳐야 할 때만 항상 새로 생성을 선택합니다.'
+        }
       ],
       run: [
-        '추출 시작을 누르면 각 파일의 모든 시트를 검사합니다.',
-        '처리 완료 후 결과 엑셀을 저장합니다.'
+        '활성 프로젝트에서 사용할 링크 CAD를 켜고 링크별 레이어, Base Level과 Height를 지정합니다.',
+        '패밀리·타입과 Diameter, Height, CAD 레이어 파라미터 매핑을 확인합니다.',
+        '원형 스캔을 눌러 링크 geometry를 읽습니다. 스캔은 프로젝트를 수정하지 않습니다.',
+        '검출 후보 표에서 사용 가능·제외·중복 수, 링크/레이어, X/Y/Z, Diameter, 표현 방식과 검출 품질을 확인합니다.',
+        '검색과 링크·레이어·상태 필터를 사용해 실제 배치할 후보만 체크합니다.',
+        '오른쪽 검증 상태가 배치 준비 완료인지 확인하고 기존 인스턴스 처리 방식을 선택한 뒤 선택 후보 배치를 누릅니다.',
+        '결과에서 생성, 건너뜀과 실패 항목을 확인합니다. 설정이나 허용오차를 바꾸면 다시 스캔해야 합니다.'
       ],
       logic: [
-        '각 시트에서 UT명, 배관No, Nozzle Code, No 헤더 블록을 찾습니다.',
-        'Nozzle Code와 No 값을 이어 하나의 결과 값으로 정리합니다.',
-        'Nozzle Code는 No 값을 _로 이어 만들고, 최종 Nozzle Code는 _000 형태의 숫자 3자리로 끝나는지 확인합니다.',
-        '형식이 맞지 않으면 비교 형식 불일치로 표시합니다.'
+        '활성 UIDocument의 호스트 프로젝트에서 IsLinked=true인 ImportInstance만 수집합니다. CAD 가져오기와 Revit 링크 문서는 읽지 않습니다.',
+        'CAD 링크의 전체 Transform과 중첩 GeometryInstance Transform을 적용해 호스트 좌표의 레이어별 Arc, Line, PolyLine과 지원 Curve를 수집합니다.',
+        '완전한 Arc는 중심과 반지름을 직접 사용하고, 분할 Arc·Line·PolyLine은 끝점 graph와 폐합 블록을 만든 뒤 평면과 원을 적합합니다. 열린 선을 임의로 닫지는 않습니다.',
+        '평면성, 수평 각도, 원형도, 최소 원주 범위, 최대 각도 공백, 자기 교차와 직경 범위를 통과한 후보만 선택 가능 상태가 됩니다.',
+        '같은 링크·레이어에서 중심과 직경이 중복 허용오차 안에 있는 후보는 표현 품질 우선순위에 따라 하나만 남깁니다.',
+        '배치점 X/Y는 CAD 링크를 변환한 원 중심을 사용하고 Z는 CAD Z가 아니라 선택한 Level.ProjectElevation을 사용합니다. 인스턴스의 Level offset은 0으로 맞춥니다.',
+        '새 FamilyInstance를 만든 뒤 선택한 인스턴스 Length 파라미터에 직경과 높이를, Text 파라미터에 CAD 레이어명을 기록합니다.',
+        '동일 출처 건너뛰기는 이전 배치 인스턴스에 저장된 링크·레이어·중심·직경 메타데이터를 기준으로 판단합니다. 각 후보 실패는 해당 SubTransaction만 되돌리고 다음 후보를 계속 처리합니다.'
       ],
       result: [
-        '처리 파일 수, 추출 건수, 비교 건수가 표시됩니다.',
-        '엑셀에는 정리된 KTA 결과와 형식 불일치 항목이 저장됩니다.'
+        '스캔 요약에는 링크 수, 레이어 수, 전체 후보, 사용 가능, 제외와 중복 후보 수가 표시됩니다.',
+        '후보 표에서 중심 좌표, 직경, 원 표현 방식과 제외 사유를 확인할 수 있습니다.',
+        '배치 결과는 생성, 갱신, 건너뜀, 실패를 구분하며 실패 항목에는 후보와 원인이 표시됩니다.',
+        '이 기능은 결과 Excel을 생성하지 않습니다. 배치 결과는 현재 화면에서 확인하고 필요하면 Revit 모델에서 생성 인스턴스를 검토합니다.'
+      ],
+      export: {
+        available: false,
+        title: 'Excel 추출',
+        note: 'CAD 원형 후보와 배치 결과는 화면에서 검토하며 별도 Excel 파일을 만들지 않습니다.'
+      },
+      excelOutputVisuals: false,
+      notes: [
+        '실제 작업 전에 작은 레이어 범위로 먼저 스캔해 검출 허용오차가 CAD 작성 상태에 맞는지 확인합니다.',
+        '항상 새로 생성을 선택한 상태로 같은 후보를 반복 실행하면 같은 위치에 인스턴스가 중복될 수 있습니다.',
+        'Diameter와 Height는 서로 다른 쓰기 가능한 인스턴스 Length 파라미터여야 하며 CAD 레이어는 Text 파라미터여야 합니다.'
+      ]
+    },
+    {
+      id: 'lateralnozzle',
+      group: '유틸리티',
+      title: 'Nozzle Code, KTA, 모델링 검토',
+      badge: '별도 화면',
+      summary: 'KTA 엑셀 단일화, 여러 RVT의 Nozzle 정보 추출, 두 결과의 수량·중복·누락·속성·원본 위치 비교를 한 화면에서 수행합니다.',
+      target: 'KTA 단일화, RVT Nozzle 정보 추출, KTA ↔ RVT 비교의 세 탭으로 구성된 기능입니다.',
+      setup: [
+        'KTA 단일화, RVT Nozzle 정보 추출 또는 KTA ↔ RVT 비교 탭을 선택합니다.',
+        'KTA 탭은 xlsx/xls를, RVT 탭은 하나 이상의 rvt 파일을 등록합니다.',
+        '비교 탭에서는 KTA와 RVT 각각 같은 실행 세션의 최근 결과 또는 각 탭에서 저장한 결과 Excel을 선택합니다. 원본 KTA 작업표나 임의 Excel이 아니라 UTILITY, LATERAL NO, Nozzle Code 열이 있는 표준 결과를 사용합니다.',
+        'RVT 탭에서는 Utility, Lateral, Nozzle Code 매핑 파라미터명을 입력합니다. Nozzle Code 매핑은 최대 20개입니다.',
+        'NOZZLE VALVE 표기가 없는 파이프 피팅·파이프 악세사리 예외 객체를 찾으려면 추가 키워드를 한 줄에 하나씩 입력합니다. 구분자 없는 키워드는 대소문자를 구분하지 않고 Family 또는 Type 이름 중 하나에 부분 포함되면 후보가 됩니다. familyKeyword::typeKeyword 형식은 Family와 Type에 각 키워드가 모두 부분 포함되어야 하며, 여러 줄은 OR로 판정합니다.'
+      ],
+      run: [
+        'KTA 탭의 추출 시작은 각 파일의 모든 시트에서 헤더 블록과 데이터 묶음을 검사합니다.',
+        'RVT 탭은 인스턴스 또는 타입의 NOZZLE VALVE 값이 NOZZLE인 객체를 기본 대상으로 포함합니다. 키워드는 추가 후보만 수집하며, 후보의 Nozzle Code 매핑 인스턴스 값이 하나 이상 비어 있지 않으면 본 결과에 포함하고 모두 비어 있으면 추가 노즐 검토 후보로 분리합니다.',
+        '비교 탭에서 양쪽 소스를 고른 뒤 비교 시작을 누르면 완전 일치, 수량 불일치, KTA만, RVT만, 속성 불일치, 중복과 원본 위치를 함께 계산합니다.',
+        '처리 완료 후 각 추출 결과 또는 비교 결과를 Excel로 저장합니다. RVT의 배관 직접 연결 여부와 연결 확인 필요 사유는 포함 필터가 아닌 진단 정보입니다.'
+      ],
+      logic: [
+        'KTA는 배관No를 데이터 묶음의 시작으로 보고 UT명, Nozzle Code, No를 같은 묶음으로 추적합니다.',
+        '새 KTA 추출결과는 기존 표시 열 UTILITY, LATERAL NO, Nozzle Code, 비고를 유지하고 Source Excel Path, Source Excel File, Source Sheet, Source Row, Source Cell Range, Original Nozzle Code, Original No를 숨김 출처 열로 저장합니다.',
+        'RVT 출력값은 인스턴스에 해당 파라미터가 있으면 그 값을 사용하고, 인스턴스에 이름 자체가 없을 때만 타입에서 찾습니다. 단, 키워드 후보를 본 결과에 포함하는 근거는 Nozzle Code 매핑의 비어 있지 않은 인스턴스 값만 인정하며 타입 값은 혼용 인스턴스를 증명하지 못합니다.',
+        '추가 키워드는 파이프 피팅·파이프 악세사리 범위 안에서 적용합니다. 구분자 없는 키워드는 대소문자를 무시하고 Family 또는 Type 이름의 부분 문자열을 검사합니다. familyKeyword::typeKeyword는 Family와 Type 양쪽의 부분 문자열이 모두 일치해야 하며, 여러 줄 중 하나만 일치해도 후보로 수집합니다.',
+        '키워드 일치는 후보 수집 조건일 뿐입니다. NOZZLE VALVE=NOZZLE인 기본 대상은 그대로 본 결과에 포함하고, 키워드 후보는 Nozzle Code 매핑 인스턴스 값이 하나 이상 있으면 본 결과, 모두 비어 있으면 추가 노즐 검토 후보 시트에 기록합니다.',
+        '배관·파이프 피팅·파이프 악세사리와의 직접 물리 연결은 직접 연결로 기록하고, 미연결·커넥터 없음·허용 대상 외 연결·Connector API 확인 실패는 연결 확인 필요로 묶어 사유를 남깁니다. 어느 상태도 포함·제외 필터로 사용하지 않습니다.',
+        '기본 대상은 Utility, Lateral 또는 Nozzle Code가 비어 있어도 제외하지 않고 누락 진단으로 남깁니다. 키워드 후보의 Nozzle Code 인스턴스 값 전체 누락도 버리지 않고 추가 노즐 검토 후보로 남깁니다.',
+        '비교키는 UTILITY + LATERAL NO + Nozzle Code입니다. 각 값은 유니코드 조합, 앞뒤·연속 공백과 대소문자만 정규화하며 하이픈, 언더스코어와 선행 0은 서로 다른 값으로 보존합니다.',
+        '비교는 키의 존재 여부만 보는 집합 비교가 아니라 발생 행을 모두 세는 다중집합 비교입니다. 같은 키의 KTA 수량과 RVT 수량 중 작은 값을 일치 수량으로 잡고, 양쪽 수량이 같으면 일치, 다르면 수량 불일치, 한쪽에만 있으면 KTA만 또는 RVT만으로 판정합니다.',
+        '동일 Nozzle Code가 완전한 KTA와 RVT 결과에서 각각 정확히 한 번만 나타나고 정확 비교키는 서로 다를 때, UTILITY 또는 LATERAL NO 차이를 속성 불일치로 연결합니다. 중복 코드처럼 짝이 모호한 경우에는 속성 불일치로 추정하지 않습니다.',
+        '추가 노즐 검토 후보는 확정 RVT 수량과 일치·누락 판정에서 제외합니다. 대신 후보의 유효 매핑값을 KTA의 정확 키, 동일 Nozzle Code, 동일 UTILITY·LATERAL 배관 순서로 교차 진단해 입력 진단에 남깁니다.',
+        'KTA 중복은 같은 비교키가 두 행 이상인 경우입니다. RVT 중복은 같은 Source RVT Path 또는 File과 ElementId의 여러 매핑행인 동일 객체 매핑 중복, 서로 다른 ElementId의 객체 간 중복, 서로 다른 RVT의 파일 간 중복으로 원인을 나누며 식별 정보가 부족하면 원인 식별 불가로 남깁니다.',
+        'UTILITY, LATERAL NO, Nozzle Code 중 하나라도 비어 있는 행은 비교키 수량에서 제외하고 비교 불가 및 입력 진단으로 남깁니다.',
+        'RVT 결과는 Utility를 최우선으로 묶고, Lateral 그룹 대표 X 오름차순, 그룹 내부 Y 내림차순과 X 오름차순으로 정렬합니다.',
+        '본 결과에서 한 객체의 Nozzle Code 매핑 파라미터 여러 개에 값이 있으면 입력한 매핑 순서대로 각각 한 행을 만듭니다. 기본 대상의 값이 모두 비어 있으면 누락 진단 행 하나를 남기고, 키워드 후보의 값이 모두 비어 있으면 추가 노즐 검토 후보 시트에 한 행을 남깁니다.'
+      ],
+      result: [
+        '처리 파일 수, 본 결과 건수, 확정 노즐 객체 수, 키워드 후보 수, 매핑 인스턴스 값으로 본 결과에 포함된 수, 추가 노즐 검토 후보 수와 직접 배관 연결·연결 확인 필요 수를 파일별 진단에서 확인할 수 있습니다.',
+        'KTA 추출결과에는 네 개의 표시 열과 일곱 개의 숨김 출처 열을 함께 저장하므로 비교 보고서에서 원본 Excel·시트·행·셀 범위와 결합 전 Nozzle Code/No를 추적할 수 있습니다.',
+        'RVT 본 결과에는 Utility, Lateral No, Nozzle Code, Source RVT와 비고를 표시합니다. 추가 키워드로 확정되거나 기본 마커와 겹친 객체는 일치 키워드와 연결 진단을 비고에 남기고, X/Y 공유좌표, 좌표 출처, ElementId, 매핑 파라미터는 숨김 검증 열로 저장합니다.',
+        '추가 노즐 검토 후보 시트에는 Source RVT, ElementId, Family, Type, 일치 키워드, Utility, Lateral, NOZZLE VALVE 값, 유효 Nozzle Code 매핑값과 인스턴스·타입 출처, 직접 연결 상태·연결 상대, X/Y 좌표와 검토 사유를 저장합니다. Utility, Lateral, Nozzle Code 누락은 제외 조건이 아니라 검토 사유입니다.',
+        '비교 화면은 KTA/RVT 행 수, RVT 객체 수, 일치 수량, 수량 불일치, KTA만, RVT만, 속성 불일치, 양쪽 중복, 후보 교차와 비교 불가 행을 요약하고 주요 판정 행을 미리 보여 줍니다.',
+        '비교 Excel은 비교 요약, 전체 비교, KTA만, RVT만, 속성 불일치, 수량 불일치, 중복, 위치 상세, 입력 진단의 아홉 시트로 저장합니다. 화면에 생략된 전체 위치, lineage와 중복 원인도 보고서에서 확인합니다.'
       ],
       export: {
         multi: false,
         single: '사용자가 저장 위치와 파일명을 선택합니다.',
         splitKo: '',
         splitEn: '',
-        note: '이 기능은 엑셀 원본 정리 도구라 RVT 파일별 저장 규칙을 사용하지 않습니다.'
-      }
+        note: 'KTA와 RVT 추출은 각각 여러 입력 파일을 한 결과 Excel로 통합하며, 비교 탭은 선택한 두 결과의 전체 판정과 위치를 Nozzle_KTA_RVT_비교.xlsx 형식으로 저장합니다.'
+      },
+      notes: [
+        '같은 Family·Type이 노즐과 일반 모델에 혼용되면 키워드나 배관 연결 상태만으로 인스턴스를 구분할 수 없습니다. Nozzle Code의 타입 매핑 값은 같은 타입의 모든 인스턴스가 공유할 수 있으므로 판별 근거가 아니며, 인스턴스 매핑 값이 없는 키워드 후보는 추가 노즐 검토 후보 시트에서 ElementId와 연결 상태를 검토합니다.',
+        '새 KTA 결과는 숨김 출처 열로 정확한 위치를 유지합니다. 이전 양식처럼 출처 열이 없는 저장 결과도 수량 비교는 가능하지만 비교 보고서의 KTA 위치는 입력 workbook과 결과 시트 행까지만 표시될 수 있습니다.'
+      ]
     },
     {
       id: 'guid',
@@ -1184,6 +1312,114 @@
         '패밀리명에 Reducer가 포함되지 않은 Pipe Fittings는 검토하지 않습니다.',
         'Point 값에 ECC와 CON이 모두 들어 있으면 어느 한 쪽으로 판단하지 않고 오류로 표시됩니다.',
         '타입명과 Point의 표기 규칙을 프로젝트 전체에서 먼저 통일해 두는 것이 좋습니다.'
+      ]
+    },
+    {
+      id: 'levelchange',
+      group: '유틸리티',
+      title: '프로젝트 파일 내 Level 변경',
+      badge: '별도 화면 · Excel',
+      summary: '여러 RVT와 Excel 작업표를 대조 검증한 뒤 지정 Level을 위·아래로 이동하고, 파일별 영향 객체·Revit 오류·저장·동기화 결과를 Excel로 남깁니다.',
+      target: '화면에 등록한 파일 기반 RVT의 Level입니다. 같은 파일에서 여러 Level을 처리할 수 있으며 한 파일씩 순서대로 실행합니다.',
+      userGuide: '프로젝트 파일 내 Level 변경은 여러 RVT의 Level 이동을 Excel로 지시하는 대량 작업 기능입니다. 화면에서 RVT를 등록해 전용 양식을 만든 뒤 각 행에 Level 이름, 이동 방향과 거리를 입력하고 다시 검증합니다. 검증을 통과한 실행 행만 처리하며, Level 이동으로 수정·삭제·추가되거나 연결 상태가 바뀐 객체와 Revit 경고·오류, 저장·중앙 동기화 결과를 파일별 Excel로 기록합니다.',
+      setupLead: '화면에서 직접 Level 값을 입력하지 않는다. RVT 등록 목록으로 전용 Excel 양식을 만든 뒤 노란 입력 열을 작성하고, 같은 RVT 목록과 다시 대조 검증해야 실행 버튼이 열린다.',
+      setup: [
+        '변경할 RVT 파일을 등록하고 Excel 양식을 저장합니다.',
+        'Level_Change 시트에서 실행 여부, 레벨 이름, 이동 방향, 이동 거리(mm)와 메모를 입력합니다.',
+        '작성한 Excel을 선택해 현재 등록 RVT와 모든 실행 행을 검증합니다.',
+        '필요하면 파일별 결과 Excel 폴더와 중앙 동기화 메모를 지정합니다.'
+      ],
+      settingDetails: [
+        {
+          label: 'RVT 파일 등록',
+          description: 'Level을 변경할 파일 기반 RVT를 추가합니다. 파일 선택과 끌어다 놓기를 지원하며, Excel의 RVT 파일 경로는 현재 화면에 등록된 절대 경로와 일치해야 합니다.',
+          example: 'C:\\Projects\\A-MEP.rvt와 B-MEP.rvt를 등록하면 양식에 각 파일 경로가 한 행씩 생성됩니다.'
+        },
+        {
+          label: 'Excel 양식 저장',
+          description: '등록한 RVT마다 기본 실행 행을 가진 KKY.ProjectLevelChange 전용 xlsx를 만듭니다. 숨김 행 ID, SchemaVersion과 매우 숨김 manifest가 파일 형식과 행 식별을 보존하므로 삭제하거나 임의 양식으로 다시 만들면 안 됩니다.',
+          example: 'RVT 두 개를 등록하고 Excel 양식 저장을 누른 뒤 Level_Change 시트의 보이는 입력 열만 수정합니다.'
+        },
+        {
+          label: '실행 여부',
+          description: '실행 또는 건너뜀을 선택합니다. 실행 행만 Level 변경 대상으로 사용하고 건너뜀 행은 양식에 남아 있어도 처리하지 않습니다.',
+          example: 'A-MEP.rvt는 실행, 참고용 B-MEP.rvt는 건너뜀으로 둡니다.'
+        },
+        {
+          label: '레벨 이름',
+          description: '대상 RVT 안에서 이동할 Level의 이름을 정확히 입력합니다. 한 파일과 같은 Level 조합을 실행 행에 두 번 입력하면 중복 지시로 차단합니다.',
+          example: '모델에 표시된 이름이 LEVEL 02라면 Level 2가 아니라 LEVEL 02로 입력합니다.'
+        },
+        {
+          label: '이동 방향과 거리(mm)',
+          description: '방향은 위 또는 아래만 사용하고 거리는 0보다 큰 숫자로 입력합니다. 거리는 부호 없는 mm 값이며 실제 부호는 방향에서 결정합니다.',
+          example: 'LEVEL 02를 150 mm 낮추려면 이동 방향=아래, 이동 거리(mm)=150으로 입력합니다.'
+        },
+        {
+          label: '메모',
+          description: '행의 작업 목적이나 승인 번호를 자유롭게 적는 보조 열입니다. 실행 판정에는 사용하지 않지만 작업표를 다시 확인할 때 지시 근거로 남길 수 있습니다.',
+          example: '현장 기준고 수정 요청 #A-104처럼 작업 근거를 적습니다.'
+        },
+        {
+          label: '작성한 Excel 선택·검증',
+          description: '저장한 xlsx를 선택하거나 드롭하면 스키마, 필수 헤더, RVT 경로, Level 행, 방향, 거리와 중복 대상을 먼저 검사합니다. RVT 목록이나 Excel 경로가 바뀌면 이전 검증은 무효가 되므로 다시 검증해야 합니다.',
+          example: '검증 행 상태가 모두 실행이고 오류가 0건인지 확인한 뒤에만 실행합니다.'
+        },
+        {
+          label: '결과 Excel 폴더',
+          description: '파일별 결과 보고서를 저장할 폴더입니다. 비우면 선택한 작업 Excel 옆에 LevelChange_Results_yyyyMMdd_HHmmss 폴더를 자동으로 만듭니다.',
+          example: 'D:\\LevelChange_Audit를 지정하면 각 RVT의 결과 xlsx가 이 폴더에 생성됩니다.'
+        },
+        {
+          label: '동기화 메모',
+          description: '워크셰어링 파일의 임시 로컬 작업이 성공했을 때 Synchronize with Central에 기록할 메모입니다. 독립 파일에는 중앙 동기화를 하지 않습니다.',
+          example: 'KKY Level 변경 2026-09-02처럼 작업 내용과 날짜를 입력합니다.'
+        }
+      ],
+      run: [
+        '대상 RVT를 모두 등록하고 Excel 양식 저장을 누릅니다.',
+        'Level_Change 시트에서 실행 여부, 레벨 이름, 위/아래, 이동 거리(mm)와 메모를 작성한 뒤 Excel을 저장하고 닫습니다.',
+        '작성한 Excel 선택 또는 드롭으로 가져온 뒤 Excel 검증의 오류와 실행 행을 확인합니다. 오류가 있으면 Excel을 수정하고 현재 Excel 다시 검증을 누릅니다.',
+        '결과 폴더와 동기화 메모를 확인하고 오른쪽 준비 상태의 RVT 파일, Excel 작업 지시, Excel 검증이 모두 준비인지 확인합니다.',
+        'Level 변경 실행을 누르고 최종 확인창에서 파일 수와 Level 건수를 다시 확인합니다.',
+        '작업은 RVT를 한 파일씩 열어 진행합니다. 화면의 전체 진행률, 현재 파일과 처리 단계를 확인하며 Revit 작업이 끝날 때까지 파일을 직접 열거나 저장하지 않습니다.',
+        '완료 후 파일별 카드에서 이동 성공, 영향 객체, 저장·동기화 상태와 수동 확인 경고를 확인하고 결과 폴더를 엽니다.'
+      ],
+      logic: [
+        'Excel 실행 직전에도 전용 schema, manifest와 필수 열을 검사하고 화면에 등록되지 않은 RVT, 없는 파일, 빈 Level, 잘못된 방향·거리, 같은 파일/Level 중복 지시를 차단합니다.',
+        '파일은 한 번에 하나만 처리하며 모든 사용자 웍셋을 닫은 상태로 엽니다. 워크셰어링 파일은 실제 중앙 경로를 확인해 임시 로컬로 작업하고 독립 파일은 등록한 파일을 대상으로 처리합니다.',
+        'Level을 잠시 unpin한 뒤 방향에 따라 양수 또는 음수 거리로 이동하고 다시 pin합니다. TransactionGroup과 Level별 Transaction/SubTransaction을 사용해 실패 범위를 제한합니다.',
+        'Revit failure processor가 warning은 기록 후 삭제하고, 오류나 rollback이 필요한 상태는 결과에 남긴 뒤 안전하게 되돌립니다. 트랜잭션 상태를 확정할 수 없으면 후속 저장과 동기화를 중단합니다.',
+        'DocumentChanged의 Added, Modified, Deleted ID와 변경 전·후 snapshot을 모아 영향 객체를 만듭니다. 일반 영향 행은 주석 카테고리를 제외하고 중첩 FamilyInstance는 최상위 객체로 통합합니다.',
+        '영향 객체에는 위치, Level, Host와 연결 관계의 변경 전·후 값을 기록합니다. Revit failure, process error, exception과 capture incomplete는 별도 진단 행으로 남깁니다.',
+        '변경을 모델에 저장하기 전에 PENDING 감사 Excel을 먼저 생성합니다. 워크셰어링 파일은 동기화 후 상태를 다시 검증하고, 결과가 불명확하거나 로컬에 미저장 변경이 남으면 임시 로컬을 보존합니다.',
+        '각 파일의 결과 보고서는 다른 파일 처리 성공 여부와 별개로 생성합니다. 한 파일이 실패해도 다음 파일은 계속 처리하되 해당 파일의 변경 영속화 상태를 명확히 기록합니다.'
+      ],
+      result: [
+        '화면 요약에는 이동 성공, 실패, 영향 객체와 중앙 동기화 파일 수가 표시됩니다.',
+        '파일별 결과 카드에서 원본·중앙·임시 로컬 경로, Level별 이동 상태, 변경 영속화와 동기화 결과를 확인할 수 있습니다.',
+        '파일별 Excel의 요약 시트에는 처리 경로, 모든 사용자 웍셋 닫기 정책, 상태, 동기화, 영속화, 영향 캡처와 임시 로컬 보존 여부가 기록됩니다.',
+        '레벨 변경 시트에는 변경 전·후 표고와 pin 상태, 경고·오류, 수정·삭제·추가·연결 변경 수가 행별로 기록됩니다.',
+        '영향 객체 시트에는 변경 유형, 객체 식별값, 카테고리·패밀리·타입, 위치·Level·Host·연결의 전후값과 Revit 메시지가 기록됩니다.',
+        '로그 시트에는 처리 시각, 등급과 작업 메시지가 저장됩니다. 결과가 불명확한 파일은 임시 로컬 경로와 중앙 직접 확인 필요 경고를 우선 확인합니다.'
+      ],
+      export: {
+        workflow: true,
+        title: '입력 양식과 파일별 결과 Excel',
+        single: '{RVT파일명}_LevelChange_yyyyMMdd_HHmmss_fff_{8자리ID}.xlsx',
+        steps: [
+          'RVT 등록 후 Excel 양식 저장으로 KKY.ProjectLevelChange 전용 입력 파일을 만듭니다.',
+          'Level_Change 시트의 실행 여부, 레벨 이름, 이동 방향, 이동 거리(mm), 메모만 작성합니다. 숨김 행 ID와 SchemaVersion, manifest는 수정하지 않습니다.',
+          '작성한 Excel을 다시 선택해 검증한 뒤 실행합니다.',
+          '결과는 RVT 파일마다 {RVT파일명}_LevelChange_yyyyMMdd_HHmmss_fff_{8자리ID}.xlsx로 저장되며 요약, 레벨 변경, 영향 객체, 로그 시트를 포함합니다.',
+          '저장·동기화 전에 생성되는 감사 초안은 {RVT파일명}_LevelChange_PENDING_yyyyMMdd_HHmmss_fff_{8자리ID}.xlsx 형식이며 최종 보고서가 생성되면 정리됩니다.'
+        ],
+        note: '이 기능은 공통 한글/영문·한 파일/파일별 네 가지 내보내기 옵션을 사용하지 않습니다. 입력 양식은 한 파일이고 실행 결과는 감사 추적을 위해 RVT별로 자동 분리됩니다.'
+      },
+      notes: [
+        'Level 이동은 호스트, 연결과 다른 객체의 위치를 함께 바꿀 수 있는 작업입니다. 검증 Excel과 결과 보고서를 보관하고 별도 테스트 파일에서 먼저 확인합니다.',
+        '중앙 동기화 결과 불명, unsafe transaction 또는 변경 영속화 미확인 상태가 표시되면 같은 Excel을 즉시 다시 실행하지 말고 중앙과 보존된 임시 로컬을 직접 확인합니다.',
+        '모든 사용자 웍셋을 닫은 상태에서 읽을 수 없는 객체는 영향 목록에 포함되지 않을 수 있으며, 이런 경우 capture incomplete 진단을 확인합니다.'
       ]
     },
     {
@@ -1898,24 +2134,39 @@
       ]
     },
     lateralnozzle: {
-      userGuide: '노즐코드 KTA 양식을 정리하고 UT명, 배관No, Nozzle Code, No 정보를 기준으로 형식 누락이나 불일치를 찾는 엑셀 전용 기능입니다.',
+      userGuide: 'KTA 엑셀 단일화, RVT Nozzle 정보 추출, 두 결과의 수량·중복·누락·속성·원본 위치 비교를 세 탭에서 실행하는 기능입니다.',
       setup: [
-        '엑셀 추가로 검사할 xlsx 또는 xls 파일을 등록합니다. 여러 파일을 한 번에 추가할 수 있습니다.',
-        '각 파일의 모든 시트를 검사해 UT명, 배관No, Nozzle Code, No 헤더 블록을 찾습니다.',
-        '검사 규칙은 UT명/LATERAL NO/Nozzle Code 중 하나라도 비어 있으면 누락으로 표시합니다.',
-        'Nozzle Code는 No 값을 포함해야 하며, _000 형태의 숫자 3자리로 끝나는지 확인합니다.',
-        '잘못된 형식 경고가 뜨지 않도록 올바른 엑셀 파일만 등록합니다.'
+        'KTA 단일화 탭에서는 검사할 xlsx 또는 xls 파일을 여러 개 등록합니다.',
+        'RVT Nozzle 정보 추출 탭에서는 rvt 파일을 여러 개 등록하고 Utility·Lateral 파라미터명을 입력합니다.',
+        'Nozzle Code 매핑 파라미터명은 쉼표, 세미콜론 또는 줄바꿈으로 구분하며 최대 20개까지 입력합니다.',
+        '파이프 피팅·파이프 악세사리 중 NOZZLE VALVE 표기가 없는 예외 객체가 있으면 추가 키워드를 한 줄에 하나씩 입력합니다. 키워드 한 개는 대소문자를 무시한 부분 문자열로 Family 또는 Type 중 하나를 검사하고, familyKeyword::typeKeyword는 Family와 Type 양쪽의 부분 문자열을 모두 검사합니다. 여러 줄은 OR 조건입니다.',
+        'RVT는 사용자 웍셋을 모두 닫은 상태로 열어 링크 로드를 최소화하고, 파이프 피팅과 파이프 악세사리를 검사합니다.',
+        'KTA ↔ RVT 비교 탭에서는 양쪽마다 최근 실행 결과 사용 또는 저장된 결과 Excel 사용을 고릅니다. 저장된 파일은 KTA 추출결과 또는 RVT Nozzle 정보 결과 Excel이어야 합니다.',
+        '최근 실행 결과는 현재 실행 세션에서 각 추출 탭을 완료했을 때 사용할 수 있습니다. 저장된 결과를 고르면 앱을 다시 연 뒤에도 기존 결과 파일을 비교 입력으로 사용할 수 있습니다.'
       ],
       run: [
-        '엑셀 파일을 등록한 뒤 추출 시작을 누릅니다.',
-        '목록에서 선택한 파일만 제거하거나 목록 지우기로 전체 등록을 초기화할 수 있습니다.',
-        '처리가 끝나면 최근 결과 카드에서 처리 파일 수와 비교 건수를 확인합니다.',
-        '결과 파일은 저장 옵션에 따라 원본 정리본 또는 검토 결과로 저장됩니다.'
+        '원하는 탭에서 파일과 설정을 확인한 뒤 추출 시작을 누릅니다.',
+        '목록에서 선택한 파일만 제거하거나 목록 지우기로 해당 탭의 등록을 초기화할 수 있습니다.',
+        'RVT 추출은 인스턴스 또는 타입의 NOZZLE VALVE 값이 NOZZLE인 객체를 기본으로 포함합니다. 키워드 후보는 Nozzle Code 매핑 인스턴스 값이 하나 이상 있으면 본 결과에 포함하고, 모두 비어 있으면 버리지 않고 추가 노즐 검토 후보 시트로 분리합니다.',
+        '처리가 끝나면 최근 결과 카드에서 파일별 성공·실패, 확정 노즐 객체, 키워드 후보, 인스턴스 매핑값으로 추가 확정된 객체, 추가 검토 후보와 연결 진단 건수를 확인하고 결과 엑셀을 저장합니다.',
+        '비교 탭에서 KTA와 RVT 입력 상태를 확인하고 비교 시작을 누릅니다. 한쪽이라도 선택한 최근 결과나 저장 Excel이 준비되지 않으면 실행할 수 없습니다.',
+        '비교가 끝나면 요약과 미리보기에서 일치, 수량 불일치, KTA만, RVT만, 속성 불일치, 중복과 후보 교차를 확인하고 비교 결과 Excel을 저장합니다.'
       ],
       result: [
-        '처리 파일 수, 추출 건수, 비교 건수가 표시됩니다.',
-        '엑셀에는 정리된 KTA 결과와 누락/형식 불일치 항목이 저장됩니다.',
-        'Nozzle Code와 No 값 연결이 맞지 않으면 비교 형식 불일치로 표시됩니다.'
+        'KTA 결과에는 정리된 값과 헤더·데이터 묶음의 누락 또는 형식 불일치가 저장됩니다. 추출결과의 Source Excel Path, Source Excel File, Source Sheet, Source Row, Source Cell Range, Original Nozzle Code, Original No는 원본 추적용 숨김 열입니다.',
+        'RVT 결과에는 Utility, Lateral No, Nozzle Code, Source RVT와 비고가 표시됩니다.',
+        '추가 노즐 검토 후보 시트에는 Source RVT, ElementId, Family, Type, 일치 키워드, Utility, Lateral, NOZZLE VALVE 값, 유효 Nozzle Code 매핑값과 인스턴스·타입 출처, 직접 연결 상태·연결 상대, X/Y 좌표와 검토 사유가 저장됩니다.',
+        '배관 직접 연결 여부는 포함 필터가 아니라 진단 항목입니다. 미연결이거나 커넥터를 확인할 수 없어도 제외하지 않으며, 파일별로 직접 배관 연결과 연결 확인 필요 건수를 확인할 수 있습니다.',
+        'Utility, Lateral, Nozzle Code 누락은 제외 조건이 아니라 검토 결과입니다. 특히 기본 대상은 이 값이 비어 있어도 본 결과에 남고, Nozzle Code 인스턴스 값이 없는 키워드 후보는 추가 검토 시트에 남습니다.',
+        '같은 Family·Type이 일반 모델과 혼용될 때 Nozzle Code 타입 매핑 값은 인스턴스 판별 근거가 아닙니다. 본 결과 자동 포함에는 인스턴스 매핑 값만 인정하고, 그 값이 없는 키워드 후보는 ElementId와 연결 진단을 검토합니다.',
+        '추가 키워드 대상의 일치 키워드와 연결 진단은 본 결과 비고에 남기고, X/Y 공유좌표, 좌표 취득 방식, ElementId와 사용한 매핑 파라미터는 숨김 검증 열로 저장합니다. 공유좌표 변환에 실패한 내부좌표는 전역 정렬에서 제외됩니다.',
+        '비교키는 UTILITY + LATERAL NO + Nozzle Code이며 앞뒤·연속 공백과 대소문자만 정규화합니다. 하이픈, 언더스코어와 선행 0은 보존하므로 예를 들어 NZ-01과 NZ_01 또는 01과 1은 서로 다른 값입니다.',
+        '비교는 같은 키의 모든 행을 세는 다중집합 방식입니다. 일치 수량은 양쪽 수량의 작은 값이고, 양쪽에 있으나 수량이 다르면 수량 불일치, 한쪽에만 있으면 KTA만 또는 RVT만입니다. 중복 행도 수량에서 제거하지 않습니다.',
+        '속성 불일치는 동일 Nozzle Code가 양쪽에 각각 한 번만 있어 안전하게 짝지을 수 있는데 UTILITY 또는 LATERAL NO가 다른 경우입니다. 같은 Nozzle Code가 여러 번 있어 짝이 모호하면 속성 불일치로 자동 추정하지 않습니다.',
+        '추가 노즐 검토 후보는 확정 RVT 수량 비교에서 제외됩니다. 후보가 KTA의 정확 키, 동일 Nozzle Code 또는 동일 배관과 교차하는지만 별도 입력 진단으로 표시합니다.',
+        'KTA 중복은 같은 비교키의 반복입니다. RVT 중복은 동일 Source RVT Path 또는 File과 ElementId에서 생긴 여러 매핑행, 서로 다른 객체, 서로 다른 파일로 원인을 나누며 전체 발생 위치를 비교 Excel에 남깁니다.',
+        'UTILITY, LATERAL NO, Nozzle Code 중 하나라도 없는 행은 키별 수량에서 제외하고 비교 불가 및 입력 진단에 남깁니다.',
+        '비교 결과 Excel에는 비교 요약, 전체 비교, KTA만, RVT만, 속성 불일치, 수량 불일치, 중복, 위치 상세, 입력 진단 시트가 생성됩니다. 화면 미리보기보다 상세한 입력 workbook·시트·행, 원본 경로·시트·행, ElementId, 매핑 파라미터와 좌표 lineage는 이 파일에서 확인합니다.'
       ]
     },
     guid: {
@@ -2763,7 +3014,7 @@
       ]
     },
     lateralnozzle: {
-      setupLead: '사용자가 조정하는 판정 옵션은 없으며, 검사할 KTA 엑셀 목록만 준비합니다.',
+      setupLead: 'KTA 단일화, RVT Nozzle 정보 추출, KTA ↔ RVT 비교 중 작업 탭을 선택하고 해당 입력 또는 결과 소스를 준비합니다.',
       settingDetails: [
         {
           label: '검사 엑셀',
@@ -2776,16 +3027,84 @@
           example: '시트 중간에 헤더가 있어도 네 이름이 맞으면 해당 블록을 검사 대상으로 인식합니다.'
         },
         {
-          label: '고정 검사 규칙',
-          description: 'UTILITY/LATERAL NO/Nozzle Code 누락, Nozzle Code와 No 연결, 마지막 _000 숫자 3자리 형식을 고정 규칙으로 검사합니다.',
-          example: 'No가 12라면 최종 Nozzle Code가 _012로 끝나지 않을 경우 형식 불일치로 표시됩니다.'
+          label: 'KTA 숨김 출처 열',
+          description: '추출결과의 표시 열 네 개 뒤에 Source Excel Path, Source Excel File, Source Sheet, Source Row, Source Cell Range, Original Nozzle Code, Original No를 숨겨 저장합니다. 이 열은 저장 결과를 다시 비교할 때 원본 행과 결합 전 값을 추적하는 lineage입니다.',
+          example: '화면에는 NZ-001만 보여도 위치 상세에서는 원본 A.xlsx의 KTA 시트 24행, C24:H24와 원래 Nozzle Code/No 조각을 확인할 수 있습니다.'
+        },
+        {
+          label: 'RVT 파라미터',
+          description: 'Utility와 Lateral 파라미터를 각각 지정하고 Nozzle Code 매핑 파라미터를 입력 순서대로 최대 20개 지정합니다.',
+          example: 'NOZZLE CODE 01부터 NOZZLE CODE 20까지 줄바꿈으로 입력하면 값이 있는 항목마다 한 행을 만듭니다.'
+        },
+        {
+          label: '추가 패밀리·타입 키워드',
+          description: '파이프 피팅·파이프 악세사리 안에서 구분자 없는 키워드는 대소문자를 구분하지 않고 Family 또는 Type 이름 중 하나에 부분 포함되면 후보를 수집합니다. familyKeyword::typeKeyword는 Family와 Type에 각 키워드가 모두 부분 포함되어야 하며, 여러 줄은 OR로 적용합니다. 키워드 일치만으로 노즐을 확정하지는 않습니다.',
+          example: 'NOZZLE은 Family 또는 Type에 NOZZLE이 포함된 객체를 찾고, ABC::DN50은 Family에 ABC와 Type에 DN50이 모두 포함된 객체를 찾습니다. 두 줄을 입력하면 어느 한 규칙만 맞아도 후보입니다.'
+        },
+        {
+          label: '확정·검토 후보와 연결 진단',
+          description: 'NOZZLE VALVE=NOZZLE인 기본 대상은 본 결과에 포함합니다. 키워드 후보는 Nozzle Code 매핑의 비어 있지 않은 인스턴스 값이 하나 이상 있어야 본 결과에 포함되고, 모두 비어 있으면 추가 노즐 검토 후보로 분리합니다. 타입 매핑 값은 혼용 인스턴스의 판별 근거가 아닙니다. 직접 배관 연결 여부는 진단일 뿐 포함 필터가 아닙니다.',
+          example: 'ABC::DN50에 맞고 Nozzle Code 인스턴스 값이 있는 미연결 객체는 본 결과에 포함하면서 미연결로 표시합니다. 같은 키워드에 맞지만 인스턴스 값이 없으면 추가 검토 시트에서 확인합니다.'
+        },
+        {
+          label: '결과 시트와 집계',
+          description: '최근 결과에는 확정 노즐 객체, 키워드 후보, 인스턴스 매핑 값으로 본 결과에 추가 확정된 수, 추가 노즐 검토 후보 수와 직접 배관 연결·연결 확인 필요 수를 표시합니다. 추가 검토 시트에는 파일, ElementId, Family, Type, 일치 키워드, Utility, Lateral, NOZZLE VALVE, 유효 매핑값과 인스턴스·타입 출처, 연결 상태·상대, X/Y 좌표와 검토 사유를 저장합니다.',
+          example: '키워드 후보 12개 중 인스턴스 매핑 값이 있는 7개는 본 결과, 값이 없는 5개는 추가 노즐 검토 후보로 집계합니다.'
+        },
+        {
+          label: 'RVT 열기 기준',
+          description: '배치 RVT는 사용자 웍셋을 모두 닫은 상태로 열어 링크 로드를 최소화합니다. 이미 Revit에 열려 있는 같은 RVT는 사용자의 현재 웍셋과 링크 상태를 바꾸지 않고 그 문서를 재사용합니다.',
+          example: '링크가 많은 작업 파일도 별도의 전체 웍셋 열기 요청이 없으면 경량 열기 기준으로 처리합니다.'
+        },
+        {
+          label: 'RVT 필터·정렬 규칙',
+          description: '본 결과는 인스턴스 또는 타입의 NOZZLE VALVE=NOZZLE인 기본 대상과 Nozzle Code 인스턴스 매핑 값이 있는 키워드 후보로 구성합니다. 기본 대상의 Utility, Lateral, Nozzle Code가 비어 있어도 제외하지 않고 누락 진단으로 남기며, 본 결과는 Utility → Lateral 대표 X 오름차순 → Y 내림차순 → X 오름차순으로 정렬합니다.',
+          example: '기본 대상의 Utility나 Lateral이 비어 있어도 누락 진단에 남기며, 같은 Utility와 Lateral의 노즐은 공유좌표 기준으로 위쪽(Y가 큰 값)부터 표시됩니다.'
+        },
+        {
+          label: '비교 입력 소스',
+          description: 'KTA와 RVT 각각 현재 실행 세션의 최근 결과 또는 저장된 표준 결과 Excel을 선택합니다. 저장 파일은 결과 시트와 UTILITY, LATERAL NO, Nozzle Code 헤더를 검사하며 원본 KTA 작업표는 비교 입력으로 사용하지 않습니다.',
+          example: '방금 추출한 KTA는 최근 실행 결과로 두고, 지난주 저장한 RVT Nozzle 결과 Excel만 선택해 비교할 수 있습니다.'
+        },
+        {
+          label: '비교키 정규화',
+          description: 'UTILITY + LATERAL NO + Nozzle Code를 한 키로 사용합니다. 유니코드 조합, 앞뒤·연속 공백과 대소문자만 정규화하고 하이픈, 언더스코어와 선행 0은 보존합니다.',
+          example: 'ut-01과 UT-01은 같지만 NZ-01과 NZ_01, L-01과 L-1은 서로 다른 키입니다.'
+        },
+        {
+          label: '다중집합 수량 판정',
+          description: '같은 키가 몇 행 발생했는지를 양쪽에서 모두 셉니다. 일치 수량은 min(KTA 수량, RVT 수량)이며 양쪽 수량이 같으면 일치, 다르면 수량 불일치, 한쪽 수량이 0이면 KTA만 또는 RVT만입니다.',
+          example: '같은 키가 KTA 3행, RVT 2행이면 일치 2건과 KTA 초과 1건인 수량 불일치로 표시합니다.'
+        },
+        {
+          label: '속성 불일치',
+          description: '동일 Nozzle Code가 완전한 KTA와 RVT 결과에서 각각 정확히 한 번만 있고 정확 비교키는 다를 때 UTILITY와 LATERAL NO를 대조합니다. 값이 다르면 두 한쪽 누락 항목을 속성 불일치 한 쌍으로 연결하며, 중복 코드처럼 연결이 모호한 경우에는 추정하지 않습니다.',
+          example: 'NZ-101이 KTA에서는 UT-A/L-01, RVT에서는 UT-A/L-02로 각각 한 번만 있으면 LATERAL NO 속성 불일치입니다.'
+        },
+        {
+          label: '중복 원인',
+          description: 'KTA는 동일 키 반복을 기록합니다. RVT는 같은 Source RVT Path 또는 File과 ElementId에서 같은 키가 여러 매핑행으로 나온 동일 객체 매핑 중복, 서로 다른 ElementId의 객체 간 중복, 서로 다른 RVT의 파일 간 중복을 분리하고 식별 정보가 부족하면 원인 식별 불가로 남깁니다.',
+          example: '한 ElementId의 NOZZLE CODE 01과 02가 모두 NZ-101이면 동일 객체 매핑 중복이고, 다른 두 ElementId가 NZ-101이면 객체 간 중복입니다.'
+        },
+        {
+          label: '검토 후보와 비교 불가 행',
+          description: '추가 노즐 검토 후보는 확정 RVT 수량에서 제외하고 KTA의 정확 키·동일 Nozzle Code·동일 배관 교차만 입력 진단에 남깁니다. UTILITY, LATERAL NO, Nozzle Code 중 하나라도 비어 있는 본 결과 행도 키별 수량에서 제외하고 비교 불가로 기록합니다.',
+          example: '후보에 NZ-101이 있어도 RVT 수량을 늘리지는 않으며, KTA에 같은 코드가 있으면 동일 Nozzle Code KTA 존재 진단으로 확인합니다.'
+        },
+        {
+          label: '비교 결과 workbook',
+          description: '비교 요약, 전체 비교, KTA만, RVT만, 속성 불일치, 수량 불일치, 중복, 위치 상세, 입력 진단의 아홉 시트를 만듭니다. 위치·비교 시트에는 입력 workbook/시트/행, 원본 경로·시트·행, ElementId, 매핑 파라미터·순서, 좌표·기준, 비교키와 locationId lineage를 숨김 열로 유지합니다.',
+          example: '화면에서 원인 요약을 확인한 뒤 중복 시트와 위치 상세 시트에서 정확한 KTA 원본 셀 또는 RVT ElementId를 추적합니다.'
         }
       ],
       run: [
-        '엑셀 파일을 등록하고 목록에서 실제 처리할 파일이 남아 있는지 확인합니다.',
-        '추출 시작을 누르면 모든 시트의 헤더 블록을 찾아 KTA 값을 정리하고 고정 규칙을 검사합니다.',
-        '최근 결과에서 처리 파일 수, 추출 건수, 비교 건수를 확인합니다.',
-        '완료된 정리 결과를 엑셀로 저장합니다.'
+        'KTA 단일화 또는 RVT Nozzle 정보 추출 탭에서 Excel/RVT 파일을 등록하고 실행 대상을 확인합니다.',
+        '추출 시작을 눌러 KTA 헤더 묶음 또는 RVT Nozzle 파라미터와 공유좌표를 읽습니다.',
+        '최근 결과에서 처리 파일 수, 본 결과 건수, 확정 노즐 객체, 키워드 후보, 추가 노즐 검토 후보와 연결 진단 건수를 확인합니다.',
+        '각 추출 결과를 다음 세션에서도 비교하려면 결과 Excel로 저장합니다. 새 KTA 결과의 숨김 출처 열은 수정하지 않습니다.',
+        'KTA ↔ RVT 비교 탭으로 이동해 양쪽에서 최근 실행 결과 또는 저장된 결과 Excel을 선택합니다.',
+        '비교 시작 후 일치 수량, 수량 불일치, 한쪽 누락, 속성 불일치, 중복, 후보 교차와 비교 불가 진단을 확인합니다.',
+        '전체 위치와 중복 원인이 필요하면 비교 결과 Excel 저장을 눌러 아홉 개의 보고서 시트를 확인합니다.'
       ]
     },
     guid: {
@@ -3003,6 +3322,20 @@
   ]);
 
   const manualScreenOverrides = {
+    cadcircle: {
+      base: {
+        title: 'CAD 링크 선택부터 후보 배치까지',
+        description: '링크·레이어·레벨, 패밀리 파라미터 매핑, 원형 스캔 후보와 최종 배치 준비 상태를 한 화면에서 순서대로 확인합니다.',
+        points: ['링크별 레이어·Base Level·Height', '패밀리 타입과 3개 파라미터 매핑', '원 검출 허용오차', '후보 검토 후 선택 배치']
+      }
+    },
+    levelchange: {
+      base: {
+        title: 'RVT 등록·Excel 검증·Level 변경',
+        description: 'RVT 등록, 작업 Excel 저장·선택·검증, 결과 폴더와 동기화 메모, 파일별 실행 결과를 한 흐름으로 확인합니다.',
+        points: ['RVT 파일 등록·드롭', '전용 Excel 양식 저장', '실행 행 사전 검증', '파일별 영향·저장·동기화 결과']
+      }
+    },
     reducerpoint: {
       base: {
         title: '고정 판정 기준과 공통 설정',
@@ -3197,6 +3530,11 @@
   };
 
   const excelInputVisuals = {
+    levelchange: {
+      title: 'Level 변경 작업 지시표',
+      description: 'Level_Change 시트에서 등록 RVT별 실행 여부, 정확한 Level 이름, 위/아래와 양수 거리(mm)를 작성합니다. 숨김 행 ID와 schema 열은 그대로 둡니다.',
+      points: ['실행 또는 건너뜀', '등록된 절대 RVT 경로', '정확한 Level 이름', '위/아래 + 0보다 큰 거리(mm)', '메모는 선택 입력']
+    },
     gridlevelconsistency: {
       title: 'Level 기준 입력표',
       description: 'Levels 시트에 사용할 Level 이름과 표고를 작성합니다. 사용 열이 꺼진 행과 빈 행은 기준에서 제외됩니다.',
@@ -3223,9 +3561,9 @@
       points: ['유지=변경 없음, 빈 경로도 삭제 아님', 'Reload From/신규 링크는 TargetLinkPath 필수', '삭제는 Action=삭제 + 대상 경로 비움', '식별·현재 상태 열은 그대로 유지']
     },
     lateralnozzle: {
-      title: 'KTA 원본 헤더 블록',
-      description: '각 시트에 UT명, 배관No, Nozzle Code, No 헤더가 있어야 자동으로 검사 범위를 찾습니다.',
-      points: ['헤더 이름을 정확히 유지', 'No는 숫자로 입력 가능', '여러 시트의 동일 블록을 모두 검색']
+      title: 'KTA / RVT Nozzle 입력·비교 기준',
+      description: 'KTA 단일화, RVT Nozzle 정보 추출, KTA ↔ RVT 비교의 세 탭을 사용합니다. 비교는 최근 실행 결과 또는 저장된 표준 결과 Excel을 대상으로 보수 정규화한 세 필드 키의 다중집합 수량, 속성 차이, 중복 원인과 원본 위치를 판정합니다.',
+      points: ['KTA 묶음 시작은 배관No', 'KTA 숨김 출처 열 7개 유지', '기본 대상은 인스턴스/타입 NOZZLE VALVE=NOZZLE', '키워드=Family 또는 Type 부분 포함', 'familyKeyword::typeKeyword=양쪽 부분 포함', '여러 줄은 OR·대소문자 무시', '키워드는 후보만 수집', '인스턴스 매핑 값 있음=본 결과', '인스턴스 매핑 값 없음=추가 노즐 검토 후보', '검토 후보는 확정 비교 수량에서 제외', '타입 매핑 값은 인스턴스 판별 근거 아님', '배관 연결은 진단만 수행', 'Nozzle Code 매핑 최대 20개', '비교키=UTILITY + LATERAL NO + Nozzle Code', '공백·대소문자만 정규화', '하이픈·언더스코어·선행 0 보존', '행 발생 수를 세는 다중집합 비교', '속성 불일치는 양쪽 유일 Nozzle Code만 연결', 'KTA 키 중복·RVT 동일 객체/객체 간/파일 간 중복 분리', '키 누락 행은 비교 불가', '비교 workbook은 9개 진단 시트']
     },
     guid: {
       title: 'GUID 삭제용 작업표',
@@ -3265,16 +3603,19 @@
     const mount = document.querySelector('[data-feature-index]');
     if (!mount) return;
 
-    const groups = ['BQC 검토', '유틸리티'];
+    const groups = ['모델링', 'BQC 검토', '유틸리티'];
     groups.forEach((group) => {
       const section = el('section', 'section');
       const header = el('div', 'section-header');
       const text = el('div');
-      text.append(el('span', 'eyebrow', group === 'BQC 검토' ? 'QUALITY CONTROL' : 'GENERAL TOOLS'));
-      text.append(el('h2', '', group === 'BQC 검토' ? 'BQC 검토 기능' : '유틸리티 기능'));
-      text.append(el('p', '', group === 'BQC 검토'
-        ? '납품 검토 과정에서 여러 기능을 선택해 같은 대상에 적용합니다.'
-        : '반복 작업과 운영 도구를 단독 또는 배치 흐름으로 실행합니다.'));
+      const groupCopy = group === '모델링'
+        ? ['MODELING', '모델링 기능', 'CAD와 프로젝트 기준 정보를 이용해 Revit 모델을 생성하거나 변경합니다.']
+        : group === 'BQC 검토'
+          ? ['QUALITY CONTROL', 'BQC 검토 기능', '납품 검토 과정에서 여러 기능을 선택해 같은 대상에 적용합니다.']
+          : ['GENERAL TOOLS', '유틸리티 기능', '반복 작업과 운영 도구를 단독 또는 배치 흐름으로 실행합니다.'];
+      text.append(el('span', 'eyebrow', groupCopy[0]));
+      text.append(el('h2', '', groupCopy[1]));
+      text.append(el('p', '', groupCopy[2]));
       header.append(text);
 
       const list = el('div', 'feature-list feature-list--linked');
