@@ -1,11 +1,11 @@
 {
   "version": "3.0.15",
   "url": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.15.zip",
-  "publishedAt": "2026-09-02",
-  "notes": "CAD 링크 원형을 레이어별로 검출해 Foreline 패밀리를 배치하는 기능과 Excel 작업표로 여러 RVT의 Level을 일괄 변경하는 기능을 추가했습니다. Nozzle Code/KTA/RVT 비교는 수량, 누락, 중복, 속성 차이와 원본 위치 진단을 보강했고 여러 RVT 작업은 파일별 진행 상태를 즉시 표시합니다. 관리자 실행 현황에는 Autodesk/Revit 프로필과 허용 여부를 기록합니다. Revit 2019, 2021, 2023, 2025, 2027을 지원합니다.",
+  "publishedAt": "2026-09-03",
+  "notes": "CAD 링크 원형 기반 Foreline 모델링과 Excel 작업표 기반 프로젝트 Level 일괄 변경, Nozzle Code/KTA/RVT 진단 보강을 포함합니다. 관리자 실행 현황에는 Autodesk/Revit 프로필과 허용 여부를 기록하며, 실행 기록에서 확인한 프로필 이름을 차단 키워드로 등록해 허용 사용자보다 우선 차단할 수 있습니다. Revit 2019, 2021, 2023, 2025, 2027을 지원합니다.",
   "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.15.exe",
-  "sha256": "EB58146F53A00C256A50216188CC2373F3B57CBDCF12D4F52CA645A673A8511B",
-  "updateZipSha256": "DC115A99F26B2CD97F4F530C3C89CB37C5C1D6F5164205127FF2DD4DAFF998EE",
+  "sha256": "17395A1EC8905CE37F452B3E610BF351E9F803C966B9DEC48E644C9929E0B193",
+  "updateZipSha256": "12C9B4F0D15853C5B098CE47783EB93265D549DFA0EC077917775D380602B7B8",
   "supportedRevit": [
     2019,
     2021,

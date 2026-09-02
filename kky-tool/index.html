@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>KKY Tool 중앙 설정 관리</title>
   <link rel="icon" href="data:,">
-  <link rel="stylesheet" href="/assets/site.css?v=3.0-20260716.2">
+  <link rel="stylesheet" href="/assets/site.css?v=3.0-20260903.1">
 </head>
 <body data-page="admin">
   <header class="site-header">
@@ -75,9 +75,14 @@
                 <p class="field-help">한 줄에 하나씩 입력합니다. 예: KCIM</p>
               </div>
               <div class="field">
+                <label for="blockedKeywords">차단 Autodesk/Revit 프로필 키워드</label>
+                <textarea id="blockedKeywords" spellcheck="false" placeholder="외부업체&#10;테스트 계정"></textarea>
+                <p class="field-help">대소문자를 구분하지 않고 이름 일부가 일치하면 차단합니다. 허용 목록보다 먼저 적용됩니다.</p>
+              </div>
+              <div class="field admin-policy-users">
                 <label for="users">정확히 허용할 사용자</label>
                 <textarea id="users" spellcheck="false" placeholder="kim.kky&#10;hong.gildong"></textarea>
-                <p class="field-help">키워드와 별개로 정확히 일치하는 사용자 이름을 등록합니다.</p>
+                <p class="field-help">허용 키워드와 별개로 정확히 일치하는 사용자 이름입니다. 차단 키워드에 걸리면 이 목록에 있어도 차단됩니다.</p>
               </div>
             </div>
             <div class="field">
@@ -434,6 +439,7 @@
 
     function collectPolicy() {
       let keywords = splitList($("keywords").value);
+      const blockedKeywords = splitList($("blockedKeywords").value);
       const users = splitList($("users").value);
       if (!keywords.length && !users.length) {
         keywords = ["KCIM"];
@@ -442,6 +448,7 @@
       return {
         enabled: $("enabled").checked,
         allowedProfileKeywords: keywords,
+        blockedProfileKeywords: blockedKeywords,
         allowedUsers: users,
         blockMessage: $("message").value.trim() || "외부 사용자는 사용할 수 없습니다.",
         updatedAtUtc: new Date().toISOString()
@@ -452,6 +459,7 @@
       data = data || {};
       $("enabled").checked = data.enabled !== false;
       $("keywords").value = Array.isArray(data.allowedProfileKeywords) ? data.allowedProfileKeywords.join("\n") : "KCIM";
+      $("blockedKeywords").value = Array.isArray(data.blockedProfileKeywords) ? data.blockedProfileKeywords.join("\n") : "";
       $("users").value = Array.isArray(data.allowedUsers) ? data.allowedUsers.join("\n") : "";
       $("message").value = data.blockMessage || data.message || "외부 사용자는 사용할 수 없습니다.";
       buildPolicy();
@@ -652,7 +660,7 @@
         fillPolicy(await response.json());
         setStatus("policyStatus", "현재 사용자 정책을 불러왔습니다.", "good");
       } catch (err) {
-        fillPolicy({ enabled: true, allowedProfileKeywords: ["KCIM"], allowedUsers: [], blockMessage: "외부 사용자는 사용할 수 없습니다." });
+        fillPolicy({ enabled: true, allowedProfileKeywords: ["KCIM"], blockedProfileKeywords: [], allowedUsers: [], blockMessage: "외부 사용자는 사용할 수 없습니다." });
         setStatus("policyStatus", "현재 정책을 찾지 못해 기본값을 표시합니다.", "bad");
       }
     }
@@ -952,7 +960,7 @@
       $(id).addEventListener("change", renderUsageEvents);
     });
 
-    ["enabled", "keywords", "users", "message"].forEach((id) => {
+    ["enabled", "keywords", "blockedKeywords", "users", "message"].forEach((id) => {
       $(id).addEventListener("input", buildPolicy);
       $(id).addEventListener("change", buildPolicy);
     });
@@ -961,7 +969,7 @@
       $(id).addEventListener("change", tryBuildFamily);
     });
 
-    fillPolicy({ enabled: true, allowedProfileKeywords: ["KCIM"], allowedUsers: [], blockMessage: "외부 사용자는 사용할 수 없습니다." });
+    fillPolicy({ enabled: true, allowedProfileKeywords: ["KCIM"], blockedProfileKeywords: [], allowedUsers: [], blockMessage: "외부 사용자는 사용할 수 없습니다." });
     fillFamilyBootstrap(defaultFamilyBootstrap());
     renderUsageEvents();
   </script>

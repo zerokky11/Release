@@ -1345,6 +1345,14 @@ pre {
   margin: 16px 0;
 }
 
+.admin-policy-users {
+  grid-column: 1 / -1;
+}
+
+.admin-policy-users textarea {
+  min-height: 84px;
+}
+
 .field-help {
   margin: 0;
   color: var(--muted);
