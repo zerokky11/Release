@@ -1,5 +1,5 @@
 (function () {
-  const staticAssetVersion = '3.0-20260902.1';
+  const staticAssetVersion = '3.0-20260904.1';
   const sharedParamNote = '공유파라미터 목록은 Revit 관리 > 공유 매개변수에 연결된 TXT를 기준으로 읽습니다. 홈페이지/Hub에서 TXT 파일을 별도로 선택하는 흐름은 없습니다.';
   const multiExportNote = '여러 RVT는 실행 전에 저장 방식을 정합니다. 실행 후 직접 저장은 결과를 화면에 남겨 사용자가 내보내고, 기능별 통합 Excel 순차 저장은 기능마다 통합 파일 하나를 만들며, RVT별 Excel 즉시 저장은 문서가 끝날 때마다 파일을 저장하고 메모리에서 결과를 해제합니다. 파일별 저장명은 {RVT파일명}_{기능명}_{오류건수00EA}.xlsx 형식이며 같은 이름이 있으면 뒤에 (2), (3)이 붙습니다.';
 
@@ -2138,6 +2138,7 @@
       setup: [
         'KTA 단일화 탭에서는 검사할 xlsx 또는 xls 파일을 여러 개 등록합니다.',
         'RVT Nozzle 정보 추출 탭에서는 rvt 파일을 여러 개 등록하고 Utility·Lateral 파라미터명을 입력합니다.',
+        '파라미터 입력 항목이 Hub 높이보다 길면 RVT 설정 카드 안에서 스크롤해 아래 항목까지 확인합니다. 바깥 페이지가 아니라 파라미터 설정 영역 위에 마우스를 두고 스크롤합니다.',
         'Nozzle Code 매핑 파라미터명은 쉼표, 세미콜론 또는 줄바꿈으로 구분하며 최대 20개까지 입력합니다.',
         '파이프 피팅·파이프 악세사리 중 NOZZLE VALVE 표기가 없는 예외 객체가 있으면 추가 키워드를 한 줄에 하나씩 입력합니다. 키워드 한 개는 대소문자를 무시한 부분 문자열로 Family 또는 Type 중 하나를 검사하고, familyKeyword::typeKeyword는 Family와 Type 양쪽의 부분 문자열을 모두 검사합니다. 여러 줄은 OR 조건입니다.',
         'RVT는 사용자 웍셋을 모두 닫은 상태로 열어 링크 로드를 최소화하고, 파이프 피팅과 파이프 악세사리를 검사합니다.',
@@ -3033,7 +3034,7 @@
         },
         {
           label: 'RVT 파라미터',
-          description: 'Utility와 Lateral 파라미터를 각각 지정하고 Nozzle Code 매핑 파라미터를 입력 순서대로 최대 20개 지정합니다.',
+          description: 'Utility와 Lateral 파라미터를 각각 지정하고 Nozzle Code 매핑 파라미터를 입력 순서대로 최대 20개 지정합니다. 설정이 길어지면 RVT 설정 카드 안을 위아래로 스크롤해 남은 항목을 확인합니다.',
           example: 'NOZZLE CODE 01부터 NOZZLE CODE 20까지 줄바꿈으로 입력하면 값이 있는 항목마다 한 행을 만듭니다.'
         },
         {
@@ -3335,6 +3336,27 @@
         description: 'RVT 등록, 작업 Excel 저장·선택·검증, 결과 폴더와 동기화 메모, 파일별 실행 결과를 한 흐름으로 확인합니다.',
         points: ['RVT 파일 등록·드롭', '전용 Excel 양식 저장', '실행 행 사전 검증', '파일별 영향·저장·동기화 결과']
       }
+    },
+    lateralnozzle: {
+      base: {
+        title: 'KTA Excel 등록과 단일화',
+        description: '여러 KTA Excel을 등록하고 검사 규칙과 최근 실행 결과를 확인하는 첫 번째 작업 탭입니다.',
+        points: ['xlsx/xls 여러 파일 등록', '등록 파일 선택과 제거', 'KTA 헤더 블록 자동 탐색', '최근 결과와 Excel 저장']
+      },
+      extra: [
+        {
+          file: 'lateralnozzle-rvt-settings.png',
+          title: 'RVT Nozzle 파라미터 설정',
+          description: 'RVT를 등록한 뒤 Utility, Lateral, Nozzle Code 매핑 파라미터를 입력합니다. 긴 설정 카드는 내부에서 따로 스크롤됩니다.',
+          points: ['RVT 파일 등록', 'Utility·Lateral 파라미터', 'Nozzle Code 매핑 최대 20개', '설정 카드 내부 스크롤']
+        },
+        {
+          file: 'lateralnozzle-rvt-settings-lower.png',
+          title: '추가 확인 항목과 실행 전 요약',
+          description: '설정 카드 안을 아래로 스크롤해 결과에 덧붙일 파라미터와 추가 노즐 후보 키워드를 입력하고, 등록 RVT와 실행 가능 상태를 확인합니다.',
+          points: ['추가 확인 파라미터', '패밀리/타입 후보 키워드', '등록 RVT·실행 대상 수', '필수 입력 확인 메시지']
+        }
+      ]
     },
     reducerpoint: {
       base: {

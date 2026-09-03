@@ -1,11 +1,11 @@
 {
-  "version": "3.0.15",
-  "url": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.15.zip",
-  "publishedAt": "2026-09-03",
-  "notes": "CAD 링크 원형 기반 Foreline 모델링과 Excel 작업표 기반 프로젝트 Level 일괄 변경, Nozzle Code/KTA/RVT 진단 보강과 여러 RVT 작업 진행 표시 개선을 포함합니다. Revit 2019, 2021, 2023, 2025, 2027을 지원합니다.",
-  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.15.exe",
-  "sha256": "17395A1EC8905CE37F452B3E610BF351E9F803C966B9DEC48E644C9929E0B193",
-  "updateZipSha256": "12C9B4F0D15853C5B098CE47783EB93265D549DFA0EC077917775D380602B7B8",
+  "version": "3.0.16",
+  "url": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.16.zip",
+  "publishedAt": "2026-09-04",
+  "notes": "RVT Nozzle 정보 추출 설정에서 파라미터 항목이 많아도 작은 Hub 창 안에서 설정 영역을 스크롤해 끝까지 확인할 수 있도록 화면을 보완했습니다. Revit 2019, 2021, 2023, 2025, 2027을 지원합니다.",
+  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.16.exe",
+  "sha256": "95D30F99599AE5BEFA93DB958F8D3660BD4774B90A667570BFC0F579E1C633E5",
+  "updateZipSha256": "6F4CD9552F43B9B83C1B6DC667F71D5FFD49AD8ECE3D95DDC4FB915BD9955C51",
   "supportedRevit": [
     2019,
     2021,
