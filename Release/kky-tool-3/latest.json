@@ -1,11 +1,11 @@
 {
-  "version": "3.0.16",
-  "url": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.16.zip",
-  "publishedAt": "2026-09-04",
-  "notes": "RVT Nozzle 정보 추출 설정에서 파라미터 항목이 많아도 작은 Hub 창 안에서 설정 영역을 스크롤해 끝까지 확인할 수 있도록 화면을 보완했습니다. Revit 2019, 2021, 2023, 2025, 2027을 지원합니다.",
-  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.16.exe",
-  "sha256": "95D30F99599AE5BEFA93DB958F8D3660BD4774B90A667570BFC0F579E1C633E5",
-  "updateZipSha256": "6F4CD9552F43B9B83C1B6DC667F71D5FFD49AD8ECE3D95DDC4FB915BD9955C51",
+  "version": "3.0.17",
+  "url": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.17.zip",
+  "publishedAt": "2026-09-06",
+  "notes": "다회차 검토와 Excel 결과 정리, 이전 회신의 OR/AND 키워드 예외 처리, 파라미터 연속성 개별 등록과 빈 값 제외를 추가했습니다. Revit 2019, 2021, 2023, 2025, 2027을 지원합니다.",
+  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.17.exe",
+  "sha256": "C6E9FE3F9E5B47F16FC9C59B25D05264158E7B70BEB7ECFDFB0346CF9D8ECEAE",
+  "updateZipSha256": "5EB65926A5125FEC4E07B9060F4262771FB171C4FF903AA6D7BEB3E686036089",
   "supportedRevit": [
     2019,
     2021,
