@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-06T11:22:20.432Z",
+  "generatedAt": "2026-09-06T12:44:35.666Z",
   "productVersion": "3.0.17",
   "displayedVersion": "v3.0.17",
   "homeScreenshot": "Sever/assets/kky-tool/home.png",
   "sourceRoot": "KKY_Tool_Revit_2019-2023/Resources/HubUI",
-  "baseUrl": "http://127.0.0.1:65054",
+  "baseUrl": "http://127.0.0.1:61855",
   "viewport": "1600x1000",
   "baseScreenCount": 36,
   "extraScreenCount": 36,
@@ -16,7 +16,7 @@
       "kind": "settings",
       "note": "3.0.17 연속성 기본 설정",
       "file": "Sever/assets/manual-screenshots/connector.png",
-      "bytes": 248394,
+      "bytes": 248393,
       "title": "KKY Tool Hub"
     },
     {
@@ -600,7 +600,7 @@
       "kind": "direct",
       "note": "예시 이전 회신과 이번 결과 연결",
       "file": "Sever/assets/manual-screenshots/revieworganizer.png",
-      "bytes": 96790,
+      "bytes": 105441,
       "title": "KKY Tool Hub"
     },
     {
@@ -608,7 +608,7 @@
       "kind": "detail-settings",
       "note": "답변 열·검색 열과 AND 조건 예시",
       "file": "Sever/assets/manual-screenshots/revieworganizer-settings.png",
-      "bytes": 90405,
+      "bytes": 92359,
       "title": "KKY Tool Hub"
     },
     {
@@ -616,7 +616,7 @@
       "kind": "detail-settings",
       "note": "다회차 검토 파일명과 이전 회신 설정",
       "file": "Sever/assets/manual-screenshots/repeatreview.png",
-      "bytes": 113939,
+      "bytes": 116036,
       "title": "KKY Tool Hub"
     },
     {
@@ -624,7 +624,7 @@
       "kind": "detail-settings",
       "note": "파라미터별 연속성 독립 등록",
       "file": "Sever/assets/manual-screenshots/connector-registrations.png",
-      "bytes": 262029,
+      "bytes": 262768,
       "title": "KKY Tool Hub"
     },
     {
@@ -632,7 +632,7 @@
       "kind": "detail-settings",
       "note": "이전 회신의 답변·판정·키워드 검색 열",
       "file": "Sever/assets/manual-screenshots/repeatreview-columns.png",
-      "bytes": 112019,
+      "bytes": 113295,
       "title": "KKY Tool Hub"
     }
   ]

@@ -1,5 +1,5 @@
 (function () {
-  const staticAssetVersion = '3.0-20260906.1';
+  const staticAssetVersion = '3.0-20260906.2';
   const sharedParamNote = '공유파라미터 목록은 Revit 관리 > 공유 매개변수에 연결된 TXT를 기준으로 읽습니다. 홈페이지/Hub에서 TXT 파일을 별도로 선택하는 흐름은 없습니다.';
   const multiExportNote = '여러 RVT는 실행 전에 저장 방식을 정합니다. 실행 후 직접 저장은 결과를 화면에 남겨 사용자가 내보내고, 기능별 통합 Excel 순차 저장은 기능마다 통합 파일 하나를 만들며, RVT별 Excel 즉시 저장은 문서가 끝날 때마다 파일을 저장하고 메모리에서 결과를 해제합니다. 파일별 저장명은 {RVT파일명}_{기능명}_{오류건수00EA}.xlsx 형식이며 같은 이름이 있으면 뒤에 (2), (3)이 붙습니다.';
 
