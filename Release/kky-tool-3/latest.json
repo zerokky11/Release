@@ -1,11 +1,11 @@
 {
-  "version": "3.0.17",
-  "url": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.17.zip",
-  "publishedAt": "2026-09-06",
-  "notes": "다회차 검토와 Excel 결과 정리, 이전 회신의 OR/AND 키워드 예외 처리, 파라미터 연속성 개별 등록과 빈 값 제외를 추가했습니다. Revit 2019, 2021, 2023, 2025, 2027을 지원합니다.",
-  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.17.exe",
-  "sha256": "004C31E9C3BB917544B7731BD5DEF714D678F3054B2F2A63BD74AC81B9848A4D",
-  "updateZipSha256": "5810BA79C063956124C4709C2A1A2E1023697CA138B2928C930FA5CF1310A765",
+  "version": "3.0.18",
+  "url": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.18.zip",
+  "publishedAt": "2026-09-07",
+  "notes": "다회차 Excel 결과 정리의 파일별 일대일 연결과 미연결 원본 보존을 보완하고, 회신 후보 선택 및 공용 안내 문구를 개선했습니다. Revit 2019, 2021, 2023, 2025, 2027을 지원합니다.",
+  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.18.exe",
+  "sha256": "27814679FD3573D0AE550876C9F8C9521C3E3A428CC3D97B1EBBA132444A0863",
+  "updateZipSha256": "9B11673ABFC54FEF166EE295597C8954BA835DAE3E4C4A318DABE3D5BBFB721B",
   "supportedRevit": [
     2019,
     2021,

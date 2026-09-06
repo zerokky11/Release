@@ -31,7 +31,7 @@
         <h1>KKY Tool 업데이트 내역</h1>
         <p>현재 운영하는 3.x 계열과 초기 레이아웃 계열의 마지막 Stable 2.x 변경 기록입니다.</p>
       </div>
-      <div class="updates-current"><span class="badge ok">현재 배포</span><strong>3.0.17</strong><span>2026.09.06</span></div>
+      <div class="updates-current"><span class="badge ok">현재 배포</span><strong>3.0.18</strong><span>2026.09.07</span></div>
     </section>
 
     <nav class="updates-program-tabs" aria-label="업데이트 내역 프로그램 선택">
@@ -44,7 +44,22 @@
       <header class="release-series__header"><div><h2 id="kky-3-series">KKY Tool 3.x</h2><p>새 작업대 UI와 확장 기능을 사용하는 현재 계열입니다.</p></div><a class="button primary" href="/index.html#download">현재 버전 받기</a></header>
       <ol class="release-notes">
         <li class="release-note">
-          <div class="release-note__version"><span class="badge ok">현재 배포</span><strong>3.0.17</strong><span class="release-note__date">2026.09.06</span></div>
+          <div class="release-note__version"><span class="badge ok">현재 배포</span><strong>3.0.18</strong><span class="release-note__date">2026.09.07</span></div>
+          <div class="release-note__content">
+            <h3>다회차 Excel 파일 연결과 원본 보존 보완</h3>
+            <p class="release-note__summary">이전 회신과 이번 결과를 파일별로 연결하는 기준을 정리하고, 연결되지 않은 결과는 원본 이름과 내용을 유지하도록 보완했습니다.</p>
+            <ul class="release-note__list">
+              <li><b>매핑 후보로 사용</b>에서 실제 반영할 이전 회신만 선택할 수 있습니다. 원본과 회신이 함께 있어도 파일 수정 시각만으로 하나를 임의 선택하지 않습니다.</li>
+              <li>모델·검토 종류·파라미터·열 구성을 기준으로 파일을 <b>일대일 연결</b>합니다. 후보가 여러 개면 직접 확인하며, 확정한 연결은 같은 파일명 규칙의 다른 모델에도 적용할 수 있습니다.</li>
+              <li>이전 회신이 없거나 연결을 확정하지 않은 이번 결과는 <b>파일명과 내용을 그대로 복사</b>합니다. 한 회신을 여러 결과에 중복 연결한 경우에는 저장 전에 확인하도록 안내합니다.</li>
+              <li>설정·도움말·오류·완료 메시지와 Excel 안내를 직원 공용 문구로 정리하고, 매뉴얼의 설정 화면도 갱신했습니다.</li>
+              <li>Revit <code>2019</code>, <code>2021</code>, <code>2023</code>, <code>2025</code>, <code>2027</code> 지원을 유지합니다.</li>
+            </ul>
+            <div class="actions"><a class="button" href="/Manual/features/revieworganizer.html">Excel 결과 정리 매뉴얼</a><a class="button" href="/Manual/features/repeatreview.html">다회차 검토 매뉴얼</a></div>
+          </div>
+        </li>
+        <li class="release-note">
+          <div class="release-note__version"><span class="badge blue">정식 버전</span><strong>3.0.17</strong><span class="release-note__date">2026.09.06</span></div>
           <div class="release-note__content">
             <h3>다회차 검토·Excel 결과 정리와 연속성 개별 등록</h3>
             <p class="release-note__summary">이전 회신의 코멘트와 인정된 예외를 이번 결과에 이어 붙이고, 실제 조치할 항목 수를 정리할 수 있습니다. 파라미터별로 다른 조건의 연속성 검토도 한 번에 등록할 수 있습니다.</p>
