@@ -1,11 +1,11 @@
 {
   "version": "3.0.18",
   "url": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.18.zip",
-  "publishedAt": "2026-09-07",
+  "publishedAt": "2026-09-08",
   "notes": "다회차 Excel 결과 정리의 파일별 일대일 연결과 미연결 원본 보존을 보완하고, 회신 후보 선택 및 공용 안내 문구를 개선했습니다. Revit 2019, 2021, 2023, 2025, 2027을 지원합니다.",
   "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.18.exe",
-  "sha256": "097A5B8A48F41A0D86DAD8660A2D3522F9842A4F20104D34A5BAA236F2D6799C",
-  "updateZipSha256": "0D4F24A21D15D9691A3E149F6FB58D27E5CC57BDF898F646AD895A4EFA0D2931",
+  "sha256": "AA3A4C22207D3F4033EF70745C1773FCF43FFBA4285A1B28040BA036F29D2DE3",
+  "updateZipSha256": "052FF69941BD7CC2E08545D79FF6A19F605EE014DF139C7323CEEBFBA980BA4C",
   "supportedRevit": [
     2019,
     2021,
