@@ -31,7 +31,7 @@
         <h1>KKY Tool 업데이트 내역</h1>
         <p>현재 운영하는 3.x 계열과 초기 레이아웃 계열의 마지막 Stable 2.x 변경 기록입니다.</p>
       </div>
-      <div class="updates-current"><span class="badge ok">현재 배포</span><strong>3.0.18</strong><span>2026.09.07</span></div>
+      <div class="updates-current"><span class="badge ok">현재 배포</span><strong>3.0.19</strong><span>2026.09.10</span></div>
     </section>
 
     <nav class="updates-program-tabs" aria-label="업데이트 내역 프로그램 선택">
@@ -44,7 +44,22 @@
       <header class="release-series__header"><div><h2 id="kky-3-series">KKY Tool 3.x</h2><p>새 작업대 UI와 확장 기능을 사용하는 현재 계열입니다.</p></div><a class="button primary" href="/index.html#download">현재 버전 받기</a></header>
       <ol class="release-notes">
         <li class="release-note">
-          <div class="release-note__version"><span class="badge ok">현재 배포</span><strong>3.0.18</strong><span class="release-note__date">2026.09.07</span></div>
+          <div class="release-note__version"><span class="badge ok">현재 배포</span><strong>3.0.19</strong><span class="release-note__date">2026.09.10</span></div>
+          <div class="release-note__content">
+            <h3>검토 Excel 양식 선택과 속성누락 검토 범위 보완</h3>
+            <p class="release-note__summary">검토 기능별로 KKY 기본 양식과 원본 호환 양식을 선택할 수 있습니다. 출력 양식과 검사 조건을 분리하고, 이전 회신과 실제 판정에 사용한 근거를 보존하도록 보완했습니다.</p>
+            <ul class="release-note__list">
+              <li><b>엑셀 출력 양식</b>을 속성누락, 프로젝트 파라미터 중복, 속성 기준값, UTILITY 재질, 미연결, 탭/분기 축 틀어짐, 웍셋 배정, Reducer Point 검토에서 각각 선택할 수 있습니다. 기본값은 기존 <b>KKY 기본 양식</b>입니다.</li>
+              <li><b>원본 호환 양식</b>은 대응되는 오류 설명과 해결 방안, 공통 열과 셀 서식을 적용합니다. 양식 선택만으로 검토 대상·오류 판정·수량을 바꾸지 않으며, 대응이 확인되지 않은 설명은 기존 내용을 유지합니다.</li>
+              <li><b>속성누락 검토</b>의 대상 카테고리와 커튼월 패널 제외 조건을 정리하고 <b>Site 카테고리 포함</b> 옵션을 추가했습니다. 기본값은 제외이며 기존 공통 필터와 누락 예외 조건을 함께 적용합니다.</li>
+              <li><b>Reducer Point</b>의 원본 호환 출력에는 <b>Point 값·타입 표기·Point 표기</b>를 별도 열로 남깁니다. 짧은 오류 문구로 바뀌어도 실제 ECC/CON 판정 근거를 확인할 수 있습니다.</li>
+              <li>양식 선택을 설정·프리셋에 저장하고 수동 재출력, 여러 RVT의 파일별·통합 출력에 적용합니다. 기존 회신과 추가 열을 보존하며, 판정 근거가 달라진 경우 이전 예외를 그대로 적용하지 않습니다.</li>
+              <li>Revit <code>2019</code>, <code>2021</code>, <code>2023</code>, <code>2025</code>, <code>2027</code> 지원을 유지합니다.</li>
+            </ul>
+          </div>
+        </li>
+        <li class="release-note">
+          <div class="release-note__version"><span class="badge blue">정식 버전</span><strong>3.0.18</strong><span class="release-note__date">2026.09.07</span></div>
           <div class="release-note__content">
             <h3>다회차 Excel 파일 연결과 원본 보존 보완</h3>
             <p class="release-note__summary">이전 회신과 이번 결과를 파일별로 연결하는 기준을 정리하고, 연결되지 않은 결과는 원본 이름과 내용을 유지하도록 보완했습니다.</p>

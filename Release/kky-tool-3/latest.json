@@ -1,11 +1,11 @@
 {
-  "version": "3.0.18",
-  "url": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.18.zip",
-  "publishedAt": "2026-09-08",
-  "notes": "다회차 Excel 결과 정리의 파일별 일대일 연결과 미연결 원본 보존을 보완하고, 회신 후보 선택 및 공용 안내 문구를 개선했습니다. Revit 2019, 2021, 2023, 2025, 2027을 지원합니다.",
-  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.18.exe",
-  "sha256": "AA3A4C22207D3F4033EF70745C1773FCF43FFBA4285A1B28040BA036F29D2DE3",
-  "updateZipSha256": "052FF69941BD7CC2E08545D79FF6A19F605EE014DF139C7323CEEBFBA980BA4C",
+  "version": "3.0.19",
+  "url": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.19.zip",
+  "publishedAt": "2026-09-10",
+  "notes": "검토 기능별 KKY 기본·원본 호환 Excel 양식 선택을 추가하고, 속성누락 검토의 대상 범위와 Site 포함 옵션을 보완했습니다. Reducer Point 출력의 판정 근거와 이전 회신을 보존합니다. Revit 2019, 2021, 2023, 2025, 2027을 지원합니다.",
+  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.19.exe",
+  "sha256": "06A38F773514E40DE8BEAE0F58CFF19256D96976A4478AB9D83A589370C6B065",
+  "updateZipSha256": "DBEB3EE8CB804DF4AE290ECA94FE83A236BCB05660E5CCDF77D16BC7B91C5496",
   "supportedRevit": [
     2019,
     2021,
