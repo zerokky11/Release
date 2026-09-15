@@ -1,11 +1,11 @@
 {
   "version": "3.0.20",
   "url": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.20.zip",
-  "publishedAt": "2026-09-15",
-  "notes": "패밀리 공유파라미터 추가·연동의 문서별 공유 상태 판정과 다단계 연동 검증을 수정했습니다. 처리 결과 보고서와 Excel 내보내기를 보완했습니다. Revit 2019, 2021, 2023, 2025, 2027을 지원합니다.",
+  "publishedAt": "2026-09-16",
+  "notes": "패밀리 공유파라미터 추가·연동의 문서별 공유 상태 판정과 다단계 연동 검증을 수정했습니다. 처리 결과 보고서와 Excel 내보내기를 보완했습니다. 2026-09-16 현재 소스로 설치파일을 다시 빌드했습니다. Revit 2019, 2021, 2023, 2025, 2027을 지원합니다.",
   "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.20.exe",
-  "sha256": "5846D9AA5E9986A650A5E80E89A9B3C2368F035B0759BF4F72ABEA52EBC064DF",
-  "updateZipSha256": "3D236E686AFB2F2DE7C6B0DC20440D00B7DE56D8216D6B5AF9336048E6C7C487",
+  "sha256": "5B03D448A2F9E55CD1EC4404883761F010E9A9687765710D69473A2E2EEE39BC",
+  "updateZipSha256": "31E577E4421512D0C3685A7FD4C661EC1263403B2F74BD3E2ADEDC0290375923",
   "supportedRevit": [
     2019,
     2021,
