@@ -1,5 +1,13 @@
 [
   {
+    "version": "3.1.0",
+    "publishedAt": "2026-09-16",
+    "title": "버전 3.1.0",
+    "notes": "링크 매니저를 추가하고 메뉴 구성, Document Navigator와 문서별 탭 색상을 개선했습니다. 새 업데이트 알림과 스케줄 Excel 추출의 단위 기준 선택을 추가했습니다. Revit 2019, 2021, 2023, 2025, 2027을 지원합니다.",
+    "packageUrl": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.0.zip",
+    "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.0.exe"
+  },
+  {
     "version": "3.0.20",
     "publishedAt": "2026-09-16",
     "title": "버전 3.0.20",
