@@ -1,11 +1,11 @@
 {
-  "version": "3.0.20",
-  "url": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.20.zip",
+  "version": "3.1.0",
+  "url": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.0.zip",
   "publishedAt": "2026-09-16",
-  "notes": "패밀리 공유파라미터 추가·연동의 문서별 공유 상태 판정과 다단계 연동 검증을 수정했습니다. 처리 결과 보고서와 Excel 내보내기를 보완했습니다. 2026-09-16 현재 소스로 설치파일을 다시 빌드했습니다. Revit 2019, 2021, 2023, 2025, 2027을 지원합니다.",
-  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.0.20.exe",
-  "sha256": "5B03D448A2F9E55CD1EC4404883761F010E9A9687765710D69473A2E2EEE39BC",
-  "updateZipSha256": "31E577E4421512D0C3685A7FD4C661EC1263403B2F74BD3E2ADEDC0290375923",
+  "notes": "링크 매니저의 통합 설정 화면과 기본 Excel 양식을 추가하고, 스케줄 Import의 실제 반영·저장 결과와 누락 열 검증을 보완했습니다. 문서 이동·탭 색상, 업데이트 알림, 스케줄 추출 단위 선택 개선을 포함합니다. Revit 2019, 2021, 2023, 2025, 2027을 지원합니다.",
+  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.0.exe",
+  "sha256": "49D438D5B062D774A603F743A0C88CC7D10AE8818CE5AA430C0F78D69325BFC3",
+  "updateZipSha256": "08EB73D3A302A77CFC3092003AB14C586DBF766FE7BDDD194D692C2B06FFD23B",
   "supportedRevit": [
     2019,
     2021,

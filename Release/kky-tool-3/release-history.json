@@ -1,5 +1,13 @@
 [
   {
+    "version": "3.1.0",
+    "publishedAt": "2026-09-16",
+    "title": "버전 3.1.0",
+    "notes": "링크 매니저의 통합 설정 화면과 기본 Excel 양식을 추가하고, 스케줄 Import의 실제 반영·저장 결과와 누락 열 검증을 보완했습니다. 문서 이동·탭 색상, 업데이트 알림, 스케줄 추출 단위 선택 개선을 포함합니다. Revit 2019, 2021, 2023, 2025, 2027을 지원합니다.",
+    "packageUrl": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.0.zip",
+    "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.0.exe"
+  },
+  {
     "version": "3.0.20",
     "publishedAt": "2026-09-16",
     "title": "버전 3.0.20",
