@@ -31,7 +31,7 @@
         <h1>KKY Tool 업데이트 내역</h1>
         <p>현재 운영하는 3.x 계열과 초기 레이아웃 계열의 마지막 Stable 2.x 변경 기록입니다.</p>
       </div>
-      <div class="updates-current"><span class="badge ok">현재 배포</span><strong>3.1.1</strong><span>2026.09.20</span></div>
+      <div class="updates-current"><span class="badge ok">현재 배포</span><strong>3.1.2</strong><span>2026.09.21</span></div>
     </section>
 
     <nav class="updates-program-tabs" aria-label="업데이트 내역 프로그램 선택">
@@ -44,7 +44,23 @@
       <header class="release-series__header"><div><h2 id="kky-3-series">KKY Tool 3.x</h2><p>새 작업대 UI와 확장 기능을 사용하는 현재 계열입니다.</p></div><a class="button primary" href="/index.html#download">현재 버전 받기</a></header>
       <ol class="release-notes">
         <li class="release-note">
-          <div class="release-note__version"><span class="badge ok">현재 배포</span><strong>3.1.1</strong><span class="release-note__date">2026.09.20</span></div>
+          <div class="release-note__version"><span class="badge ok">현재 배포</span><strong>3.1.2</strong><span class="release-note__date">2026.09.21</span></div>
+          <div class="release-note__content">
+            <h3>Link객체 확인 도구 추가</h3>
+            <p class="release-note__summary">현재 프로젝트에 연결된 RVT의 내부 객체를 ID로 선택하고, 반대로 선택한 링크 객체의 ID를 확인할 수 있습니다. Hub와 별도로 열리는 보조 도구입니다.</p>
+            <ul class="release-note__list">
+              <li><b>KKY Tools → 보조 도구 → Link객체 확인</b>에서 대상 링크 인스턴스를 선택합니다. 같은 RVT가 여러 번 배치되어 있으면 인스턴스 ID로 구분하며, 마지막으로 사용한 링크는 호스트 모델별로 기억합니다.</li>
+              <li><b>ID로 선택</b>에서 하나 또는 여러 ID를 입력합니다. 마침표·쉼표·탭·줄바꿈으로 구분할 수 있고 Excel에서 복사한 값을 붙여 넣을 수 있습니다. 중복을 제외한 최대 1,000개를 처리하며, 올바르지 않은 ID가 섞여 있으면 선택을 바꾸지 않고 사유를 표시합니다.</li>
+              <li><b>선택 객체 ID 확인</b>은 Revit에서 미리 선택한 링크 내부 객체의 ID를 링크 인스턴스별로 표시합니다. <b>ID 복사</b>로 쉼표로 구분된 목록을 복사해 다시 사용할 수 있습니다. 선택을 바꾸려면 창을 닫고 Revit에서 다시 선택한 뒤 도구를 엽니다.</li>
+              <li>처음 실행할 때 단축키가 없으면 등록 창을 표시합니다. 영문·숫자 2~5자의 순차 입력을 지원하며, 기존 단축키와 충돌하면 덮어쓰지 않습니다. <b>다시 묻지 않기</b>를 선택하면 등록 없이 안내를 생략할 수도 있습니다.</li>
+              <li>현재 프로젝트의 <b>직접 연결된 RVT 링크</b>가 대상입니다. 언로드된 링크는 먼저 로드해야 하며, 호스트 객체·링크 전체 선택·CAD·중첩 링크의 최하위 객체는 이 도구의 대상이 아닙니다.</li>
+              <li>새 도구는 <b>Revit 2023·2025·2027</b>에서 사용할 수 있습니다. Revit 2019·2021에서는 링크 내부 선택 API가 없어 버튼이 비활성화됩니다. Revit 2023은 선택 강조 표시 개선이 포함된 <b>2023.1.4 이상</b>을 권장합니다.</li>
+              <li>설치파일은 기존처럼 Revit <code>2019</code>, <code>2021</code>, <code>2023</code>, <code>2025</code>, <code>2027</code>용을 포함합니다. 기존 3.x 사용자는 <b>업데이트 확인</b>에서 3.1.2를 받을 수 있습니다.</li>
+            </ul>
+          </div>
+        </li>
+        <li class="release-note">
+          <div class="release-note__version"><span class="badge blue">정식 버전</span><strong>3.1.1</strong><span class="release-note__date">2026.09.20</span></div>
           <div class="release-note__content">
             <h3>공유파라미터 통합 변경, 기둥 넘버 배치·검토 및 스케줄 추출 개선</h3>
             <p class="release-note__summary">프로젝트와 패밀리의 공유파라미터를 매핑에 따라 변경하고 값을 이관하는 기능, 링크 모델의 기둥을 기준으로 넘버를 배치·검토하는 기능을 추가했습니다. 대량 작업의 중간저장과 결과 확인, 스케줄 Excel 추출도 보완했습니다.</p>
