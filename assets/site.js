@@ -95,7 +95,7 @@
           return;
         }
         const field = el.dataset.releaseDownload || 'installerUrl';
-        const url = data[field] || data.url || '';
+        const url = (kind === 'kky3' && field === 'url' ? data.packageUrl : '') || data[field] || data.url || '';
         if (url) {
           el.setAttribute('href', url);
           el.removeAttribute('aria-disabled');
