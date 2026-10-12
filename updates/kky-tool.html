@@ -31,7 +31,7 @@
         <h1>KKY Tool 업데이트 내역</h1>
         <p>현재 운영하는 3.x 계열과 초기 레이아웃 계열의 마지막 Stable 2.x 변경 기록입니다.</p>
       </div>
-      <div class="updates-current"><span class="badge ok">현재 배포</span><strong>3.1.5</strong><span>2026.10.12</span></div>
+      <div class="updates-current"><span class="badge ok">현재 배포</span><strong>3.1.6</strong><span>2026.10.12</span></div>
     </section>
 
     <nav class="updates-program-tabs" aria-label="업데이트 내역 프로그램 선택">
@@ -44,7 +44,25 @@
       <header class="release-series__header"><div><h2 id="kky-3-series">KKY Tool 3.x</h2><p>새 작업대 UI와 확장 기능을 사용하는 현재 계열입니다.</p></div><a class="button primary" href="/index.html#download">현재 버전 받기</a></header>
       <ol class="release-notes">
         <li class="release-note">
-          <div class="release-note__version"><span class="badge ok">현재 배포</span><strong>3.1.5</strong><span class="release-note__date">2026.10.12</span></div>
+          <div class="release-note__version"><span class="badge ok">현재 배포</span><strong>3.1.6</strong><span class="release-note__date">2026.10.12</span></div>
+          <div class="release-note__content">
+            <h3>Link Manager 독립 창과 NWC 파일 작업 개선</h3>
+            <p class="release-note__summary">Link Manager를 NWC Exporter plus 옆의 리본 버튼에서 별도 창으로 실행하도록 정리했습니다. NWC Exporter plus 0.9.4를 함께 설치하며, 여러 뷰를 추출할 때 파일을 다시 여는 작업과 원본 누락 안내를 개선했습니다.</p>
+            <ul class="release-note__list">
+              <li><b>Link Manager 독립 창</b>에서 로컬·ACC 등록, 활성 문서·여러 RVT, 링크 배치·참조·웍셋 설정, Excel, 검증·실행·중지·결과를 처리합니다. Hub 기능 목록이 아닌 전용 리본 버튼을 사용하세요.</li>
+              <li><b>Revit 문서 전환</b>: Link Manager 창을 열어 둔 상태로 Revit을 조작할 수 있습니다. 문서를 전환하면 활성 문서와 웍셋을 갱신하며 편집 중인 설정은 유지합니다. 실제 링크·저장 작업 중 Revit API를 실행하는 대기 시간은 별개입니다.</li>
+              <li><b>NWC 문서 재사용</b>: 같은 실행 안에서 동일 RVT의 열린 문서를 재사용하고 등록 순서대로 뷰를 추출합니다. 별도 예약 실행 사이에 문서를 계속 열어 두는 방식은 아닙니다.</li>
+              <li><b>행별 ‘리로드 후 진행’</b>은 기본 꺼짐입니다. 켜면 센트럴 최신 변경과 해당 링크 설정을 반영한 뒤 추출하며, Excel 마지막 열로도 설정을 주고받습니다. 구형 양식의 누락 열·빈값은 꺼짐으로 처리합니다. 센트럴 기준 임시 로컬에는 원본 로컬의 미동기화 변경이 포함되지 않고 원본 저장·동기화도 하지 않습니다.</li>
+              <li><b>원본 파일 점검</b>: 삭제·이동된 RVT는 전체 등록 경로와 함께 실패를 표시하고 나머지 파일을 계속 처리합니다. 선택한 원본을 모두 사용할 수 없으면 Revit을 실행하지 않습니다. 접근·잠금 오류와 실행 준비 이후 삭제도 구분하며, NWD 갱신에 누락된 원본의 이전 성공 NWC를 재사용하지 않습니다.</li>
+              <li><b>작업용 Revit과 링크 진단</b>: 새로 시작한 Revit 프로세스를 확인하고 기존 세션을 보호합니다. 링크 재로드 전후의 호스트 활성 공유좌표와 최상위 링크 배치를 비교해 변경이 감지되면 해당 추출을 중단합니다. 긴 결과 경로·오류는 줄바꿈하고 XML 읽기 실패의 파일 경로와 내부 원인을 남깁니다.</li>
+              <li><b>공유파라미터 진행 표시</b>는 최근 상위·하위 패밀리 작업과 확정된 처리 수를 구분합니다. 30초 이상 새 작업 알림이 없으면 마지막 확인 작업으로 표시하며, 단계 전환·정지·재개와 입력·스크롤 유지를 보완했습니다.</li>
+              <li>설치파일은 <b>Revit 2019·2021·2023·2025·2027</b>용입니다. 설치 전에 모든 Revit 창을 닫으세요. 기존 사용자 설정과 이전 버전 다운로드는 보존합니다.</li>
+              <li>이번 배포에서는 빌드와 패키지를 확인했습니다. 실제 센트럴 갱신·두 Revit 창 라우팅·최종 NWC 좌표·다른 PC 설치와 전체 기능의 실제 모델 실행을 새로 검증했다는 의미는 아닙니다.</li>
+            </ul>
+          </div>
+        </li>
+        <li class="release-note">
+          <div class="release-note__version"><span class="badge blue">정식 버전</span><strong>3.1.5</strong><span class="release-note__date">2026.10.12</span></div>
           <div class="release-note__content">
             <h3>공유파라미터 처리와 작업 재개·진행 표시 개선</h3>
             <p class="release-note__summary">공유파라미터 통합 변경에서 등록한 파라미터를 중심으로 패밀리를 처리하도록 정리했습니다. 작업 중인 대상과 완료 수를 구분하고, 저장된 체크포인트에서 이어가는 흐름을 보완했습니다.</p>
