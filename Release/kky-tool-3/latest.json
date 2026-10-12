@@ -4,8 +4,8 @@
   "publishedAt": "2026-10-12",
   "notes": "Link Manager에 열린 문서 선택과 기존 링크 웍셋 변경을 추가하고, 레벨 영역별 검토의 기둥 높이·경계 판정을 수정했습니다.",
   "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.8.exe",
-  "sha256": "1A164A60AFF8045F7C544784A21204D41C59B22E06F7AB4AC3BE01ED2AFE0E75",
-  "updateZipSha256": "207F5EC60096DB9AEC8B0989C361A543DECA5364D5413ED01DFDC494E0764EF1",
+  "sha256": "824848512D68DD988E96120CA0674A008882082966DF7AFC0A04667DBE8C68AC",
+  "updateZipSha256": "ACB6EBA79EF1FD2971951DE095EB82167A2B3651A30A830BFB7A9D6215B14C63",
   "packageUrl": "https://update.zerokky.com/Release/kky-tool-3/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.8.zip",
   "supportedRevit": [
     2019,
