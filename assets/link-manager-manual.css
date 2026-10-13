@@ -1,0 +1,32 @@
+body[data-manual="link-manager"] .module-shot {
+  margin: 20px 0 28px;
+}
+
+body[data-manual="link-manager"] .module-shot a {
+  display: block;
+  background: #f2f5f7;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+
+body[data-manual="link-manager"] .module-shot img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  max-height: 380px;
+  object-fit: contain;
+  margin: 0 auto;
+}
+
+body[data-manual="link-manager"] .module-section h3 {
+  margin-top: 28px;
+}
+
+body[data-manual="link-manager"] li + li {
+  margin-top: 8px;
+}
+
+body[data-manual="link-manager"] code {
+  overflow-wrap: anywhere;
+}

@@ -49,6 +49,20 @@
     else nav.appendChild(updates);
   }
 
+  function normalizeRequestsNav() {
+    const nav = qs('[data-nav-menu]');
+    if (!nav) return;
+    const matches = qsa('[data-nav="requests"]', nav);
+    matches.slice(1).forEach((link) => link.remove());
+    const requests = matches[0] || document.createElement('a');
+    requests.dataset.nav = 'requests';
+    requests.href = '/requests.html';
+    requests.textContent = '요청하기';
+    const admin = qs('[data-nav="admin"]', nav);
+    if (admin) nav.insertBefore(requests, admin);
+    else nav.appendChild(requests);
+  }
+
   function setActiveNav() {
     const activePage = page === 'features' || page === 'family-browser' ? 'manual' : page;
     qsa('[data-nav]').forEach((link) => {
@@ -513,6 +527,7 @@
   }
 
   document.addEventListener('DOMContentLoaded', () => {
+    normalizeRequestsNav();
     normalizeManualNav();
     normalizeUpdatesNav();
     setActiveNav();
