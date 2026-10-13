@@ -1,5 +1,21 @@
 [
   {
+    "version": "3.1.9",
+    "publishedAt": "2026-10-13",
+    "title": "버전 3.1.9",
+    "notes": [
+      "공유파라미터 통합 변경의 RVT 저장만·중앙 동기화와 작업 중 체크포인트 선택을 분리하고 진행 관찰을 보완했습니다.",
+      "기억된 설정을 체크박스·입력란에 표시하고 늦은 초기 응답이 편집값을 덮는 경우를 수정했습니다.",
+      "스케줄 Import는 수식 원문 대신 Excel에 저장된 계산 결과를 읽으며 계산 불가·오류 셀은 적용 전에 안내합니다.",
+      "BQC/NWC 하위 메뉴 버튼과 납품 정리 파라미터의 표시 단위·실패 안내, 구조 프레임 위치선 기본 숨김을 보완했습니다.",
+      "서명된 애드인과 설치 실행기를 제공하며 공개 게시자 인증서 등록을 설치기에 포함했습니다. 별도 인증서 설치는 필요하지 않습니다.",
+      "Revit 2019·2021·2023·2025·2027, Link Manager와 NWC Exporter plus 0.9.4 전체본을 포함합니다.",
+      "서명·패키지 검사는 실제 현장 RVT 처리나 다른 PC의 Revit 무경고 로드를 직접 검증한 시험과 구분합니다."
+    ],
+    "packageUrl": "https://github.com/zerokky11/Release/releases/download/kky-tool-v3.1.9/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.9.zip",
+    "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.9.exe"
+  },
+  {
     "version": "3.1.8",
     "publishedAt": "2026-10-12",
     "title": "버전 3.1.8",
