@@ -1,5 +1,21 @@
 [
   {
+    "version": "3.1.10",
+    "publishedAt": "2026-10-14",
+    "title": "버전 3.1.10",
+    "notes": [
+      "Link Manager는 실행 중인 Revit보다 높은 버전의 로컬 RVT와 판독할 수 없는 파일을 열기·링크 전에 검사하여 안내합니다.",
+      "신규 링크별 Absolute/Relative와 고정 옵션, 기존 링크의 경로 유형·Reference Type·웍셋·고정·안전한 재배치를 지원합니다. 기존 ElementId/UniqueId는 유지합니다.",
+      "공유 위치 저장을 새로 요구하는 기존 링크 재배치는 해당 행 전체를 되돌립니다. 현재 위치 유지를 선택하면 다른 설정만 변경할 수 있습니다.",
+      "열린 문서의 현재 링크 목록·상태, 전체 파일명 한 줄 표시와 compact 옵션, 압축한 일괄 설정·Excel 버튼을 정리했습니다.",
+      "Positioning·Path Type·Reference Type은 영문 Revit 용어로 표시하며 schema 4 빈 기본 Excel 양식과 구형 한글 Excel 입력을 함께 지원합니다.",
+      "Revit 2019·2021·2023·2025·2027, Link Manager와 NWC Exporter plus 0.9.4 전체본을 포함합니다.",
+      "최신 용어 변경은 다섯 연도 빌드·UI·Excel·서명 대조를 확인했습니다. 앞선 기능 수정의 실제 실행은 Revit 2019/2023/2025/2027 시험 모델 범위이며, 2021 실제 실행·현장 센트럴·실제 ACC는 미검증입니다."
+    ],
+    "packageUrl": "https://github.com/zerokky11/Release/releases/download/kky-tool-v3.1.10/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.10.zip",
+    "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.10.exe"
+  },
+  {
     "version": "3.1.9",
     "publishedAt": "2026-10-13",
     "title": "버전 3.1.9",
