@@ -1,18 +1,19 @@
 [
   {
     "version": "3.1.11",
-    "publishedAt": "2026-10-15",
-    "title": "버전 3.1.11 · NWC 1.0.1 수정본",
+    "publishedAt": "2026-10-16",
+    "title": "버전 3.1.11 · NWC 1.0.1 Fix5 수정본",
     "notes": [
-      "NWC Exporter plus 1.0.1 전체 23파일과 다섯 Revit 연도 작업 모듈, 활성 문서 연결용 최신 KKY DLL을 통합했습니다. KKY Tool 버전은 3.1.11 그대로입니다.",
+      "NWC Exporter plus 1.0.1 Fix5 전체 23파일과 다섯 Revit 연도 작업 모듈, 활성 문서 연결용 KKY DLL을 통합했습니다. KKY Tool 3.1.11 / NWC 1.0.1 버전은 유지합니다.",
       "확인된 CLR4 XML 금지 문자 직렬화와 임시 파일 정리 결함을 수정하고 프로세스 시작·자연 종료·종료 정리 이유와 전체 XML 내부 오류를 보존합니다.",
-      "활성 문서 연결 정보를 고정 LocalAppData 세션 경로에 등록하며 Exporter는 기존 TEMP 경로도 읽습니다. 본체만 바꾸지 말고 KKY DLL까지 함께 설치한 뒤 Revit을 다시 실행하세요.",
+      "자동 탐색은 마지막으로 확인한 상태를 표시하며 다른 Revit 창으로 자동 전환하지 않습니다. 새로고침과 추출을 누르면 선택한 Revit의 실제 문서와 뷰를 다시 확인하고 문서가 바뀌면 추출을 중단합니다. 본체와 KKY DLL을 함께 갱신하세요.",
+      "최종 설치본으로 Revit 2019·2023 동시 실행 목록 연결, 새로고침과 실제 NWC 추출을 확인했습니다. 2021·2025·2027 실제 실행은 이번에 검증하지 않았습니다. 기존 GUI의 자동 전면 전환을 보장하지 않습니다.",
       "이미 3.1.11을 설치한 PC에는 같은 버전이므로 자동 업데이트 알림이 표시되지 않습니다. Revit과 Exporter를 모두 종료하고 홈페이지 수정 설치파일로 직접 재설치하세요. 3.1.10 이하 업데이트는 이 수정본을 받습니다.",
       "객체 복사의 파일 선택·파라미터 조건·UTC AND/OR 미리보기, 위치와 값 매핑 및 센트럴 생성의 파일별 Building Number 입력을 유지합니다.",
       "다른 PC의 Revit 2021 시작 중 종료 원인과 실제 추출 성공은 아직 확인되지 않았습니다. XML 결함 수정과 진단 보강을 원격 실행 문제의 해결 확정으로 표현하지 않습니다."
     ],
-    "packageUrl": "https://github.com/zerokky11/Release/releases/download/kky-tool-v3.1.11/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.11.zip?rev=nwc101-r2-20261015",
-    "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.11.exe?rev=nwc101-r2-20261015"
+    "packageUrl": "https://github.com/zerokky11/Release/releases/download/kky-tool-v3.1.11/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.11.zip?rev=nwc101-fix5-20261016",
+    "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.11.exe?rev=nwc101-fix5-20261016"
   },
   {
     "version": "3.1.10",
