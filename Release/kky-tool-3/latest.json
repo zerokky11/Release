@@ -1,12 +1,12 @@
 {
   "version": "3.1.11",
-  "url": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.11.exe",
+  "url": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.11.exe?rev=nwc101-r2-20261015",
   "publishedAt": "2026-10-15",
-  "notes": "NWC Exporter plus 1.0 통합, 조건 기반 객체 복사와 센트럴 생성의 건물 번호 입력을 추가했습니다.",
-  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.11.exe",
-  "sha256": "7968F523929F2525DEB87865A519597DE520E26084AEEA585C1D8F9AD8BB4DD1",
-  "updateZipSha256": "AA03F905A7107992D6E8397F0B5C35522239DC0E53B1A59479C06817457BD4F3",
-  "packageUrl": "https://github.com/zerokky11/Release/releases/download/kky-tool-v3.1.11/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.11.zip",
+  "notes": "NWC 1.0.1 XML 처리·활성 문서 연결 수정본입니다. 기존 3.1.11은 직접 재설치하세요.",
+  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.11.exe?rev=nwc101-r2-20261015",
+  "sha256": "6A7708CC6D240ADC516508E8BB0123F59B33410152F274DA2B320A1DE853B8E2",
+  "updateZipSha256": "54A7BB15A9111BF390C4482F75DE5430024F9C7675766EA2D23EBA342E12B7DD",
+  "packageUrl": "https://github.com/zerokky11/Release/releases/download/kky-tool-v3.1.11/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.11.zip?rev=nwc101-r2-20261015",
   "supportedRevit": [
     2019,
     2021,
