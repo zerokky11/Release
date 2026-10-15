@@ -1,5 +1,20 @@
 [
   {
+    "version": "3.1.11",
+    "publishedAt": "2026-10-15",
+    "title": "버전 3.1.11",
+    "notes": [
+      "NWC Exporter plus 1.0 전체본을 기본 포함하며 Revit 2019·2021·2023·2025·2027과 Navisworks 작업 모듈을 함께 설치합니다. 기존 설정·Excel·예약·뷰 재사용을 유지합니다.",
+      "객체 복사에서 열린 문서 또는 RVT로 A/B를 준비하고 인스턴스 파라미터 문자열·UTC 날짜 조건을 AND/OR로 조합해 미리보기 후 복사합니다.",
+      "복사 위치·같은 이름/GUID의 값 유지와 사용자 A→B 매핑을 확인합니다. 대상이 바뀌면 다시 미리보기를 요구하고 검증 실패 시 B 복사를 되돌립니다. 저장·중앙 동기화는 자동 실행하지 않습니다.",
+      "센트럴 생성 화면·Excel에 파일별 Building Number 입력을 추가했습니다. 빈 값은 원본 유지이며 새 센트럴 저장 전에만 적용합니다.",
+      "최신 Link Manager와 다섯 Revit 연도, 기존 서명 및 설치 시 게시자 신뢰 등록을 유지합니다. 설치 전 모든 Revit 창을 종료하세요.",
+      "빌드·서명·포함 파일 확인은 실제 Revit 2021·Navisworks 2021 추출, 현장 ACC 전체 기능이나 깨끗한 PC 설치·무경고 로드의 검증 완료를 의미하지 않습니다."
+    ],
+    "packageUrl": "https://github.com/zerokky11/Release/releases/download/kky-tool-v3.1.11/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.11.zip",
+    "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.11.exe"
+  },
+  {
     "version": "3.1.10",
     "publishedAt": "2026-10-14",
     "title": "버전 3.1.10",
