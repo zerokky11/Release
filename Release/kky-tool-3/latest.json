@@ -1,12 +1,12 @@
 {
   "version": "3.1.12",
-  "url": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.12.exe",
+  "url": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.12.exe?rev=blankexcel-20261016",
   "publishedAt": "2026-10-16",
   "notes": "객체 복사 진입, 링크 목록·재시도와 NWC 파일명 일괄 설정을 개선했습니다.",
-  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.12.exe",
-  "sha256": "80A74AAF9C6E1B47690C1A53A9F9F99647E0D86C1360053ED69605894A1EBF7D",
-  "updateZipSha256": "8CB905D635058ECBF7B5EF6D1F80AD037545548FFAF1E95CA089FC7148557A98",
-  "packageUrl": "https://github.com/zerokky11/Release/releases/download/kky-tool-v3.1.12/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.12.zip",
+  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.12.exe?rev=blankexcel-20261016",
+  "sha256": "284498A2A7C11FD4612D8CBE15C16F7CFE96A71B751F060D48D76022B39DDFF3",
+  "updateZipSha256": "49F883A5A236D437C39A2B8E0F0C8625E5A05E5F6EA090E3B88F28A9DDF60536",
+  "packageUrl": "https://github.com/zerokky11/Release/releases/download/kky-tool-v3.1.12/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.12.zip?rev=blankexcel-20261016",
   "supportedRevit": [
     2019,
     2021,
