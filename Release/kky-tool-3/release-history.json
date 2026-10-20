@@ -1,5 +1,20 @@
 [
   {
+    "version": "3.1.14",
+    "publishedAt": "2026-10-20",
+    "title": "버전 3.1.14 · 기둥 넘버 높이별 중복 판정",
+    "notes": [
+      "같은 기준 레벨·원본 기둥에 연결된 넘버라도 실제 삽입점 Z가 다른 높이면 중복으로 합산하지 않습니다. 기존 위치 허용 오차 안의 같은 높이 그룹에서만 중복을 셉니다.",
+      "기존 원본 연결, 수동 3D 매칭과 목표 배치 위치·원본 값·번호·타입·치수 검토는 유지합니다. 다른 높이에 있다는 이유만으로 모든 검토를 정상 처리하는 변경은 아닙니다.",
+      "기존 빈 교차점 계산, 샛기둥 순서와 교차점의 주기둥 번호 방식, 패밀리 선택을 유지합니다. NWC Exporter plus Fix6 전체 23파일도 포함합니다.",
+      "Revit 2019·2021·2023·2025·2027용 최종 signed DLL에서 각각 높이 회귀 21시나리오·86조건과 로드 해시/버전 일치를 확인했습니다. 독립 포장 감사 24항목을 통과했으며 실제 Revit·다른 PC 모델·설치 실행은 이번에 검증하지 않았습니다."
+    ],
+    "packageUrl": "https://github.com/zerokky11/Release/releases/download/kky-tool-v3.1.14/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.14.zip",
+    "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.14.exe",
+    "sha256": "44073C1E672031A98359E0A153485A3969D4B581F1B9D5A17B2617FB2E29E971",
+    "updateZipSha256": "3B4EBD779D4402A709C02EFA422E2FEB617CDED45233CF30605436D718A03408"
+  },
+  {
     "version": "3.1.13",
     "publishedAt": "2026-10-20",
     "title": "버전 3.1.13 · 기둥 번호 검토 개선",
