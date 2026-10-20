@@ -1,12 +1,12 @@
 {
   "version": "3.1.16",
-  "url": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.16.exe",
+  "url": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.16.exe?rev=20261020-b30e4b578376",
   "publishedAt": "2026-10-20",
   "notes": "검토 결과창·엑셀 내보내기와 파일 열기 질문을 공통 디자인으로 정리하고, 교차점 예상 번호를 그리드 위치로 계산하도록 보완했습니다.",
-  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.16.exe",
-  "sha256": "F34E40BBC6377759B68D140E8687FAF64705E8377702C82F91BAAA31EB897DF5",
-  "updateZipSha256": "D8F68B708CBB4B3C732EF6585226E543F51557EC1217A2CED235A4ED94D13E7C",
-  "packageUrl": "https://github.com/zerokky11/Release/releases/download/kky-tool-v3.1.16/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.16.zip",
+  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.16.exe?rev=20261020-b30e4b578376",
+  "sha256": "B30E4B5783767FABFD6DCAAA336114C183903A0E661EEF525BFA61CFB22C69D0",
+  "updateZipSha256": "4116FE6B8A659C47074AAF489D8533EA5907CC53CAA7AAA9FE81351FB84B38AD",
+  "packageUrl": "https://github.com/zerokky11/Release/releases/download/kky-tool-v3.1.16/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.16_r20261020-1600.zip",
   "supportedRevit": [
     2019,
     2021,
