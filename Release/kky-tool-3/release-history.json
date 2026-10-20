@@ -1,5 +1,21 @@
 [
   {
+    "version": "3.1.15",
+    "publishedAt": "2026-10-20",
+    "title": "버전 3.1.15 · 기둥 넘버 배치 중복 판정과 결과 엑셀 정리",
+    "notes": [
+      "같은 원본 기둥 ID와 높이를 사용해도 실제 XYZ 배치점이 떨어진 넘버는 중복으로 합산하지 않습니다. 기존 위치 허용 오차 안의 실제 겹침만 중복으로 셉니다. 저장된 원본 연결과 위치·값 대조는 유지합니다.",
+      "구조 기둥 ID, 기둥번호 ID, 구조 기둥 패밀리·타입, 예상 Column Number·Stud Number, 구조 원본 입력값, 실제 Column Number·Stud Number, 값 일치 여부, 비고의 11열로 검토 엑셀을 정리했습니다.",
+      "예상 번호 두 열을 유지하며 값 일치 여부는 구조 원본과 실제 Column Number·Stud Number를 비교한 결과입니다. 정상 행의 비고는 비우고 문제가 있는 행에만 짧은 설명을 표시합니다.",
+      "최신 다회차 정리의 명시 제외·대체답변 및 최종 수량 자동 파일명 보완과 기존 NWC Exporter plus Fix6 전체 구성을 포함합니다.",
+      "다섯 Revit 연도의 최종 서명 DLL에서 각각 XYZ 32시나리오·100조건과 별도 11열 스키마, 독립 포장 감사24항목을 확인했습니다. 실제 Revit 모델 실행·현장 모델·설치 후 시험은 이번에 수행하지 않았습니다."
+    ],
+    "packageUrl": "https://github.com/zerokky11/Release/releases/download/kky-tool-v3.1.15/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.15.zip",
+    "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.15.exe",
+    "sha256": "BC34450EC7643145CA038C9946A7844F6C7B5D2C9785F1BEABE3FAE9A858F98D",
+    "updateZipSha256": "FA7CA6E1CB2ED62EA7A4220D2DA095CB7389C38214373BE7F9489ECC25F68479"
+  },
+  {
     "version": "3.1.14",
     "publishedAt": "2026-10-20",
     "title": "버전 3.1.14 · 기둥 넘버 높이별 중복 판정",
