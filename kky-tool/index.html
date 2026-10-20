@@ -95,22 +95,31 @@
             <div class="admin-panel-heading">
               <div>
                 <span class="eyebrow">Family Browser</span>
-                <h2>공유 관리 폴더</h2>
-                <p>첫 번째 경로를 기본으로 사용하고, 접근할 수 없으면 아래 예비 경로를 순서대로 확인합니다.</p>
+                <h2>관리·기록 공용 폴더</h2>
+                <p>표준·권한 설정과 작업자의 기록이 함께 저장되는 위치입니다. 각 PC에서 사용 중인 등록 경로에 접근할 수 있으면 유지하고, 아니면 아래 순서로 접근 가능한 경로를 찾습니다.</p>
               </div>
               <span class="admin-file-badge">bootstrap.json</span>
             </div>
 
             <div class="field">
-              <label>관리 폴더 경로</label>
+              <label>공용 관리·기록 폴더 경로</label>
               <div id="familyPaths" class="admin-path-list"></div>
               <div class="actions admin-inline-actions">
                 <button class="button secondary" id="addFamilyPath" type="button">예비 경로 추가</button>
               </div>
-              <p class="field-help">예: <code>I:\FamilyBrowser\ProjectA</code>. 각 경로 아래의 Config, Requests, Registry, Snapshots, Thumbnails 폴더를 사용합니다.</p>
+              <p class="field-help">예: <code>\\server\BIM\FamilyBrowser</code>. 관리자만 접근하는 개인 폴더가 아니라, 작업자도 필요한 기록을 읽고 쓸 수 있는 공유 위치를 지정합니다.</p>
             </div>
 
             <div id="familyDerivedPaths" class="admin-derived-paths" aria-live="polite"></div>
+
+            <details class="admin-derived-paths" id="familyStorageGuide">
+              <summary><strong>관리 경로와 작업자 기록 경로는 어떻게 다른가요?</strong></summary>
+              <p><strong>최종 기록:</strong> 현재 버전에는 별도 작업자 기록 경로 입력란이 없습니다. 선택된 공용 폴더 아래의 <code>OperationLogs</code>에 로드·적용 기록을, <code>ElementChangeHistory</code>에 생성·수정·삭제 이력을 저장합니다.</p>
+              <p><strong>PC 임시 보관:</strong> 전송 대기 기록은 작업자 PC의 <code>%LOCALAPPDATA%\KKY\FamilyBrowser\PendingTracking</code>에서 보관합니다. 이 위치는 관리자가 함께 조회하는 최종 저장소가 아닙니다. 공유 위치에 접근할 수 있어야 전송을 완료할 수 있습니다.</p>
+              <p><strong>예비 경로:</strong> 같은 공유 폴더의 다른 접속 주소나 장애 시 대체 주소입니다. 서로 다른 폴더를 등록하면 PC마다 저장 위치가 달라질 수 있으며, 기록을 자동으로 합쳐 주지 않습니다.</p>
+              <p><strong>H·G 드라이브별 기록 분리:</strong> 센트럴 파일 위치에 따라 별도 기록 폴더를 선택하는 운영 설정은 아직 연결되어 있지 않습니다. 예비 경로 추가를 이 용도로 사용하지 마세요.</p>
+              <p><strong>폴더 권한:</strong> 표준·권한 정책의 수정 권한과 작업자의 기록 폴더 읽기·쓰기 권한을 구분해 설정하세요. 관리자가 접근할 수 있다는 사실만으로 작업자 PC에서도 기록이 저장되는 것은 아닙니다. 프로그램이 만든 하위 파일·폴더를 임의로 이동하거나 삭제하지 마세요.</p>
+            </details>
 
             <div class="form-grid admin-form-grid">
               <div class="field">
@@ -502,14 +511,18 @@
       return appendPath(appendPath(value, "Config"), "standard-policy.json");
     }
 
-    function rootToRequestPath(root) {
+    function rootToDataPath(root, folder) {
       const value = trimTrailingSlash(root);
       if (!value) return "";
       if (looksLikeJsonPath(value)) {
         const rootPath = policyPathToRoot(value);
-        return rootPath ? appendPath(rootPath, "Requests") : "";
+        return rootPath ? appendPath(rootPath, folder) : "";
       }
-      return appendPath(value, "Requests");
+      return appendPath(value, folder);
+    }
+
+    function rootToRequestPath(root) {
+      return rootToDataPath(root, "Requests");
     }
 
     function getFamilyRootPaths() {
@@ -525,7 +538,7 @@
       input.spellcheck = false;
       input.placeholder = "I:\\FamilyBrowser\\ProjectA";
       input.value = value;
-      input.setAttribute("aria-label", "Family Browser 관리 폴더 경로");
+      input.setAttribute("aria-label", "Family Browser 공용 관리·기록 폴더 경로");
       input.addEventListener("input", () => {
         updateFamilyDerivedPaths();
         tryBuildFamily();
@@ -623,17 +636,21 @@
       const target = $("familyDerivedPaths");
       target.innerHTML = "";
       if (!roots.length) {
-        target.textContent = "경로를 입력하면 정책 파일과 요청 저장소 경로를 자동으로 표시합니다.";
+        target.textContent = "경로를 입력하면 정책 파일, 요청 저장소와 작업자 기록 경로를 표시합니다.";
         return;
       }
 
       const title = document.createElement("strong");
-      title.textContent = roots.length > 1 ? `기본 경로 1개 · 예비 경로 ${roots.length - 1}개` : "기본 경로 1개";
+      title.textContent = roots.length > 1 ? `기본 후보 기준 미리보기 · 예비 경로 ${roots.length - 1}개` : "입력한 공용 폴더 기준 미리보기";
       const policy = document.createElement("span");
       policy.textContent = "정책 파일: " + rootToPolicyPath(roots[0]);
       const requests = document.createElement("span");
       requests.textContent = "요청 저장소: " + rootToRequestPath(roots[0]);
-      target.append(title, policy, requests);
+      const operations = document.createElement("span");
+      operations.textContent = "로드·적용 기록: " + rootToDataPath(roots[0], "OperationLogs");
+      const elements = document.createElement("span");
+      elements.textContent = "생성·수정·삭제 이력: " + rootToDataPath(roots[0], "ElementChangeHistory");
+      target.append(title, policy, requests, operations, elements);
     }
 
     function buildFamily() {
