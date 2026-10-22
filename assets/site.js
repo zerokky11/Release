@@ -21,8 +21,8 @@
     if (!manual) {
       manual = document.createElement('a');
       manual.dataset.nav = 'manual';
-      const next = qs('[data-nav="updates"]', nav) || qs('[data-nav="admin"]', nav);
-      if (next) nav.insertBefore(manual, next);
+      const requests = qs('[data-nav="requests"]', nav);
+      if (requests) nav.insertBefore(manual, requests);
       else nav.appendChild(manual);
     }
     manual.href = '/Manual/index.html';
@@ -44,14 +44,23 @@
     updates.href = '/updates/index.html';
     updates.textContent = '업데이트 내역';
 
-    const next = qs('[data-nav="admin"]', nav);
-    if (next) nav.insertBefore(updates, next);
+    const requests = qs('[data-nav="requests"]', nav);
+    if (requests) nav.insertBefore(updates, requests);
     else nav.appendChild(updates);
   }
 
   function normalizeRequestsNav() {
-    qsa('[data-nav="requests"], a[href="/requests.html"], a[href="requests.html"]')
-      .forEach((link) => link.remove());
+    const nav = qs('[data-nav-menu]');
+    if (!nav) return;
+    const matches = qsa('[data-nav="requests"]', nav);
+    matches.slice(1).forEach((link) => link.remove());
+    const requests = matches[0] || document.createElement('a');
+    requests.dataset.nav = 'requests';
+    requests.href = '/requests.html';
+    requests.textContent = '요청하기';
+    const admin = qs('[data-nav="admin"]', nav);
+    if (admin) nav.insertBefore(requests, admin);
+    else nav.appendChild(requests);
   }
 
   function setActiveNav() {
