@@ -21,8 +21,8 @@
     if (!manual) {
       manual = document.createElement('a');
       manual.dataset.nav = 'manual';
-      const requests = qs('[data-nav="requests"]', nav);
-      if (requests) nav.insertBefore(manual, requests);
+      const next = qs('[data-nav="updates"]', nav) || qs('[data-nav="admin"]', nav);
+      if (next) nav.insertBefore(manual, next);
       else nav.appendChild(manual);
     }
     manual.href = '/Manual/index.html';
@@ -44,8 +44,8 @@
     updates.href = '/updates/index.html';
     updates.textContent = '업데이트 내역';
 
-    const requests = qs('[data-nav="requests"]', nav);
-    if (requests) nav.insertBefore(updates, requests);
+    const next = qs('[data-nav="admin"]', nav);
+    if (next) nav.insertBefore(updates, next);
     else nav.appendChild(updates);
   }
 
