@@ -31,7 +31,7 @@
         <h1>KKY Tool 업데이트 내역</h1>
         <p>현재 운영하는 3.x 계열과 초기 레이아웃 계열의 마지막 Stable 2.x 변경 기록입니다.</p>
       </div>
-      <div class="updates-current"><span class="badge ok">현재 배포</span><strong>3.1.16</strong><span>2026.10.20</span></div>
+      <div class="updates-current"><span class="badge ok">현재 배포</span><strong>3.1.17</strong><span>2026.10.23</span></div>
     </section>
 
     <nav class="updates-program-tabs" aria-label="업데이트 내역 프로그램 선택">
@@ -44,7 +44,22 @@
       <header class="release-series__header"><div><h2 id="kky-3-series">KKY Tool 3.x</h2><p>새 작업대 UI와 확장 기능을 사용하는 현재 계열입니다.</p></div><a class="button primary" href="/index.html#download">현재 버전 받기</a></header>
       <ol class="release-notes">
         <li class="release-note">
-          <div class="release-note__version"><span class="badge ok">현재 배포</span><strong>3.1.16</strong><span class="release-note__date">2026.10.20</span></div>
+          <div class="release-note__version"><span class="badge ok">현재 배포</span><strong>3.1.17</strong><span class="release-note__date">2026.10.23</span></div>
+          <div class="release-note__content">
+            <h3>연속성 검토와 문서 상태·기둥번호 검토 보완</h3>
+            <p class="release-note__summary">연속성 검토 집계와 열린 문서 처리, 상단 문서 표시를 보완하고 링크 기둥번호 검토·중복 및 자체 간섭 판정을 정리했습니다.</p>
+            <ul class="release-note__list">
+              <li>파라미터 연속성 검토에서 정상 비교 건수를 오류 행과 분리해 집계합니다. 검토가 끝나지 않은 파일을 완료로 표시하지 않습니다.</li>
+              <li>이미 열린 동일 로컬 RVT를 여러 RVT 검토에서 다시 열지 않고 재사용합니다. 실행 중 직접 연 문서만 저장하거나 닫으며, 열린 문서를 변경하는 일부 작업은 활성 문서 방식으로 안내합니다.</li>
+              <li>상단 문서 상태를 공유하는 모듈 주소를 통일해 실제 열린 문서와 상단 문서 수&#183;이름 표시가 어긋나는 원인을 수정했습니다.</li>
+              <li>링크 기둥번호 검토는 호스트 좌표의 XY 위치별로 실제 구조 번호와 실제 Column Number&#183;Stud Number를 대조합니다. 레벨&#183;Z&#183;그리드 예상값은 이 검토에 사용하지 않습니다. 같은 위치의 여러 객체를 각각 표시하고 결과는 그룹 색상과 9열로 정리했습니다.</li>
+              <li>같은 중점&#183;타입의 X자 구조 프레임을 완전 중복으로 합치지 않도록 실제 솔리드 점유영역을 비교합니다. 실제 체적이 겹치는 경우 자체 간섭 대상으로 구분합니다.</li>
+              <li>타입명에 300 x 300 x 30 x 30처럼 이어진 치수가 있으면 앞 두 값을 가로&#183;세로로 사용합니다. 한글 자판의 ㅌ 구분도 지원합니다.</li>
+            </ul>
+          </div>
+        </li>
+        <li class="release-note">
+          <div class="release-note__version"><span class="badge blue">정식 버전</span><strong>3.1.16</strong><span class="release-note__date">2026.10.20</span></div>
           <div class="release-note__content">
             <h3>검토 결과창과 그리드 예상 번호 보완</h3>
             <p class="release-note__summary">검토 후 결과창·엑셀 내보내기를 바로 사용할 수 있도록 보완하고, 교차점의 예상 번호를 원본 값과 분리해 그리드 위치에서 계산하도록 수정했습니다.</p>
