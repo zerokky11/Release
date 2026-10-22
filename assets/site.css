@@ -1,3 +1,10 @@
+/* Keep retired request links hidden before scripts run and without JavaScript. */
+[data-nav="requests"],
+a[href="/requests.html"],
+a[href="requests.html"] {
+  display: none !important;
+}
+
 :root {
   --bg: #f5f8fb;
   --bg-soft: #edf4f8;
