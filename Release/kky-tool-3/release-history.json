@@ -2,8 +2,10 @@
   {
     "version": "3.1.17",
     "publishedAt": "2026-10-23",
-    "title": "버전 3.1.17 · 공통 검토 집계와 문서·기둥번호 검토 보완",
+    "title": "버전 3.1.17 · 공통 집계와 패밀리 연동·GUID 검토 보완",
     "notes": [
+      "패밀리 공유파라미터 연동 검토에서 정상 항목의 상세 행을 오류 목록에 남기지 않더라도 실제 정상 건수가 집계되도록 보완했습니다. 정상·오류가 함께 있는 경우에도 각각의 수를 유지합니다.",
+      "파라미터 GUID 검토 및 정리에서 BUILTIN과 FAMILY_PARAM 참고 행을 오류 건수에서 제외했습니다. 실제 GUID 불일치·공유파라미터 파일에 없는 GUID·읽기 실패 등의 오류 판정은 유지합니다.",
       "여러 기능을 함께 실행한 결과의 정상 건수는 각 기능이 실제로 계산한 값을 합산합니다. 서로 다른 기능의 오류 수를 한 기능의 전체 수에서 빼서 정상을 추정하지 않습니다.",
       "미연결 검토는 대상 객체·오류 객체·정상 객체의 같은 단위로 표시합니다. 보조 검사를 켜서 전체 정상 수를 별도로 계산하지 않는 경우에는 추정값 대신 —를 표시합니다.",
       "실제 정상 0건과 정상 수 미계측을 구분합니다. 미계측은 —로 표시하고, 중단·실패·정보 행을 정상 결과로 취급하지 않습니다.",
@@ -15,10 +17,10 @@
       "같은 중점·타입의 X자 구조 프레임을 완전 중복으로 합치지 않도록 실제 솔리드 점유영역을 비교합니다. 실제 체적이 겹치는 경우 자체 간섭 대상으로 구분합니다.",
       "타입명에 300 x 300 x 30 x 30처럼 이어진 치수가 있으면 앞 두 값을 가로·세로로 사용합니다. 한글 자판의 ㅌ 구분도 지원합니다."
     ],
-    "packageUrl": "https://github.com/zerokky11/Release/releases/download/kky-tool-v3.1.17/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.17_r20261023-normalfix.zip",
-    "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.17.exe?rev=20261023-normalfix-746d43760563",
-    "sha256": "746D437605635ED30406418048E3D0D744D6849F3DB90027F63485E5D4AF1A40",
-    "updateZipSha256": "B74F3C23EA1447501A6B5D6B101240F1A3B64C97B983342F18BACFAA18E438A9"
+    "packageUrl": "https://github.com/zerokky11/Release/releases/download/kky-tool-v3.1.17/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.17_r20261023-familyguid.zip",
+    "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.17.exe?rev=20261023-familyguid-9a1b72d61cf1",
+    "sha256": "9A1B72D61CF1607B4505F6A8BD4D73F0964FA55F089DE3AEA4BDA0EC607C0026",
+    "updateZipSha256": "81784421A4F7013BF82C54A49D246B1B5622F49F426D40640649713BF321B1CF"
   },
   {
     "version": "3.1.16",

@@ -1,12 +1,12 @@
 {
   "version": "3.1.17",
-  "url": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.17.exe?rev=20261023-normalfix-746d43760563",
+  "url": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.17.exe?rev=20261023-familyguid-9a1b72d61cf1",
   "publishedAt": "2026-10-23",
-  "notes": "여러 검토를 함께 실행할 때 정상 건수를 올바르게 합산하도록 수정했습니다. 연속성·미연결 검토 집계와 열린 문서 처리, 링크 기둥번호·중복 판정 개선도 포함합니다.",
-  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.17.exe?rev=20261023-normalfix-746d43760563",
-  "sha256": "746D437605635ED30406418048E3D0D744D6849F3DB90027F63485E5D4AF1A40",
-  "updateZipSha256": "B74F3C23EA1447501A6B5D6B101240F1A3B64C97B983342F18BACFAA18E438A9",
-  "packageUrl": "https://github.com/zerokky11/Release/releases/download/kky-tool-v3.1.17/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.17_r20261023-normalfix.zip",
+  "notes": "공통 정상 건수 집계에 더해 패밀리 공유파라미터 연동 검토의 정상 통계와 GUID 검토의 참고 행 분류를 보완했습니다.",
+  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.17.exe?rev=20261023-familyguid-9a1b72d61cf1",
+  "sha256": "9A1B72D61CF1607B4505F6A8BD4D73F0964FA55F089DE3AEA4BDA0EC607C0026",
+  "updateZipSha256": "81784421A4F7013BF82C54A49D246B1B5622F49F426D40640649713BF321B1CF",
+  "packageUrl": "https://github.com/zerokky11/Release/releases/download/kky-tool-v3.1.17/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.17_r20261023-familyguid.zip",
   "supportedRevit": [
     2019,
     2021,
