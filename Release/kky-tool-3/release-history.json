@@ -1,5 +1,22 @@
 [
   {
+    "version": "3.1.21",
+    "publishedAt": "2026-10-28",
+    "title": "버전 3.1.21 · 빠른 엑셀 저장 확대와 실행 불가 환경 대응",
+    "notes": [
+      "빠른 Excel 저장의 외부 작성 방식을 공통 검토와 특수 검토 결과로 확대했습니다. 기존 저장 옵션과 결과의 값·자료형·행 순서·서식은 유지합니다.",
+      "외부 작성기가 시작되지 않아 요청도 전달되지 않은 경우에만 기존 내부 작성기로 자동 전환합니다. 정상적인 빠른 저장은 계속 사용하며, 이미 시작한 작업의 통신·저장 오류를 중복 실행하지 않습니다.",
+      "여러 파라미터의 커넥터 연속성을 검토할 때 반복적인 이름·타입 조회를 줄였습니다. 기존 단일 파라미터 경로와 검토 기준은 유지합니다.",
+      "추가 파라미터, 매핑, Match·빈값 제외, 다회차 답변·수량과 기존 출력 형식을 유지합니다. 기둥넘버 여러 RVT 검토·파일별 설정 보완도 포함합니다.",
+      "기존 Link Manager와 NWC Exporter plus 1.0.1 Fix8 전체 구성을 함께 설치합니다. 설치 전 Revit과 NWC Exporter를 종료하세요.",
+      "실제 Revit 시험 모델의 결과 비교와 작성기 실행 차단 조건을 확인했습니다. 새 설치본을 설치한 원격 PC와 회사 보안 프로그램 환경의 동작은 별도 확인이 필요합니다."
+    ],
+    "packageUrl": "https://github.com/zerokky11/Release/releases/download/kky-tool-v3.1.21/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.21.zip",
+    "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.21.exe?rev=20261028-792e27d3f219",
+    "sha256": "792E27D3F2196DD43165D863FBC92DD9241ACCFD0A099229F0E5D9C6F20D2173",
+    "updateZipSha256": "D6A1315C80D249E44D22F16B5D099C8ED57DE1A16ACC3276BDC9C4F853185B34"
+  },
+  {
     "version": "3.1.20",
     "publishedAt": "2026-10-28",
     "title": "버전 3.1.20 · 대형 모델 엑셀 처리 개선과 기둥넘버 검토 보완",
