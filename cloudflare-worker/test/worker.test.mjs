@@ -428,6 +428,28 @@ test("duplicate usage event ids are accepted once", async () => {
   assert.equal(env.CONFIG_DB.usageEvents.length, 1);
 });
 
+test("NWC Exporter opens and export outcomes use the existing private usage list", async () => {
+  const env = await testEnv();
+  for (const [i, eventName] of ["tool_open", "active_export_succeeded", "file_export_failed", "scheduled_export_partial"].entries()) {
+    const response = await request(env, "/api/usage/events", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(usageEvent({ product: "nwc-exporter-plus", eventName, clientEventId: String(i + 1).repeat(32),
+        modelPath: "must-not-be-stored.rvt", viewName: "must-not-be-stored" }))
+    });
+    assert.equal(response.status, 202);
+  }
+  assert.equal(env.CONFIG_DB.usageEvents.length, 4);
+  const response = await request(env, "/api/usage/events?limit=500", {
+    headers: { "X-KKY-Admin-Password": ADMIN_PASSWORD }
+  });
+  assert.equal(response.status, 200);
+  const data = await response.json();
+  assert.equal(data.items.length, 4);
+  assert.ok(data.items.every(item => item.product === "nwc-exporter-plus"));
+  assert.ok(data.items.some(item => item.eventName === "active_export_succeeded"));
+  assert.ok(!JSON.stringify(data).includes("must-not-be-stored"));
+});
+
 test("usage event validation rejects an unknown product", async () => {
   const env = await testEnv();
   const response = await request(env, "/api/usage/events", {

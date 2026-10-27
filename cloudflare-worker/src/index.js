@@ -194,7 +194,7 @@ function normalizeUsageEvent(payload) {
   requirePlainObject(payload, "usage_event_must_be_an_object");
 
   const product = usageString(payload.product, "product", 100, true).toLowerCase();
-  if (product !== "kky-tool" && product !== "family-browser") {
+  if (product !== "kky-tool" && product !== "family-browser" && product !== "nwc-exporter-plus") {
     throw new HttpError(400, "usage_product_not_allowed");
   }
 

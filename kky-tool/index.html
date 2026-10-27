@@ -213,7 +213,7 @@
             <div>
               <span class="eyebrow">Usage audit</span>
               <h2>프로그램 실행 기록</h2>
-              <p>KKY Tool을 연 시각과 Autodesk/Revit 프로필, 애드인·Revit 버전을 확인합니다.</p>
+              <p>KKY Tool, Family Browser, NWC Exporter plus의 실행 시각과 사용자, 버전, 작업 종류를 확인합니다.</p>
             </div>
             <div class="actions">
               <button class="button primary" id="reloadUsage" type="button">기록 새로고침</button>
@@ -238,6 +238,7 @@
                 <option value="">전체</option>
                 <option value="kky-tool">KKY Tool</option>
                 <option value="family-browser">Family Browser</option>
+                <option value="nwc-exporter-plus">NWC Exporter plus</option>
               </select>
             </div>
             <div class="field">
@@ -256,6 +257,7 @@
                 <tr>
                   <th>실행 시각</th>
                   <th>프로그램</th>
+                  <th>작업</th>
                   <th>Autodesk/Revit 프로필</th>
                   <th>애드인</th>
                   <th>Revit</th>
@@ -263,7 +265,7 @@
                 </tr>
               </thead>
               <tbody id="usageRows">
-                <tr><td colspan="6" class="admin-usage-empty">실행 기록을 불러오면 여기에 표시됩니다.</td></tr>
+                <tr><td colspan="7" class="admin-usage-empty">실행 기록을 불러오면 여기에 표시됩니다.</td></tr>
               </tbody>
             </table>
           </div>
@@ -803,7 +805,17 @@
     function usageProductLabel(value) {
       if (value === "family-browser") return "Family Browser";
       if (value === "kky-tool") return "KKY Tool";
+      if (value === "nwc-exporter-plus") return "NWC Exporter plus";
       return value || "-";
+    }
+
+    function usageEventLabel(value) {
+      if (value === "tool_open") return "프로그램 실행";
+      const match = /^(active|file|scheduled)_export_(started|succeeded|empty|partial|failed|cancelled)$/.exec(value || "");
+      if (!match) return value || "-";
+      const kind = { active: "활성 문서", file: "파일 추출", scheduled: "예약 추출" }[match[1]];
+      const outcome = { started: "시작", succeeded: "완료", empty: "객체 없음", partial: "일부 완료", failed: "실패", cancelled: "중지" }[match[2]];
+      return kind + " · " + outcome;
     }
 
     function filteredUsageEvents() {
@@ -815,7 +827,7 @@
         if (access === "allowed" && item.accessAllowed !== true) return false;
         if (access === "blocked" && item.accessAllowed !== false) return false;
         if (!query) return true;
-        const haystack = [item.profileName, item.addinVersion, item.revitVersion, item.product]
+        const haystack = [item.profileName, item.addinVersion, item.revitVersion, item.product, usageEventLabel(item.eventName)]
           .map((value) => String(value || "").toLowerCase())
           .join(" ");
         return haystack.includes(query);
@@ -830,7 +842,7 @@
       if (!items.length) {
         const row = document.createElement("tr");
         const cell = document.createElement("td");
-        cell.colSpan = 6;
+        cell.colSpan = 7;
         cell.className = "admin-usage-empty";
         cell.textContent = usageEvents.length ? "현재 검색 조건에 맞는 실행 기록이 없습니다." : "아직 저장된 실행 기록이 없습니다.";
         row.appendChild(cell);
@@ -841,6 +853,7 @@
           const values = [
             formatUsageTime(item.receivedAtUtc),
             usageProductLabel(item.product),
+            usageEventLabel(item.eventName),
             item.profileName || "확인되지 않음",
             item.addinVersion ? "v" + item.addinVersion : "-",
             item.revitVersion || "-"
@@ -900,10 +913,11 @@
         return;
       }
 
-      const rows = [["실행 시각", "프로그램", "Autodesk/Revit 프로필", "애드인 버전", "Revit 버전", "접근 결과"]];
+      const rows = [["실행 시각", "프로그램", "작업", "Autodesk/Revit 프로필", "애드인 버전", "Revit 버전", "접근 결과"]];
       items.forEach((item) => rows.push([
         formatUsageTime(item.receivedAtUtc),
         usageProductLabel(item.product),
+        usageEventLabel(item.eventName),
         item.profileName || "",
         item.addinVersion || "",
         item.revitVersion || "",
