@@ -31,7 +31,7 @@
         <h1>KKY Tool 업데이트 내역</h1>
         <p>현재 운영하는 3.x 계열과 초기 레이아웃 계열의 마지막 Stable 2.x 변경 기록입니다.</p>
       </div>
-      <div class="updates-current"><span class="badge ok">현재 배포</span><strong>3.1.21</strong><span>2026.10.28</span></div>
+      <div class="updates-current"><span class="badge ok">현재 배포</span><strong>3.1.22</strong><span>2026.10.28</span></div>
     </section>
 
     <nav class="updates-program-tabs" aria-label="업데이트 내역 프로그램 선택">
@@ -44,7 +44,23 @@
       <header class="release-series__header"><div><h2 id="kky-3-series">KKY Tool 3.x</h2><p>새 작업대 UI와 확장 기능을 사용하는 현재 계열입니다.</p></div><a class="button primary" href="/index.html#download">현재 버전 받기</a></header>
       <ol class="release-notes">
         <li class="release-note">
-          <div class="release-note__version"><span class="badge ok">현재 배포</span><strong>3.1.21</strong><span class="release-note__date">2026.10.28</span></div>
+          <div class="release-note__version"><span class="badge ok">현재 배포</span><strong>3.1.22</strong><span class="release-note__date">2026.10.28</span></div>
+          <div class="release-note__content">
+            <h3>커넥터 검토 대상·정상 수량과 결과 요약 정리</h3>
+            <p class="release-note__summary">커넥터 검토에서 보온재·라이닝과 트레이·컨듀잇 Run을 처음 수집과 연결 상대 선택부터 제외하도록 수정했습니다. 이로 인한 좌표 읽기 실패·미판정과 정상 수량 집계를 보완하고, 결과창 파일별 표를 파일·상태·검토·오류·정상 5열로 정리했습니다.</p>
+            <ul class="release-note__list">
+              <li><b>검토 대상 구분</b>: 배관·덕트 보온재, 덕트 라이닝, CableTrayRun·ConduitRun을 처음 수집과 연결 상대 선택에서 제외합니다. 실제 배관·덕트·트레이·컨듀잇과 피팅은 계속 검토합니다.</li>
+              <li><b>잘못된 미판정 수정</b>: 보온재 등의 참조 좌표를 읽지 못해 정상 본체까지 미판정으로 분류되던 경로를 수정했습니다. 실제 연결·좌표 읽기 실패와 파라미터 오류는 계속 기록합니다.</li>
+              <li><b>정상 수량 집계</b>: 제외해야 할 객체와 연결 상대가 본체의 정상·오류·미판정 집계를 흐리지 않도록 보완했습니다. 이번 제외는 커넥터 검토에 한정하며 다른 모수·층정보 검토의 공통 필터를 전역 변경하지 않습니다.</li>
+              <li><b>결과창 정리</b>: 파일별 요약 표의 비고 열을 제거해 파일·상태·검토·오류·정상 5열로 표시합니다. 하단 기능별 수량과 Excel 상세 결과는 유지합니다.</li>
+              <li><b>앞선 개선 포함</b>: 빠른 Excel 저장 확대, 작성기 미시작 시 기존 방식 전환, 여러 파라미터 조회 개선을 포함합니다. 추가값·필터·매핑·다회차 결과·기둥넘버 설정과 기존 Link Manager도 유지합니다.</li>
+              <li><b>실제 3.1.22 설치본</b>: 표시 21·설치본 19였던 임시 복구를 종료합니다. 이번 파일은 실제 3.1.22이고 NWC Exporter plus 1.0.1 Fix8을 함께 설치합니다. 이전 21의 복구 기록과 파일은 보존합니다.</li>
+              <li><b>확인 범위</b>: 실제 Revit 2021 시험 모델에서 보온재로 발생하는 미판정을 재현하고 수정 결과를 확인했습니다. 최초 신고된 회사의 약 2천 건 모델은 경로가 확인되지 않아 직접 시험하지 못했습니다. 모든 연도·회사 환경·새 설치본 설치 후 실행을 확인한 것은 아닙니다.</li>
+            </ul>
+          </div>
+        </li>
+        <li class="release-note">
+          <div class="release-note__version"><span class="badge warn">이전 임시 복구</span><strong>3.1.21</strong><span class="release-note__date">2026.10.28</span></div>
           <div class="release-note__content">
             <h3>임시 복구 배포 · 3.1.19 설치본</h3>
             <p class="release-note__summary">3.1.20 이후 동작 문제에 대한 임시 조치로, 배포 표시는 3.1.21을 유지하고 설치파일은 보존된 3.1.19 원본으로 복구했습니다. 실제 설치 후 버전은 3.1.19로 표시됩니다.</p>
