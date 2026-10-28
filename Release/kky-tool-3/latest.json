@@ -1,12 +1,12 @@
 {
   "version": "3.1.21",
-  "url": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.21.exe?rev=20261028-792e27d3f219",
+  "url": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.21.exe?rev=recovery19-20261028-ff3feba3a04c",
   "publishedAt": "2026-10-28",
-  "notes": "빠른 Excel 저장 지원 범위를 공통·특수 검토 결과로 확대했습니다. 외부 작성기를 시작할 수 없는 경우에는 기존 저장 방식으로 전환하며, 여러 파라미터 연속성 검토의 반복 조회를 줄였습니다. 기존 결과 값·서식과 추가 파라미터·필터·매핑·다회차 설정은 유지합니다.",
-  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.21.exe?rev=20261028-792e27d3f219",
-  "sha256": "792E27D3F2196DD43165D863FBC92DD9241ACCFD0A099229F0E5D9C6F20D2173",
-  "updateZipSha256": "D6A1315C80D249E44D22F16B5D099C8ED57DE1A16ACC3276BDC9C4F853185B34",
-  "packageUrl": "https://github.com/zerokky11/Release/releases/download/kky-tool-v3.1.21/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.21.zip",
+  "notes": "3.1.20 이후 동작 문제에 대한 임시 조치로, 배포 표시는 3.1.21을 유지하고 설치파일은 보존된 3.1.19 원본으로 복구했습니다. 실제 설치 후 버전은 3.1.19로 표시됩니다. 이미 3.1.21을 설치했다면 홈페이지 설치파일로 직접 다시 설치하세요.",
+  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.21.exe?rev=recovery19-20261028-ff3feba3a04c",
+  "sha256": "FF3FEBA3A04CEEDA4F7F52FD7228E2A2B87A2835A71069F7F987D9632531B443",
+  "updateZipSha256": "CAF24FED507F5E53A0D0AFAD3E077D248857CA3F9AA00073B65A5AC995D94881",
+  "packageUrl": "https://github.com/zerokky11/Release/releases/download/kky-tool-v3.1.19/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.19.zip",
   "supportedRevit": [
     2019,
     2021,
@@ -15,5 +15,7 @@
     2027
   ],
   "channel": "3.x",
-  "majorVersion": 3
+  "majorVersion": 3,
+  "payloadVersion": "3.1.19",
+  "recovery": true
 }
