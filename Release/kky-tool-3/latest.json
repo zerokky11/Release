@@ -1,12 +1,12 @@
 {
   "version": "3.1.22",
-  "url": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.22.exe?rev=20261028-f522d72c4cd8",
+  "url": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.22.exe?rev=20261028-d6727aec7e5c",
   "publishedAt": "2026-10-28",
-  "notes": "커넥터 검토에서 보온재·라이닝과 트레이·컨듀잇 Run을 처음 수집과 연결 상대 선택부터 제외하도록 수정했습니다. 이로 인한 좌표 읽기 실패·미판정과 정상 수량 집계를 보완하고, 결과창 파일별 표를 파일·상태·검토·오류·정상 5열로 정리했습니다. 이번 설치파일은 실제 3.1.22이며 이전 3.1.19 임시 복구 배포를 종료합니다.",
-  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.22.exe?rev=20261028-f522d72c4cd8",
-  "sha256": "F522D72C4CD8633D1749E7CDB1E37EB2BBD15E7E91C4D3C5495AF21F3122C579",
-  "updateZipSha256": "FD15A6C48EBC27C10632019CE44C9B6E6945333D6D1B831FE9FDB12412FA0BBE",
-  "packageUrl": "https://github.com/zerokky11/Release/releases/download/kky-tool-v3.1.22/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.22.zip",
+  "notes": "결과창의 기능별 Excel 버튼과 같은 층 기준 자동 조회 시 결과 유지 처리를 보완한 3.1.22 수정본입니다. 앞선 커넥터 검토·수량 수정은 유지합니다. 기존 3.1.22 사용자는 새 설치파일로 직접 다시 설치하세요.",
+  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.22.exe?rev=20261028-d6727aec7e5c",
+  "sha256": "D6727AEC7E5CB8903FA0365E8B69670F5D3A7BA02682EC1D9ACBDFA98A540C8D",
+  "updateZipSha256": "93E14E788E34C6CE4D186AA566B4282EEF481BA803D0C1559DD3D34DA447D60C",
+  "packageUrl": "https://github.com/zerokky11/Release/releases/download/kky-tool-v3.1.22/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.22_summaryexportfix1.zip",
   "supportedRevit": [
     2019,
     2021,
@@ -17,5 +17,6 @@
   "channel": "3.x",
   "majorVersion": 3,
   "payloadVersion": "3.1.22",
-  "recovery": false
+  "recovery": false,
+  "revision": "summaryexportfix1"
 }
