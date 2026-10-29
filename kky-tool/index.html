@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>KKY Tool 중앙 설정 관리</title>
   <link rel="icon" href="data:,">
-  <link rel="stylesheet" href="/assets/site.css?v=3.0-20260903.1">
+  <link rel="stylesheet" href="/assets/site.css?v=20261029-groups2">
 </head>
 <body data-page="admin">
   <header class="site-header">
@@ -91,34 +91,81 @@
             </div>
           </article>
 
-          <article class="panel">
+          <article class="panel" id="family-browser-paths">
             <div class="admin-panel-heading">
               <div>
                 <span class="eyebrow">Family Browser</span>
-                <h2>관리·기록 공용 폴더</h2>
-                <p>표준·권한 설정과 작업자의 기록이 함께 저장되는 위치입니다. 각 PC에서 사용 중인 등록 경로에 접근할 수 있으면 유지하고, 아니면 아래 순서로 접근 가능한 경로를 찾습니다.</p>
+                <h2>관리 폴더와 작업 기록 저장소</h2>
+                <p>표준·권한의 원본 관리 폴더를 지정합니다. 작업자의 접근 범위가 다르면 아래에서 센트럴 파일 위치별 기록 저장소를 따로 연결합니다.</p>
               </div>
               <span class="admin-file-badge">bootstrap.json</span>
             </div>
 
             <div class="field">
-              <label>공용 관리·기록 폴더 경로</label>
+              <label for="familyGroupSelect">프로젝트 관리 그룹</label>
+              <select id="familyGroupSelect"></select>
+              <div class="actions admin-inline-actions">
+                <button class="button secondary" id="addFamilyGroup" type="button">그룹 추가</button>
+                <button class="button secondary" id="removeFamilyGroup" type="button">그룹 연결 삭제</button>
+              </div>
+            </div>
+            <div id="familyGroupFields" class="family-management-group-fields" hidden>
+              <div class="field">
+                <label for="familyGroupName">그룹 이름</label>
+                <input id="familyGroupName" maxlength="200">
+              </div>
+              <div class="field">
+                <label for="familyGroupPrefixes">이 그룹의 센트럴 파일 또는 상위 폴더 · 한 줄에 한 경로</label>
+                <textarea id="familyGroupPrefixes" spellcheck="false" placeholder="\\\\server\\H\\Projects&#10;\\\\server\\G\\Projects"></textarea>
+              </div>
+              <label class="check" for="familyGroupDefault"><input id="familyGroupDefault" type="checkbox">대상 경로가 지정되지 않은 프로젝트의 기본 그룹</label>
+            </div>
+
+            <div class="field">
+              <label for="familyGroupConnectionUrl">선택 그룹 전용 연결 주소</label>
+              <input id="familyGroupConnectionUrl" type="password" readonly autocomplete="off" spellcheck="false">
+              <div class="actions admin-inline-actions">
+                <button class="button secondary" id="issueFamilyGroupLink" type="button">연결 주소 발급</button>
+                <button class="button secondary" id="copyFamilyGroupLink" type="button">저장된 연결 주소 복사</button>
+              </div>
+              <p class="field-help">발급 후 경로 저장을 누르고, 해당 그룹 사용자에게만 전달하세요. Family Browser의 중앙 설정 연결 주소로 지정하면 그 그룹 설정만 읽습니다. 주소를 아는 사람은 설정을 읽을 수 있으므로 외부에 공개하지 마세요. 다시 발급하면 저장 시 이전 주소의 새 조회가 차단됩니다. 이미 받은 설정은 실행 중인 클라이언트에 캐시될 수 있습니다.</p>
+              <p class="field-help">기존 설치본과의 호환을 위해 기본 그룹은 기존 공개 설정 주소로도 제공됩니다. 다른 그룹의 전체 매핑과 연결 키는 관리자 인증 후에만 조회됩니다. 그룹 연결은 네트워크 폴더의 실제 읽기·쓰기 권한을 대신하지 않습니다.</p>
+            </div>
+
+            <div class="field">
+              <label>원본 관리 폴더 경로</label>
               <div id="familyPaths" class="admin-path-list"></div>
               <div class="actions admin-inline-actions">
                 <button class="button secondary" id="addFamilyPath" type="button">예비 경로 추가</button>
               </div>
-              <p class="field-help">예: <code>\\server\BIM\FamilyBrowser</code>. 관리자만 접근하는 개인 폴더가 아니라, 작업자도 필요한 기록을 읽고 쓸 수 있는 공유 위치를 지정합니다.</p>
+              <p class="field-help">예: <code>\\server\BIM\FamilyBrowser</code>. 분리 저장을 사용하지 않으면 작업자도 이 위치의 기록 폴더에 접근할 수 있어야 합니다.</p>
             </div>
 
             <div id="familyDerivedPaths" class="admin-derived-paths" aria-live="polite"></div>
 
+            <label class="check" for="familyStorageEnabled">
+              <input id="familyStorageEnabled" type="checkbox">
+              센트럴 파일 위치별로 작업 기록 분리
+            </label>
+            <div id="familyStorageFields" hidden>
+              <div class="field">
+                <label for="familyManagementId">관리 그룹 ID</label>
+                <input id="familyManagementId" readonly spellcheck="false">
+                <p class="field-help">자동 생성되는 연결 식별자입니다. 같은 관리 그룹을 유지하는 동안 바꾸지 않습니다.</p>
+              </div>
+              <div id="familyStores"></div>
+              <div class="actions admin-inline-actions"><button class="button secondary" id="addFamilyStore" type="button">기록 저장소 추가</button></div>
+              <p class="field-help">드라이브 문자는 PC마다 다르므로 <code>\\서버\공유폴더\하위폴더</code> 형식으로 등록합니다. 예: H 드라이브의 센트럴 폴더 → H 드라이브 안의 전용 기록 폴더. G 드라이브도 별도 저장소로 추가합니다.</p>
+              <p class="field-help">홈페이지 저장과 실제 저장소 연결은 별도입니다. 새 설정을 지원하는 Family Browser에서 작업자 설정을 게시해야 합니다. 구형 설치본은 여러 그룹을 구분하지 못하므로 함께 전환하세요. 관리자 통합 수집은 아직 준비 중이며 기존 기록을 자동 이동·삭제하지 않습니다.</p>
+            </div>
+
             <details class="admin-derived-paths" id="familyStorageGuide">
               <summary><strong>관리 경로와 작업자 기록 경로는 어떻게 다른가요?</strong></summary>
-              <p><strong>최종 기록:</strong> 현재 버전에는 별도 작업자 기록 경로 입력란이 없습니다. 선택된 공용 폴더 아래의 <code>OperationLogs</code>에 로드·적용 기록을, <code>ElementChangeHistory</code>에 생성·수정·삭제 이력을 저장합니다.</p>
+              <p><strong>최종 기록:</strong> 분리 저장을 끄면 원본 관리 폴더의 기존 기록 경로를 유지합니다. 켜면 권한/차단에 등록된 센트럴 파일의 경로와 저장소 대상 범위를 대조해, 해당 저장소 아래의 Revit 버전·프로젝트별 폴더에 기록합니다.</p>
               <p><strong>PC 임시 보관:</strong> 전송 대기 기록은 작업자 PC의 <code>%LOCALAPPDATA%\KKY\FamilyBrowser\PendingTracking</code>에서 보관합니다. 이 위치는 관리자가 함께 조회하는 최종 저장소가 아닙니다. 공유 위치에 접근할 수 있어야 전송을 완료할 수 있습니다.</p>
               <p><strong>예비 경로:</strong> 같은 공유 폴더의 다른 접속 주소나 장애 시 대체 주소입니다. 서로 다른 폴더를 등록하면 PC마다 저장 위치가 달라질 수 있으며, 기록을 자동으로 합쳐 주지 않습니다.</p>
-              <p><strong>H·G 드라이브별 기록 분리:</strong> 센트럴 파일 위치에 따라 별도 기록 폴더를 선택하는 운영 설정은 아직 연결되어 있지 않습니다. 예비 경로 추가를 이 용도로 사용하지 마세요.</p>
-              <p><strong>폴더 권한:</strong> 표준·권한 정책의 수정 권한과 작업자의 기록 폴더 읽기·쓰기 권한을 구분해 설정하세요. 관리자가 접근할 수 있다는 사실만으로 작업자 PC에서도 기록이 저장되는 것은 아닙니다. 프로그램이 만든 하위 파일·폴더를 임의로 이동하거나 삭제하지 마세요.</p>
+              <p><strong>연결 확인:</strong> 관리 그룹 ID와 저장소 ID가 식별파일과 일치해야 전송합니다. 관리 폴더에 접근하지 못하는 작업자는 접근 가능한 기록 저장소의 읽기 전용 작업자 설정을 받습니다. 저장소가 끊기거나 ID가 다르면 로컬에 대기하며 다른 저장소로 우회하지 않습니다. 표준 RVT·이미지의 원본 읽기 권한은 별도로 필요합니다.</p>
+              <p><strong>폴더 권한:</strong> 저장소의 <code>Config</code>와 식별파일은 관리자만 수정하고 작업자는 읽기만 허용하세요. 프로젝트 기록 하위 폴더에는 작업자의 기록 권한을 부여합니다. ID는 암호가 아니며 서버 권한 설정을 대신하지 않습니다. 프로그램이 만든 파일·폴더를 임의로 이동하거나 삭제하지 마세요.</p>
             </details>
 
             <div class="form-grid admin-form-grid">
@@ -288,12 +335,19 @@
   </footer>
 
   <script src="/assets/site.js?v=20261014site-nav"></script>
+  <script src="/assets/family-browser-groups.js?v=20261029.2"></script>
   <script>
     const PASSWORD_SHA256 = "9f27c8b87c38e457d773cc4d0c9a1583fec4cbaa9ca9bc75cf76ea4bfee83ba0";
     const POLICY_PATH = "kky-tool/user-access.json";
     const FAMILY_BOOTSTRAP_PATH = "family-browser/bootstrap.json";
     const $ = (id) => document.getElementById(id);
     let preservedFamilyBootstrap = {};
+    let editingFamilyBootstrap = {};
+    let familyGroupDrafts = [];
+    let selectedFamilyGroupId = "";
+    let defaultFamilyGroupId = "";
+    let familyGroupsEnabled = false;
+    let familyConfigLoaded = false;
     let currentAdminPassword = "";
     let usageEvents = [];
     const configEtags = new Map();
@@ -581,6 +635,79 @@
       return uniqueList(policyPaths.map((path) => policyPathToRoot(path) || path));
     }
 
+    function createFamilyStore(store = {}) {
+      const row = document.createElement("fieldset");
+      row.className = "admin-derived-paths family-store-row";
+      row.dataset.storeId = store.id || crypto.randomUUID();
+      row.storageOriginal = store;
+      const legend = document.createElement("legend");
+      legend.textContent = "기록 저장소";
+      row.appendChild(legend);
+      [["name", "저장소 이름", "H 드라이브 프로젝트", false],
+       ["pathCandidates", "기록 저장 폴더 · 한 줄에 한 주소", "\\\\server\\H\\FamilyBrowserRecords", true],
+       ["projectPathPrefixes", "대상 센트럴 파일 또는 상위 폴더 · 한 줄에 한 경로", "\\\\server\\H\\Projects", true]].forEach(([key, label, hint, multiline]) => {
+        const field = document.createElement("div");
+        field.className = "field";
+        const title = document.createElement("label");
+        const input = document.createElement(multiline ? "textarea" : "input");
+        input.id = "store-" + row.dataset.storeId + "-" + key;
+        title.htmlFor = input.id;
+        title.textContent = label;
+        input.dataset.field = key;
+        input.spellcheck = false;
+        input.placeholder = hint;
+        input.value = multiline ? (store[key] || []).join("\n") : (store[key] || "");
+        input.addEventListener("input", tryBuildFamily);
+        field.append(title, input);
+        row.appendChild(field);
+      });
+      const id = document.createElement("small");
+      id.textContent = "저장소 ID: " + row.dataset.storeId;
+      const remove = document.createElement("button");
+      remove.type = "button";
+      remove.className = "button secondary";
+      remove.textContent = "저장소 연결 삭제";
+      remove.addEventListener("click", () => { row.remove(); tryBuildFamily(); });
+      row.append(id, remove);
+      $("familyStores").appendChild(row);
+    }
+
+    function collectFamilyStorage() {
+      const previous = (editingFamilyBootstrap || {}).projectStorage;
+      const enabled = $("familyStorageEnabled").checked;
+      if (!enabled && !previous) return undefined;
+      const settings = Object.assign({}, previous || {}, {
+        schemaVersion: 1, enabled,
+        managementId: $("familyManagementId").value,
+        stores: [...$("familyStores").querySelectorAll(".family-store-row")].map((row) => Object.assign({}, row.storageOriginal, {
+          id: row.dataset.storeId,
+          name: row.querySelector('[data-field="name"]').value.trim(),
+          pathCandidates: uniqueList(row.querySelector('[data-field="pathCandidates"]').value.split(/\r?\n/)),
+          projectPathPrefixes: uniqueList(row.querySelector('[data-field="projectPathPrefixes"]').value.split(/\r?\n/))
+        }))
+      });
+      if (!enabled) return settings;
+      const guid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+      const validPath = (path) => path.startsWith("\\\\") && !/^\\\\[?.]\\/.test(path) &&
+        path.slice(2).split("\\").filter(Boolean).length >= 3 &&
+        path.slice(2).split("\\").filter(Boolean).every((part) => part !== "." && part !== ".." && !/[<>:"|?*\x00-\x1f]/.test(part) && !/[. ]$/.test(part));
+      if (!guid.test(settings.managementId) || /^0{8}-0{4}-0{4}-0{4}-0{12}$/.test(settings.managementId)) throw new Error("관리 그룹 ID가 올바르지 않습니다.");
+      if (!settings.stores.length || settings.stores.length > 32) throw new Error("기록 저장소를 1~32개 등록해 주세요.");
+      const ids = new Set();
+      settings.stores.forEach((store) => {
+        if (!guid.test(store.id) || ids.has(store.id.toLowerCase())) throw new Error("저장소 ID가 중복되었거나 올바르지 않습니다.");
+        ids.add(store.id.toLowerCase());
+        if (!store.name || !store.pathCandidates.length || store.pathCandidates.length > 8 || !store.projectPathPrefixes.length || store.projectPathPrefixes.length > 256 ||
+            !store.pathCandidates.concat(store.projectPathPrefixes).every(validPath)) throw new Error("각 저장소의 이름, 전용 UNC 기록 폴더와 대상 센트럴 경로를 확인해 주세요.");
+      });
+      const contains = (a, b) => { a = a.replace(/\\+$/, "").toLowerCase(); b = b.replace(/\\+$/, "").toLowerCase(); return a === b || b.startsWith(a + "\\"); };
+      settings.stores.forEach((a, i) => settings.stores.slice(i + 1).forEach((b) => {
+        if (a.projectPathPrefixes.some((x) => b.projectPathPrefixes.some((y) => contains(x, y) || contains(y, x)))) throw new Error("서로 다른 저장소의 대상 센트럴 범위가 겹칩니다: " + a.name + " / " + b.name);
+        if (a.pathCandidates.some((x) => b.pathCandidates.some((y) => contains(x, y) || contains(y, x)))) throw new Error("서로 다른 저장소는 분리된 기록 폴더를 사용해야 합니다.");
+      }));
+      return settings;
+    }
+
     function defaultFamilyBootstrap() {
       return {
         version: new Date().toISOString().slice(0, 10).replace(/-/g, "."),
@@ -592,7 +719,7 @@
       };
     }
 
-    function collectFamilyBootstrap() {
+    function collectFamilyGroupBootstrap() {
       const roots = getFamilyRootPaths();
       if (!roots.length) throw new Error("Family Browser 관리 폴더 경로를 하나 이상 입력해 주세요.");
 
@@ -603,7 +730,9 @@
 
       const policyPaths = uniqueList(roots.map(rootToPolicyPath));
       const requestPaths = uniqueList(roots.map(rootToRequestPath));
-      const bootstrap = Object.assign(defaultFamilyBootstrap(), preservedFamilyBootstrap || {});
+      const bootstrap = Object.assign(defaultFamilyBootstrap(), editingFamilyBootstrap || {});
+      delete bootstrap.managementGroups;
+      delete bootstrap.defaultManagementGroupId;
 
       bootstrap.version = bootstrap.version || defaultFamilyBootstrap().version;
       bootstrap.message = $("familyMessage").value.trim();
@@ -620,18 +749,146 @@
         endpoint: ""
       });
       if (!Array.isArray(bootstrap.standardLibraries)) bootstrap.standardLibraries = [];
+      const storage = collectFamilyStorage();
+      if (storage !== undefined) bootstrap.projectStorage = storage;
       return bootstrap;
+    }
+
+    function fillFamilyGroupBootstrap(data) {
+      data = data || {};
+      editingFamilyBootstrap = data;
+      $("familyMessage").value = data.message || "";
+      $("familyDisabled").checked = data.disabled === true;
+      $("familyRefreshMinutes").value = Number(data.refreshMinutes) > 0 ? Number(data.refreshMinutes) : 30;
+      const storage = data.projectStorage || {};
+      $("familyStorageEnabled").checked = storage.enabled === true;
+      $("familyStorageFields").hidden = storage.enabled !== true;
+      $("familyManagementId").value = selectedFamilyGroupId || storage.managementId || crypto.randomUUID();
+      $("familyStores").replaceChildren();
+      (storage.stores || []).forEach(createFamilyStore);
+      setFamilyRootPaths(readFamilyRootPaths(data));
+    }
+
+    function rememberFamilyGroup() {
+      const current = familyGroupDrafts.find((group) => group.id === selectedFamilyGroupId);
+      if (!current) throw new Error("편집할 관리 그룹을 찾을 수 없습니다.");
+      current.bootstrap = collectFamilyGroupBootstrap();
+      if (familyGroupsEnabled) {
+        current.name = $("familyGroupName").value.trim();
+        current.projectPathPrefixes = uniqueList($("familyGroupPrefixes").value.split(/\r?\n/));
+      } else current.projectPathPrefixes = uniqueList((current.bootstrap.projectStorage?.stores || []).flatMap((store) => store.projectPathPrefixes || []));
+      refreshFamilyGroupLabels();
+    }
+
+    function refreshFamilyGroupLabels() {
+      Array.from($("familyGroupSelect").options).forEach((option) => {
+        const group = familyGroupDrafts.find((item) => item.id === option.value);
+        if (group) option.textContent = group.name + (group.id === defaultFamilyGroupId ? " · 기본" : "");
+      });
+    }
+
+    function showFamilyGroup(id) {
+      const group = familyGroupDrafts.find((item) => item.id === id);
+      if (!group) throw new Error("관리 그룹을 찾을 수 없습니다.");
+      selectedFamilyGroupId = group.id;
+      $("familyGroupSelect").replaceChildren();
+      familyGroupDrafts.forEach((item) => {
+        const option = document.createElement("option");
+        option.value = item.id;
+        option.textContent = item.name + (item.id === defaultFamilyGroupId ? " · 기본" : "");
+        $("familyGroupSelect").appendChild(option);
+      });
+      $("familyGroupSelect").value = id;
+      $("familyGroupFields").hidden = !familyGroupsEnabled;
+      $("removeFamilyGroup").disabled = familyGroupDrafts.length < 2;
+      $("familyGroupName").value = group.name;
+      $("familyGroupPrefixes").value = group.projectPathPrefixes.join("\n");
+      $("familyGroupDefault").checked = id === defaultFamilyGroupId;
+      fillFamilyGroupBootstrap(group.bootstrap);
+      $("familyGroupConnectionUrl").value = group.deliveryKey ? familyGroupConnectionUrl(group) : "";
     }
 
     function fillFamilyBootstrap(data) {
       data = data || {};
-      preservedFamilyBootstrap = data;
-      $("familyMessage").value = data.message || "";
-      $("familyDisabled").checked = data.disabled === true;
-      $("familyRefreshMinutes").value = Number(data.refreshMinutes) > 0 ? Number(data.refreshMinutes) : 30;
-      setFamilyRootPaths(readFamilyRootPaths(data));
+      KKYFamilyStorageGroups.validateEnvelope(data);
+      preservedFamilyBootstrap = KKYFamilyStorageGroups.clone(data);
+      familyGroupsEnabled = Array.isArray(data.managementGroups);
+      const legacy = KKYFamilyStorageGroups.clone(data);
+      delete legacy.managementGroups;
+      delete legacy.defaultManagementGroupId;
+      const id = data.projectStorage?.managementId || crypto.randomUUID();
+      familyGroupDrafts = familyGroupsEnabled ? KKYFamilyStorageGroups.clone(data.managementGroups) : [{
+        id, name: "기존 관리 그룹", projectPathPrefixes: uniqueList((data.projectStorage?.stores || []).flatMap((store) => store.projectPathPrefixes || [])), bootstrap: legacy
+      }];
+      defaultFamilyGroupId = familyGroupsEnabled ? data.defaultManagementGroupId : id;
+      showFamilyGroup(defaultFamilyGroupId);
       tryBuildFamily();
     }
+
+    function collectFamilyBootstrap() {
+      rememberFamilyGroup();
+      if (!familyGroupsEnabled) return familyGroupDrafts[0].bootstrap;
+      return KKYFamilyStorageGroups.compose(preservedFamilyBootstrap, familyGroupDrafts, defaultFamilyGroupId);
+    }
+
+    function familyGroupConnectionUrl(group) {
+      return location.origin + "/family-browser/group-config/" + group.id.toLowerCase() + "/" + group.deliveryKey + "/bootstrap.json";
+    }
+
+    $("issueFamilyGroupLink").addEventListener("click", () => {
+      try {
+        rememberFamilyGroup();
+        const group = familyGroupDrafts.find((item) => item.id === selectedFamilyGroupId);
+        if (group.deliveryKey && !confirm("새 주소를 발급할까요? 경로 저장 후 이전 주소로는 연결할 수 없습니다.")) return;
+        familyGroupsEnabled = true;
+        group.deliveryKey = Array.from(crypto.getRandomValues(new Uint8Array(32)), (value) => value.toString(16).padStart(2, "0")).join("");
+        showFamilyGroup(group.id);
+        tryBuildFamily();
+        setStatus("familyStatus", "연결 주소를 발급했습니다. 경로 저장 후 사용자에게 전달하세요.", "");
+      } catch (error) { setStatus("familyStatus", error.message, "bad"); }
+    });
+    $("copyFamilyGroupLink").addEventListener("click", async () => {
+      try {
+        const group = familyGroupDrafts.find((item) => item.id === selectedFamilyGroupId);
+        const saved = preservedFamilyBootstrap.managementGroups?.find((item) => item.id === group?.id);
+        if (!group?.deliveryKey || saved?.deliveryKey !== group.deliveryKey) throw new Error("연결 주소를 발급하고 경로 저장을 먼저 완료하세요.");
+        await navigator.clipboard.writeText(familyGroupConnectionUrl(group));
+        setStatus("familyStatus", "저장된 그룹 전용 주소를 복사했습니다. 해당 그룹 사용자에게만 전달하세요.", "good");
+      } catch (error) { setStatus("familyStatus", error.message, "bad"); }
+    });
+
+    $("familyGroupSelect").addEventListener("change", () => {
+      try {
+        rememberFamilyGroup();
+        showFamilyGroup($("familyGroupSelect").value);
+        tryBuildFamily();
+      } catch (error) { $("familyGroupSelect").value = selectedFamilyGroupId; setStatus("familyStatus", error.message, "bad"); }
+    });
+    $("addFamilyGroup").addEventListener("click", () => {
+      try {
+        rememberFamilyGroup();
+        if (familyGroupDrafts.length >= 32) throw new Error("관리 그룹은 최대 32개까지 등록할 수 있습니다.");
+        familyGroupsEnabled = true;
+        const id = crypto.randomUUID();
+        familyGroupDrafts.push({ id, name: "새 관리 그룹", projectPathPrefixes: [], bootstrap: defaultFamilyBootstrap() });
+        showFamilyGroup(id);
+        tryBuildFamily();
+      } catch (error) { setStatus("familyStatus", error.message, "bad"); }
+    });
+    $("removeFamilyGroup").addEventListener("click", () => {
+      if (familyGroupDrafts.length < 2 || !confirm("이 그룹의 연결 설정을 삭제할까요? 네트워크의 기존 기록과 파일은 삭제하지 않습니다.")) return;
+      familyGroupDrafts = familyGroupDrafts.filter((group) => group.id !== selectedFamilyGroupId);
+      if (defaultFamilyGroupId === selectedFamilyGroupId) defaultFamilyGroupId = familyGroupDrafts[0].id;
+      showFamilyGroup(defaultFamilyGroupId);
+      tryBuildFamily();
+    });
+    $("familyGroupDefault").addEventListener("change", () => {
+      if ($("familyGroupDefault").checked) defaultFamilyGroupId = selectedFamilyGroupId;
+      else if (defaultFamilyGroupId === selectedFamilyGroupId) $("familyGroupDefault").checked = true;
+      refreshFamilyGroupLabels();
+      tryBuildFamily();
+    });
+    ["familyGroupName", "familyGroupPrefixes"].forEach((id) => $(id).addEventListener("input", tryBuildFamily));
 
     function updateFamilyDerivedPaths() {
       const roots = getFamilyRootPaths();
@@ -649,10 +906,25 @@
       const requests = document.createElement("span");
       requests.textContent = "요청 저장소: " + rootToRequestPath(roots[0]);
       const operations = document.createElement("span");
-      operations.textContent = "로드·적용 기록: " + rootToDataPath(roots[0], "OperationLogs");
       const elements = document.createElement("span");
-      elements.textContent = "생성·수정·삭제 이력: " + rootToDataPath(roots[0], "ElementChangeHistory");
+      if ($("familyStorageEnabled").checked) {
+        operations.textContent = "작업자 기록: 아래에서 연결한 저장소에 센트럴 파일 위치별로 분리됩니다.";
+        elements.textContent = "관리자 통합 수집: 준비 중 · 기존 기록의 자동 이동·삭제 없음";
+      } else {
+        operations.textContent = "로드·적용 기록: " + rootToDataPath(roots[0], "OperationLogs");
+        elements.textContent = "생성·수정·삭제 이력: " + rootToDataPath(roots[0], "ElementChangeHistory");
+      }
       target.append(title, policy, requests, operations, elements);
+      if ($("familyStorageEnabled").checked) {
+        $("familyStores").querySelectorAll(".family-store-row").forEach((row) => {
+          const name = row.querySelector('[data-field="name"]').value.trim() || "미입력 저장소";
+          const folder = row.querySelector('[data-field="pathCandidates"]').value.split(/\r?\n/).map((value) => value.trim()).find(Boolean);
+          const scopes = row.querySelector('[data-field="projectPathPrefixes"]').value.split(/\r?\n/).map((value) => value.trim()).filter(Boolean);
+          const summary = document.createElement("span");
+          summary.textContent = name + ": " + (scopes.join(" · ") || "대상 경로 미입력") + " → " + (folder || "기록 경로 미입력");
+          target.appendChild(summary);
+        });
+      }
     }
 
     function buildFamily() {
@@ -662,6 +934,7 @@
     }
 
     function tryBuildFamily() {
+      updateFamilyDerivedPaths();
       try {
         return buildFamily();
       } catch (err) {
@@ -685,16 +958,18 @@
     }
 
     async function reloadFamily() {
+      familyConfigLoaded = false;
       setStatus("familyStatus", "현재 Family Browser 설정을 불러오는 중...", "");
       try {
-        const response = await fetch("/family-browser/bootstrap.json", { cache: "no-store" });
+        const response = await fetch("/family-browser/bootstrap.json", { cache: "no-store", headers: { "X-KKY-Admin-Password": currentAdminPassword } });
         if (!response.ok) throw new Error("HTTP " + response.status);
+        if (response.headers.get("X-KKY-Config-Scope") !== "admin") throw new Error("서버가 그룹별 비공개 설정을 지원하지 않습니다. 관리자에게 문의하세요.");
         rememberEtag(FAMILY_BOOTSTRAP_PATH, response);
         fillFamilyBootstrap(await response.json());
+        familyConfigLoaded = true;
         setStatus("familyStatus", "현재 Family Browser 설정을 불러왔습니다.", "good");
       } catch (err) {
-        fillFamilyBootstrap(defaultFamilyBootstrap());
-        setStatus("familyStatus", "현재 설정을 찾지 못했습니다. 새 경로를 입력해 저장할 수 있습니다.", "bad");
+        setStatus("familyStatus", "설정을 불러오지 못해 저장을 중지했습니다. 현재 값 불러오기를 다시 시도하세요. " + err.message, "bad");
       }
     }
 
@@ -741,7 +1016,7 @@
       }
       rememberEtag(path, saveResponse);
 
-      const verifyResponse = await fetch("/" + path, { cache: "no-store" });
+      const verifyResponse = await fetch("/" + path, { cache: "no-store", headers: { "X-KKY-Admin-Password": currentAdminPassword } });
       if (!verifyResponse.ok) throw new Error("저장 후 확인 실패: HTTP " + verifyResponse.status);
       rememberEtag(path, verifyResponse);
       const expected = JSON.stringify(JSON.parse(json));
@@ -757,11 +1032,12 @@
     }
 
     async function saveFamily() {
+      if (!familyConfigLoaded) throw new Error("기존 설정을 먼저 불러와야 합니다. 현재 값 불러오기를 눌러 주세요.");
       setStatus("familyStatus", "Family Browser 경로를 저장하는 중...", "");
       const json = buildFamily();
       await saveHostedJson(FAMILY_BOOTSTRAP_PATH, json);
       preservedFamilyBootstrap = JSON.parse(json);
-      setStatus("familyStatus", "Family Browser 경로를 저장하고 공개 주소 반영까지 확인했습니다.", "good");
+      setStatus("familyStatus", "Family Browser 경로 저장·재조회 반영까지 확인했습니다. 다른 그룹은 각 전용 주소로 연결하세요. 관리자 통합 수집은 아직 준비 중입니다.", "good");
     }
 
     async function copyJson(builder, statusId) {
@@ -964,6 +1240,13 @@
       const inputs = $("familyPaths").querySelectorAll("input");
       inputs[inputs.length - 1].focus();
     });
+    $("familyStorageEnabled").addEventListener("change", () => {
+      $("familyStorageFields").hidden = !$("familyStorageEnabled").checked;
+      if ($("familyStorageEnabled").checked && !$("familyStores").children.length) createFamilyStore();
+      updateFamilyDerivedPaths();
+      tryBuildFamily();
+    });
+    $("addFamilyStore").addEventListener("click", () => { createFamilyStore(); tryBuildFamily(); });
     $("reloadPolicy").addEventListener("click", reloadPolicy);
     $("reloadFamily").addEventListener("click", reloadFamily);
     $("savePolicy").addEventListener("click", () => savePolicy().catch((err) => setStatus("policyStatus", err.message || String(err), "bad")));

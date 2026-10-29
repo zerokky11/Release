@@ -389,6 +389,159 @@ test("legacy Family Browser API writes to the same D1 config", async () => {
   assert.equal(JSON.parse(env.CONFIG_DB.getConfig(BOOTSTRAP_PATH).content).refreshMinutes, 15);
 });
 
+function groupedBootstrap() {
+  const ids = ["11111111-1111-4111-8111-111111111111", "22222222-2222-4222-8222-222222222222"];
+  return bootstrap({ defaultManagementGroupId: ids[0], managementGroups: ids.map((id, index) => ({
+    id, name: "Group " + index, projectPathPrefixes: ["\\\\server\\Projects\\Group" + index],
+    bootstrap: { managedRootPath: "\\\\server\\Admin\\Group" + index, standardLibraries: [], security: { adminProfileKeywords: ["group" + index] } }
+  })) });
+}
+
+function linkedGroups() {
+  const value = groupedBootstrap();
+  value.managementGroups.forEach((group, index) => { group.deliveryKey = String(index + 1).repeat(64); });
+  return value;
+}
+
+test("anonymous bootstrap reads never expose the management directory or connection keys", async () => {
+  const env = await testEnv(), value = linkedGroups();
+  env.CONFIG_DB.seed(BOOTSTRAP_PATH, normalized(value));
+  for (const route of ["/" + BOOTSTRAP_PATH, "/api/family-browser", "/api/family-browser/bootstrap.json", "/api/family-browser/file?path=bootstrap.json", "/api/policy/file?path=" + BOOTSTRAP_PATH]) {
+    const response = await request(env, route);
+    assert.equal(response.status, 200);
+    assert.equal(response.headers.get("X-KKY-Config-Scope"), "default-group");
+    const data = await response.json();
+    assert.deepEqual(data, { ...value.managementGroups[0].bootstrap, disabled: false });
+    assert.ok(!JSON.stringify(data).includes(value.managementGroups[1].bootstrap.managedRootPath));
+    assert.ok(!JSON.stringify(data).includes("deliveryKey"));
+    assert.ok(!JSON.stringify(data).includes("managementGroups"));
+  }
+});
+
+test("authenticated bootstrap reads retain the entire editable envelope and its actual etag", async () => {
+  const env = await testEnv(), value = linkedGroups();
+  env.CONFIG_DB.seed(BOOTSTRAP_PATH, normalized(value));
+  const full = await request(env, "/" + BOOTSTRAP_PATH, { headers: { "X-KKY-Admin-Password": ADMIN_PASSWORD } });
+  assert.equal(full.headers.get("X-KKY-Config-Scope"), "admin");
+  assert.deepEqual(await full.json(), value);
+  const publicRead = await request(env, "/" + BOOTSTRAP_PATH);
+  assert.notEqual(publicRead.headers.get("ETag"), full.headers.get("ETag"));
+  assert.match(full.headers.get("Vary"), /X-KKY-Admin-Password/);
+  const denied = await request(env, "/" + BOOTSTRAP_PATH, { headers: { "X-KKY-Admin-Password": "wrong" } });
+  assert.equal(denied.status, 401);
+});
+
+test("each secret connection delivers only its own group with legacy compatible bootstrap fields", async () => {
+  const env = await testEnv(), value = linkedGroups();
+  env.CONFIG_DB.seed(BOOTSTRAP_PATH, normalized(value));
+  for (const group of value.managementGroups) {
+    const route = "/family-browser/group-config/" + group.id + "/" + group.deliveryKey + "/bootstrap.json";
+    const response = await request(env, route);
+    assert.equal(response.status, 200);
+    assert.equal(response.headers.get("X-KKY-Config-Scope"), "group");
+    assert.match(response.headers.get("Cache-Control"), /no-store/);
+    assert.equal(response.headers.get("Referrer-Policy"), "no-referrer");
+    assert.deepEqual(await response.json(), { ...group.bootstrap, disabled: false });
+    const head = await request(env, route, { method: "HEAD" });
+    assert.equal(head.status, 200);
+    assert.equal(await head.text(), "");
+    assert.equal(head.headers.get("ETag"), response.headers.get("ETag"));
+  }
+});
+
+test("wrong group key, guessed id, absent key and static aliases do not disclose a group", async () => {
+  const env = await testEnv(), value = linkedGroups();
+  env.CONFIG_DB.seed(BOOTSTRAP_PATH, normalized(value));
+  const [a, b] = value.managementGroups;
+  for (const route of [
+    `/family-browser/group-config/${a.id}/${b.deliveryKey}/bootstrap.json`,
+    `/family-browser/group-config/${b.id}/${a.deliveryKey}/bootstrap.json`,
+    `/family-browser/group-config/aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa/${a.deliveryKey}/bootstrap.json`,
+    `/family-browser/group-config/${a.id}/bootstrap.json`,
+    `/family-browser/group-config/${a.id}/${a.deliveryKey}/other.json`
+  ]) {
+    const response = await request(env, route);
+    assert.equal(response.status, 404);
+    assert.deepEqual(await response.json(), { ok: false, message: "group_configuration_not_found" });
+  }
+});
+
+test("rotating and deleting a connection revoke the old address without mutating other groups", async () => {
+  const env = await testEnv(), value = linkedGroups();
+  env.CONFIG_DB.seed(BOOTSTRAP_PATH, normalized(value));
+  const [a, b] = value.managementGroups;
+  const route = `/family-browser/group-config/${a.id}/${a.deliveryKey}/bootstrap.json`;
+  const other = `/family-browser/group-config/${b.id}/${b.deliveryKey}/bootstrap.json`;
+  const oldOther = await (await request(env, other)).text();
+  value.managementGroups[0].deliveryKey = "a".repeat(64);
+  env.CONFIG_DB.seed(BOOTSTRAP_PATH, normalized(value));
+  assert.equal((await request(env, route)).status, 404);
+  assert.equal(await (await request(env, other)).text(), oldOther);
+  value.managementGroups = [b]; value.defaultManagementGroupId = b.id;
+  env.CONFIG_DB.seed(BOOTSTRAP_PATH, normalized(value));
+  assert.equal((await request(env, `/family-browser/group-config/${a.id}/${"a".repeat(64)}/bootstrap.json`)).status, 404);
+  assert.equal(await (await request(env, other)).text(), oldOther);
+});
+
+test("global disable remains effective for public default and private group delivery", async () => {
+  const env = await testEnv(), value = linkedGroups(); value.disabled = true;
+  env.CONFIG_DB.seed(BOOTSTRAP_PATH, normalized(value));
+  const a = value.managementGroups[0];
+  assert.equal((await (await request(env, "/" + BOOTSTRAP_PATH)).json()).disabled, true);
+  assert.equal((await (await request(env, `/family-browser/group-config/${a.id}/${a.deliveryKey}/bootstrap.json`)).json()).disabled, true);
+});
+
+test("malformed or shared connection keys cannot be saved and group links cannot write", async () => {
+  const env = await testEnv();
+  for (const change of [v => { v.managementGroups[0].deliveryKey = "weak"; }, v => { v.managementGroups[1].deliveryKey = v.managementGroups[0].deliveryKey; }]) {
+    const value = linkedGroups(); change(value);
+    const response = await request(env, "/" + BOOTSTRAP_PATH, { method: "PUT", headers: { "X-KKY-Admin-Password": ADMIN_PASSWORD }, body: normalized(value) });
+    assert.equal(response.status, 400);
+  }
+  const value = linkedGroups(), group = value.managementGroups[0];
+  const response = await request(env, `/family-browser/group-config/${group.id}/${group.deliveryKey}/bootstrap.json`, { method: "PUT", body: "{}" });
+  assert.equal(response.status, 405);
+  assert.equal(env.CONFIG_DB.history.length, 0);
+});
+
+test("management group save retains the previous configuration and requires authentication", async () => {
+  const env = await testEnv();
+  const updated = groupedBootstrap();
+  const denied = await request(env, "/" + BOOTSTRAP_PATH, { method: "PUT", headers: { "Content-Type": "application/json" }, body: normalized(updated) });
+  assert.equal(denied.status, 401);
+  const current = await request(env, "/" + BOOTSTRAP_PATH);
+  const saved = await request(env, "/" + BOOTSTRAP_PATH, { method: "PUT", headers: {
+    "Content-Type": "application/json", "X-KKY-Admin-Password": ADMIN_PASSWORD, "If-Match": current.headers.get("ETag")
+  }, body: normalized(updated) });
+  assert.equal(saved.status, 200);
+  assert.deepEqual(JSON.parse(env.CONFIG_DB.getConfig(BOOTSTRAP_PATH).content), updated);
+  assert.equal(env.CONFIG_DB.historyFor(BOOTSTRAP_PATH).length, 1);
+});
+
+test("management group overlap is rejected without changing current or archived configuration", async () => {
+  const env = await testEnv();
+  const before = env.CONFIG_DB.getConfig(BOOTSTRAP_PATH).content;
+  const updated = groupedBootstrap();
+  updated.managementGroups[1].projectPathPrefixes = ["\\\\server\\Projects\\Group0\\Nested"];
+  const response = await request(env, "/" + BOOTSTRAP_PATH, { method: "PUT", headers: {
+    "Content-Type": "application/json", "X-KKY-Admin-Password": ADMIN_PASSWORD
+  }, body: normalized(updated) });
+  assert.equal(response.status, 400);
+  assert.equal(env.CONFIG_DB.getConfig(BOOTSTRAP_PATH).content, before);
+  assert.equal(env.CONFIG_DB.historyFor(BOOTSTRAP_PATH).length, 0);
+});
+
+test("stale group configuration cannot overwrite a later administrator save", async () => {
+  const env = await testEnv();
+  const before = env.CONFIG_DB.getConfig(BOOTSTRAP_PATH).content;
+  const response = await request(env, "/" + BOOTSTRAP_PATH, { method: "PUT", headers: {
+    "Content-Type": "application/json", "X-KKY-Admin-Password": ADMIN_PASSWORD, "If-Match": '"old-group-edition"'
+  }, body: normalized(groupedBootstrap()) });
+  assert.equal(response.status, 412);
+  assert.equal(env.CONFIG_DB.getConfig(BOOTSTRAP_PATH).content, before);
+  assert.equal(env.CONFIG_DB.historyFor(BOOTSTRAP_PATH).length, 0);
+});
+
 test("usage event records the Autodesk/Revit profile without exposing the raw IP", async () => {
   const env = await testEnv();
   const response = await request(env, "/api/usage/events", {

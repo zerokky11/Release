@@ -1386,6 +1386,13 @@ pre {
   margin-top: 10px;
 }
 
+.family-management-group-fields:not([hidden]) {
+  display: grid;
+  gap: 14px;
+  margin: 16px 0;
+  min-width: 0;
+}
+
 .admin-derived-paths {
   display: grid;
   gap: 5px;
@@ -1491,6 +1498,8 @@ pre {
 }
 
 .admin-preview-grid pre {
+  min-width: 0;
+  overflow-wrap: anywhere;
   min-height: 330px;
   max-height: 540px;
   margin-bottom: 0;

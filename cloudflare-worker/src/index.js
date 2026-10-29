@@ -1,3 +1,5 @@
+import "../../assets/family-browser-groups.js";
+
 const DEFAULT_ALLOWED_ORIGIN = "https://update.zerokky.com";
 const KKY_TOOL_POLICY_PATH = "kky-tool/user-access.json";
 const FAMILY_BROWSER_INDEX_PATH = "family-browser/bootstrap-index.json";
@@ -44,6 +46,10 @@ export default {
 
       if (pathname === "/api/usage/events") {
         return await handleUsageEvents(request, env, cors, url);
+      }
+
+      if (pathname.startsWith("/family-browser/group-config/")) {
+        return await handleGroupBootstrap(request, env, cors, pathname);
       }
 
       const publicConfigPath = managedPathFromPublicRoute(pathname);
@@ -97,7 +103,7 @@ function corsHeaders(request, env) {
     "Access-Control-Allow-Origin": allowOrigin,
     "Access-Control-Allow-Methods": "GET,HEAD,POST,PUT,OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type,Authorization,If-Match,X-KKY-Admin-Token,X-KKY-Admin-Password",
-    "Access-Control-Expose-Headers": "ETag,X-KKY-Config-Source",
+    "Access-Control-Expose-Headers": "ETag,X-KKY-Config-Source,X-KKY-Config-Scope",
     "Access-Control-Max-Age": "86400",
     "Vary": "Origin"
   };
@@ -330,12 +336,30 @@ function usageHeader(value, maxLength) {
 async function handleManagedConfig(request, env, cors, path) {
   if (request.method === "GET" || request.method === "HEAD") {
     const stored = await readManagedConfig(env, path);
-    return new Response(request.method === "HEAD" ? null : stored.content, {
+    let content = stored.content, etag = stored.etag, scope = "public";
+    if (path === FAMILY_BROWSER_BOOTSTRAP_PATH) {
+      if (request.headers.has("X-KKY-Admin-Password") || request.headers.has("X-KKY-Admin-Token") || request.headers.has("Authorization")) {
+        await requireAdmin(request, env);
+        scope = "admin";
+      } else {
+        const value = JSON.parse(content);
+        if (value.managementGroups !== undefined) {
+          validateFamilyBootstrap(value);
+          const group = value.managementGroups.find((item) => item.id.toLowerCase() === value.defaultManagementGroupId.toLowerCase());
+          content = normalizeJsonContent(groupBootstrap(value, group));
+          etag = httpEtag(await sha256Hex(content));
+          scope = "default-group";
+        }
+      }
+    }
+    return new Response(request.method === "HEAD" ? null : content, {
       status: 200,
       headers: {
         ...noStoreHeaders(cors),
-        "ETag": stored.etag,
-        "X-KKY-Config-Source": stored.source
+        "Vary": "Origin,Authorization,X-KKY-Admin-Password,X-KKY-Admin-Token",
+        "ETag": etag,
+        "X-KKY-Config-Source": stored.source,
+        "X-KKY-Config-Scope": scope
       }
     });
   }
@@ -356,6 +380,30 @@ async function handleManagedConfig(request, env, cors, path) {
   }
 
   throw new HttpError(405, "method_not_allowed");
+}
+
+function groupBootstrap(value, group) {
+  const result = globalThis.KKYFamilyStorageGroups.clone(group.bootstrap);
+  result.disabled = value.disabled === true || result.disabled === true;
+  return result;
+}
+
+async function handleGroupBootstrap(request, env, cors, pathname) {
+  if (request.method !== "GET" && request.method !== "HEAD") throw new HttpError(405, "method_not_allowed");
+  const match = /^\/family-browser\/group-config\/([a-f0-9-]{36})\/([a-f0-9]{64})\/bootstrap\.json$/.exec(pathname);
+  if (!match) throw new HttpError(404, "group_configuration_not_found");
+  const stored = await readManagedConfig(env, FAMILY_BROWSER_BOOTSTRAP_PATH);
+  const value = JSON.parse(stored.content);
+  validateFamilyBootstrap(value);
+  const group = (value.managementGroups || []).find((item) => item.id.toLowerCase() === match[1]);
+  if (!group?.deliveryKey || !constantTimeEqual(group.deliveryKey, match[2])) throw new HttpError(404, "group_configuration_not_found");
+  const content = normalizeJsonContent(groupBootstrap(value, group));
+  return new Response(request.method === "HEAD" ? null : content, {
+    status: 200, headers: {
+      ...noStoreHeaders(cors), "Referrer-Policy": "no-referrer",
+      "ETag": httpEtag(await sha256Hex(content)), "X-KKY-Config-Source": stored.source, "X-KKY-Config-Scope": "group"
+    }
+  });
 }
 
 async function handlePolicyApi(request, env, cors, url) {
@@ -606,6 +654,9 @@ function validateKkyPolicy(value) {
 }
 
 function validateFamilyBootstrap(value) {
+  try { globalThis.KKYFamilyStorageGroups.validateEnvelope(value); }
+  catch (error) { throw new HttpError(400, error.message); }
+  for (const group of value.managementGroups || []) validateFamilyBootstrap(group.bootstrap);
   validateOptionalString(value.version, "version", 200);
   validateOptionalString(value.message, "message", 4000);
   validateOptionalString(value.standardMode, "standardMode", 200);

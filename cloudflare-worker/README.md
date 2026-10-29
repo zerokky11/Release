@@ -25,6 +25,7 @@
 - `GET|HEAD|PUT /kky-tool/user-access.json`
 - `GET|HEAD|PUT /family-browser/bootstrap.json`
 - `GET|HEAD|PUT /family-browser/bootstrap-index.json`
+- `GET|HEAD /family-browser/group-config/{group-id}/{connection-key}/bootstrap.json`
 - `GET|PUT /api/policy/file?path=...`
 - `GET|PUT /api/family-browser/file?path=...`
 - `POST /api/usage/events`
@@ -32,6 +33,12 @@
 - `GET /family-browser/*` for the existing static Family Browser pages
 
 Public reads do not require authentication. Writes require `X-KKY-Admin-Password` or an admin token. The password itself is never stored in Worker variables; the Worker compares its SHA-256 value with the `POLICY_ADMIN_PASSWORD_SHA256` secret.
+
+Grouped Family Browser configuration is different: an authenticated bootstrap GET returns the complete editable envelope (`X-KKY-Config-Scope: admin`). Anonymous reads through every managed-config alias return only the default group's legacy-compatible bootstrap, never the group directory or connection keys. Its ETag describes that projection, not the private full configuration. Existing single-group JSON is unchanged.
+
+The administrator can explicitly issue a random 256-bit connection key per group and save it with the mapping. Its HTTPS connection address returns only that group's bootstrap. Knowing this address grants read access to those settings; this is a shared capability, not company-account authentication or network-folder ACL. Do not publish these addresses or put them in the public profile index. Incorrect group/key pairs have the same 404 response. Rotation or group deletion blocks new HTTP reads of the old address; an already-running client may retain its own same-URL/project in-memory cache. That cache must not be described as immediately revoked. The existing public default group remains public for compatibility.
+
+Configure the selected address in Family Browser's existing deployment bootstrap URL setting. The response retains the existing bootstrap shape and project-storage IDs. Homepage save does not publish worker-policy files to the network, create folder permissions, collect records into the management folder, or finish the pending unified collector. A compatible client and the existing explicit worker-settings publication step are still required.
 
 Usage event POSTs are accepted without admin authentication so the installed add-in can report an open event. The payload is schema-validated and deduplicated by `client_event_id`. The add-in sends the Revit `Application.Username` value, add-in/Revit versions, access result, a random session id, and a locally hashed machine identifier. Raw computer names are not sent. The Worker hashes the connecting IP before storage, removes records older than `USAGE_RETENTION_DAYS`, and exposes the list only through the authenticated admin GET route. The admin response omits the stored IP hash and user agent.
 
@@ -42,7 +49,7 @@ Usage event POSTs are accepted without admin authentication so the installed add
 - KKY Tool policy, Family Browser bootstrap, and bootstrap index have separate schema checks.
 - 현재 JSON은 변경 전에 `policy_history`에 경로, 내용, ETag, 보관 시각과 함께 기록된다.
 - The admin page sends the last `ETag` through `If-Match`. A stale page receives HTTP `412` instead of overwriting a newer change.
-- The admin page immediately reads the public URL again and compares the saved JSON.
+- The admin page immediately reads the same URL with administrator authentication and compares the complete saved JSON. Failed configuration reads stop saving rather than replacing existing groups with a blank default.
 
 ## Local verification
 
