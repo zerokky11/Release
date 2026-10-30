@@ -1,12 +1,12 @@
 {
-  "version": "3.1.22",
-  "url": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.22.exe?rev=20261028-d6727aec7e5c",
-  "publishedAt": "2026-10-28",
-  "notes": "결과창의 기능별 Excel 버튼과 같은 층 기준 자동 조회 시 결과 유지 처리를 보완한 3.1.22 수정본입니다. 앞선 커넥터 검토·수량 수정은 유지합니다. 기존 3.1.22 사용자는 새 설치파일로 직접 다시 설치하세요.",
-  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.22.exe?rev=20261028-d6727aec7e5c",
-  "sha256": "D6727AEC7E5CB8903FA0365E8B69670F5D3A7BA02682EC1D9ACBDFA98A540C8D",
-  "updateZipSha256": "93E14E788E34C6CE4D186AA566B4282EEF481BA803D0C1559DD3D34DA447D60C",
-  "packageUrl": "https://github.com/zerokky11/Release/releases/download/kky-tool-v3.1.22/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.22_summaryexportfix1.zip",
+  "version": "3.1.23",
+  "url": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.23.exe?rev=20261030-802ee4085149",
+  "publishedAt": "2026-10-30",
+  "notes": "등록 RVT의 링크 제외 추출과 Link Manager 일괄 링크를 보완했습니다. NWC Exporter plus 1.0.1 Fix10 r6를 포함합니다. Family Browser가 있는 PC는 전체 설치 EXE를 사용하세요.",
+  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.23.exe?rev=20261030-802ee4085149",
+  "sha256": "802EE4085149BEB782D6858CFD1AD5CA27980D936E2940F9DE62CBF3546EF6C9",
+  "updateZipSha256": "44C3C46EBFFCFFF4B827F2E41F367F1FFEC24AD12951CB6D8A648274E2287375",
+  "packageUrl": "https://github.com/zerokky11/Release/releases/download/kky-tool-v3.1.23/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.23.zip",
   "supportedRevit": [
     2019,
     2021,
@@ -16,7 +16,7 @@
   ],
   "channel": "3.x",
   "majorVersion": 3,
-  "payloadVersion": "3.1.22",
+  "payloadVersion": "3.1.23",
   "recovery": false,
-  "revision": "summaryexportfix1"
+  "revision": "nwcfix10r6"
 }

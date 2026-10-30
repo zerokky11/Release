@@ -31,7 +31,7 @@
         <h1>KKY Tool 업데이트 내역</h1>
         <p>현재 운영하는 3.x 계열과 초기 레이아웃 계열의 마지막 Stable 2.x 변경 기록입니다.</p>
       </div>
-      <div class="updates-current"><span class="badge ok">현재 배포</span><strong>3.1.22</strong><span>2026.10.28</span></div>
+      <div class="updates-current"><span class="badge ok">현재 배포</span><strong>3.1.23</strong><span>2026.10.30</span></div>
     </section>
 
     <nav class="updates-program-tabs" aria-label="업데이트 내역 프로그램 선택">
@@ -44,7 +44,22 @@
       <header class="release-series__header"><div><h2 id="kky-3-series">KKY Tool 3.x</h2><p>새 작업대 UI와 확장 기능을 사용하는 현재 계열입니다.</p></div><a class="button primary" href="/index.html#download">현재 버전 받기</a></header>
       <ol class="release-notes">
         <li class="release-note">
-          <div class="release-note__version"><span class="badge ok">현재 배포</span><strong>3.1.22</strong><span class="release-note__date">2026.10.28</span></div>
+          <div class="release-note__version"><span class="badge ok">현재 배포</span><strong>3.1.23</strong><span class="release-note__date">2026.10.30</span></div>
+          <div class="release-note__content">
+            <h3>NWC 링크 제외 추출과 Family 호환·링크 관리 보완</h3>
+            <p class="release-note__summary">등록 RVT에서 링크를 제외하는 NWC 추출 순서와 Link Manager 일괄 링크를 보완했습니다. NWC Exporter plus 1.0.1 Fix10 r6를 포함하며, 앞선 Excel·결과 집계 수정도 유지합니다.</p>
+            <ul class="release-note__list">
+              <li><b>등록 RVT의 링크 제외</b>: 작업공유 파일은 모든 사용자 워크셋을 닫아 임시 로컬을 열고, 최상위 링크를 로컬에서 언로드한 뒤 그 임시 로컬만 저장합니다. 워크셋을 모두 열어 다시 연 후 링크 제외 상태를 확인하고 선택한 뷰를 추출합니다. 원본·링크·중앙 파일을 저장하거나 중앙 동기화하지 않습니다.</li>
+              <li><b>중앙 파일 식별</b>: BasicFileInfo.IsCentral 값만으로 실행을 거절하지 않고 실제 문서의 중앙 경로를 확인합니다. 전용 Revit 실행 경로 확인과 정확히 식별된 기본 패밀리 템플릿 시작 알림 처리도 보완했습니다.</li>
+              <li><b>Family Browser 호환</b>: Family Browser가 없으면 새로 설치하지 않습니다. 2019의 확인된 구형 모듈만 서명된 호환 모듈로 백업 후 교체하며, 다른 버전·해시는 덮어쓰지 않고 안내합니다. Family Browser가 있는 PC는 <b>전체 설치 EXE</b>를 사용하세요. 원시 ZIP 적용만으로는 이 호환 처리가 실행되지 않습니다.</li>
+              <li><b>Link Manager</b>: 기존 링크의 읽기 전용 조회와 Excel의 명시적인 UPDATE/ReloadFrom 요청을 보완했습니다. 기존 링크의 빈 옵션은 유지하고 신규 링크는 원점·Overlay·절대 경로 기본값을 사용합니다. 잔여 소유권으로 RecoveryRequired가 발생하면 자동 복구로 처리하지 않고 중단합니다.</li>
+              <li><b>설치 안내</b>: Revit 2019·2021·2023·2025·2027용입니다. Revit과 NWC Exporter를 종료한 뒤 업데이트하세요. 3.1.22의 기능별 Excel 버튼·결과 유지·커넥터 검토 대상과 정상 수량 수정은 유지합니다.</li>
+              <li><b>확인 범위</b>: NWC 기능 작업에서 실제 Revit 2019의 Family Browser 없음·리로드 끔과 호환 모듈 있음·리로드 켬 두 경우를 확인했습니다. Navisworks 2025에서 호스트 객체가 남고 링크 형상이 제외된 결과도 확인했습니다. 다른 연도는 빌드 확인 범위이며, 이번 새 설치본의 실제 설치·활성 문서·회사 모델·원격 PC·NWD·대규모 성능 시험은 별도로 완료하지 않았습니다.</li>
+            </ul>
+          </div>
+        </li>
+        <li class="release-note">
+          <div class="release-note__version"><span class="badge">이전 배포</span><strong>3.1.22</strong><span class="release-note__date">2026.10.28</span></div>
           <div class="release-note__content">
             <h3>커넥터 검토 대상·정상 수량과 결과 요약 정리</h3>
             <p class="release-note__summary">커넥터 검토에서 보온재·라이닝과 트레이·컨듀잇 Run을 처음 수집과 연결 상대 선택부터 제외하도록 수정했습니다. 이로 인한 좌표 읽기 실패·미판정과 정상 수량 집계를 보완하고, 결과창 파일별 표를 파일·상태·검토·오류·정상 5열로 정리했습니다.</p>
