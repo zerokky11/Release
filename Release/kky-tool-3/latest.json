@@ -1,12 +1,12 @@
 {
-  "version": "3.1.23",
-  "url": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.23.exe?rev=20261030-802ee4085149",
+  "version": "3.1.24",
+  "url": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.24.exe?rev=20261030-786959990ac0",
   "publishedAt": "2026-10-30",
-  "notes": "등록 RVT의 링크 제외 추출과 Link Manager 일괄 링크를 보완했습니다. NWC Exporter plus 1.0.1 Fix10 r6를 포함합니다. Family Browser가 있는 PC는 전체 설치 EXE를 사용하세요.",
-  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.23.exe?rev=20261030-802ee4085149",
-  "sha256": "802EE4085149BEB782D6858CFD1AD5CA27980D936E2940F9DE62CBF3546EF6C9",
-  "updateZipSha256": "44C3C46EBFFCFFF4B827F2E41F367F1FFEC24AD12951CB6D8A648274E2287375",
-  "packageUrl": "https://github.com/zerokky11/Release/releases/download/kky-tool-v3.1.23/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.23.zip",
+  "notes": "NWC 등록 작업의 제어 통신과 여러 RVT·지정 뷰 추출을 보완했습니다. NWC Exporter plus 1.0.1 Fix11 r3를 포함합니다. Family Browser가 로드된 Revit 2019의 추출 후 종료 오류는 남아 있습니다.",
+  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.24.exe?rev=20261030-786959990ac0",
+  "sha256": "786959990AC061A9BF5AD07263497827C7F561A412FE65352124A28583697BE0",
+  "updateZipSha256": "3161AE7802ED04DF8DE1B788DD8B8999581B0FA89F5DD0270DCA782C572D0067",
+  "packageUrl": "https://github.com/zerokky11/Release/releases/download/kky-tool-v3.1.24/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.24.zip",
   "supportedRevit": [
     2019,
     2021,
@@ -16,7 +16,7 @@
   ],
   "channel": "3.x",
   "majorVersion": 3,
-  "payloadVersion": "3.1.23",
+  "payloadVersion": "3.1.24",
   "recovery": false,
-  "revision": "nwcfix10r6"
+  "revision": "nwcfix11r3memory"
 }

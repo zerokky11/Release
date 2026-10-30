@@ -31,7 +31,7 @@
         <h1>KKY Tool 업데이트 내역</h1>
         <p>현재 운영하는 3.x 계열과 초기 레이아웃 계열의 마지막 Stable 2.x 변경 기록입니다.</p>
       </div>
-      <div class="updates-current"><span class="badge ok">현재 배포</span><strong>3.1.23</strong><span>2026.10.30</span></div>
+      <div class="updates-current"><span class="badge ok">현재 배포</span><strong>3.1.24</strong><span>2026.10.30</span></div>
     </section>
 
     <nav class="updates-program-tabs" aria-label="업데이트 내역 프로그램 선택">
@@ -44,7 +44,23 @@
       <header class="release-series__header"><div><h2 id="kky-3-series">KKY Tool 3.x</h2><p>새 작업대 UI와 확장 기능을 사용하는 현재 계열입니다.</p></div><a class="button primary" href="/index.html#download">현재 버전 받기</a></header>
       <ol class="release-notes">
         <li class="release-note">
-          <div class="release-note__version"><span class="badge ok">현재 배포</span><strong>3.1.23</strong><span class="release-note__date">2026.10.30</span></div>
+          <div class="release-note__version"><span class="badge ok">현재 배포</span><strong>3.1.24</strong><span class="release-note__date">2026.10.30</span></div>
+          <div class="release-note__content">
+            <h3>NWC 작업 통신과 여러 RVT·지정 뷰 추출 보완</h3>
+            <p class="release-note__summary">NWC Exporter plus 1.0.1 Fix11 r3를 포함합니다. 등록 작업의 제어 통신을 바꾸고 여러 RVT의 지정 뷰와 전체 워크셋 추출을 확인했습니다. <b>Family Browser가 로드된 Revit 2019의 추출 후 종료 오류는 해결되지 않았습니다.</b></p>
+            <ul class="release-note__list">
+              <li><b>등록 작업의 제어 통신</b>: 요청·프로세스 확인·진행·결과·취소를 프로세스 간 메모리 통신으로 전달합니다. 진단 XML을 다시 읽다가 추출 전에 실패하는 경로를 제거하고 PID·시작시각·nonce와 OS 통신 상대 검증은 유지합니다. 제어 XML 9개를 잘못된 내용으로 둔 별도 실제 시험에서도 NWC 생성·게시를 확인했습니다.</li>
+              <li><b>링크 제외와 전체 워크셋</b>: 전체 사용자 워크셋 닫기 → 작업용 로컬 열기 → 최상위 링크 나만 언로드 → 그 로컬만 저장 → 전체 워크셋 재열기와 준비 상태 확인 → 입력 이름과 정확히 일치하는 3D 뷰 추출 순서입니다. 원본·링크·중앙 파일 저장과 중앙 동기화는 하지 않습니다.</li>
+              <li><b>여러 파일·뷰 확인</b>: 실제 Revit 2019에서 RVT 두 개·뷰 다섯 행으로 NWC 네 개와 진짜 빈 뷰 TXT 하나를 확인했습니다. 리로드 켬·끔, 문서 재사용, 없는 뷰 실패 후 다음 정상 행 처리와, Navisworks 2025 내용 검사에서 아홉 NWC의 정확한 호스트 객체·링크 제외를 확인했습니다. 등록 화면을 직접 클릭한 시험은 아닙니다.</li>
+              <li><b>종료 결과와 한계</b>: Family Browser가 없는 이번 다중 파일 시험은 정상 종료·강제 종료 없음·일치하는 Windows 오류 이벤트 부재를 확인했습니다. 하지만 Family가 로드된 2019 실행들은 추출·게시 후 종료 오류가 남습니다. 과거 Family 없는 단일 실행에도 오류가 있어 원인을 Family로 확정하거나 모든 환경의 정상 종료를 보장하지 않습니다.</li>
+              <li><b>이전 종료 설명 정정</b>: Fix10 r6의 로그 exit0만으로 정상 OS 종료라고 판단했던 설명은 후속 OS 오류 이벤트 확인으로 정정했습니다. 이전 실패 기록을 지우지 않고 NWC 내용 검사 통과와 종료 오류를 구분합니다.</li>
+              <li><b>설치와 기존 기능</b>: KKY Tool 3.1.24는 Revit 2019·2021·2023·2025·2027용이며 NWC 자체 버전은 1.0.1입니다. 기존 KKY 기능과 설치·업데이트 경로, 확인된 구형 Family 2019 모듈의 조건부 호환 업데이트 정책은 유지합니다. Family가 없으면 새로 설치하지 않습니다. 호환 처리는 전체 EXE에서만 실행되며 종료 오류 해결을 뜻하지 않습니다. 설치 전 Revit과 Exporter를 종료하세요.</li>
+              <li><b>미검증 범위</b>: 다른 Revit 연도의 실제 실행, 원격 회사 보안환경·NASCA, 전체 NWD 작업, 공유좌표 정확성과 대형·네트워크 성능은 별도 미검증입니다. 이번 새 설치 EXE의 실제 설치·실행 시험도 추가하지 않았습니다.</li>
+            </ul>
+          </div>
+        </li>
+        <li class="release-note">
+          <div class="release-note__version"><span class="badge">이전 배포</span><strong>3.1.23</strong><span class="release-note__date">2026.10.30</span></div>
           <div class="release-note__content">
             <h3>NWC 링크 제외 추출과 Family 호환·링크 관리 보완</h3>
             <p class="release-note__summary">등록 RVT에서 링크를 제외하는 NWC 추출 순서와 Link Manager 일괄 링크를 보완했습니다. NWC Exporter plus 1.0.1 Fix10 r6를 포함하며, 앞선 Excel·결과 집계 수정도 유지합니다.</p>
