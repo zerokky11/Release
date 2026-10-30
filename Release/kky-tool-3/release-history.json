@@ -1,6 +1,28 @@
 [
   {
     "version": "3.1.24",
+    "revision": "familycompatfix12",
+    "releaseType": "same-version-correction",
+    "payloadVersion": "3.1.24",
+    "recovery": false,
+    "publishedAt": "2026-10-30",
+    "title": "버전 3.1.24 · 같은 버전 수정본 · Family NWC 호환 처리 누락 보완",
+    "notes": [
+      "버전은 3.1.24 그대로입니다. 원배포 설치 EXE·ZIP·이력은 보존하고 familycompatfix12 파일명·해시·다운로드 rev로 수정본을 구분합니다. 기존 24 사용자도 모든 Revit과 NWC Exporter를 종료한 뒤 수정된 전체 EXE로 재설치하고 Revit을 다시 실행하세요.",
+      "원래 호환 처리가 Revit 2019 공용 경로의 확인된 모듈 하나에 한정됐고 ZIP Updater에서 호출되지 않은 누락을 수정했습니다. 2019·2021·2023 공용·현재 사용자 Roaming과 허용된 manifest 하위 경로의 확인된 구형 C95 모듈만 백업 후 F431로 교체합니다. Family가 없는 PC에는 새로 설치하지 않으며 미확인 버전·외부 경로는 보존하고 안내합니다.",
+      "새 Updater는 ZIP의 스크립트를 실행하지 않고 서명된 자기 실행파일에 포함된 helper만 사용합니다. 설치 연도 전체의 유효성을 확인한 뒤 legacy 2019·2021·2023에만 helper를 호출합니다. 2025·2027만 있는 환경의 불필요한 경고를 줄였으며 modern Family 복구를 새로 구현한 것은 아닙니다.",
+      "기존에 설치된 old Updater는 첫 ZIP 업데이트에서 새 호환 호출 코드를 소급 실행하지 못합니다. 같은 버전의 자동 알림 재표시도 미검증이므로 알림이나 ZIP 적용에만 의존하지 말고 수정 전체 EXE를 사용하세요.",
+      "NWC Exporter plus 1.0.1 Fix12의 worker 진단은 실제 로드한 Family 경로·MVID·연도와 API 누락·타입/계약 불일치·rollback·cleanup을 구분합니다. 보호 계약 실패를 직접 추출로 우회하지 않습니다. Core·Navis와 다른 Tool3 DLL·리소스는 승인된 기존 바이트를 유지합니다.",
+      "기능 작업의 실제 Revit 2023/F431 시험은 추출·게시·정상 종료와 Windows 오류 이벤트 부재를 확인했습니다. 2019/F431은 추출·게시와 NWC 내용 검사를 통과했지만 기존 종료 오류가 남아 전체 native FAIL을 유지합니다.",
+      "신고한 다른 PC의 전체 로그와 Revit 연도는 확인하지 못했습니다. 확인된 설치 누락을 보완한 것이며 그 PC의 정확한 원인이나 해결을 확정한 것은 아닙니다. 2019 종료 오류·modern 2025/2027 Family 복구·UNC·다른 사용자 프로필·실무망·긴 경로·수정 EXE 실제 설치 후 실행은 별도 미검증입니다."
+    ],
+    "packageUrl": "https://github.com/zerokky11/Release/releases/download/kky-tool-v3.1.24/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.24_familycompatfix12.zip",
+    "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.24_familycompatfix12.exe?rev=20261030-familycompatfix12-835ec149cb5f",
+    "sha256": "835EC149CB5F9E76900552BFB8D39DF492166D32DCF5067C4A035221E23A814F",
+    "updateZipSha256": "9D44A7E49E0CBDF12090A0E9CA0A98A22741A548B6038C926CB6F1D8BA646675"
+  },
+  {
+    "version": "3.1.24",
     "payloadVersion": "3.1.24",
     "recovery": false,
     "publishedAt": "2026-10-30",

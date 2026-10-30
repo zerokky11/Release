@@ -44,7 +44,23 @@
       <header class="release-series__header"><div><h2 id="kky-3-series">KKY Tool 3.x</h2><p>새 작업대 UI와 확장 기능을 사용하는 현재 계열입니다.</p></div><a class="button primary" href="/index.html#download">현재 버전 받기</a></header>
       <ol class="release-notes">
         <li class="release-note">
-          <div class="release-note__version"><span class="badge ok">현재 배포</span><strong>3.1.24</strong><span class="release-note__date">2026.10.30</span></div>
+          <div class="release-note__version"><span class="badge ok">현재 수정본</span><strong>3.1.24</strong><span class="release-note__date">2026.10.30 · Fix12</span></div>
+          <div class="release-note__content">
+            <h3>같은 버전 수정본 · Family NWC 호환 처리 누락 보완</h3>
+            <p class="release-note__summary"><b>기존 3.1.24 사용자도 수정된 전체 EXE로 재설치하고 Revit을 다시 실행하세요.</b> 원배포 파일·이력은 보존하고 familycompatfix12 파일명·해시·다운로드 rev로 구분합니다. 25로 버전업하지 않았으며 2019의 추출 후 종료 오류는 남아 있습니다.</p>
+            <ul class="release-note__list">
+              <li><b>확인된 설치 누락</b>: 원래 호환 처리는 2019 공용 경로의 확인된 모듈 하나만 갱신했고 ZIP Updater에서는 호출되지 않았습니다. 이 누락과 설치 후 진단을 보완했습니다. 다른 PC의 전체 로그·Revit 연도를 받지 못해 그 PC의 정확한 원인이나 해결을 확정한 것은 아닙니다.</li>
+              <li><b>호환 처리 범위</b>: 2019·2021·2023 공용·현재 사용자 Roaming과 허용된 manifest 하위 경로에서 확인된 구형 C95 모듈만 백업 후 F431로 교체합니다. Family가 없는 PC에는 새로 설치하지 않고 미확인 버전·외부 경로는 보존하고 안내합니다. 다른 사용자 프로필이나 modern 2025/2027 Family 복구를 새로 구현한 것은 아닙니다.</li>
+              <li><b>새 서명 Updater</b>: ZIP의 스크립트가 아니라 자기 서명 실행파일에 포함된 helper만 사용합니다. 설치 연도 유효성 검사 후 legacy 2019·2021·2023만 처리하며 2025·2027만 있는 환경에는 helper를 호출하지 않아 불필요한 경고를 줄였습니다.</li>
+              <li><b>전체 EXE 재설치 필요</b>: 이미 설치된 old Updater는 첫 ZIP 업데이트에서 새 호환 호출 코드를 소급 실행하지 못합니다. 같은 3.1.24의 자동 알림 재표시도 미검증이므로 알림이나 ZIP만으로 복구됐다고 가정하지 마세요. 모든 Revit과 Exporter 종료 → 수정 전체 EXE 재설치 → Revit 재시작 순서입니다.</li>
+              <li><b>NWC Fix12 진단</b>: 로드된 Family 경로·MVID·연도와 API 누락·타입/계약 불일치·rollback·cleanup을 구분합니다. 보호 계약 실패를 직접 추출로 우회하지 않습니다. Core·Navis와 다른 Tool3 DLL·리소스는 승인된 원래 바이트를 유지합니다.</li>
+              <li><b>확인한 범위</b>: 기능 작업의 실제 2023/F431 시험은 추출·게시·정상 종료와 Windows 오류 이벤트 부재를 확인했습니다. 2019/F431은 추출·게시 및 NWC 내용 검사를 통과했지만 종료 오류가 남아 전체 native FAIL을 유지합니다.</li>
+              <li><b>미검증과 보존</b>: 수정 EXE의 실제 설치 후 실행, 원격 정확한 오류, modern Family 복구·UNC·다른 프로필·실무망·긴 경로·좌표·전체 NWD는 별도 미검증입니다. 이전 실패 판정과 원배포 24 파일·해시·이력, Family 별도 다운로드 중지 상태는 유지합니다.</li>
+            </ul>
+          </div>
+        </li>
+        <li class="release-note">
+          <div class="release-note__version"><span class="badge">이전 설치본</span><strong>3.1.24</strong><span class="release-note__date">2026.10.30</span></div>
           <div class="release-note__content">
             <h3>NWC 작업 통신과 여러 RVT·지정 뷰 추출 보완</h3>
             <p class="release-note__summary">NWC Exporter plus 1.0.1 Fix11 r3를 포함합니다. 등록 작업의 제어 통신을 바꾸고 여러 RVT의 지정 뷰와 전체 워크셋 추출을 확인했습니다. <b>Family Browser가 로드된 Revit 2019의 추출 후 종료 오류는 해결되지 않았습니다.</b></p>
