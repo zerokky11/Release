@@ -1,12 +1,12 @@
 {
-  "version": "3.1.24",
-  "url": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.24_familycompatfix12.exe?rev=20261030-familycompatfix12-835ec149cb5f",
-  "publishedAt": "2026-10-30",
-  "notes": "3.1.24 수정 설치본입니다. Family NWC 호환 처리의 경로·ZIP 호출 누락을 보완했습니다. 기존 24 사용자도 수정된 전체 EXE로 재설치한 뒤 Revit을 재시작하세요. 2019의 추출 후 종료 오류는 남아 있습니다.",
-  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.24_familycompatfix12.exe?rev=20261030-familycompatfix12-835ec149cb5f",
-  "sha256": "835EC149CB5F9E76900552BFB8D39DF492166D32DCF5067C4A035221E23A814F",
-  "updateZipSha256": "9D44A7E49E0CBDF12090A0E9CA0A98A22741A548B6038C926CB6F1D8BA646675",
-  "packageUrl": "https://github.com/zerokky11/Release/releases/download/kky-tool-v3.1.24/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.24_familycompatfix12.zip",
+  "version": "3.1.25",
+  "url": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.25.exe?rev=20261031-d6c04920af4c",
+  "publishedAt": "2026-10-31",
+  "notes": "KKY Tool 3.1.25입니다. 3.1.24 Fix12 수정본의 Family NWC 호환 처리와 최종 Updater r2를 정식 버전에 반영했습니다. 문제 PC는 전체 EXE로 재설치한 뒤 Revit을 다시 실행하세요. 2019의 추출 후 종료 오류는 남아 있습니다.",
+  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.25.exe?rev=20261031-d6c04920af4c",
+  "sha256": "D6C04920AF4CACB6497519F376F1C290C5336D6AEDDA49DD4DC71D7BC650FC03",
+  "updateZipSha256": "656D7BD4077D87AF976C43906B2977F043E138DFD11C480B91EA73A998D0196F",
+  "packageUrl": "https://github.com/zerokky11/Release/releases/download/kky-tool-v3.1.25/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.25.zip",
   "supportedRevit": [
     2019,
     2021,
@@ -16,7 +16,7 @@
   ],
   "channel": "3.x",
   "majorVersion": 3,
-  "payloadVersion": "3.1.24",
+  "payloadVersion": "3.1.25",
   "recovery": false,
   "revision": "familycompatfix12"
 }

@@ -1,5 +1,27 @@
 [
   {
+    "version": "3.1.25",
+    "payloadVersion": "3.1.25",
+    "recovery": false,
+    "revision": "familycompatfix12",
+    "releaseType": "version-release",
+    "publishedAt": "2026-10-31",
+    "title": "버전 3.1.25 · Family NWC 호환 수정본 정식 버전 반영",
+    "notes": [
+      "3.1.24 Fix12 수정본과 같은 NWC Exporter plus 1.0.1 Fix12 및 최종 서명 Updater r2를 포함합니다. KKY Tool의 DLL·화면·설치·패키지 버전과 UI 캐시를 3.1.25로 맞췄으며 다른 기능의 검토 규칙은 바꾸지 않았습니다.",
+      "호환 처리는 2019·2021·2023 공용 폴더·현재 사용자 Roaming·허용된 manifest 하위 경로에서 확인된 구형 Family 모듈만 백업 후 교체합니다. Family가 없으면 새로 설치하지 않고, 미확인 버전이나 외부 경로는 보존하고 안내합니다.",
+      "Updater는 ZIP의 스크립트가 아니라 자기 서명 실행파일에 포함된 helper를 사용합니다. 설치 연도 유효성을 검사한 뒤 legacy 2019·2021·2023만 처리하며, 2025·2027만 있는 환경에는 해당 helper를 호출하지 않습니다.",
+      "기존 3.1.24 문제 PC는 모든 Revit과 Exporter 종료 → 3.1.25 전체 설치 EXE로 재설치 → Revit 재시작 순서로 진행하세요. 구 업데이터의 첫 ZIP 적용에는 새 호환 코드가 소급되지 않으므로 ZIP만으로 복구됐다고 가정하지 마세요.",
+      "기능 작업의 실제 2023/F431 시험은 추출·게시·정상 종료와 Windows 오류 이벤트 부재를 확인했습니다. 2019/F431은 추출·게시 및 NWC 내용 검사에 통과했지만 종료 오류가 남아 전체 native FAIL을 유지합니다.",
+      "다른 PC의 전체 오류 로그와 Revit 연도를 받지 못해 그 PC의 정확한 원인이나 해결을 확정하지 않았습니다. modern 2025/2027 Family 복구, 다른 사용자 프로필·UNC·긴 경로·실무망·좌표·전체 NWD와 새 설치 EXE의 실제 설치 후 실행은 별도 미검증입니다.",
+      "3.1.24 원배포·Fix12 수정본 파일과 모든 이전 이력은 보존합니다. Family Browser의 별도 다운로드 중지 상태는 유지합니다."
+    ],
+    "packageUrl": "https://github.com/zerokky11/Release/releases/download/kky-tool-v3.1.25/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.25.zip",
+    "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.25.exe?rev=20261031-d6c04920af4c",
+    "sha256": "D6C04920AF4CACB6497519F376F1C290C5336D6AEDDA49DD4DC71D7BC650FC03",
+    "updateZipSha256": "656D7BD4077D87AF976C43906B2977F043E138DFD11C480B91EA73A998D0196F"
+  },
+  {
     "version": "3.1.24",
     "revision": "familycompatfix12",
     "releaseType": "same-version-correction",
