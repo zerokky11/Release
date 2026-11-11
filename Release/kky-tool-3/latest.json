@@ -1,12 +1,12 @@
 {
-  "version": "3.1.26",
-  "url": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.26.exe?rev=20261111-a3386500cade",
-  "publishedAt": "2026-11-11",
-  "notes": "파일 경계에서 서로 다른 원본의 접점을 찾고 여러 파라미터를 항목별로 비교합니다. 여러 기능을 선택한 RVT 검토에서는 동시에 처리할 파일 수를 1~5개로 지정할 수 있습니다.",
-  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.26.exe?rev=20261111-a3386500cade",
-  "sha256": "A3386500CADE5424ACBF2756EEE080CCACDDDCF13F3F6C5C34A5B8F398163743",
-  "updateZipSha256": "4849543B786BF4D48D64E17D3EECB9061438D3C71A82BE4BF4AFD94878B2E586",
-  "packageUrl": "https://github.com/zerokky11/Release/releases/download/kky-tool-v3.1.26/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.26.zip",
+  "version": "3.1.27",
+  "url": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.27.exe?rev=20261112-5b2be2217037",
+  "publishedAt": "2026-11-12",
+  "notes": "여러 RVT를 등록하면 사용자 워크셋을 닫은 상태로 링크 목록을 먼저 읽습니다. 배치 위치나 핀 상태를 더 확인하려면 해당 파일의 인스턴스 상세 조회를 선택하세요.",
+  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.27.exe?rev=20261112-5b2be2217037",
+  "sha256": "5B2BE221703773756BEA616C9E31AE4257087AB457004DC15C6B6D1FB67AB78A",
+  "updateZipSha256": "D222B68097236D4B7B30A683438BE211C3287DCD7B407CF216E23E3186084638",
+  "packageUrl": "https://github.com/zerokky11/Release/releases/download/kky-tool-v3.1.27/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.27.zip",
   "supportedRevit": [
     2019,
     2021,
@@ -16,7 +16,7 @@
   ],
   "channel": "3.x",
   "majorVersion": 3,
-  "payloadVersion": "3.1.26",
+  "payloadVersion": "3.1.27",
   "recovery": false,
-  "revision": "cross-file-multi-rvt"
+  "revision": "link-manager-fast-scan"
 }
