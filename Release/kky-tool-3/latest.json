@@ -1,12 +1,12 @@
 {
-  "version": "3.1.25",
-  "url": "https://update.zerokky.com/Release/kky-tool-3/official/familyoptional/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.25.exe?rev=20261103-950f0eeb64c6",
-  "publishedAt": "2026-10-31",
-  "notes": "KKY Tool 3.1.25입니다. 3.1.24 Fix12 수정본의 Family NWC 호환 처리와 최종 Updater r2를 정식 버전에 반영했습니다. 문제 PC는 전체 EXE로 재설치한 뒤 Revit을 다시 실행하세요. 2019의 추출 후 종료 오류는 남아 있습니다.",
-  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/familyoptional/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.25.exe?rev=20261103-950f0eeb64c6",
-  "sha256": "950F0EEB64C673B58BB9788D4BCF035D804A932A012D7A81DA788C8C3C8309B2",
-  "updateZipSha256": "656D7BD4077D87AF976C43906B2977F043E138DFD11C480B91EA73A998D0196F",
-  "packageUrl": "https://github.com/zerokky11/Release/releases/download/kky-tool-v3.1.25/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.25.zip",
+  "version": "3.1.26",
+  "url": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.26.exe?rev=20261111-a3386500cade",
+  "publishedAt": "2026-11-11",
+  "notes": "파일 경계에서 서로 다른 원본의 접점을 찾고 여러 파라미터를 항목별로 비교합니다. 여러 기능을 선택한 RVT 검토에서는 동시에 처리할 파일 수를 1~5개로 지정할 수 있습니다.",
+  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.26.exe?rev=20261111-a3386500cade",
+  "sha256": "A3386500CADE5424ACBF2756EEE080CCACDDDCF13F3F6C5C34A5B8F398163743",
+  "updateZipSha256": "4849543B786BF4D48D64E17D3EECB9061438D3C71A82BE4BF4AFD94878B2E586",
+  "packageUrl": "https://github.com/zerokky11/Release/releases/download/kky-tool-v3.1.26/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.26.zip",
   "supportedRevit": [
     2019,
     2021,
@@ -16,7 +16,7 @@
   ],
   "channel": "3.x",
   "majorVersion": 3,
-  "payloadVersion": "3.1.25",
+  "payloadVersion": "3.1.26",
   "recovery": false,
-  "revision": "familycompatfix12-installer-optional"
+  "revision": "cross-file-multi-rvt"
 }

@@ -1,4 +1,23 @@
 [
+{
+  "version": "3.1.26",
+  "payloadVersion": "3.1.26",
+  "recovery": false,
+  "revision": "cross-file-multi-rvt",
+  "releaseType": "version-release",
+  "publishedAt": "2026-11-11",
+  "title": "버전 3.1.26 · 파일 간 접점·다중 파라미터 비교와 여러 RVT 병렬 검토",
+  "notes": [
+    "파일 경계 검토: 서로 다른 원본 사이의 접점만 비교합니다. 파라미터는 한 줄에 한 항목씩 입력하고, 같은 항목의 대체 이름은 |로 구분합니다. 결과와 엑셀에서 항목별 일치·불일치·확인 불가 판정을 확인할 수 있습니다.",
+    "파일 경계 검토가 RVT를 열 때 누락된 외부 업데이터 경고는 두 번째 선택지로 진행합니다. 사용자가 직접 여는 파일이나 다른 경고에는 적용하지 않습니다.",
+    "여러 기능 선택 → 여러 RVT 검토: 동시 처리 수의 기본값은 1개(순차)이며 마지막 선택을 기억합니다. 저장·동기화는 서로 다른 센트럴이고 링크 의존성이 없다고 확인될 때만 병렬로 진행합니다. ACC와 판별할 수 없는 대상은 순차로 처리합니다.",
+    "Family Browser 없이도 설치할 수 있습니다. NWC Exporter plus 1.0.1을 포함하며, 기존에 안내한 Revit 2019의 추출 후 종료 오류가 해결됐다는 의미는 아닙니다."
+  ],
+  "packageUrl": "https://github.com/zerokky11/Release/releases/download/kky-tool-v3.1.26/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.26.zip",
+  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.26.exe?rev=20261111-a3386500cade",
+  "sha256": "A3386500CADE5424ACBF2756EEE080CCACDDDCF13F3F6C5C34A5B8F398163743",
+  "updateZipSha256": "4849543B786BF4D48D64E17D3EECB9061438D3C71A82BE4BF4AFD94878B2E586"
+},
   {
     "version": "3.1.25",
     "payloadVersion": "3.1.25",
