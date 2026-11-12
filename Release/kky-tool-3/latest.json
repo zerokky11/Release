@@ -1,12 +1,12 @@
 {
-  "version": "3.1.27",
-  "url": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.27.exe?rev=20261112-5b2be2217037",
+  "version": "3.1.28",
+  "url": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.28.exe?rev=20261112-27cc7b06e9c8",
   "publishedAt": "2026-11-12",
-  "notes": "여러 RVT를 등록하면 사용자 워크셋을 닫은 상태로 링크 목록을 먼저 읽습니다. 배치 위치나 핀 상태를 더 확인하려면 해당 파일의 인스턴스 상세 조회를 선택하세요.",
-  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.27.exe?rev=20261112-5b2be2217037",
-  "sha256": "5B2BE221703773756BEA616C9E31AE4257087AB457004DC15C6B6D1FB67AB78A",
-  "updateZipSha256": "D222B68097236D4B7B30A683438BE211C3287DCD7B407CF216E23E3186084638",
-  "packageUrl": "https://github.com/zerokky11/Release/releases/download/kky-tool-v3.1.27/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.27.zip",
+  "notes": "RVT와 NWD·NWC에서 엘보의 하위 더미 때문에 정상적인 끝이 보류되던 경우를 줄였습니다. 다른 파일에서 후보를 찾으면 접점이 미확정이어도 선택한 파라미터 값을 비교합니다.",
+  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.28.exe?rev=20261112-27cc7b06e9c8",
+  "sha256": "27CC7B06E9C8CB0BB3CE8C0DE764781A50FD0AE256E83B6C4232E07C2527EFA2",
+  "updateZipSha256": "E3A4796FB2B1D9F7F025B63C075C2F313A58B22755E0829845DBC5CA46E63199",
+  "packageUrl": "https://github.com/zerokky11/Release/releases/download/kky-tool-v3.1.28/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.28.zip",
   "supportedRevit": [
     2019,
     2021,
@@ -16,7 +16,7 @@
   ],
   "channel": "3.x",
   "majorVersion": 3,
-  "payloadVersion": "3.1.27",
+  "payloadVersion": "3.1.28",
   "recovery": false,
-  "revision": "link-manager-fast-scan"
+  "revision": "boundary-nested-elbow-and-field-comparison"
 }
