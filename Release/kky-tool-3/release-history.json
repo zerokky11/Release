@@ -12,7 +12,7 @@
     "NWD·NWC에서는 소유 엘보와 해당 끝을 계층·속성·형상으로 식별할 수 있는 원형 배관 엘보의 작은 더미만 제외합니다. 반대쪽 끝이나 소유 관계가 불분명한 경우에는 기존 검토를 유지합니다.",
     "내부 경로가 불확실해도 다른 파일에 후보가 있으면 결과창·Excel·CSV에 필드별 일치, 불일치, 확인 불가를 표시합니다. 값이 일치해도 접점을 확정하지 않으며 상대가 없으면 비교하지 않습니다."
   ],
-  "packageUrl": "https://github.com/zerokky11/Release/releases/download/kky-tool-v3.1.28/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.28.zip",
+  "packageUrl": "https://update.zerokky.com/Release/kky-tool-3/packages/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.28.zip",
   "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.28.exe?rev=20261112-27cc7b06e9c8",
   "sha256": "27CC7B06E9C8CB0BB3CE8C0DE764781A50FD0AE256E83B6C4232E07C2527EFA2",
   "updateZipSha256": "E3A4796FB2B1D9F7F025B63C075C2F313A58B22755E0829845DBC5CA46E63199"

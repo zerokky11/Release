@@ -6,7 +6,7 @@
   "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.28.exe?rev=20261112-27cc7b06e9c8",
   "sha256": "27CC7B06E9C8CB0BB3CE8C0DE764781A50FD0AE256E83B6C4232E07C2527EFA2",
   "updateZipSha256": "E3A4796FB2B1D9F7F025B63C075C2F313A58B22755E0829845DBC5CA46E63199",
-  "packageUrl": "https://github.com/zerokky11/Release/releases/download/kky-tool-v3.1.28/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.28.zip",
+  "packageUrl": "https://update.zerokky.com/Release/kky-tool-3/packages/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.28.zip",
   "supportedRevit": [
     2019,
     2021,

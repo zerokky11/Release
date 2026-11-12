@@ -1,0 +1,10 @@
+name = "kky-official-downloads"
+main = "src/downloads.js"
+compatibility_date = "2026-05-18"
+workers_dev = false
+preview_urls = false
+
+routes = [
+  { pattern = "update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3*", zone_name = "zerokky.com" },
+  { pattern = "update.zerokky.com/Release/kky-tool-3/packages/*", zone_name = "zerokky.com" }
+]

@@ -84,3 +84,7 @@ Set `POLICY_ADMIN_PASSWORD_SHA256` to the SHA-256 constant used by the unified h
 4. Open the public URL with cache disabled and confirm `X-KKY-Config-Source: d1`.
 
 If a current row is missing and `CONFIG_FALLBACK_TO_GITHUB=true`, the next read validates the corresponding repository JSON, seeds D1, and identifies that one response as `github-migration`. Normal reads after that use D1.
+
+## Official KKY Tool downloads
+
+`wrangler deploy --config wrangler.downloads.toml` deploys a separate, unprivileged Worker for official EXEs and release-asset ZIPs. It does not deploy the policy API. Keep the original files in the release repository and GitHub Releases. Publish the ZIP link as `/Release/kky-tool-3/packages/<release-asset-name>.zip`. The browser stays on the update domain; only the Worker follows the release storage redirect. A Range request intentionally receives the entire file with status 200. Compare the downloaded byte count and SHA-256 to the release originals after deployment.
