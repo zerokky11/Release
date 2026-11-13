@@ -1,5 +1,23 @@
 [
 {
+  "version": "3.1.29",
+  "payloadVersion": "3.1.29",
+  "recovery": false,
+  "revision": "connector-port-pairing-and-per-parameter-review",
+  "releaseType": "version-release",
+  "publishedAt": "2026-11-13",
+  "title": "버전 3.1.29 · 파라미터 연속성: 검토 항목별 설정과 연결 후보 판정",
+  "notes": [
+    "이미 연결된 포트는 근접 후보로 다시 사용하지 않습니다. 짧은 배관의 양 끝이 같은 열린 포트를 고를 때는 더 가까운 쪽이 명확하면 먼 끝에서 다른 상대를 찾습니다.",
+    "파라미터 선택과 별도 등록을 한 단계로 합쳤습니다. 각 행에서 허용 범위·단위·빈 값 및 일치 값 제외·좌표·선형 정보·값 매핑을 설정하고, 같은 이름으로 다른 조건을 검사하려면 행을 복제합니다. 이전 프리셋의 공통 설정도 각 행으로 복원합니다.",
+    "연속성 결과는 통합 저장을 선택해도 RVT 하나와 검토 항목 하나당 한 파일입니다. 수동 내보내기를 마치면 저장한 전체 파일 수를 한 번 표시합니다."
+  ],
+  "packageUrl": "https://update.zerokky.com/Release/kky-tool-3/packages/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.29.zip",
+  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.29.exe?rev=20261113-3e391b0240f8",
+  "sha256": "3E391B0240F8A2DEAB8AB4114B6AC89842B65F29C489AB558D5E16D9F2B7F595",
+  "updateZipSha256": "8A44D31C5129345BA6DFFC503102A4BF67656B3F884B64D4207E185237E03315"
+},
+{
   "version": "3.1.28",
   "payloadVersion": "3.1.28",
   "recovery": false,

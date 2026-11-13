@@ -3428,14 +3428,26 @@
   });
 
   const continuity = features.find(feature => feature.id === 'connector');
+  continuity.setupLead = '먼저 파라미터를 고른 뒤, 생긴 행에서 그 파라미터에 적용할 기준을 정합니다.';
+  continuity.settingDetails.unshift({ label: '파라미터 선택과 복제', description: '목록에서 이름을 클릭하면 검토 행이 바로 생깁니다. 별도의 등록 버튼은 없습니다. 같은 파라미터에 다른 조건을 적용하려면 해당 행에서 복제를 누릅니다.', example: 'Mark와 Comments를 차례로 누르면 두 행이 생깁니다. Mark의 허용 범위를 바꿔도 Comments의 값은 변하지 않습니다.' });
   continuity.settingDetails.push(
-    { label: '선택한 파라미터를 각각 등록', description: '선택 파라미터마다 독립 검토 항목을 만듭니다. 등록 당시의 허용 범위·단위·보조 열·제외 옵션·값 매핑을 복사하며 각 항목에서 개별 수정할 수 있습니다. 등록 목록이 있으면 그 목록만 실행하고, 모두 삭제하면 위쪽 기본 설정으로 한 번 실행합니다.', example: 'KKY_LineNo는 1 mm, KKY_System은 2 mm로 별도 등록해 한 번의 여러 RVT 작업에서 검토합니다.' },
-    { label: '한쪽이라도 값이 비어 있으면 결과에서 제외', description: '켜면 비교 쌍의 한쪽 또는 양쪽이 빈 결과를 제외합니다. 공백도 빈 값으로 보지만 숫자 0은 남깁니다. 검토 실패와 오류 없음 안내는 숨기지 않으며 활성 문서와 여러 RVT에 모두 적용됩니다.', example: 'A쪽이 빈 문자열이고 B쪽이 CW이면 결과에서 제외합니다. A쪽 0, B쪽 1은 비교합니다.' }
+    { label: '빈 값 제외 · 값 일치 제외', description: '빈 값 제외는 양쪽 중 하나라도 비어 있는 행을, 값 일치 제외는 서로 같은 값으로 판정된 행을 결과에서 뺍니다. 각각 현재 검토 행에만 적용됩니다.', example: '공백은 빈 값이지만 숫자 0은 빈 값이 아닙니다. 정상 연결도 함께 확인하려면 값 일치 제외를 끕니다.' },
+    { label: '기존 프리셋', description: '예전에 여러 파라미터에 공통 기준 하나를 저장했다면 각 파라미터가 그 기준을 가진 행으로 복원됩니다.', example: '복원 후 Mark만 2 mm로 수정하고 저장하면 나머지 항목의 거리는 유지됩니다.' }
   );
-  continuity.run.splice(2, 0, '파라미터별로 기준을 달리할 때는 선택한 파라미터를 각각 등록한 뒤 각 항목의 허용 범위·단위·제외 옵션을 확인합니다. 같은 파라미터를 여러 기준으로 등록할 수도 있습니다.');
-  continuity.logic.push('빈 값 제외가 켜져 있으면 공백을 포함한 빈 비교 값을 결과 수집 단계에서 거릅니다. 개별 등록은 등록 당시 복사한 매핑과 각 항목의 조건을 사용합니다.');
-  continuity.result.push('여러 RVT에서 여러 개 등록한 연속성은 RVT·등록 항목별 Excel로 저장하며, 통합 자동 저장을 선택해도 이 항목들은 개별 파일입니다.');
-  continuity.export.note += ' 여러 개 등록한 검토의 자동 저장에는 파라미터와 검토01·검토02 번호를 붙여 구분합니다. 다회차를 켜면 기능별 사용자 이름 뒤에 같은 구분을 붙이고 최종 조치 수량을 기록합니다.';
+  continuity.run = [
+    'BQC에서 파라미터 연속성 검토의 설정을 엽니다. Revit의 관리 > 공유 매개변수에 연결한 목록에서 검토할 이름을 클릭합니다.',
+    '각 행에서 허용 범위와 단위(inch 또는 mm), 제외 조건과 추출할 보조 열을 선택합니다. 표기가 달라도 같은 값으로 볼 때는 해당 행의 값 매핑을 열어 동의값을 지정합니다. 매핑은 모델에 값을 쓰지 않습니다.',
+    '설정을 적용한 뒤 열린 모델은 활성 문서 검토로 실행합니다. 열린 호스트 문서가 여럿이면 대상 문서를 고릅니다. 파일 묶음은 여러 RVT 검토에서 RVT를 등록하고 실행합니다.',
+    '완료 후 결과창의 엑셀 내보내기에서 저장 폴더를 선택합니다. 수동 저장 완료 메시지는 이번에 저장한 전체 파일 수를 한 번 알려줍니다.'
+  ];
+  continuity.logic.push('실제 연결을 먼저 비교합니다. 이미 연결된 포트는 근접 검색의 출발점이나 상대 후보로 다시 쓰지 않습니다. 같은 객체에 속해도 다른 열린 포트는 독립적으로 확인합니다.',
+    '짧은 배관의 열린 두 끝이 같은 열린 상대 포트를 고르면, 상대 쪽에서도 가까운 끝을 유일하게 우선하는 경우에만 먼 끝의 후보를 해제하고 다른 열린 포트를 찾습니다. 거리 차이가 0.254 mm 이하면 기존 후보를 유지합니다. 이 기준은 행의 허용 범위와 별개입니다.');
+  continuity.result.push('RVT와 검토 항목별로 파일을 나눕니다. 오류가 없는 항목도 완료 안내행이 있는 파일로 남습니다.');
+  continuity.export = {workflow: true, title: '엑셀 파일은 어떻게 나뉘나요?', steps: [
+    '한글·영문, 통합·파일별 설정에 관계없이 연속성 결과는 RVT 하나 × 검토 항목 하나마다 한 파일입니다. RVT 두 개에서 Mark와 Comments를 검사하면 네 파일입니다.',
+    '같은 파라미터를 복제해 거리나 필터를 달리했다면 서로 다른 검토 항목입니다. 파일명의 검토01·검토02를 보고 구분합니다.',
+    '영문 저장 예: Controlled4096Connectors2021_Mark_검토01 Continuity Error (Location-based)_08EA.xlsx. 끝의 수량은 해당 항목의 결과 건수이지 저장한 파일 개수가 아닙니다.'
+  ]};
   features.find(feature => feature.id === 'deliverycleaner').group = 'BQC 결과 정리';
 
   const featureMap = new Map(features.map((item) => [item.id, item]));
@@ -3512,17 +3524,12 @@
     },
     connector: {
       base: {
-        title: '연속성 판정과 결과 열 설정',
-        description: '허용 범위, 검토 파라미터와 좌표·선형 보조 열, End + Dummy 제외 여부를 설정합니다.',
-        points: ['허용 범위와 단위', '검토 파라미터', '좌표·선형 정보', 'End + Dummy 패밀리 제외']
+        file: 'connector-per-parameter-3129.png',
+        title: '파라미터별 검토 설정',
+        description: 'Mark와 Material을 선택한 예입니다. 허용 범위·단위·필터·보조 열과 값 매핑이 각 행에 따로 저장됩니다.',
+        points: ['파라미터 선택 즉시 행 추가', '항목별 값 매핑', '같은 파라미터는 복제로 다른 조건 검토']
       },
       extra: [
-        {
-          file: 'connector-registrations.png',
-          title: '파라미터별 독립 등록',
-          description: '선택한 파라미터를 각각 등록하고 각 항목의 허용 범위·단위·빈 값 제외를 따로 설정합니다.',
-          points: ['등록 목록이 있으면 목록만 실행', '항목별 설정', '추가 추출·제외 옵션', 'RVT·등록별 Excel']
-        },
         {
           file: 'connector-mapping.png',
           title: '파라미터 값 일치 처리 매핑',
@@ -3879,7 +3886,7 @@
     const override = manualScreenOverrides[feature.id] || {};
     const defaultPoints = (feature.settingDetails || []).slice(0, 4).map((item) => item.label);
     const screens = [{
-      file: `${feature.id}.png`,
+      file: override.base?.file || `${feature.id}.png`,
       title: override.base?.title || '기능 설정 화면',
       description: override.base?.description || '기능별 필수 설정과 현재 설정 상태를 한 화면에서 확인합니다.',
       points: override.base?.points || defaultPoints
