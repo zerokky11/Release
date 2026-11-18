@@ -1,12 +1,12 @@
 {
-  "version": "3.1.30",
-  "url": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.30.exe?rev=20261118-f6fb2be7a70f",
+  "version": "3.1.31",
+  "url": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.31.exe?rev=20261118-a477a4b5337a",
   "publishedAt": "2026-11-18",
-  "notes": "NWC Exporter plus에서 동시에 처리할 RVT 파일 수를 1~4개로 지정할 수 있습니다. 기본값은 순차 처리이며, 같은 RVT의 여러 뷰는 순서대로 추출합니다.",
-  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.30.exe?rev=20261118-f6fb2be7a70f",
-  "sha256": "F6FB2BE7A70FF862824271BA6F41F7B8C8247E9882D00C9664B477AF436656AB",
-  "updateZipSha256": "E2323E811AE5AC9C76D1941DF295B0ADA31C11B9E4C23D4BDF96F3E524492A7E",
-  "packageUrl": "https://update.zerokky.com/Release/kky-tool-3/packages/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.30.zip",
+  "notes": "여러 RVT의 사용자 작업세트를 닫고 링크를 상세 조회하며, 활성 문서에서도 경로 입력·RVT 선택·Excel로 기존 링크를 Reload From 할 수 있습니다.",
+  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.31.exe?rev=20261118-a477a4b5337a",
+  "sha256": "A477A4B5337ABA18038961BADF94EC13ABC49E30536B15A11079509C2101E003",
+  "updateZipSha256": "0914DFF0310655FA236D4CDE39B2AC7B3ED8509545EB6F0A044326C62FB170A9",
+  "packageUrl": "https://update.zerokky.com/Release/kky-tool-3/packages/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.31.zip",
   "supportedRevit": [
     2019,
     2021,
@@ -16,7 +16,7 @@
   ],
   "channel": "3.x",
   "majorVersion": 3,
-  "payloadVersion": "3.1.30",
+  "payloadVersion": "3.1.31",
   "recovery": false,
-  "revision": "nwc-parallel-registered-files"
+  "revision": "linkmanager-closed-detail-active-reload"
 }

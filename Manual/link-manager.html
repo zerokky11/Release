@@ -14,8 +14,8 @@
   <main class="page-main module-page">
     <nav class="breadcrumb" aria-label="현재 위치"><a href="/Manual/index.html">매뉴얼 선택</a><span>/</span><a href="/Manual/kky-tool.html">KKY Tool</a><span>/</span><span>Link Manager</span></nav>
     <section class="module-hero">
-      <div><span class="eyebrow">독립 실행 기능 · Revit 링크</span><h1>Link Manager</h1><p class="lead">열린 프로젝트의 기존 링크를 수정하거나, 여러 RVT에 새 링크를 일괄 배치합니다. 파일별 배치·경로·참조·웍셋·고정 설정과 Excel 작업을 한 창에서 관리합니다.</p><div class="actions"><a class="button primary" href="#start">실행 순서</a><a class="button" href="#settings">설정별 설명</a><a class="button" href="#logic">적용 논리</a></div></div>
-      <div class="module-hero__facts"><div class="module-hero__fact"><span>진입</span><strong>Revit 리본의 Link Manager</strong></div><div class="module-hero__fact"><span>대상</span><strong>열린 호스트 / 여러 RVT</strong></div><div class="module-hero__fact"><span>입력</span><strong>화면 설정 / Excel 양식</strong></div><div class="module-hero__fact"><span>매뉴얼 기준</span><strong>KKY Tool 3.1.10</strong></div></div>
+      <div><span class="eyebrow">독립 실행 기능 · Revit 링크</span><h1>Link Manager</h1><p class="lead">열린 프로젝트와 여러 RVT에서 기존 링크를 조회·변경·삭제하거나 새 링크를 추가합니다. 파일별 배치·경로·참조·웍셋·고정 설정과 Excel 작업을 한 창에서 관리합니다.</p><div class="actions"><a class="button primary" href="#start">실행 순서</a><a class="button" href="#settings">설정별 설명</a><a class="button" href="#logic">적용 논리</a></div></div>
+      <div class="module-hero__facts"><div class="module-hero__fact"><span>진입</span><strong>Revit 리본의 Link Manager</strong></div><div class="module-hero__fact"><span>대상</span><strong>열린 호스트 / 여러 RVT</strong></div><div class="module-hero__fact"><span>입력</span><strong>화면 설정 / Excel 양식</strong></div><div class="module-hero__fact"><span>매뉴얼 기준</span><strong>KKY Tool 3.1.31</strong></div></div>
     </section>
     <div class="module-manual-layout">
       <div class="module-manual-main">
@@ -26,12 +26,12 @@
             <li><strong>문서 선택</strong><p><b>활성 문서</b>를 선택하고 <b>열린 RVT 문서</b>에서 작업할 호스트를 고릅니다. 연결된 링크 문서나 패밀리 편집 문서는 대상이 아닙니다.</p></li>
             <li><strong>현재 목록 확인</strong><p><b>현재 LINK 목록</b>에서 기존 링크와 Loaded/Not Loaded, Path Type, Workset, 고정·배치 상태를 확인합니다. 새 링크 없이 기존 행의 설정만 바꿀 수도 있습니다.</p></li>
             <li><strong>신규 링크 등록</strong><p>새로 추가할 파일이 있으면 <b>현재 LINK 목록</b>의 <b>로컬 RVT 추가</b> 또는 <b>ACC 모델 추가</b>를 누릅니다. 선택한 파일이 원래 화면의 작업 목록에 추가됩니다.</p></li>
-            <li><strong>행별 설정</strong><p>각 작업 행의 설정을 수정합니다. 기존 링크에서 바꾸지 않을 설정은 <b>현재 값 유지</b>로 둡니다. 일괄 기본값을 바꾼 것과 기존 행에 적용한 것을 구분하세요.</p></li>
-            <li><strong>검증 후 실행</strong><p>오른쪽의 <b>입력 검증</b>으로 결과를 확인한 뒤 <b>변경 실행</b>을 누릅니다. 기존 행은 처음에는 실행 대상에서 제외되며 설정을 변경하면 적용 대상이 됩니다. 신규 행의 사용 여부도 확인합니다.</p></li>
+            <li><strong>행별 설정</strong><p>각 작업 행의 설정을 수정합니다. 현재 LINK 목록에서 <b>변경 작업 추가</b>를 누른 뒤 작업 목록을 편집합니다. 바꾸지 않을 설정은 <b>현재 값 유지</b>로 둡니다. 일괄 기본값을 바꾼 것과 기존 행에 적용한 것을 구분하세요.</p></li>
+            <li><strong>검증 후 실행</strong><p>오른쪽의 <b>입력 검증</b>으로 결과를 확인한 뒤 <b>변경 실행</b>을 누릅니다. 현재 LINK 목록은 조회 상태입니다. 실제 실행할 변경 작업을 작업 목록에 추가하고 적용 대상을 확인합니다. 신규 행의 사용 여부도 확인합니다.</p></li>
             <li><strong>결과와 문서 저장</strong><p>오류 행의 설명을 확인하고 필요한 결과 Excel을 저장합니다. 활성 문서는 자동 저장하지 않으므로 Revit에서 저장·동기화 여부를 직접 결정합니다.</p></li>
           </ol>
           <figure class="module-shot"><a href="/assets/manual-screenshots/link-manager-active-20261014.png" target="_blank" rel="noopener"><img src="/assets/manual-screenshots/link-manager-active-20261014.png" alt="Link Manager의 열린 RVT 선택과 현재 링크 목록" loading="lazy"></a><figcaption>샘플 파일과 웍셋을 사용한 활성 문서 화면입니다. 이미지를 누르면 원래 크기로 확인할 수 있습니다.</figcaption></figure>
-          <h3>여러 RVT: 등록한 호스트 파일에 새 링크를 일괄 추가</h3>
+          <h3>여러 RVT: 기존 링크 조회·변경과 새 링크 추가</h3>
           <ol class="module-flow">
             <li><strong>호스트 등록</strong><p><b>여러 RVT</b>를 선택한 뒤 <b>대상 RVT</b> 쪽의 <b>로컬 RVT 추가</b> 또는 <b>ACC 모델 추가</b>로 링크를 배치할 파일을 등록합니다. 대상 RVT와 링크 RVT는 서로 다른 목록입니다.</p></li>
             <li><strong>링크 등록</strong><p><b>링크 RVT</b> 쪽의 <b>로컬 RVT 추가</b> 또는 <b>ACC 모델 추가</b>로 추가할 파일을 등록합니다. 등록한 대상과 링크의 작업 조합을 아래 <b>링크 작업 목록</b>에서 확인합니다.</p></li>
@@ -43,7 +43,7 @@
         <section class="module-section" id="registration">
           <div class="module-section__head"><h2>파일을 추가한 뒤 작업 행을 확인합니다</h2><p>독립 Link Manager 창에서는 <b>로컬 RVT 추가</b>가 파일 선택창을, <b>ACC 모델 추가</b>가 모델 선택창을 엽니다. 선택한 파일은 Link Manager 안의 목록에 추가되며, 같은 창에서 설정을 이어서 확인합니다.</p></div>
           <ul><li>로컬 RVT는 실제 전체 경로로 등록합니다. 같은 이름이라도 경로가 다르면 목록에서 구분해서 확인하세요.</li><li>ACC는 모델 선택창에서 등록합니다. 화면의 표시 이름만 복사해 클라우드 모델 주소로 사용하지 않습니다.</li><li>새로 등록한 작업은 실행 대상에 포함됩니다. 전체 파일명은 한 줄로 표시되며, 긴 이름은 목록의 가로 스크롤로 끝까지 확인할 수 있습니다.</li><li>compact 표시를 사용해 행 높이를 줄일 수 있습니다. 검색으로 숨긴 행과 실행에서 제외한 행은 다른 상태입니다. 사용 여부와 전체 작업 수를 확인하세요.</li><li>상위 Revit 버전으로 저장된 로컬 파일이나 판독할 수 없는 RVT는 실행 전에 오류로 안내합니다. 읽기 실패를 ACC 파일로 추정하지 않습니다.</li></ul>
-          <figure class="module-shot"><a href="/assets/manual-screenshots/link-manager-row-settings-20261014.png" target="_blank" rel="noopener"><img src="/assets/manual-screenshots/link-manager-row-settings-20261014.png" alt="Link Manager 작업 행의 경로 편집과 Positioning Workset 설정" loading="lazy"></a><figcaption>작업 행의 경로 편집을 펼친 화면입니다. 신규 행의 대상·링크 경로와 개별 설정을 확인합니다. 기존 링크의 식별 정보를 임의로 다른 파일로 바꾸지는 않습니다.</figcaption></figure>
+          <figure class="module-shot"><a href="/assets/manual-screenshots/link-manager-row-settings-20261014.png" target="_blank" rel="noopener"><img src="/assets/manual-screenshots/link-manager-row-settings-20261014.png" alt="Link Manager 작업 행의 경로 편집과 Positioning Workset 설정" loading="lazy"></a><figcaption>작업 행의 경로 편집을 펼친 화면입니다. 신규 행의 대상·링크 경로와 개별 설정을 확인합니다. 아래 이미지는 이전 화면 예시입니다. 현재 버전의 기존 링크 경로 변경은 다음 Reload From 절차를 따릅니다.</figcaption></figure>
         </section>
         <section class="module-section" id="settings">
           <div class="module-section__head"><h2>배치와 링크 속성을 정합니다</h2><p>Revit 영문판의 용어를 그대로 사용합니다. 상단 Positioning·Path Type·Reference Type·Pin을 바꾸면 등록한 신규 링크 행 전체에 해당 설정이 반영됩니다. 기존 링크는 적용 항목을 선택하고 <b>위 설정 적용</b>을 눌러 명시적으로 변경합니다. 대상별로 다른 값은 작업 행에서 확인·수정하세요.</p></div>
@@ -73,8 +73,25 @@
         </section>
         <section class="module-section" id="existing">
           <div class="module-section__head"><h2>기존 링크는 새로 만들지 않고 설정을 변경합니다</h2><p>활성 문서의 기존 행은 해당 인스턴스를 식별해 UPDATE로 처리합니다. ElementId/UniqueId를 유지하며, 변경하지 않은 값은 보존합니다.</p></div>
-          <ul><li><b>타입 단위</b>: Path Type, Reference Type, Type Workset은 같은 타입 전체에 공통입니다. 같은 타입을 사용하는 행끼리 충돌하는 설정은 검증에서 차단합니다.</li><li><b>인스턴스 단위</b>: 배치, 고정, Instance Workset은 해당 인스턴스에 적용합니다. 로드된 최상위 링크의 안전한 재배치만 지원합니다.</li><li><b>현재 배치 상태</b>: Revit API가 최초 삽입 방법을 제공하지 않으므로 현재 좌표 관계를 바탕으로 추정한 표시입니다. 여러 기준이 일치하거나 구분할 수 없는 상태를 최초 배치 이력으로 확정하지 않습니다.</li><li><b>변경할 문서 확인</b>: 선택 문서가 닫히거나 다시 열리면 이전 선택·식별자로 다른 문서를 수정하지 않습니다. 새로고침하고 현재 문서와 링크를 다시 확인하세요.</li></ul>
+          <ul><li><b>타입 단위</b>: Reload From 경로, Path Type, Reference Type, Type Workset은 같은 타입 전체에 공통입니다. 같은 타입을 사용하는 행끼리 충돌하는 설정은 검증에서 차단합니다.</li><li><b>인스턴스 단위</b>: 배치, 고정, Instance Workset은 해당 인스턴스에 적용합니다. 로드된 최상위 링크의 안전한 재배치만 지원합니다.</li><li><b>현재 배치 상태</b>: Revit API가 최초 삽입 방법을 제공하지 않으므로 현재 좌표 관계를 바탕으로 추정한 표시입니다. 여러 기준이 일치하거나 구분할 수 없는 상태를 최초 배치 이력으로 확정하지 않습니다.</li><li><b>변경할 문서 확인</b>: 선택 문서가 닫히거나 다시 열리면 이전 선택·식별자로 다른 문서를 수정하지 않습니다. 새로고침하고 현재 문서와 링크를 다시 확인하세요.</li></ul>
           <div class="module-callout warn"><strong>공유 위치 저장이 필요한 재배치는 실행하지 않습니다</strong>기존 링크에 저장 대기 중인 공유 위치가 있거나, 이동 후 새 공유 위치 저장이 필요해지면 해당 작업을 차단하거나 이번 행 전체를 되돌립니다. 다른 Shared Site, 기울어진·반전된 링크, 언로드된 링크 등 안전하게 재배치할 수 없는 상태도 오류로 안내합니다. <b>Positioning을 현재 위치 유지로 두고 다른 설정만 바꾸세요.</b> 공유 위치 저장창을 자동 승인하거나 좌표를 취득·게시하는 우회 동작은 하지 않습니다.</div>
+        </section>
+        <section class="module-section" id="reload-from">
+          <div class="module-section__head"><h2>기존 링크의 경로를 바꾸는 방법</h2><p>Reload From은 기존 링크 타입이 읽는 원본 RVT를 바꾸는 작업입니다. 같은 타입을 여러 번 배치했다면 모든 인스턴스가 함께 바뀝니다. 개별 인스턴스 하나만 다른 파일로 바꾸는 기능은 아닙니다.</p></div>
+          <h3>활성 문서에서 경로 변경</h3>
+          <ol class="module-flow">
+            <li><strong>기존 링크 선택</strong><p><b>활성 문서</b>에서 호스트를 선택하고, <b>현재 LINK 목록</b>의 해당 링크에서 <b>변경 작업 추가</b>를 누릅니다. 등록된 변경은 아래 <b>작업 목록</b>에서 편집합니다.</p></li>
+            <li><strong>새 파일 지정</strong><p>작업 행의 <b>경로 편집 · Reload From</b>을 펼쳐 링크 RVT의 전체 경로를 입력하거나 <b>RVT 선택 · Reload From</b>으로 파일을 고릅니다. 예를 들어 <code>D:\Project\Structure_A.rvt</code>를 <code>D:\Project\Structure_B.rvt</code>로 바꿉니다. 호스트 경로와 기존 링크 식별 정보는 바꾸지 않습니다.</p></li>
+            <li><strong>같은 파일을 다시 읽을 때</strong><p>파일 경로는 같지만 외부에서 저장한 최신 내용을 다시 읽으려면 <b>같은 경로도 Reload From 실행</b>을 선택합니다. 파일 선택을 취소하면 이전 경로를 유지합니다.</p></li>
+            <li><strong>영향 범위와 실행 확인</strong><p>Positioning은 <b>현재 위치 유지</b>로 두고 필요한 속성만 지정합니다. <b>입력 검증</b>을 실행하고 같은 타입에 서로 다른 새 경로를 지정한 행이 없는지 확인한 뒤 <b>변경 실행</b>을 누릅니다.</p></li>
+            <li><strong>저장 여부 결정</strong><p>결과와 실제 링크 경로를 확인합니다. 활성 문서는 자동 저장·동기화·닫기를 하지 않습니다. 필요한 저장은 Revit에서 직접 진행합니다.</p></li>
+          </ol>
+          <h3>여러 RVT에서 기존 링크 변경</h3>
+          <p>대상 RVT를 등록하면 우선 빠른 경로 목록을 표시합니다. 변경할 파일의 <b>링크 상세 조회</b>를 누르면 모든 사용자 Workset을 닫은 상태로 호스트를 열어 실제 링크 타입 식별자를 확인합니다. 조회만으로 호스트를 저장하거나 링크를 변경하지 않습니다.</p>
+          <p>타입을 확인한 행에서는 <b>Reload From 작업 추가</b>로 새 경로를 지정할 수 있습니다. 닫힌 Workset에서 읽을 수 없는 인스턴스 위치·Pin·웍셋을 임의 값으로 채우지 않으며, 상세 조회의 Reload From 작업은 이 설정을 유지합니다. 입력 검증 후 실행하면 파일별 저장 또는 센트럴 동기화까지 처리하므로 원본 백업과 쓰기 권한을 먼저 확인합니다.</p>
+          <div class="module-callout"><strong>호스트 Workset과 링크 내부 Workset은 다릅니다</strong>상세 조회 시 닫는 것은 호스트의 사용자 Workset입니다. Reload From은 링크 내부의 기존 Workset 로드 선택을 유지하며 모든 Workset을 강제로 열지 않습니다. 내부 Workset 유지의 실제 작업공유 링크 검증은 환경별로 확인이 필요합니다.</div>
+          <h3>링크 타입 전체 삭제</h3>
+          <p><b>링크 삭제 작업 추가</b>는 해당 링크 타입과 그 타입의 모든 인스턴스를 실제 모델에서 지우는 작업을 등록합니다. 여러 RVT에서는 상세 조회로 타입을 확인한 뒤 사용할 수 있습니다. 실행 전 표시되는 전체 삭제 범위를 확인해야 합니다. 아래 작업 목록에서 행을 제거하는 것은 예약 취소이며 실제 링크 삭제가 아닙니다.</p>
         </section>
         <section class="module-section" id="excel">
           <div class="module-section__head"><h2>Excel에서 먼저 작업을 작성할 수 있습니다</h2><p>상단의 <b>기본 양식 내보내기</b>, <b>현재 설정 Excel 내보내기</b>, <b>Excel 불러오기</b>를 사용합니다. 작성 양식과 실행 결과 Excel은 서로 다른 파일입니다.</p></div>
@@ -83,13 +100,15 @@
           <div class="module-table-wrap"><table><thead><tr><th>대상 RVT 경로</th><th>링크 RVT 경로</th><th>배치 방식</th><th>웍셋</th></tr></thead><tbody><tr><td><code>D:\Project\Host_A.rvt</code></td><td><code>D:\Project\Structure.rvt</code></td><td>Auto - Origin to Origin</td><td>LINK_Structure</td></tr><tr><td><code>D:\Project\Host_B.rvt</code></td><td><code>D:\Project\Structure.rvt</code></td><td>Auto - Origin to Origin</td><td>LINK_Structure</td></tr></tbody></table></div>
           <ul><li><b>활성 문서</b>: 대상 RVT 경로를 비우고 링크 RVT 경로를 입력합니다. 화면에서 선택한 호스트에 신규 링크를 추가합니다.</li><li><b>여러 RVT</b>: 각 행에 대상과 링크의 전체 경로를 모두 입력합니다. 위 예시는 같은 구조 파일을 서로 다른 두 호스트에 추가합니다.</li><li><b>배치 방식</b>: 드롭다운에서 영문 Revit 옵션을 선택합니다. 비우면 Auto - Origin to Origin입니다.</li><li><b>웍셋</b>: 입력한 기존 웍셋을 타입과 인스턴스에 함께 적용합니다. 비우면 문서 기본값을 사용하며, 기본 양식에서는 새 웍셋을 만들지 않습니다.</li><li>기본 양식은 Overlay를 사용합니다. Absolute/Relative, 고정, Attachment, 타입·인스턴스별 웍셋, 없는 웍셋 생성이나 기존 링크 UPDATE가 필요하면 현재 설정 양식을 사용하세요.</li><li>경로와 설정은 수식이 아니라 값으로 입력합니다. 입력 행을 저장한 뒤 <b>Excel 불러오기</b>로 가져와 화면의 작업 목록과 오류를 확인합니다.</li></ul>
           <h3>2. 현재 설정 양식: 행별 상세 설정과 기존 링크 변경</h3>
-          <p>등록한 작업이 있으면 <code>링크_매니저_등록내용.xlsx</code>를 내보냅니다. 현재 schema 4는 경로 유형·고정과 기존 링크 식별 정보를 함께 보관하며, schema 1/2/3과 구형 한글 선택값도 계속 읽습니다.</p>
+          <p>등록한 작업이 있으면 <code>링크_매니저_등록내용.xlsx</code>를 내보냅니다. 현재 양식은 경로 유형·고정과 기존 링크 식별 정보를 함께 보관하며, schema 1/2/3과 구형 한글 선택값도 계속 읽습니다.</p>
           <div class="module-table-wrap"><table><thead><tr><th>시트 / 항목</th><th>수정하는 내용</th></tr></thead><tbody><tr><td>링크 매니저</td><td>실행할 작업 행입니다. 사용 여부, 대상·링크 경로, 배치 방식, 하위 링크 포함 방식, 타입·인스턴스 웍셋, 없는 웍셋 생성, 경로 유형과 고정을 수정합니다.</td></tr><tr><td>작업 설정 / 등록 파일</td><td>화면을 다시 구성하고 새 행의 기본값을 보관합니다. 기존 작업 행의 실행값을 자동으로 덮어쓰거나 전체 조합으로 다시 만들지는 않습니다.</td></tr><tr><td>기존 링크의 숨김 식별 열</td><td>UPDATE 대상과 문서를 확인하는 정보입니다. 삭제·수정하거나 새 링크 행에 복사하지 않습니다. 기존 링크는 화면에서 내보낸 양식을 사용하세요.</td></tr></tbody></table></div>
           <p>Excel을 가져온 뒤에도 동일한 <b>링크 작업 목록</b>에서 설정을 확인·수정합니다. 화면은 한 번에 100행까지 표시하지만 Excel 저장·검증·실행은 전체 작업에 적용합니다. ACC는 화면에서 모델을 등록하고 현재 설정 양식으로 왕복하세요.</p>
+          <h3>3. Excel UPDATE로 기존 링크 경로 변경</h3>
+          <ol><li>활성 문서에서 기존 링크의 <b>변경 작업 추가</b>를 선택하거나, 여러 RVT 상세 조회 후 <b>Reload From 작업 추가</b>를 선택합니다.</li><li><b>현재 설정 Excel 내보내기</b>로 등록내용 양식을 저장합니다. 새 링크용 기본 양식은 기존 링크 변경에 사용하지 않습니다.</li><li>UPDATE 작업의 <b>링크 RVT 경로</b>를 새 전체 경로로 바꿉니다. 예: <code>D:\Project\Structure_B.rvt</code>. 대상 문서와 기존 타입·인스턴스의 숨김 식별 열은 유지합니다.</li><li>같은 링크 타입의 다른 행에도 새 경로를 명시한다면 서로 일치해야 합니다. 경로가 실제로 변경된 한 행만 지정해도 실행 결과의 참여 행들은 같은 실제 새 경로를 표시합니다.</li><li>파일을 저장하고 <b>Excel 불러오기 → 입력 검증 → 변경 실행</b> 순서로 진행합니다. 활성 문서와 여러 RVT 모드의 자동 저장 여부는 화면 작업과 동일합니다.</li></ol>
         </section>
         <section class="module-section" id="results">
           <div class="module-section__head"><h2>행별 결과를 확인하고 Excel을 저장합니다</h2><p>사전 검증 결과와 실행 종료 결과를 구분합니다. 사전 검증 통과는 링크 추가·문서 저장 완료를 뜻하지 않습니다. 완료 화면에서 각 행의 처리 상태와 설명을 확인하세요.</p></div>
-          <ul><li>버전 불일치, 파일 없음, 입력 오류, 웍셋 또는 같은 타입 설정 충돌은 해당 원인을 확인하고 수정합니다.</li><li>공유 위치 보호로 되돌린 행은 링크 변경 완료로 계산하지 않습니다. 다른 설정까지 해당 행 전체가 되돌려졌는지 결과 설명을 확인합니다.</li><li>중지하거나 실행에서 제외한 행은 정상 적용과 구분합니다. 전체 행 수만 보고 모든 링크가 적용됐다고 판단하지 않습니다.</li><li>결과를 저장하려면 <b>결과 Excel 내보내기 (.xlsx)</b>를 누르고 저장 위치를 선택합니다. 기본 파일명은 <code>링크_매니저_결과_20261014_083000.xlsx</code>처럼 내보내기를 시작한 시각을 포함합니다. 저장창에서 이름을 바꿀 수 있습니다.</li></ul>
+          <ul><li>버전 불일치, 파일 없음, 입력 오류, 웍셋 또는 같은 타입 설정 충돌은 해당 원인을 확인하고 수정합니다.</li><li>Reload From이 먼저 성공한 뒤 다른 설정 적용이 실패하면 경로 변경이 남을 수 있습니다. 오류 표시만 보고 전체가 되돌려졌다고 판단하지 말고, 원경로·실제 새 경로와 부분 반영 설명을 확인합니다.</li><li>중지하거나 실행에서 제외한 행은 정상 적용과 구분합니다. 전체 행 수만 보고 모든 링크가 적용됐다고 판단하지 않습니다.</li><li>결과를 저장하려면 <b>결과 Excel 내보내기 (.xlsx)</b>를 누르고 저장 위치를 선택합니다. 기본 파일명은 <code>링크_매니저_결과_20261014_083000.xlsx</code>처럼 내보내기를 시작한 시각을 포함합니다. 저장창에서 이름을 바꿀 수 있습니다.</li></ul>
           <div class="module-table-wrap"><table><thead><tr><th>결과 시트</th><th>확인할 내용</th></tr></thead><tbody><tr><td>결과 요약</td><td>사전 검증 / 실행 종료 단계, 완료·내보낸 시각, 전체 행과 처리 상태별 수량, 전체 오류를 확인합니다.</td></tr><tr><td>행별 결과</td><td>대상·링크 경로, 결과·설명·입력 오류와 적용 당시의 배치·참조·웍셋·경로·고정, 링크 식별 정보를 확인합니다.</td></tr></tbody></table></div>
           <div class="module-callout"><strong>이 기능의 Excel 저장 방식</strong>BQC의 한글/영문 × 통합/파일별 네 가지 결과 내보내기와 다릅니다. Link Manager는 현재 작업 전체의 결과를 한 XLSX로 저장하며, 열 제목은 한국어, Revit 선택값은 영문 용어로 표시합니다. 저장한 결과를 편집용 등록 양식으로 대신 사용하지 않습니다.</div>
         </section>
@@ -99,10 +118,10 @@
         </section>
         <section class="module-section" id="limits">
           <div class="module-section__head"><h2>사용 전 확인할 범위</h2></div>
-          <ul><li>호스트와 링크의 버전, 접근 권한, 작업공유 상태와 원본 백업을 확인하세요. 오래 걸리는 Revit API 작업이 동시에 모델 편집을 허용하는 것은 아닙니다.</li><li>2021은 빌드·API·UI·설치 파일 대조를 확인했지만 실제 Revit 실행은 확인하지 못했습니다. 앞선 기능 수정은 Revit 2019/2023/2025/2027의 시험 모델에서 확인했고, 영문 용어 변경은 이후 별도의 빌드·UI·Excel·서명 대조를 수행했습니다.</li><li>현장 센트럴과 실제 ACC 전체 시나리오를 검증 완료한 것으로 보장하지 않습니다. 해당 환경에서는 작업 사본 또는 제한된 대상부터 결과·저장 상태를 확인하세요.</li></ul>
+          <ul><li>호스트와 링크의 버전, 접근 권한, 작업공유 상태와 원본 백업을 확인하세요. 오래 걸리는 Revit API 작업이 동시에 모델 편집을 허용하는 것은 아닙니다.</li><li>이번 상세 조회·경로 편집·Excel UPDATE와 저장 재열기는 Revit 2019 시험 모델에서 확인했습니다. 정상 종료 시 프로세스가 남는 문제는 해결된 것으로 보지 않습니다. 다른 연도 실제 실행, 작업공유 링크 내부 Workset 유지 실측과 새 설치본 실행은 별도 확인이 필요합니다.</li><li>현장 센트럴과 실제 ACC 전체 시나리오를 검증 완료한 것으로 보장하지 않습니다. 해당 환경에서는 작업 사본 또는 제한된 대상부터 결과·저장 상태를 확인하세요.</li></ul>
         </section>
       </div>
-      <aside class="module-manual-side"><section class="module-side-card"><h3>Link Manager 목차</h3><nav class="module-side-nav" aria-label="매뉴얼 목차"><a href="#start">모드별 실행 순서</a><a href="#registration">파일 등록·관리</a><a href="#settings">Positioning · Workset</a><a href="#existing">기존 링크 변경</a><a href="#excel">Excel 작성 양식</a><a href="#results">결과와 파일명</a><a href="#logic">적용 논리</a><a href="#limits">사용 전 확인</a></nav></section></aside>
+      <aside class="module-manual-side"><section class="module-side-card"><h3>Link Manager 목차</h3><nav class="module-side-nav" aria-label="매뉴얼 목차"><a href="#start">모드별 실행 순서</a><a href="#registration">파일 등록·관리</a><a href="#settings">Positioning · Workset</a><a href="#existing">기존 링크 변경</a><a href="#reload-from">Reload From · 링크 삭제</a><a href="#excel">Excel 작성 양식</a><a href="#results">결과와 파일명</a><a href="#logic">적용 논리</a><a href="#limits">사용 전 확인</a></nav></section></aside>
     </div>
   </main>
   <footer class="site-footer"><div class="site-footer__inner"><span>KKY Tool</span><div class="mini-links"><a href="/Manual/kky-tool.html">KKY Tool 매뉴얼</a><a href="/updates/kky-tool.html">업데이트 내역</a></div></div></footer>
