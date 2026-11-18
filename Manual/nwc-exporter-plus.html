@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NWC Exporter plus: 등록 RVT와 병렬 추출 | KKY Tool</title>
+  <meta name="description" content="NWC Exporter plus의 파일·예약 작업, RVT와 3D 뷰 등록, 동시 처리 수 1~4개, 파일별 처리 순서와 결과 확인 안내">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/assets/site.css?v=3.0-20260731.1">
+  <style>
+    .plus-shot { margin: 20px 0 28px; }
+    .plus-shot a { display: block; border: 1px solid var(--line); border-radius: 6px; padding: 8px; }
+    .plus-shot img { display: block; width: auto; height: auto; max-width: 100%; max-height: 380px; margin: auto; object-fit: contain; }
+    .plus-shot figcaption { margin-top: 8px; color: var(--muted); }
+    .module-section h3 { margin-top: 24px; }
+    .module-section code { overflow-wrap: anywhere; }
+    .plus-table { overflow-x: auto; }
+    .plus-table table { width: 100%; }
+    .plus-table th, .plus-table td { text-align: left; vertical-align: top; padding: 12px; border-bottom: 1px solid var(--line); }
+    .plus-table th:first-child { min-width: 125px; }
+    @media (max-width: 640px) {
+      .plus-table thead { display: none; }
+      .plus-table table, .plus-table tbody, .plus-table tr, .plus-table td { display: block; }
+      .plus-table tr { padding: 12px 0; border-bottom: 1px solid var(--line); }
+      .plus-table td { padding: 4px 0; border: 0; }
+      .plus-table td:first-child { font-weight: 700; }
+      .plus-table td:nth-child(3) { color: var(--muted); }
+    }
+  </style>
+</head>
+<body data-page="manual" data-manual="nwc-exporter-plus">
+  <header class="site-header"><div class="site-header__inner"><a class="brand" href="/index.html"><span class="brand__mark">K</span><span><span class="brand__title">KKY Tool</span><span class="brand__sub">Revit Hub 3.0</span></span></a><button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false">메뉴</button><nav class="nav" data-nav-menu><a href="/index.html" data-nav="home">홈</a><a href="/index.html#download" data-nav="download">다운로드</a><a href="/Manual/index.html" data-nav="manual">매뉴얼</a><a href="/updates/index.html" data-nav="updates">업데이트 내역</a><a href="/requests.html" data-nav="requests">요청하기</a><a href="/kky-tool/" data-nav="admin">관리자</a></nav></div></header>
+  <main class="page-main module-page">
+    <nav class="breadcrumb" aria-label="현재 위치"><a href="/Manual/index.html">매뉴얼 선택</a><span>/</span><a href="/Manual/kky-tool.html">KKY Tool</a><span>/</span><span>NWC Exporter plus</span></nav>
+    <section class="module-section">
+      <h1>NWC Exporter plus</h1>
+      <p class="lead">등록한 RVT의 3D 뷰를 NWC로 추출하고, 선택한 발행 방식에 따라 NWD로 통합합니다. KKY Tool 3.1.30부터 파일·예약 작업에 동시 처리 RVT 수를 지정할 수 있습니다.</p>
+      <div class="actions"><a class="button primary" href="#start">등록과 실행</a><a class="button" href="#parallel">동시 처리 설정</a><a class="button" href="#logic">처리 순서</a></div>
+      <p class="manual-note">이 페이지는 KKY Tool과 함께 설치되는 <b>NWC Exporter plus 1.0.1</b>의 파일·예약 화면을 설명합니다. KKY Hub 안의 이전 NWC Export 화면은 <a href="/Manual/nwc-export.html">기존 화면 매뉴얼</a>을 참고하세요. 두 화면의 설정과 실행 방식은 다릅니다.</p>
+    </section>
+    <div class="module-manual-layout">
+      <div class="module-manual-main">
+        <section class="module-section" id="start">
+          <div class="module-section__head"><h2>RVT와 3D 뷰를 등록한 뒤 실행합니다</h2><p>Revit 리본의 <b>NWC Exporter plus</b>를 열고 <b>파일·예약</b> 탭으로 이동합니다. 활성 문서 탭에는 이 병렬 파일 설정을 적용하지 않습니다.</p></div>
+          <ol class="module-flow">
+            <li><strong>작업 선택</strong><p>왼쪽에서 기존 발행 작업을 고르거나 <b>새 작업</b>을 누릅니다. 작업 이름과 Revit 버전을 정합니다. 한 작업에는 같은 Revit 버전으로 처리할 파일을 등록합니다.</p></li>
+            <li><strong>발행 방식과 저장 위치</strong><p><b>모델·출력</b>에서 NWC 파일만 게시할지, NWD로 통합할지 선택합니다. 결과 폴더는 실행 PC에서 접근하고 쓸 수 있는 위치여야 합니다. NWD 통합에는 화면에 표시되는 해당 연도의 Navisworks Manage/Simulate가 필요합니다.</p></li>
+            <li><strong>파일과 뷰</strong><p><b>RVT 추가</b>로 파일을 등록하고, 각 행의 <b>3D 뷰 이름 · 직접 입력</b>에 실제 뷰 이름을 입력합니다. 예를 들어 파일에 <code>NWC_EXPORT</code>라는 3D 뷰가 있다면 그 이름을 입력합니다. 같은 파일에서 다른 뷰도 추출하려면 <b>뷰 추가</b>를 사용합니다. 실행할 행의 <b>사용</b> 체크를 확인합니다.</p></li>
+            <li><strong>추출 옵션</strong><p><b>NWC 추출 설정</b>에서 동시 처리 RVT 수, 좌표와 링크 포함 여부 등 작업 공통 옵션을 정합니다. 서로 다른 옵션이 필요한 모델은 작업을 나누어 등록합니다.</p></li>
+            <li><strong>저장과 실행</strong><p><b>변경 저장</b> 후 <b>사전 점검</b>을 실행합니다. 경로·뷰 이름·지원 버전 등의 오류를 정리하고 <b>지금 실행</b>을 누릅니다. 사전 점검 성공은 실제 RVT 열기와 추출 성공을 보장하는 것은 아닙니다.</p></li>
+            <li><strong>결과 확인</strong><p>실행 기록에서 뷰별 처리 결과와 오류를 확인하고 결과 폴더의 생성 파일을 확인합니다. 일부 파일이 만들어졌더라도 실패·취소·작업자 종료 오류가 있으면 전체 정상 완료로 보지 않습니다.</p></li>
+          </ol>
+          <figure class="plus-shot"><a href="/assets/manual-screenshots/nwc-plus-models-3130.png" target="_blank" rel="noopener"><img src="/assets/manual-screenshots/nwc-plus-models-3130.png" width="1344" height="845" alt="NWC Exporter plus 파일·예약의 작업 선택, RVT 추가와 3D 뷰 이름 입력 화면" loading="lazy"></a><figcaption>샘플 경로를 사용한 화면 미리보기입니다. 원본 크기로 열면 파일 등록과 뷰 입력 위치를 확인할 수 있습니다.</figcaption></figure>
+        </section>
+        <section class="module-section" id="parallel">
+          <div class="module-section__head"><h2>동시에 처리할 RVT 파일 수</h2><p><b>파일·예약 → 작업 선택 → NWC 추출 설정 → 동시 처리 RVT 파일 수</b>에서 설정합니다. 작업마다 따로 저장하며, 기존 작업이나 새 작업의 기본값은 <b>1개 · 순차 처리</b>입니다.</p></div>
+          <figure class="plus-shot"><a href="/assets/manual-screenshots/nwc-plus-parallel-3130.png" target="_blank" rel="noopener"><img src="/assets/manual-screenshots/nwc-plus-parallel-3130.png" width="1344" height="845" alt="NWC 추출 설정 상단에 추가된 동시 처리 RVT 파일 수 드롭다운" loading="lazy"></a><figcaption>드롭다운에서 1~4개를 선택한 뒤 변경 저장을 누릅니다. 이 그림은 추출 결과가 아닌 설정 화면 미리보기입니다.</figcaption></figure>
+          <div class="plus-table"><table><thead><tr><th>선택값</th><th>달라지는 동작</th><th>설정 예</th></tr></thead><tbody>
+            <tr><td>1개</td><td>등록된 파일을 순차 처리합니다. 기존 작업 흐름을 유지합니다.</td><td>큰 모델을 열거나 다른 Revit 작업을 함께 하는 PC.</td></tr>
+            <tr><td>2개</td><td>서로 다른 RVT를 최대 두 개의 Revit 작업자에서 동시에 처리합니다.</td><td>건축·구조 RVT 각각 한 개에 여러 뷰를 등록한 작업.</td></tr>
+            <tr><td>3개 또는 4개</td><td>서로 다른 RVT의 동시 처리 상한을 세 개 또는 네 개로 늘립니다. 추출할 파일 수가 적으면 필요한 수만 실행합니다.</td><td>여러 파일을 처리할 때 메모리 여유와 네트워크 사용량을 확인한 뒤 선택.</td></tr>
+          </tbody></table></div>
+          <p class="manual-note">이 값은 <b>뷰 수가 아닌 서로 다른 RVT 파일 수</b>입니다. 같은 RVT의 뷰 네 개를 등록하고 4개를 선택해도 해당 파일의 뷰를 네 개의 Revit으로 나누지 않습니다. 동시에 여러 Revit을 실행하므로 메모리·CPU·디스크 사용량이 늘어납니다. 파일 크기와 PC 환경에 따라 오히려 느려질 수 있어 1개 또는 2개부터 확인하는 것이 좋습니다.</p>
+          <h3>예: 건축·구조 두 파일에 뷰를 두 개씩 등록한 경우</h3>
+          <p><code>A.rvt / 전체</code>, <code>A.rvt / 설비구간</code>, <code>B.rvt / 전체</code>, <code>B.rvt / 구조구간</code>을 등록하고 2개를 선택하면 A와 B를 별도 Revit에서 처리합니다. A의 두 뷰는 A 작업자에서 순서대로, B의 두 뷰는 B 작업자에서 순서대로 추출합니다. 완료 시점이 달라도 결과 목록은 등록 순서를 유지합니다.</p>
+          <p>뷰별 예약이나 작업 예약으로 실행할 때도 해당 작업에 저장한 동시 처리 수를 사용합니다. 같은 PC에서 별개의 발행 작업을 여러 개 실행하는 제한까지 해제하는 옵션은 아닙니다.</p>
+        </section>
+        <section class="module-section" id="options">
+          <div class="module-section__head"><h2>함께 확인할 설정</h2></div>
+          <div class="plus-table"><table><thead><tr><th>설정</th><th>의미와 예</th></tr></thead><tbody>
+            <tr><td>공유 좌표 사용</td><td>선택하면 공유 좌표, 해제하면 내부 좌표로 추출합니다. 모델을 통합할 때는 관련 RVT의 좌표 체계와 출력 옵션을 일관되게 맞춥니다.</td></tr>
+            <tr><td>Revit 링크 모델 포함</td><td>링크 형상을 함께 추출할지 정합니다. 제외할 때는 추출용 문서의 링크를 언로드하는 기존 절차를 유지합니다. 원본 RVT를 저장하거나 센트럴에 동기화하는 옵션이 아닙니다.</td></tr>
+            <tr><td>리로드 후 진행</td><td>해당 행을 추출하기 전에 문서를 다시 열어야 하는 기존 설정입니다. 같은 파일을 묶어 처리하더라도 이 요청을 생략하지 않습니다.</td></tr>
+            <tr><td>NWC 파일명 설정</td><td>모델·출력 화면에서 기존 파일명 규칙을 지정합니다. 병렬 처리를 켜도 새 이름 규칙으로 바꾸지 않습니다. 중복 파일명은 사전 점검 결과를 확인해 정리합니다.</td></tr>
+            <tr><td>발행 결과: NWD 통합 게시</td><td>추출 작업과 작업자 정리를 기다린 뒤 통합 가능한 NWC를 Navisworks에 전달합니다. 파일 오류가 있으면 성공 파일의 존재와 전체 작업 상태를 함께 확인합니다.</td></tr>
+          </tbody></table></div>
+        </section>
+        <section class="module-section" id="logic">
+          <div class="module-section__head"><h2>파일별 실행과 오류 처리</h2></div>
+          <ol>
+            <li>실행 대상 행을 정하고 RVT 전체 경로를 정규화합니다. 같은 경로의 뷰는 하나의 파일 그룹으로 묶습니다.</li>
+            <li>동시 처리 수가 2 이상이면 각 파일 그룹에 별도 Revit 작업자를 할당합니다. 요청·결과·로그·NWC·임시 로컬과 TEMP/TMP를 그룹별로 나눕니다.</li>
+            <li>각 그룹에서는 뷰를 등록 순서대로 처리합니다. 같은 문서를 재사용할 수 있으면 재사용하고, 리로드 요청이 있으면 기존 재열기 절차를 수행합니다.</li>
+            <li>파일별 오류를 남기고 다른 파일의 처리를 이어갑니다. 단, 작업자의 종료를 확인하지 못하면 새 파일을 시작하지 않고 NWD 통합도 보류합니다.</li>
+            <li>취소하면 새 파일을 시작하지 않고 실행 중인 작업자의 정리를 기다립니다. 결과는 완료 순서가 아닌 원래 등록 순서로 합칩니다.</li>
+            <li>NWC 처리가 끝난 뒤 선택한 발행 방식에 따라 파일을 게시하거나 NWD를 통합합니다. 생성 파일과 작업자 종료 상태를 함께 판정합니다.</li>
+          </ol>
+          <p>병렬 추출은 원본 RVT 저장·동기화를 추가하지 않습니다. 추출용 임시 로컬의 저장은 원본 저장과 구분되며, 기존 링크 제외와 전체 호스트 워크셋 열기 절차를 유지합니다.</p>
+        </section>
+        <section class="module-section" id="scope">
+          <div class="module-section__head"><h2>확인 범위와 사용 시 주의점</h2></div>
+          <p>Revit 2019에서 두 RVT·네 뷰를 동시에 처리하고 생성된 네 NWC의 호스트 객체와 링크 제외 결과를 Navisworks 2025에서 확인했습니다. 설정 저장·동시 처리 상한·파일 묶음·취소·오류 처리는 별도 관리 코드 검사로 확인했습니다.</p>
+          <p>다른 Revit 연도, 3~4개 실제 동시 실행, Family Browser가 없는 환경의 실제 병렬 실행, 현장 대형·공유폴더·ACC 모델의 성능, 공유좌표 수치 비교와 병렬 결과의 실제 NWD 통합은 이 확인에 포함되지 않았습니다. 과거 Revit 2019 종료 오류가 모든 환경에서 해결됐다는 뜻도 아닙니다.</p>
+          <p>배포 전에 사용 환경의 작은 작업으로 출력 위치·내용·오류 기록을 확인하세요. 메모리 부족이나 종료 오류가 있으면 동시 처리 수를 1개로 낮추고 해당 실행 기록을 확인합니다.</p>
+        </section>
+      </div>
+      <aside class="module-manual-aside"><div class="module-toc"><h2>이 페이지에서 찾기</h2><nav><a href="#start">등록과 실행</a><a href="#parallel">동시 처리 1~4개</a><a href="#options">관련 설정</a><a href="#logic">처리 순서와 오류</a><a href="#scope">확인 범위</a></nav><p><a href="/Manual/nwc-export.html">기존 NWC Export 화면</a></p><p><a href="/updates/kky-tool.html">KKY Tool 업데이트 내역</a></p></div></aside>
+    </div>
+  </main>
+  <script src="/assets/site.js?v=20261118-nwc3130"></script>
+</body>
+</html>
