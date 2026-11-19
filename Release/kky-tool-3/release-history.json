@@ -1,5 +1,25 @@
 [
 {
+  "version": "3.1.32",
+  "payloadVersion": "3.1.32",
+  "recovery": false,
+  "revision": "nwc-active-multiview-settings",
+  "releaseType": "version-release",
+  "publishedAt": "2026-11-19",
+  "title": "버전 3.1.32 · NWC Exporter plus: 활성 문서 다중 뷰와 세부 설정",
+  "notes": [
+    "활성 문서의 3D 뷰를 체크 목록에서 여러 개 선택할 수 있습니다. 새 Revit을 열지 않고 같은 문서에서 순서대로 추출하며, 뷰별 진행과 결과를 표시합니다.",
+    "NWC 세부 설정 창에 공유·내부 좌표와 12개 추출 옵션을 추가했습니다. 기본값은 Revit API 기본 동작을 사용하며, 파일·예약 작업의 설정이나 Revit 내보내기 창의 마지막 값을 자동으로 가져오지 않습니다.",
+    "링크 포함과 추출 전 링크 리로드를 구분했습니다. 둘 다 선택하면 첫 뷰 전에 현재 로드된 최상위 링크를 한 번 갱신합니다. 언로드·중첩 링크와 워크셋 선택은 유지하며 원본 저장·동기화는 하지 않습니다. 리로드 후 문서가 변경됨 상태로 표시될 수 있습니다.",
+    "여러 뷰의 파일명은 지정 이름_뷰 이름.nwc로 구분하고 이름 충돌을 사전에 확인합니다. 파일·예약 화면에서는 긴 작업명에 가려지던 변경 저장 버튼을 정리했습니다.",
+    "새 설정이 적용되려면 NWC 본체와 KKY Tool 호스트가 함께 업데이트되어야 합니다. 설치 후 해당 Revit을 다시 시작하세요. 등록 RVT 병렬 처리 1~4개는 파일·예약 탭에서 기존대로 사용합니다."
+  ],
+  "packageUrl": "https://update.zerokky.com/Release/kky-tool-3/packages/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.32.zip",
+  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.32.exe?rev=20261119-05404c9727e0",
+  "sha256": "05404C9727E02E441E2011185A14138F1B7437DA0DDA4FB17468E2E430D72065",
+  "updateZipSha256": "895F6C20427D69270C2B3692BC71DEE66CA7515261DB29CA4938EA46BCE82174"
+},
+{
   "version": "3.1.31",
   "payloadVersion": "3.1.31",
   "recovery": false,
