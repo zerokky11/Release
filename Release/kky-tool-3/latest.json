@@ -1,12 +1,12 @@
 {
-  "version": "3.1.32",
-  "url": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.32.exe?rev=20261119-05404c9727e0",
-  "publishedAt": "2026-11-19",
-  "notes": "활성 문서에서 여러 3D 뷰를 선택해 순차 추출하고, 좌표·속성·형상 세부 설정과 추출 전 링크 리로드 여부를 지정할 수 있습니다.",
-  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.32.exe?rev=20261119-05404c9727e0",
-  "sha256": "05404C9727E02E441E2011185A14138F1B7437DA0DDA4FB17468E2E430D72065",
-  "updateZipSha256": "895F6C20427D69270C2B3692BC71DEE66CA7515261DB29CA4938EA46BCE82174",
-  "packageUrl": "https://update.zerokky.com/Release/kky-tool-3/packages/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.32.zip",
+  "version": "3.1.33",
+  "url": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.33.exe?rev=20261120-8fb61d0e3100",
+  "publishedAt": "2026-11-20",
+  "notes": "커넥터 수집과 공유 파라미터 조회를 개선해 대형 모델의 연속성 검토 시간을 줄였습니다.",
+  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.33.exe?rev=20261120-8fb61d0e3100",
+  "sha256": "8FB61D0E31003CC89901437419404E9F523E2761D3854B0D2F4C11B542FA744E",
+  "updateZipSha256": "E40C64AC422EF3A6AB91F08E0ED1EAD9956C3E735F475EFBB24111806FF59796",
+  "packageUrl": "https://update.zerokky.com/Release/kky-tool-3/packages/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.33.zip",
   "supportedRevit": [
     2019,
     2021,
@@ -16,7 +16,7 @@
   ],
   "channel": "3.x",
   "majorVersion": 3,
-  "payloadVersion": "3.1.32",
+  "payloadVersion": "3.1.33",
   "recovery": false,
-  "revision": "nwc-active-multiview-settings"
+  "revision": "bqc-continuity-connector-collection-guid-lookup"
 }

@@ -1,5 +1,25 @@
 [
 {
+  "version": "3.1.33",
+  "payloadVersion": "3.1.33",
+  "recovery": false,
+  "revision": "bqc-continuity-connector-collection-guid-lookup",
+  "releaseType": "version-release",
+  "publishedAt": "2026-11-20",
+  "title": "버전 3.1.33 · 파라미터 연속성 검토 속도 개선",
+  "notes": [
+    "커넥터 소유 객체를 수집할 때 같은 Revit API 속성을 반복해서 읽는 부분을 줄였습니다.",
+    "Revit에 연결한 공유 TXT에서 이름에 해당하는 GUID가 하나로 확인되면, 그 GUID로 인스턴스 파라미터를 먼저 찾습니다. 정의가 모호하거나 유효한 파라미터를 찾지 못하면 기존처럼 인스턴스와 타입에서 이름으로 검색합니다.",
+    "Revit 2019의 10만 커넥터 시험 모델에서 검토와 빠른 Excel 저장을 합한 시간은 파라미터 2개 등록 시 50.03초에서 14.53초로, 3개 등록 시 78.37초에서 28.21초로 줄었습니다. 첫 회를 제외한 3회 중앙값이며, 모델 열기와 화면 조작은 포함하지 않았습니다.",
+    "시험 모델에서 기존 기준판과 검토 결과, 객체별 통계·진단 및 생성 시각을 제외한 Excel 내용이 일치했습니다. 사용 환경·모델과 연결된 TXT에 따라 시간이 달라질 수 있습니다.",
+    "NWC Exporter plus 1.0.1과 Family 호환 구성은 3.1.32와 같습니다."
+  ],
+  "packageUrl": "https://update.zerokky.com/Release/kky-tool-3/packages/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.33.zip",
+  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.33.exe?rev=20261120-8fb61d0e3100",
+  "sha256": "8FB61D0E31003CC89901437419404E9F523E2761D3854B0D2F4C11B542FA744E",
+  "updateZipSha256": "E40C64AC422EF3A6AB91F08E0ED1EAD9956C3E735F475EFBB24111806FF59796"
+},
+{
   "version": "3.1.32",
   "payloadVersion": "3.1.32",
   "recovery": false,
