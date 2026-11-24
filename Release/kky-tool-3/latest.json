@@ -1,12 +1,12 @@
 {
-  "version": "3.1.33",
-  "url": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.33.exe?rev=20261120-8fb61d0e3100",
-  "publishedAt": "2026-11-20",
-  "notes": "커넥터 수집과 공유 파라미터 조회를 개선해 대형 모델의 연속성 검토 시간을 줄였습니다.",
-  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.33.exe?rev=20261120-8fb61d0e3100",
-  "sha256": "8FB61D0E31003CC89901437419404E9F523E2761D3854B0D2F4C11B542FA744E",
-  "updateZipSha256": "E40C64AC422EF3A6AB91F08E0ED1EAD9956C3E735F475EFBB24111806FF59796",
-  "packageUrl": "https://update.zerokky.com/Release/kky-tool-3/packages/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.33.zip",
+  "version": "3.1.34",
+  "url": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.34.exe?rev=20261124-a9f9a519bfea",
+  "publishedAt": "2026-11-24",
+  "notes": "활성 문서의 연속성 검토 결과를 다른 이름으로 저장하고, 항목별 제외 조건을 쉽게 구분할 수 있도록 정리했습니다.",
+  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.34.exe?rev=20261124-a9f9a519bfea",
+  "sha256": "A9F9A519BFEA4BB47AEFAA5A2767BE9110327C6B9610650B8383079D38DB22ED",
+  "updateZipSha256": "354AE143D6A2EC46677176C3E31AC452DDBC2E9BB2339390D7B0CC36FBDF8558",
+  "packageUrl": "https://update.zerokky.com/Release/kky-tool-3/packages/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.34.zip",
   "supportedRevit": [
     2019,
     2021,
@@ -16,7 +16,7 @@
   ],
   "channel": "3.x",
   "majorVersion": 3,
-  "payloadVersion": "3.1.33",
+  "payloadVersion": "3.1.34",
   "recovery": false,
-  "revision": "bqc-continuity-connector-collection-guid-lookup"
+  "revision": "bqc-continuity-active-excel-and-options"
 }
