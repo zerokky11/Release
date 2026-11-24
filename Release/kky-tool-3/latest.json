@@ -1,12 +1,12 @@
 {
-  "version": "3.1.34",
-  "url": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.34.exe?rev=20261124-a9f9a519bfea",
+  "version": "3.1.35",
+  "url": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.35.exe?rev=20261124-09454ad9cb62",
   "publishedAt": "2026-11-24",
-  "notes": "활성 문서의 연속성 검토 결과를 다른 이름으로 저장하고, 항목별 제외 조건을 쉽게 구분할 수 있도록 정리했습니다.",
-  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.34.exe?rev=20261124-a9f9a519bfea",
-  "sha256": "A9F9A519BFEA4BB47AEFAA5A2767BE9110327C6B9610650B8383079D38DB22ED",
-  "updateZipSha256": "354AE143D6A2EC46677176C3E31AC452DDBC2E9BB2339390D7B0CC36FBDF8558",
-  "packageUrl": "https://update.zerokky.com/Release/kky-tool-3/packages/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.34.zip",
+  "notes": "BQC 연속성 검토 등에서 등록한 작업공유 RVT를 열 때 모든 사용자 웍셋을 닫도록 수정했습니다. 디태치 검토와 동기화용 새 로컬 모두에 적용됩니다.",
+  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.35.exe?rev=20261124-09454ad9cb62",
+  "sha256": "09454AD9CB62F69C04A7900BC03FA58B346316C63EE4FDD062FB05C2ECEB886A",
+  "updateZipSha256": "092741B5D2B9105CA4C4143877770ED06FA10154C84009734D7639C81E94BFFF",
+  "packageUrl": "https://update.zerokky.com/Release/kky-tool-3/packages/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.35.zip",
   "supportedRevit": [
     2019,
     2021,
@@ -16,7 +16,7 @@
   ],
   "channel": "3.x",
   "majorVersion": 3,
-  "payloadVersion": "3.1.34",
+  "payloadVersion": "3.1.35",
   "recovery": false,
-  "revision": "bqc-continuity-active-excel-and-options"
+  "revision": "registered-rvt-closed-user-worksets"
 }
