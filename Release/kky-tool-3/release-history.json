@@ -1,5 +1,26 @@
 [
 {
+  "version": "3.1.36",
+  "payloadVersion": "3.1.36",
+  "recovery": false,
+  "revision": "boundary-bqc-performance-delivery-view",
+  "releaseType": "version-release",
+  "publishedAt": "2026-11-25",
+  "title": "버전 3.1.36 · 파일 경계 검토·BQC 성능·납품 RVT 정리 개선",
+  "notes": [
+    "파일 경계 연속성 검토: 등록한 센트럴의 원래 경로에서 직접 디태치해 임시로 전체 파일을 복사하지 않습니다. 새로 연 검토용 문서는 웍셋을 닫고 RVT 링크를 내린 뒤 호스트 요소를 읽습니다. 이미 열린 문서의 상태는 바꾸지 않습니다.",
+    "접점의 상대를 못 찾았을 때 경계 상대 없음, 상대 파일 미검토, 내부 단절 추정 등을 구분합니다. 파일 등록·관리 창과 실행 당시 조건을 보여주는 결과의 검토 설정 탭을 추가했습니다.",
+    "BQC 공통 필터: 공유 파라미터는 확인된 GUID를, 비공유 프로젝트 파라미터는 RVT별 정의를 사용합니다. 정의가 모호하면 기존 이름 조회를 유지합니다. 다회차 검토에서 파라미터 정의나 필터 조건이 달라지면 이전 판정을 그대로 재사용하지 않습니다.",
+    "층정보·속성 누락·재질별 유틸리티·속성 모수 검토의 파라미터 읽기를 개선했습니다. Revit 2019 시험 모델에서 공통 필터 30만 객체는 평균 72.48초에서 4.50초로, 층정보 69,288개는 검토 중앙값 5.44초에서 2.10초로 줄었습니다. 실제 시간은 모델과 설정에 따라 다릅니다.",
+    "속성 누락 검토의 KKY 기본 양식과 원본 호환 양식에서 빠른 Excel 저장을 개선했습니다. 30만 객체 시험에서 각 양식의 결과 값과 서식을 이전 공식본과 대조했습니다.",
+    "납품용 RVT 정리: 기존 뷰 템플릿을 먼저 삭제하고 납품용 3D 뷰를 만듭니다. 이전 템플릿이 강제하던 바닥 투명도 등 표시 설정이 새 뷰에 남지 않도록 했습니다."
+  ],
+  "packageUrl": "https://update.zerokky.com/Release/kky-tool-3/packages/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.36.zip",
+  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.36.exe?rev=20261125-801499348b7e",
+  "sha256": "801499348B7E411E985FCDFD10CC046DC6F01546DC8F9C80C0E2BF8104354A25",
+  "updateZipSha256": "AC2519D7EF2DAE606BB8C60DC2CFCDDDF2ED67B201AACA5483717109C7083C9A"
+},
+{
   "version": "3.1.35",
   "payloadVersion": "3.1.35",
   "recovery": false,
