@@ -1,5 +1,24 @@
 [
 {
+  "version": "3.1.37",
+  "payloadVersion": "3.1.37",
+  "recovery": false,
+  "revision": "boundary-end-dummy-endpoints",
+  "releaseType": "version-release",
+  "publishedAt": "2026-11-25",
+  "title": "버전 3.1.37 · 파일 경계 검토: End Dummy에 연결된 끝점도 검토",
+  "notes": [
+    "RVT 검토에서 경계와 판정 기준의 End Dummy에 연결된 끝점도 검토를 켜면, 열린 끝점은 유지하고 같은 분야의 End Dummy 피팅과 실제 연결된 배관·덕트·케이블 트레이 및 각 피팅의 끝점을 추가합니다.",
+    "패밀리 이름 하나에 End와 Dummy가 모두 있어야 합니다. 대소문자와 두 단어의 순서는 상관없습니다. 타입 이름에만 이 단어가 있거나 실제로 연결되지 않고 맞닿기만 한 경우는 포함하지 않습니다.",
+    "결과에는 더미가 아닌 원래 요소의 ID와 파라미터가 표시됩니다. 검토 설정 탭의 End Dummy 접점에서 실행 당시 선택을 확인할 수 있습니다.",
+    "Revit 2023의 시험용 RVT 두 개에서 기존 1쌍이 유지됐고, 옵션을 켰을 때 4쌍이 추가돼 총 5쌍을 확인했습니다."
+  ],
+  "packageUrl": "https://update.zerokky.com/Release/kky-tool-3/packages/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.37.zip",
+  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.37.exe?rev=20261125-6bdd6b3f4c73",
+  "sha256": "6BDD6B3F4C73D45A0C7A10ECD52E2227FB5DF6A30A437B2E02E6E625021B9B40",
+  "updateZipSha256": "7B006F62485B0BAEB980DBA6247130976C3CF5865DBE7C3A125D89F40B891081"
+},
+{
   "version": "3.1.36",
   "payloadVersion": "3.1.36",
   "recovery": false,

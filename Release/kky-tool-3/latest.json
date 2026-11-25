@@ -1,12 +1,12 @@
 {
-  "version": "3.1.36",
-  "url": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.36.exe?rev=20261125-801499348b7e",
+  "version": "3.1.37",
+  "url": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.37.exe?rev=20261125-6bdd6b3f4c73",
   "publishedAt": "2026-11-25",
-  "notes": "파일 경계에서 상대가 없는 끝점을 구분하고, BQC의 파라미터 조회와 Excel 저장을 개선했습니다. 납품용 3D 뷰가 이전 템플릿의 표시 설정을 물려받던 문제도 수정했습니다.",
-  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.36.exe?rev=20261125-801499348b7e",
-  "sha256": "801499348B7E411E985FCDFD10CC046DC6F01546DC8F9C80C0E2BF8104354A25",
-  "updateZipSha256": "AC2519D7EF2DAE606BB8C60DC2CFCDDDF2ED67B201AACA5483717109C7083C9A",
-  "packageUrl": "https://update.zerokky.com/Release/kky-tool-3/packages/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.36.zip",
+  "notes": "RVT 파일 경계 검토에서 열린 끝점에 더해 End Dummy에 실제로 연결된 끝점을 검토할 수 있습니다. 기본값은 꺼짐입니다.",
+  "installerUrl": "https://update.zerokky.com/Release/kky-tool-3/official/KKY_Tool_Revit_3(2019,21,23,25,27)_v3.1.37.exe?rev=20261125-6bdd6b3f4c73",
+  "sha256": "6BDD6B3F4C73D45A0C7A10ECD52E2227FB5DF6A30A437B2E02E6E625021B9B40",
+  "updateZipSha256": "7B006F62485B0BAEB980DBA6247130976C3CF5865DBE7C3A125D89F40B891081",
+  "packageUrl": "https://update.zerokky.com/Release/kky-tool-3/packages/KKY_Tool_Revit_3.2019.21.23.25.27._v3.1.37.zip",
   "supportedRevit": [
     2019,
     2021,
@@ -16,7 +16,7 @@
   ],
   "channel": "3.x",
   "majorVersion": 3,
-  "payloadVersion": "3.1.36",
+  "payloadVersion": "3.1.37",
   "recovery": false,
-  "revision": "boundary-bqc-performance-delivery-view"
+  "revision": "boundary-end-dummy-endpoints"
 }
